@@ -15,9 +15,13 @@ export interface UMM {
     getUmmState: () => UMM_State;  // REPLACED
     saveUmmState: (ummState: UMM_State) => void;  // REPLACED
 
+    nextMission: () => void;
+    previousMission: () => void;
+
     updatePortalCountSidebar: () => void;
     notification: (message: string) => void;
     toggleMissionMode: () => void;
+    setCurrentMission: (mission: number) => void;
 }
 
 // State

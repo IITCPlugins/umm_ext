@@ -42,7 +42,9 @@ class UMM_Ext implements Plugin.Class {
         this.monkeyPatchState();
         this.monkeyPatchDrawing();
         this.monkeyPatchNumbers();
+        this.monkeyPatchMissionSelect();
     }
+
 
     // Patch - Use Toolbox as visibilty toggle
     replaceToolboxButton() {
@@ -91,7 +93,14 @@ class UMM_Ext implements Plugin.Class {
         // Patch - Inject our Number Renderer
         this.umm.refreshMissionNumbers = () => this.renderNumbers.redraw();
     }
+
+
+    monkeyPatchMissionSelect() {
+        this.umm.nextMission = () => this.state.nextMission();
+        this.umm.previousMission = () => this.state.prevMission();
+    }
 }
+
 
 
 /**
@@ -100,3 +109,4 @@ class UMM_Ext implements Plugin.Class {
  */
 export const main = new UMM_Ext();
 Plugin.Register(main, "UMM_Ext");
+
