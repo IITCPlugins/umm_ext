@@ -1,6 +1,7 @@
 import * as Plugin from "iitcpluginkit";
+import { UMM, UMM_State } from "./UMM_types";
 import { Renderer } from "./Map";
-import { UMM } from "./UMM_types";
+import { State } from "./State";
 
 
 // TODO add State Manager (reduce getState calls)
@@ -12,6 +13,7 @@ class UMM_Ext implements Plugin.Class {
     public umm: UMM;
 
     private render: Renderer;
+    private state: State;
 
 
     init() {
@@ -26,6 +28,7 @@ class UMM_Ext implements Plugin.Class {
             return;
         }
 
+        this.state = new State();
         this.render = new Renderer(this.umm.ummMissionPaths);
 
         this.patch();
@@ -33,16 +36,18 @@ class UMM_Ext implements Plugin.Class {
 
     patch() {
         this.replaceToolboxButton();
-        this.monkeyPatchUMM();
+        this.monkeyPatchState();
+        this.monkeyPatchDrawing();
     }
 
-    // Patch 1 - Use Toolbox as visibilty toggle
+    // Patch - Use Toolbox as visibilty toggle
     replaceToolboxButton() {
-        // remove old
-        /*
+        // delay removal, IDK who why when moves the button around
+        window.setTimeout(() => {
             $('#toolbox a:contains("UMM Opt")').remove();
-            $('#,toolbox_component a:contains("UMM Opt")').remove();
-        */
+            $('#toolbox_component a:contains("UMM Opt")').remove();
+        }, 500);
+
         // create new
         $('#toolbox').append(
             $('<a>', { text: "UMM", title: "Ultimate Mission Maker", click: () => $('.leaflet-umm.leaflet-bar').toggle() }));
@@ -51,12 +56,22 @@ class UMM_Ext implements Plugin.Class {
         $('.leaflet-umm.leaflet-bar').hide();
     }
 
+    // Patch - State management
+    monkeyPatchState() {
+        this.umm.getUmmState = () => this.state.get();
+        this.umm.saveUmmState = (_ummState: UMM_State) => {
+            // we assume the state is already updated
+            this.state.save();
+        };
+    }
 
-    monkeyPatchUMM() {
-        // Patch 2 - Inject our Path Renderer
+
+    // Patch - Path editing
+    monkeyPatchDrawing() {
+        // Patch - Inject our Path Renderer
         this.umm.drawMissions = () => this.render.drawMissions();
 
-        // Patch 2b - redraw on mission mode toggle
+        // Patch - redraw on mission mode toggle
         const ori = this.umm.toggleMissionMode;
         this.umm.toggleMissionMode = () => {
             ori();

@@ -8,9 +8,11 @@ export interface UMM {
     missionModeActive: boolean;
 
     // methods
-    drawMissions: () => void;
+    drawMissions: () => void; // REPLACED
+
     getUmmState: () => UMM_State;
     saveUmmState: (ummState: UMM_State) => void;
+
     updatePortalCountSidebar: () => void;
     notification: (message: string) => void;
     toggleMissionMode: () => void;
@@ -22,6 +24,9 @@ export interface UMM_State {
     missionSetDescription: string;
     currentMission: number;
     missions: UMM_Mission[];
+    plannedBannerLength: number;
+    titleFormat: string
+    fileFormatVersion: number;
 }
 
 export interface UMM_Mission {
