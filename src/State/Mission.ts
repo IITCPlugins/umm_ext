@@ -21,6 +21,10 @@ export class Mission {
         return this.portal_data;
     }
 
+    hasPortals(): boolean {
+        return this.portal_data.length > 0;
+    }
+
     getLocations(): L.LatLng[] {
         return this.portal_data.toLatLng();
     }

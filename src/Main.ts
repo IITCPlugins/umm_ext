@@ -1,6 +1,7 @@
 import * as Plugin from "iitcpluginkit";
 import { UMM, UMM_State } from "./UMM_types";
-import { Renderer } from "./Map";
+import { RenderPath } from "./Render/RenderPath";
+import { RenderNumbers } from "./Render/RenderNumbers";
 import { State } from "./State/State";
 
 
@@ -12,7 +13,8 @@ class UMM_Ext implements Plugin.Class {
     // TODO: umm should be private
     public umm: UMM;
 
-    private render: Renderer;
+    private renderPath: RenderPath;
+    private renderNumbers: RenderNumbers;
     public state: State;
 
 
@@ -29,7 +31,8 @@ class UMM_Ext implements Plugin.Class {
         }
 
         this.state = new State();
-        this.render = new Renderer(this.umm.ummMissionPaths);
+        this.renderPath = new RenderPath(this.umm.ummMissionPaths);
+        this.renderNumbers = new RenderNumbers(this.umm.ummMissionNumbers);
 
         this.patch();
     }
@@ -38,6 +41,7 @@ class UMM_Ext implements Plugin.Class {
         this.replaceToolboxButton();
         this.monkeyPatchState();
         this.monkeyPatchDrawing();
+        this.monkeyPatchNumbers();
     }
 
     // Patch - Use Toolbox as visibilty toggle
@@ -69,17 +73,23 @@ class UMM_Ext implements Plugin.Class {
     // Patch - Path editing
     monkeyPatchDrawing() {
         // Patch - Inject our Path Renderer
-        this.umm.drawMissions = () => this.render.drawMissions();
+        this.umm.drawMissions = () => this.renderPath.drawMissions();
 
         // Patch - redraw on mission mode toggle
         const ori = this.umm.toggleMissionMode;
         this.umm.toggleMissionMode = () => {
             ori();
-            this.render.drawMissions();
+            this.renderPath.drawMissions();
         }
 
         // init repaint
-        this.render.drawMissions();
+        this.renderPath.drawMissions();
+    }
+
+    // Patch - Autonumbers
+    monkeyPatchNumbers() {
+        // Patch - Inject our Number Renderer
+        this.umm.refreshMissionNumbers = () => this.renderNumbers.redraw();
     }
 }
 

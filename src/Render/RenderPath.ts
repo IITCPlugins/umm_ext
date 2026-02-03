@@ -1,6 +1,6 @@
-import { main } from "./Main";
-import { Mission } from "./State/Mission";
-import { UMM_Mission, UMM_Portal } from "./UMM_types";
+import { main } from "../Main";
+import { Mission } from "../State/Mission";
+import { UMM_Mission, UMM_Portal } from "../UMM_types";
 
 type MarkerOptions = L.MarkerOptions & {
     portal: number;
@@ -8,8 +8,7 @@ type MarkerOptions = L.MarkerOptions & {
     isMidPoint: boolean;
 }
 
-
-export class Renderer {
+export class RenderPath {
 
     private missionPaths: L.LayerGroup<any>;
     private touchIcon: L.DivIcon;
@@ -151,6 +150,7 @@ export class Renderer {
         this.missionPaths.addLayer(this.editDragLine);
     }
 
+
     private onMarkerDrag(event: L.LeafletMouseEvent) {
         if (!this.editDragLine) return;
 
@@ -168,6 +168,7 @@ export class Renderer {
         latlngs[index] = newTarget;
         this.editDragLine.setLatLngs(latlngs);
     }
+
 
     private onMarkerDragEnd(event: L.LeafletDragEndEvent) {
         if (this.editDragLine) {

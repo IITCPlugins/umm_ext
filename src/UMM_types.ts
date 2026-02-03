@@ -5,13 +5,15 @@ export interface UMM {
 
     // properties
     ummMissionPaths: L.LayerGroup<any>;
+    ummMissionNumbers: L.LayerGroup<any>;
     missionModeActive: boolean;
 
     // methods
     drawMissions: () => void; // REPLACED
+    refreshMissionNumbers: () => void; // REPLACED
 
-    getUmmState: () => UMM_State;
-    saveUmmState: (ummState: UMM_State) => void;
+    getUmmState: () => UMM_State;  // REPLACED
+    saveUmmState: (ummState: UMM_State) => void;  // REPLACED
 
     updatePortalCountSidebar: () => void;
     notification: (message: string) => void;

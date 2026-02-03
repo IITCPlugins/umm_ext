@@ -10,6 +10,10 @@ export class Portals {
         this.data = data;
     }
 
+    get length(): number {
+        return this.data.length;
+    }
+
     get(index: number): UMM_Portal | undefined {
         return this.data[index];
     }

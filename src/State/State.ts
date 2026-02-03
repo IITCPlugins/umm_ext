@@ -183,6 +183,9 @@ export class State {
         return missTitleNew;
     }
 
+    missionCount(): number {
+        return Math.max(this.theState.missions.length, this.theState.plannedBannerLength);
+    }
 
     getMission(missionId: number): Mission | undefined {
         return this.theState.missions[missionId] && new Mission(this.theState.missions[missionId]);
