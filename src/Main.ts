@@ -1,7 +1,7 @@
 import * as Plugin from "iitcpluginkit";
 import { UMM, UMM_State } from "./UMM_types";
 import { Renderer } from "./Map";
-import { State } from "./State";
+import { State } from "./State/State";
 
 
 // TODO add State Manager (reduce getState calls)
@@ -13,7 +13,7 @@ class UMM_Ext implements Plugin.Class {
     public umm: UMM;
 
     private render: Renderer;
-    private state: State;
+    public state: State;
 
 
     init() {

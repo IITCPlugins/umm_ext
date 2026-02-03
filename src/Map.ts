@@ -1,5 +1,6 @@
 import { main } from "./Main";
-import { UMM_Mission, UMM_Portal, UMM_State } from "./UMM_types";
+import { Mission } from "./State/Mission";
+import { UMM_Mission, UMM_Portal } from "./UMM_types";
 
 type MarkerOptions = L.MarkerOptions & {
     portal: number;
@@ -34,10 +35,9 @@ export class Renderer {
         this.missionPaths.clearLayers();
 
         const editMode = main.umm.missionModeActive;
-        const state = main.umm.getUmmState();
 
-        state.missions.forEach((mission, missionId) => {
-            if (state.currentMission === missionId && editMode) {
+        main.state.forEachMission((mission, missionId) => {
+            if (main.state.isCurrent(missionId) && editMode) {
                 this.drawEditMission(missionId, mission);
             }
             else
@@ -52,8 +52,8 @@ export class Renderer {
     }
 
 
-    private drawMission(mission: UMM_Mission) {
-        const geodesicPolyline = new L.GeodesicPolyline(this.getMissionLocations(mission), {
+    private drawMission(mission: Mission) {
+        const geodesicPolyline = new L.GeodesicPolyline(mission.getLocations(), {
             color: "crimson",
             weight: 5,
             smoothFactor: 1
@@ -63,8 +63,8 @@ export class Renderer {
 
 
     // let _draggingLine = undefined;
-    private drawEditMission(missionId: number, mission: UMM_Mission) {
-        const coordinatesList = this.getMissionLocations(mission);
+    private drawEditMission(missionId: number, mission: Mission) {
+        const coordinatesList = mission.getLocations();
 
         // Portal Markers
         coordinatesList.forEach((ll, index) => this.createDragMarker(ll, index, missionId));
@@ -120,8 +120,7 @@ export class Renderer {
         const options: MarkerOptions = event.target.options;
         const isMidPoint = options.isMidPoint;
 
-        const state = main.umm.getUmmState();
-        const mission = state.missions[options.missionId];
+        const mission = main.state.getMission(options.missionId)!;
         console.assert(mission);
 
         if (this.editDragLine) {
@@ -129,8 +128,8 @@ export class Renderer {
         }
 
         const portal = options.portal;
-        const portal_pre = mission.portals[portal - 1];
-        const portal_post = mission.portals[portal + (isMidPoint ? 0 : 1)];
+        const portal_pre = mission.portals.get(portal - 1);
+        const portal_post = mission.portals.get(portal + (isMidPoint ? 0 : 1));
 
         let lls = [
             portal_pre && new L.LatLng(portal_pre.location.latitude, portal_pre.location.longitude),
@@ -142,7 +141,7 @@ export class Renderer {
         if (!portal_post) lls = [lls[1], lls[0]];
 
 
-        this.editDragLine = new L.Polyline(lls, {
+        this.editDragLine = new L.Polyline(lls as L.LatLng[], {
             color: "#ff9a00",
             weight: 3,
             dashArray: '5,5',
@@ -178,11 +177,10 @@ export class Renderer {
 
         const marker: L.Marker = event.target;
         const options: MarkerOptions = event.target.options;
-        const state = main.umm.getUmmState();
-        const mission = state.missions[options.missionId];
+        const mission = main.state.getMission(options.missionId)!;
         console.assert(mission);
 
-        const coordinatesList = this.getMissionLocations(mission);
+        const coordinatesList = mission.getLocations();
 
         const snappedPortal = this.getSnapPortal(marker.getLatLng(), coordinatesList);
         if (!snappedPortal) {
@@ -201,11 +199,11 @@ export class Renderer {
         )
 
         if (options.isMidPoint)
-            mission.portals.splice(options.portal, 0, portalToAdd);
+            mission.portals.insert(options.portal, portalToAdd);
         else
-            mission.portals[options.portal] = portalToAdd;
+            mission.portals.set(options.portal, portalToAdd);
 
-        this.saveStateAndRefresh(state);
+        this.saveStateAndRefresh();
     }
 
 
@@ -230,6 +228,7 @@ export class Renderer {
         return candidates[0][1];
     };
 
+
     private createPortal(guid: string, imageUrl: string, latitude: number, longitude: number, title: string): UMM_Portal {
         return {
             guid,
@@ -250,18 +249,17 @@ export class Renderer {
         const portal = options.portal;
         if (options.isMidPoint) return;
 
-        const state = main.umm.getUmmState();
-        const mission = state.missions[options.missionId];
+        const mission = main.state.getMission(options.missionId)!;
         console.assert(mission);
 
-        mission.portals.splice(portal, 1);
-        this.saveStateAndRefresh(state);
-        main.umm.notification(`${mission.missionTitle}\nRemoved #${portal + 1} from mission`);
+        mission.portals.remove(portal);
+        this.saveStateAndRefresh();
+        main.umm.notification(`${mission.title}\nRemoved #${portal + 1} from mission`);
     }
 
 
-    private saveStateAndRefresh(state: UMM_State) {
-        main.umm.saveUmmState(state)
+    private saveStateAndRefresh() {
+        main.state.save();
         main.umm.updatePortalCountSidebar();
         this.drawMissions();
     }

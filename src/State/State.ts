@@ -1,7 +1,10 @@
-import { UMM_State } from "./UMM_types";
+import { Mission } from "./Mission";
+import { UMM_State } from "../UMM_types";
+
 
 const STORAGE_KEY = "ultimate-mission-maker";
 const fileFormatVersion = 2;
+
 
 export class State {
 
@@ -142,11 +145,13 @@ export class State {
         return ummState as UMM_State;
     }
 
+
     getPlannedLength(): number {
         return this.theState.plannedBannerLength > 0 ?
             this.theState.plannedBannerLength
             : this.theState.missions.length;
     }
+
 
     generateMissionTitle(missNumber: number): string {
         let missTitleNew = this.theState.titleFormat || "";
@@ -177,4 +182,23 @@ export class State {
         }
         return missTitleNew;
     }
+
+
+    getMission(missionId: number): Mission | undefined {
+        return this.theState.missions[missionId] && new Mission(this.theState.missions[missionId]);
+    }
+
+    forEachMission(callback: (mission: Mission, index: number) => void) {
+        this.theState.missions.forEach((missionData, index) => {
+            const mission = new Mission(missionData);
+            callback(mission, index);
+        });
+    }
+
+    isCurrent(missionId: number): boolean {
+        return this.theState.currentMission === missionId;
+    }
 }
+
+
+
