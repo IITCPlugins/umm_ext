@@ -7,7 +7,7 @@ interface MissionStart {
     auto: boolean;
 }
 
-// const MIN_PORTALS_PER_MISSION = 6;
+const MIN_PORTALS_PER_MISSION = 6;
 
 export class RenderNumbers {
 
@@ -59,37 +59,38 @@ export class RenderNumbers {
                 });
             }
 
-            let next = mid + 1;
-            for (next; next < state.missionCount(); next++) {
-                const nextMission = state.getMission(next);
+            // count empty mission + 1
+            let count = 1;
+            for (; mid + count <= state.missionCount(); count++) {
+                const nextMission = state.getMission(mid + count);
                 if (nextMission?.hasPortals()) {
                     break;
                 }
             }
 
-            if (next > mid + 1) {
+            if (count > 1) {
                 // Fill in auto numbers for empty missions
-                const count = next - mid - 1;
                 const allLocations = [];
-                for (let fillMid = mid; fillMid <= next; fillMid++) {
-                    const fillMission = state.getMission(fillMid);
-                    if (fillMission?.hasPortals()) {
+                for (let i = 0; i < count - 1; i++) {
+                    const fillMission = state.getMission(mid + i);
+                    if (fillMission?.hasPortals()) {// NOTE: only the first (i=0) should have portals
                         allLocations.push(...fillMission.getLocations());
                     }
                 }
-                const portalsPerMission = allLocations.length / count;
+                const portalsPerMission = Math.max(allLocations.length / count, MIN_PORTALS_PER_MISSION);
                 for (let fillIndex = 1; fillIndex < count; fillIndex++) {
-                    const autoIndex = mid + fillIndex;
-                    const locationIndex = Math.min(Math.floor(portalsPerMission * fillIndex), allLocations.length - 1);
-                    missions.push({
-                        missionIndex: autoIndex,
-                        location: allLocations[locationIndex],
-                        auto: true
-                    });
+                    const locationIndex = Math.floor(portalsPerMission * fillIndex);
+                    if (locationIndex < allLocations.length - 1) {
+                        missions.push({
+                            missionIndex: mid + fillIndex,
+                            location: allLocations[locationIndex],
+                            auto: true
+                        });
+                    }
                 }
             }
 
-            mid = next;
+            mid += count;
         }
 
         return missions;
