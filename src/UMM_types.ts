@@ -14,6 +14,8 @@ export interface UMM {
 
     getUmmState: () => UMM_State;  // REPLACED
     saveUmmState: (ummState: UMM_State) => void;  // REPLACED
+    clearMissionData: () => void; // REPLACED
+
 
     nextMission: () => void;
     previousMission: () => void;
@@ -22,7 +24,10 @@ export interface UMM {
     notification: (message: string) => void;
     toggleMissionMode: () => void;
     setCurrentMission: (mission: number) => void;
+    updateCurrentActiveMissionSidebar: (ummState: UMM_State) => void;
+    reloadSettingsWindowIfNeeded: () => void;
 }
+
 
 // State
 export interface UMM_State {

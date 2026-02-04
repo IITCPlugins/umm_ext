@@ -64,6 +64,19 @@ class UMM_Ext implements Plugin.Class {
             // we assume the state is already updated
             this.state.save();
         };
+
+        this.umm.clearMissionData = () => {
+            this.state.reset();
+            this.state.save();
+
+            this.umm.updateCurrentActiveMissionSidebar(this.state.get());
+            this.umm.reloadSettingsWindowIfNeeded();
+            if (this.umm.missionModeActive) {
+                this.umm.toggleMissionMode();
+            }
+            this.renderPath.drawMissions();
+            this.renderNumbers.redraw();
+        }
     }
 
 
