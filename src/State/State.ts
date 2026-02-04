@@ -86,33 +86,45 @@ export class State {
 
     generateMissionTitleEx(missNumber: number, plannedBannerLength: number | undefined, missSetName: string | undefined, missNameFormat: string | undefined): string {
         // eslint-disable-next-line unicorn/prefer-default-parameters
-        let missTitleNew = missNameFormat ?? "";
+        const format = missNameFormat ?? "";
 
-        if (missTitleNew != "") {
-            // Total
-            const planned = plannedBannerLength || 0
-            if (planned >= 1) {
-                missTitleNew = missTitleNew.replace(/(M+)/g, planned.toString());
-            }
+        if (!format) {
+            return "";
+        }
 
-            if (missNumber >= 0) {
-                const missionNumberFormat = missNameFormat?.match(/N+/g)?.[0];
-                if (missionNumberFormat) {
-                    if (missionNumberFormat.length > 1) {
-                        const missionNumberInTitle = "0".repeat(planned.toString().length - missNumber.toString().length) + missNumber.toString();
-                        missTitleNew = missTitleNew.replace(/(N+)/g, missionNumberInTitle);
-                    } else {
-                        missTitleNew = missTitleNew.replace(/(N)/, missNumber.toString());
-                    }
-                }
+        let title = format;
+        const totalMissions = plannedBannerLength ?? 0;
 
-                // Titel
-                if (missSetName && missSetName !== "") {
-                    missTitleNew = missTitleNew.replace("T", missSetName);
-                }
+        // Replace total mission count (M+)
+        if (totalMissions >= 1) {
+            title = title.replace(/M+/g, totalMissions.toString());
+        }
+
+        // Replace mission number (N or N+)
+        if (missNumber >= 0) {
+            const numberPattern = format.match(/N+/g)?.[0];
+            if (numberPattern) {
+                const paddedNumber = this.zeroPad(missNumber, numberPattern.length, totalMissions);
+                title = title.replace(/N+/g, paddedNumber);
             }
         }
-        return missTitleNew;
+
+        // Replace mission set name (T)
+        if (missSetName?.trim()) {
+            title = title.replace(/T/g, missSetName);
+        }
+
+        return title;
+    }
+
+    private zeroPad(missNumber: number, formatLength: number, totalMissions: number): string {
+        if (formatLength <= 1) {
+            return missNumber.toString();
+        }
+
+        const totalDigits = totalMissions.toString().length;
+        const paddingZeros = Math.max(0, totalDigits - missNumber.toString().length);
+        return "0".repeat(paddingZeros) + missNumber.toString();
     }
 
 
