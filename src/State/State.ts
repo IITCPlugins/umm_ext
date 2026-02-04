@@ -1,6 +1,7 @@
 import { Mission } from "./Mission";
 import { UMM_State } from "../UMM_types";
 import { main } from "../Main";
+import { migrateUmmVersion } from "./StateMigration";
 
 
 const STORAGE_KEY = "ultimate-mission-maker";
@@ -25,7 +26,7 @@ export class State {
         const data = localStorage.getItem(STORAGE_KEY)
         if (data) {
             const anyState = JSON.parse(data);
-            this.theState = this.migrateUmmVersion(anyState);
+            this.theState = migrateUmmVersion(this, anyState);
         } else {
             this.reset();
         }
@@ -56,99 +57,6 @@ export class State {
     }
 
 
-    migrateUmmVersion(ummState: any): UMM_State {
-
-        // Original beta didn't have a fileFormatVersion yet
-        if (ummState.fileFormatVersion === undefined || ummState.fileFormatVersion === "") {
-            // Because of slight variations on BETA's we do some checks to avoid overwriting any data
-            const undefinedOrEmptyString = (value: any): boolean => {
-                if (value == undefined || value == "") {
-                    return true
-                }
-                return false;
-            }
-
-            if (undefinedOrEmptyString(ummState.missionSetName)) {
-                // Check if old name was set, if so, use that for missionSetName, otherwise set blank
-                if (undefinedOrEmptyString(ummState.missionName)) {
-                    ummState.missionSetName = '';
-                } else {
-                    ummState.missionSetName = ummState.missionName;
-                    delete ummState.missionName; // Remove old field from state
-                }
-
-            }
-
-            if (undefinedOrEmptyString(ummState.missionSetDescription)) {
-                if (undefinedOrEmptyString(ummState.missionDescription)) {
-                    ummState.missionSetDescription = '';
-                } else {
-                    ummState.missionSetDescription = ummState.missionDescription;
-                    delete ummState.missionDescription; // Remove old field from state
-                }
-            }
-
-            if (undefinedOrEmptyString(ummState.titleFormat)) {
-                ummState.titleFormat = 'T NN-M';
-            }
-
-            // Rename numberofMissions to plannedBannerLength if present, otherwise set to current banner length
-            if (ummState.numberOfMissions === undefined) {
-                ummState.plannedBannerLength = Object.keys(ummState.missions as Record<string, any>).length
-            } else {
-                ummState.plannedBannerLength = ummState.numberOfMissions;
-                delete ummState.numberOfMissions;
-            }
-
-            // Check if the data is using the oldest beta format or a newer version, newer versions don't need converting for V1.
-            if (!Object.keys(ummState.missions[0] as Record<string, any>).includes("portals")) {
-                // Old format detected, check if data is present
-                if (ummState.missions[0][0].guid) {
-                    // Data present, convert necessary
-                    const newMissions = [];
-                    for (const mission in ummState.missions) {
-                        const missionTitle = this.generateMissionTitle(parseInt(mission) + 1)
-                        newMissions.push({ missionTitle: missionTitle, missionDescription: ummState.missionSetDescription, portals: ummState.missions[mission] })
-                    }
-                    ummState.missions = newMissions;
-                } else {
-                    // No data detected, just set it to an empty state.
-                    ummState.missions = [{ missionTitle: '', missionDescription: '', portals: [] }];
-                }
-            }
-
-            ummState.fileFormatVersion = 1;
-
-        }
-
-        if (ummState.fileFormatVersion === 1) {
-            // FileFormatVersion 2 supports custom objectives for portals
-            // Valid type values are: HACK_PORTAL, INSTALL_MOD, CAPTURE_PORTAL, CREATE_LINK, CREATE_FIELD, PASSPHRASE
-            // NIA will ignore passphrase_params if type is not passphrase
-            for (const mission in ummState.missions) {
-                for (const portal in ummState.missions[mission].portals) {
-                    ummState.missions[mission].portals[portal].objective = { type: "HACK_PORTAL", passphrase_params: { question: "", _single_passphrase: "" } }
-                }
-            }
-            ummState.fileFormatVersion = 2;
-        }
-
-        if (ummState.fileFormatVersion === 2) {
-            // Bugfix for 0.4.0, unintentionally it had objective type HACK rather than HACK_PORTAL, not a full new fileFormatVersion
-            for (const mission in ummState.missions) {
-                for (const portal in ummState.missions[mission].portals) {
-                    if (ummState.missions[mission].portals[portal].objective.type === "HACK") {
-                        ummState.missions[mission].portals[portal].objective.type = "HACK_PORTAL"
-                    }
-                }
-            }
-
-            // UMM-EX uses empty missions
-            this.setPlannedLength(this.theState.plannedBannerLength);
-        }
-
-        return ummState as UMM_State;
-    }
 
 
     getPlannedLength(): number {
@@ -173,17 +81,22 @@ export class State {
 
 
     generateMissionTitle(missNumber: number): string {
-        let missTitleNew = this.theState.titleFormat || "";
+        return this.generateMissionTitleEx(missNumber, this.getPlannedLength(), this.theState.missionSetName, this.theState.titleFormat);
+    }
+
+    generateMissionTitleEx(missNumber: number, plannedBannerLength: number | undefined, missSetName: string | undefined, missNameFormat: string | undefined): string {
+        // eslint-disable-next-line unicorn/prefer-default-parameters
+        let missTitleNew = missNameFormat ?? "";
 
         if (missTitleNew != "") {
             // Total
-            const planned = this.getPlannedLength()
+            const planned = plannedBannerLength || 0
             if (planned >= 1) {
                 missTitleNew = missTitleNew.replace(/(M+)/g, planned.toString());
             }
 
             if (missNumber >= 0) {
-                const missionNumberFormat = this.theState.titleFormat.match(/N+/g)?.[0];
+                const missionNumberFormat = missNameFormat?.match(/N+/g)?.[0];
                 if (missionNumberFormat) {
                     if (missionNumberFormat.length > 1) {
                         const missionNumberInTitle = "0".repeat(planned.toString().length - missNumber.toString().length) + missNumber.toString();
@@ -194,13 +107,14 @@ export class State {
                 }
 
                 // Titel
-                if (this.theState.missionSetName !== "") {
-                    missTitleNew = missTitleNew.replace("T", this.theState.missionSetName);
+                if (missSetName && missSetName !== "") {
+                    missTitleNew = missTitleNew.replace("T", missSetName);
                 }
             }
         }
         return missTitleNew;
     }
+
 
     missionCount(): number {
         return Math.max(this.theState.missions.length, this.theState.plannedBannerLength);

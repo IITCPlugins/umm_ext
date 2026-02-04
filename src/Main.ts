@@ -2,15 +2,12 @@ import * as Plugin from "iitcpluginkit";
 import { UMM, UMM_State } from "./UMM_types";
 import { RenderPath } from "./Render/RenderPath";
 import { RenderNumbers } from "./Render/RenderNumbers";
-import { State } from "./State/State";
+import { State } from "./State/StateMigration";
 
-
-// TODO add State Manager (reduce getState calls)
 
 // eslint-disable-next-line unicorn/prevent-abbreviations
 class UMM_Ext implements Plugin.Class {
 
-    // TODO: umm should be private
     public umm: UMM;
 
     private renderPath: RenderPath;
@@ -19,8 +16,6 @@ class UMM_Ext implements Plugin.Class {
 
 
     init() {
-        console.log("UMM_Ext: Loaded");
-
         // eslint-disable-next-line @typescript-eslint/no-require-imports
         require("./styles.css");
 
@@ -94,7 +89,7 @@ class UMM_Ext implements Plugin.Class {
         this.umm.refreshMissionNumbers = () => this.renderNumbers.redraw();
     }
 
-
+    // Patch - Select every mission - even when empty
     monkeyPatchMissionSelect() {
         this.umm.nextMission = () => this.state.nextMission();
         this.umm.previousMission = () => this.state.prevMission();
