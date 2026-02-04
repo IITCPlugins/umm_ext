@@ -21,6 +21,7 @@ export interface UMM {
     previousMission: () => void; // REPLACED
 
     addPortalToCurrentMission: (data: EventPortalSelected) => void; // REPLACED
+    updateMissionPortalsDetails: (data: EventPortalDetailsUpdated) => void;  // removed/REPLACED
 
     updatePortalCountSidebar: () => void;
     notification: (message: string) => void;

@@ -66,6 +66,8 @@ class UMM_Ext implements Plugin.Class {
             this.state.save();
         };
 
+        window.removeHook('portalDetailsUpdated', this.umm.updateMissionPortalsDetails);
+
         this.umm.clearMissionData = () => {
             this.state.reset();
             this.state.save();
@@ -122,6 +124,7 @@ class UMM_Ext implements Plugin.Class {
         // we are not in edit mode or it is the first selection
         if (!this.umm.missionModeActive || this.umm.missionModeResuming) {
             this.umm.missionModeResuming = false;
+            return;
         }
 
         if (this.umm.lastPortal === data.selectedPortalGuid) {

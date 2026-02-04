@@ -14,6 +14,8 @@ export class State {
 
     constructor() {
         this.load();
+
+        window.addHook("portalDetailsUpdated", event => this.checkPortal(event));
     }
 
 
@@ -61,6 +63,7 @@ export class State {
     getPlannedLength(): number {
         return this.theState.plannedBannerLength;
     }
+
 
     setPlannedLength(count: number) {
         this.theState.plannedBannerLength = count;
@@ -192,5 +195,24 @@ export class State {
                 main.umm.notification(`${this.theState.missionSetName}\nCurrent active mission set to #${this.theState.currentMission + 1}`);
             }
         }
+    }
+
+
+    checkPortal(event: EventPortalDetailsUpdated) {
+        let updated = false;
+
+        this.theState.missions.forEach(mission => {
+            const portal = mission.portals.find(x => x.guid === event.guid);
+            if (portal) {
+                if (portal.imageUrl !== event.portalData.image ||
+                    portal.title !== event.portalData.title) {
+                    portal.imageUrl = event.portalData.image;
+                    portal.title = event.portalData.title;
+                    updated = true;
+                }
+            }
+        });
+
+        if (updated) this.save();
     }
 }
