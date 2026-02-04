@@ -12,7 +12,6 @@ const fileFormatVersion = 2;
 export class State {
 
     private theState: UMM_State;
-    private missisons: Missions;
 
     constructor() {
         this.load();
@@ -57,7 +56,6 @@ export class State {
                     portals: []
                 }],
         };
-        this.missisons = new Missions(this.theState.missions);
     }
 
 
@@ -87,7 +85,7 @@ export class State {
 
 
     get missions(): Missions {
-        return this.missisons;
+        return new Missions(this.theState.missions);
     }
 
 
@@ -115,7 +113,9 @@ export class State {
         if (missNumber >= 0) {
             const numberPattern = format.match(/N+/g)?.[0];
             if (numberPattern) {
-                const paddedNumber = this.zeroPad(missNumber, numberPattern.length, totalMissions);
+
+                const length = numberPattern.length > 1 ? totalMissions.toString().length : 0;
+                const paddedNumber = window.zeroPad(missNumber, length);
                 title = title.replace(/N+/g, paddedNumber);
             }
         }
@@ -128,39 +128,16 @@ export class State {
         return title;
     }
 
-    private zeroPad(missNumber: number, formatLength: number, totalMissions: number): string {
-        if (formatLength <= 1) {
-            return missNumber.toString();
-        }
-
-        const totalDigits = totalMissions.toString().length;
-        const paddingZeros = Math.max(0, totalDigits - missNumber.toString().length);
-        return "0".repeat(paddingZeros) + missNumber.toString();
-    }
-
-
-    missionCount(): number {
-        return Math.max(this.theState.missions.length, this.theState.plannedBannerLength);
-    }
-
-    getMission(missionId: number): Mission | undefined {
-        return this.theState.missions[missionId] && new Mission(this.theState.missions[missionId]);
-    }
 
     getEditMission(): Mission | undefined {
-        return this.getMission(this.theState.currentMission);
+        return this.missions.get(this.theState.currentMission);
     }
 
-    forEachMission(callback: (mission: Mission, index: number) => void) {
-        this.theState.missions.forEach((missionData, index) => {
-            const mission = new Mission(missionData);
-            callback(mission, index);
-        });
-    }
 
     isCurrent(missionId: number): boolean {
         return this.theState.currentMission === missionId;
     }
+
 
     nextMission() {
         if (this.theState.currentMission >= this.theState.plannedBannerLength - 1) return;
@@ -168,7 +145,7 @@ export class State {
         // Activate the new mission
         main.umm.setCurrentMission(this.theState.currentMission + 1)
 
-        const mission = this.getMission(this.theState.currentMission)!;
+        const mission = this.missions.get(this.theState.currentMission)!;
         console.assert(mission, "no mission found");
 
         if (mission.hasPortals()) {
@@ -184,7 +161,7 @@ export class State {
         // Activate the new mission
         main.umm.setCurrentMission(this.theState.currentMission - 1)
 
-        const mission = this.getMission(this.theState.currentMission)!;
+        const mission = this.missions.get(this.theState.currentMission)!;
         console.assert(mission, "no mission found");
 
         if (mission.hasPortals()) {

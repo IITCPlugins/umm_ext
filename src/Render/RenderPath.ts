@@ -35,7 +35,7 @@ export class RenderPath {
 
         const editMode = main.umm.missionModeActive;
 
-        main.state.forEachMission((mission, missionId) => {
+        main.state.missions.forEach((mission, missionId) => {
             if (main.state.isCurrent(missionId) && editMode) {
                 this.drawEditMission(missionId, mission);
             }
@@ -119,7 +119,7 @@ export class RenderPath {
         const options: MarkerOptions = event.target.options;
         const isMidPoint = options.isMidPoint;
 
-        const mission = main.state.getMission(options.missionId)!;
+        const mission = main.state.missions.get(options.missionId)!;
         console.assert(mission);
 
         if (this.editDragLine) {
@@ -178,7 +178,7 @@ export class RenderPath {
 
         const marker: L.Marker = event.target;
         const options: MarkerOptions = event.target.options;
-        const mission = main.state.getMission(options.missionId)!;
+        const mission = main.state.missions.get(options.missionId)!;
         console.assert(mission);
 
         const coordinatesList = mission.getLocations();
@@ -249,7 +249,7 @@ export class RenderPath {
         const portal = options.portal;
         if (options.isMidPoint) return;
 
-        const mission = main.state.getMission(options.missionId)!;
+        const mission = main.state.missions.get(options.missionId)!;
         console.assert(mission);
 
         mission.portals.remove(portal);

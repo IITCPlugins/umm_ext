@@ -47,8 +47,8 @@ export class RenderNumbers {
         const missions: MissionStart[] = [];
 
         let mid = 0;
-        while (mid < state.missionCount()) {
-            const mission = state.getMission(mid);
+        while (mid < state.missions.count()) {
+            const mission = state.missions.get(mid);
 
             if (mission?.hasPortals()) {
                 const start = mission.getLocations()[0]; // TODO optimize; this converts all portals to LatLng while only the first is needed
@@ -61,8 +61,8 @@ export class RenderNumbers {
 
             // count empty mission + 1
             let count = 1;
-            for (; mid + count <= state.missionCount(); count++) {
-                const nextMission = state.getMission(mid + count);
+            for (; mid + count <= state.missions.count(); count++) {
+                const nextMission = state.missions.get(mid + count);
                 if (nextMission?.hasPortals()) {
                     break;
                 }
@@ -72,7 +72,7 @@ export class RenderNumbers {
                 // Fill in auto numbers for empty missions
                 const allLocations = [];
                 for (let i = 0; i < count - 1; i++) {
-                    const fillMission = state.getMission(mid + i);
+                    const fillMission = state.missions.get(mid + i);
                     if (fillMission?.hasPortals()) {// NOTE: only the first (i=0) should have portals
                         allLocations.push(...fillMission.getLocations());
                     }
