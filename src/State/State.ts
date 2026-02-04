@@ -159,7 +159,7 @@ export class State {
         if (mission.hasPortals()) {
             this.showMission(mission);
         } else {
-            main.umm.notification(this.theState.missionSetName + "\nStart of mission #" + (this.theState.currentMission + 1) + "\nSelect start portal.");
+            main.umm.notification(`${this.theState.missionSetName}\nStart of mission #${this.theState.currentMission + 1}\nSelect start portal.`);
         }
     }
 
@@ -180,13 +180,13 @@ export class State {
     showMission(mission: Mission) {
         if (mission.hasPortals()) {
             if (main.umm.missionModeActive) {
-                // window.map.setView([ummState.missions[ummState.currentMission].portals[ummState.missions[ummState.currentMission].portals.length - 1].location.latitude, ummState.missions[ummState.currentMission].portals[ummState.missions[ummState.currentMission].portals.length - 1].location.longitude]);
-                // window.renderPortalDetails(ummState.missions[ummState.currentMission].portals[ummState.missions[ummState.currentMission].portals.length - 1].guid);
-                main.umm.notification("Mission mode active.\n" + this.theState.missionSetName + "\nCurrent mission #" + (this.theState.currentMission + 1) + "\nSelect next portal");
+                const bounds = new L.LatLngBounds(mission.getLocations());
+                window.map.fitBounds(bounds);
+                main.umm.notification(`Mission mode active.\n${this.theState.missionSetName}\nCurrent mission #${this.theState.currentMission + 1}\nSelect next portal`);
             }
             else {
                 main.umm.updatePortalCountSidebar();
-                main.umm.notification(this.theState.missionSetName + "\nCurrent active mission set to #" + (this.theState.currentMission + 1));
+                main.umm.notification(`${this.theState.missionSetName}\nCurrent active mission set to #${this.theState.currentMission + 1}`);
             }
         }
     }
