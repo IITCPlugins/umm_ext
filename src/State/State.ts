@@ -2,6 +2,7 @@ import { Mission } from "./Mission";
 import { UMM_State } from "../UMM_types";
 import { main } from "../Main";
 import { migrateUmmVersion } from "./StateMigration";
+import { Missions } from "./Missions";
 
 
 const STORAGE_KEY = "ultimate-mission-maker";
@@ -11,6 +12,7 @@ const fileFormatVersion = 2;
 export class State {
 
     private theState: UMM_State;
+    private missisons: Missions;
 
     constructor() {
         this.load();
@@ -45,7 +47,7 @@ export class State {
             missionSetName: '',
             missionSetDescription: '',
             currentMission: 0,
-            plannedBannerLength: 0,
+            plannedBannerLength: 1,
             titleFormat: "T NN-M",
             fileFormatVersion: fileFormatVersion,
             missions: [
@@ -55,6 +57,7 @@ export class State {
                     portals: []
                 }],
         };
+        this.missisons = new Missions(this.theState.missions);
     }
 
 
@@ -66,6 +69,7 @@ export class State {
 
 
     setPlannedLength(count: number) {
+        count = Math.max(count, 1)
         this.theState.plannedBannerLength = count;
         if (this.theState.missions.length > count) {
             this.theState.missions = this.theState.missions.slice(0, count);
@@ -79,6 +83,11 @@ export class State {
                 })
             }
         }
+    }
+
+
+    get missions(): Missions {
+        return this.missisons;
     }
 
 
@@ -154,7 +163,7 @@ export class State {
     }
 
     nextMission() {
-        if (this.theState.currentMission >= this.theState.plannedBannerLength) return;
+        if (this.theState.currentMission >= this.theState.plannedBannerLength - 1) return;
 
         // Activate the new mission
         main.umm.setCurrentMission(this.theState.currentMission + 1)
