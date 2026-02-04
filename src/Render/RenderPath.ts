@@ -1,6 +1,6 @@
 import { main } from "../Main";
 import { Mission } from "../State/Mission";
-import { UMM_Mission, UMM_Portal } from "../UMM_types";
+import { UMM_Mission } from "../UMM_types";
 
 type MarkerOptions = L.MarkerOptions & {
     portal: number;
@@ -127,7 +127,7 @@ export class RenderPath {
         }
 
         const portal = options.portal;
-        const portal_pre = mission.portals.get(portal - 1);
+        const portal_pre = portal > 0 ? mission.portals.get(portal - 1) : undefined;
         const portal_post = mission.portals.get(portal + (isMidPoint ? 0 : 1));
 
         let lls = [
@@ -190,14 +190,7 @@ export class RenderPath {
         }
 
         // insert portal
-        const latLng = snappedPortal.getLatLng();
-        const portalToAdd = this.createPortal(
-            snappedPortal.options.guid,
-            snappedPortal.options.data.image,
-            latLng.lat,
-            latLng.lng,
-            snappedPortal.options.data.title
-        )
+        const portalToAdd = mission.portals.create(snappedPortal.options.guid);
 
         if (options.isMidPoint)
             mission.portals.insert(options.portal, portalToAdd);
@@ -228,22 +221,6 @@ export class RenderPath {
         candidates = candidates.sort((a, b) => a[0] - b[0]);
         return candidates[0][1];
     };
-
-
-    private createPortal(guid: string, imageUrl: string, latitude: number, longitude: number, title: string): UMM_Portal {
-        return {
-            guid,
-            description: "",
-            location: { latitude, longitude },
-            imageUrl,
-            isOrnamented: false,
-            isStartPoint: false,
-            title,
-            type: "PORTAL",
-            objective: { type: "HACK_PORTAL", passphrase_params: { question: "", _single_passphrase: "" } }
-        }
-    }
-
 
     private onMarkerDblClick(event: L.LeafletMouseEvent) {
         const options: MarkerOptions = event.target.options;

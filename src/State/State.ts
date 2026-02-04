@@ -23,12 +23,11 @@ export class State {
 
 
     load() {
+        this.reset();
         const data = localStorage.getItem(STORAGE_KEY)
         if (data) {
             const anyState = JSON.parse(data);
             this.theState = migrateUmmVersion(this, anyState);
-        } else {
-            this.reset();
         }
     }
 
@@ -136,6 +135,10 @@ export class State {
         return this.theState.missions[missionId] && new Mission(this.theState.missions[missionId]);
     }
 
+    getEditMission(): Mission | undefined {
+        return this.getMission(this.theState.currentMission);
+    }
+
     forEachMission(callback: (mission: Mission, index: number) => void) {
         this.theState.missions.forEach((missionData, index) => {
             const mission = new Mission(missionData);
@@ -179,13 +182,13 @@ export class State {
 
     showMission(mission: Mission) {
         if (mission.hasPortals()) {
+            const bounds = new L.LatLngBounds(mission.getLocations()).pad(0.2);
+            window.map.fitBounds(bounds);
+            main.umm.updatePortalCountSidebar();
+
             if (main.umm.missionModeActive) {
-                const bounds = new L.LatLngBounds(mission.getLocations());
-                window.map.fitBounds(bounds);
                 main.umm.notification(`Mission mode active.\n${this.theState.missionSetName}\nCurrent mission #${this.theState.currentMission + 1}\nSelect next portal`);
-            }
-            else {
-                main.umm.updatePortalCountSidebar();
+            } else {
                 main.umm.notification(`${this.theState.missionSetName}\nCurrent active mission set to #${this.theState.currentMission + 1}`);
             }
         }

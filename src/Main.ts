@@ -38,6 +38,7 @@ class UMM_Ext implements Plugin.Class {
         this.monkeyPatchDrawing();
         this.monkeyPatchNumbers();
         this.monkeyPatchMissionSelect();
+        this.monkeyPatchPortalAdd();
     }
 
 
@@ -107,8 +108,53 @@ class UMM_Ext implements Plugin.Class {
         this.umm.nextMission = () => this.state.nextMission();
         this.umm.previousMission = () => this.state.prevMission();
     }
-}
 
+    // Patch - refresh our drawing on new Portal add
+    monkeyPatchPortalAdd() {
+        window.addHook('portalSelected', (event) => this.addPortalToCurrentMission(event));
+        window.removeHook('portalSelected', this.umm.addPortalToCurrentMission);
+        this.umm.addPortalToCurrentMission = this.addPortalToCurrentMission;
+    }
+
+
+    addPortalToCurrentMission(data: EventPortalSelected) {
+
+        // we are not in edit mode or it is the first selection
+        if (!this.umm.missionModeActive || this.umm.missionModeResuming) {
+            this.umm.missionModeResuming = false;
+        }
+
+        if (this.umm.lastPortal === data.selectedPortalGuid) {
+            return;
+        }
+        this.umm.lastPortal = data.selectedPortalGuid;
+
+        const mission = this.state.getEditMission();
+        if (!mission) return;
+
+        const portalToAdd = mission.portals.create(data.selectedPortalGuid);
+
+        if (mission.portals.includes(portalToAdd)) {
+            if (mission.portals.get(-1)?.guid !== portalToAdd.guid) {
+                const state = this.state.get();
+                this.umm.notification(`${state.missionSetName}\nPortal already in mission #${state.currentMission + 1}`);
+            }
+        } else {
+            mission.portals.add(portalToAdd);
+            this.state.save();
+
+            this.renderPath.drawMissions();
+            this.renderNumbers.redraw();
+            this.umm.updatePortalCountSidebar();
+
+            const state = this.state.get();
+            this.umm.notification(`${state.missionSetName}\nAdded to mission #${state.currentMission + 1}`)
+        }
+
+
+
+    }
+}
 
 
 /**

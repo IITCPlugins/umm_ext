@@ -91,7 +91,7 @@ export const migrateUmmVersion = (state: State, ummState: any): UMM_State => {
         }
 
         // UMM-EX uses empty missions
-        this.setPlannedLength(this.theState.plannedBannerLength);
+        state.setPlannedLength(ummState.plannedBannerLength as number || 1);
     }
 
     return ummState as UMM_State;

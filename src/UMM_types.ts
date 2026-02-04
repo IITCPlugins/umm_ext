@@ -6,7 +6,9 @@ export interface UMM {
     // properties
     ummMissionPaths: L.LayerGroup<any>;
     ummMissionNumbers: L.LayerGroup<any>;
-    missionModeActive: boolean;
+    missionModeActive: boolean; // in edit mode
+    missionModeResuming: boolean; // true while mission is activated (this triggers a portal select)
+    lastPortal: string; // last portal (to prevent multiple runs)
 
     // methods
     drawMissions: () => void; // REPLACED
@@ -15,10 +17,10 @@ export interface UMM {
     getUmmState: () => UMM_State;  // REPLACED
     saveUmmState: (ummState: UMM_State) => void;  // REPLACED
     clearMissionData: () => void; // REPLACED
+    nextMission: () => void; // REPLACED
+    previousMission: () => void; // REPLACED
 
-
-    nextMission: () => void;
-    previousMission: () => void;
+    addPortalToCurrentMission: (data: EventPortalSelected) => void; // REPLACED
 
     updatePortalCountSidebar: () => void;
     notification: (message: string) => void;
