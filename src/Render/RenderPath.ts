@@ -1,6 +1,6 @@
 import { main } from "../Main";
 import { Mission } from "../State/Mission";
-import { UMM_Mission } from "../UMM_types";
+import { UMM_Mission, UMM_Portal } from "../UMM_types";
 
 type MarkerOptions = L.MarkerOptions & {
     portal: number;
@@ -195,9 +195,31 @@ export class RenderPath {
         if (options.isMidPoint)
             mission.portals.insert(options.portal, portalToAdd);
         else
-            mission.portals.set(options.portal, portalToAdd);
+            this.movePortal(options.missionId, mission, options.portal, portalToAdd);
 
         this.saveStateAndRefresh();
+    }
+
+    private movePortal(missionId: number, mission: Mission, portalID: number, target: UMM_Portal) {
+
+        // TODO:
+        // a) when portalID === 0
+        //   -> is target last of previous mission?
+        //        -> confirm("Merge Missions?")
+        // b) when portalID === last
+        //   -> is target first of next ?
+        //        -> confirm("Merge Missions?")
+        // c) if this mission has only this portal and target is part of previous mission
+        //        -> confirm("Split Missions?")
+
+        /*if (portalID === 0) {
+            const premission = 
+            main.state.getMission(options.missionId)!;
+            const preMission: Mission = main.state.getMission(options.missionId)!;
+            if (preMission.po)
+        }*/
+
+        mission.portals.set(portalID, target);
     }
 
 
