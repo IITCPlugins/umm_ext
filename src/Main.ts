@@ -154,9 +154,6 @@ class UMM_Ext implements Plugin.Class {
             const state = this.state.get();
             this.umm.notification(`${state.missionSetName}\nAdded to mission #${state.currentMission + 1}`)
         }
-
-
-
     }
 }
 

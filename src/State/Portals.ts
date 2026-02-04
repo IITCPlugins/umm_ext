@@ -26,9 +26,9 @@ export class Portals {
         this.data[index] = portal;
     }
 
-    add(portal: UMM_Portal) {
-        console.assert(!this.includes(portal), "portal is already in");
-        this.data.push(portal);
+    add(...portal: UMM_Portal[]) {
+        console.assert(!portal.some(p => this.includes(p)), "portal is already in");
+        this.data.push(...portal);
     }
 
     insert(index: number, portal: UMM_Portal) {
@@ -38,6 +38,14 @@ export class Portals {
 
     remove(index: number) {
         this.data.splice(index, 1);
+    }
+
+    clear() {
+        this.data = [];
+    }
+
+    all(): UMM_Portal[] {
+        return this.data;
     }
 
     toLatLng(): L.LatLng[] {

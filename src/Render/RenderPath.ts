@@ -200,24 +200,42 @@ export class RenderPath {
         this.saveStateAndRefresh();
     }
 
+
     private movePortal(missionId: number, mission: Mission, portalID: number, target: UMM_Portal) {
 
-        // TODO:
-        // a) when portalID === 0
-        //   -> is target last of previous mission?
-        //        -> confirm("Merge Missions?")
-        // b) when portalID === last
-        //   -> is target first of next ?
-        //        -> confirm("Merge Missions?")
-        // c) if this mission has only this portal and target is part of previous mission
-        //        -> confirm("Split Missions?")
+        // drag portal to last mission -> merge?
+        if (portalID === 0 && missionId > 0) {
+            const missions = main.state.missions;
+            let preMissionID = missionId - 1;
+            while (!missions.get(preMissionID)?.hasPortals() && preMissionID > 0) preMissionID--;
+            const preMission = missions.get(preMissionID);
 
-        /*if (portalID === 0) {
-            const premission = 
-            main.state.getMission(options.missionId)!;
-            const preMission: Mission = main.state.getMission(options.missionId)!;
-            if (preMission.po)
-        }*/
+            if (preMission?.portals.get(-1)?.guid === target.guid) {
+                if (confirm("Merge mission ?")) {
+                    missions.merge(preMissionID, missionId);
+                    return;
+                }
+            } else
+                if (mission.portals.length === 1 && preMission?.portals.includes(target)) {
+                    if (confirm("Split mission ?")) {
+                        // TODO: split mission
+                    }
+                }
+        }
+
+        // drag portal to next mission -> merge?
+        if (portalID === mission.portals.length - 1) {
+            const missions = main.state.missions;
+
+            const postMission = missions.get(missionId + 1);
+            if (postMission?.portals.get(0)?.guid === target.guid) {
+                if (confirm("Merge mission ?")) {
+                    missions.merge(missionId, missionId + 1);
+                    return;
+                }
+            }
+        }
+
 
         mission.portals.set(portalID, target);
     }
