@@ -3,6 +3,7 @@ import { UMM, UMM_State } from "./UMM_types";
 import { RenderPath } from "./Render/RenderPath";
 import { RenderNumbers } from "./Render/RenderNumbers";
 import { State } from "./State/State";
+import { addPortalToCurrentMission } from "./PortalAdd";
 
 
 // eslint-disable-next-line unicorn/prevent-abbreviations
@@ -30,6 +31,12 @@ class UMM_Ext implements Plugin.Class {
         this.renderNumbers = new RenderNumbers(this.umm.ummMissionNumbers);
 
         this.patch();
+    }
+
+    redrawAll() {
+        this.renderPath.redraw();
+        this.renderNumbers.redraw();
+        this.umm.updatePortalCountSidebar();
     }
 
     patch() {
@@ -113,64 +120,9 @@ class UMM_Ext implements Plugin.Class {
 
     // Patch - refresh our drawing on new Portal add
     monkeyPatchPortalAdd() {
-        window.addHook('portalSelected', (event) => this.addPortalToCurrentMission(event));
+        window.addHook('portalSelected', (event) => addPortalToCurrentMission(event));
         window.removeHook('portalSelected', this.umm.addPortalToCurrentMission);
-        this.umm.addPortalToCurrentMission = this.addPortalToCurrentMission;
-    }
-
-
-    addPortalToCurrentMission(data: EventPortalSelected) {
-
-        // we are not in edit mode or it is the first selection
-        if (!this.umm.missionModeActive || this.umm.missionModeResuming) {
-            this.umm.missionModeResuming = false;
-            return;
-        }
-
-        if (this.umm.lastPortal === data.selectedPortalGuid) {
-            return;
-        }
-        this.umm.lastPortal = data.selectedPortalGuid;
-
-        const mission = this.state.getEditMission();
-        if (!mission) return;
-
-        const portalToAdd = mission.portals.create(data.selectedPortalGuid);
-
-        if (mission.portals.includes(portalToAdd)) {
-            if (mission.portals.get(-1)?.guid !== portalToAdd.guid) {
-                const state = this.state.get();
-                this.umm.notification(`${state.missionSetName}\nPortal already in mission #${state.currentMission + 1}`);
-            }
-        } else {
-
-            const preMission = this.state.missions.previous(mission);
-            if (preMission && preMission.portals.includes(portalToAdd) &&
-                (!preMission.portals.isStart(portalToAdd) && !preMission.portals.isEnd(portalToAdd))
-            ) {
-                if (confirm("Split mission?")) {
-                    const index = preMission.portals.indexOf(portalToAdd);
-                    mission.portals.clear();
-                    this.state.missions.split(preMission, index, mission);
-
-                    this.state.save();
-                    this.renderPath.redraw();
-                    this.renderNumbers.redraw();
-                    return;
-                }
-            }
-
-            // TODO: if portal is in previous mission ask for "split"
-            mission.portals.add(portalToAdd);
-            this.state.save();
-
-            this.renderPath.redraw();
-            this.renderNumbers.redraw();
-            this.umm.updatePortalCountSidebar();
-
-            const state = this.state.get();
-            this.umm.notification(`${state.missionSetName}\nAdded to mission #${state.currentMission + 1}`)
-        }
+        this.umm.addPortalToCurrentMission = addPortalToCurrentMission;
     }
 }
 

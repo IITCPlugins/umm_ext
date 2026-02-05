@@ -283,9 +283,6 @@ export class RenderPath {
 
     private saveStateAndRefresh() {
         main.state.save();
-        this.redraw();
-        main.umm.updatePortalCountSidebar();
-        main.umm.refreshMissionNumbers();
-
+        main.redrawAll();
     }
 }
