@@ -31,7 +31,7 @@ export class Missions {
     previous(mission: Mission): Mission | undefined {
         let preMissionID = mission.id - 1;
         let preMission;
-        while ((preMission = this.get(preMissionID))?.hasPortals() && preMissionID > 0) preMissionID--;
+        while (!(preMission = this.get(preMissionID))?.hasPortals() && preMissionID > 0) preMissionID--;
         return preMission;
     }
 
