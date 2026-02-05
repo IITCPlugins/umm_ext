@@ -143,6 +143,23 @@ class UMM_Ext implements Plugin.Class {
                 this.umm.notification(`${state.missionSetName}\nPortal already in mission #${state.currentMission + 1}`);
             }
         } else {
+
+            const preMission = this.state.missions.previous(mission);
+            if (preMission && preMission.portals.includes(portalToAdd) &&
+                (!preMission.portals.isStart(portalToAdd) && !preMission.portals.isEnd(portalToAdd))
+            ) {
+                if (confirm("Split mission?")) {
+                    const index = preMission.portals.indexOf(portalToAdd);
+                    mission.portals.clear();
+                    this.state.missions.split(preMission, index, mission);
+
+                    this.state.save();
+                    this.renderPath.drawMissions();
+                    this.renderNumbers.redraw();
+                    return;
+                }
+            }
+
             // TODO: if portal is in previous mission ask for "split"
             mission.portals.add(portalToAdd);
             this.state.save();

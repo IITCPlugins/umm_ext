@@ -8,6 +8,7 @@ type MarkerOptions = L.MarkerOptions & {
     isMidPoint: boolean;
 }
 
+// TODO: D&D should be handled elsewhere
 export class RenderPath {
 
     private missionPaths: L.LayerGroup<any>;
@@ -195,30 +196,33 @@ export class RenderPath {
         if (options.isMidPoint)
             mission.portals.insert(options.portal, portalToAdd);
         else
-            this.movePortal(options.missionId, mission, options.portal, portalToAdd);
+            this.movePortal(mission, options.portal, portalToAdd);
 
         this.saveStateAndRefresh();
     }
 
 
-    private movePortal(missionId: number, mission: Mission, portalID: number, target: UMM_Portal) {
+    private movePortal(mission: Mission, portalID: number, target: UMM_Portal) {
 
         // drag portal to last mission -> merge?
-        if (portalID === 0 && missionId > 0) {
+        if (portalID === 0) {
             const missions = main.state.missions;
-            let preMissionID = missionId - 1;
-            while (!missions.get(preMissionID)?.hasPortals() && preMissionID > 0) preMissionID--;
-            const preMission = missions.get(preMissionID);
+            const preMission = missions.previous(mission);
 
-            if (preMission?.portals.get(-1)?.guid === target.guid) {
+            if (preMission?.portals.isEnd(target)) {
                 if (confirm("Merge mission ?")) {
-                    missions.merge(preMissionID, missionId);
+                    missions.merge(preMission, mission);
+                    main.state.get().currentMission = preMission.id;
                     return;
                 }
             } else
                 if (mission.portals.length === 1 && preMission?.portals.includes(target)) {
                     if (confirm("Split mission ?")) {
-                        // TODO: split mission
+                        const index = preMission.portals.indexOf(target);
+
+                        mission.portals.clear();
+                        missions.split(preMission, index, mission);
+                        return;
                     }
                 }
         }
@@ -227,10 +231,10 @@ export class RenderPath {
         if (portalID === mission.portals.length - 1) {
             const missions = main.state.missions;
 
-            const postMission = missions.get(missionId + 1);
-            if (postMission?.portals.get(0)?.guid === target.guid) {
+            const postMission = missions.next(mission);
+            if (postMission?.portals.isStart(target)) {
                 if (confirm("Merge mission ?")) {
-                    missions.merge(missionId, missionId + 1);
+                    missions.merge(mission, postMission);
                     return;
                 }
             }
@@ -262,6 +266,7 @@ export class RenderPath {
         return candidates[0][1];
     };
 
+
     private onMarkerDblClick(event: L.LeafletMouseEvent) {
         const options: MarkerOptions = event.target.options;
         const portal = options.portal;
@@ -278,7 +283,9 @@ export class RenderPath {
 
     private saveStateAndRefresh() {
         main.state.save();
-        main.umm.updatePortalCountSidebar();
         this.drawMissions();
+        main.umm.updatePortalCountSidebar();
+        main.umm.refreshMissionNumbers();
+
     }
 }

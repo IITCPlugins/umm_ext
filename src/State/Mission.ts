@@ -5,10 +5,12 @@ import { UMM_Mission } from "../UMM_types";
 
 export class Mission {
 
+    private missionID: number;
     private data: UMM_Mission;
     private portal_data: Portals;
 
-    constructor(data: UMM_Mission) {
+    constructor(id: number, data: UMM_Mission) {
+        this.missionID = id;
         this.data = data;
         this.portal_data = new Portals(data.portals);
     }
@@ -19,6 +21,10 @@ export class Mission {
 
     get portals(): Portals {
         return this.portal_data;
+    }
+
+    get id(): number {
+        return this.missionID;
     }
 
     hasPortals(): boolean {

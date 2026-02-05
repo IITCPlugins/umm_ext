@@ -12,7 +12,7 @@ export class Missions {
 
     get(missionId: number): Mission | undefined {
         const mis = this.data[missionId]
-        return mis && new Mission(mis);
+        return mis && new Mission(missionId, mis);
     }
 
 
@@ -23,20 +23,33 @@ export class Missions {
 
     forEach(callback: (mission: Mission, index: number) => void) {
         this.data.forEach((missionData, index) => {
-            const mission = new Mission(missionData);
+            const mission = new Mission(index, missionData);
             callback(mission, index);
         });
     }
 
+    previous(mission: Mission): Mission | undefined {
+        let preMissionID = mission.id - 1;
+        let preMission;
+        while ((preMission = this.get(preMissionID))?.hasPortals() && preMissionID > 0) preMissionID--;
+        return preMission;
+    }
 
-    merge(id1: number, id2: number) {
-        if (id1 > id2) [id1, id2] = [id2, id1];
+    next(mission: Mission): Mission | undefined {
+        return this.get(mission.id + 1);
+    }
 
-        const missionA = this.get(id1)!;
-        const missionB = this.get(id2)!;
-        console.assert(missionA && missionB, "cannot merge, mission not defined");
 
-        missionA.portals.add(...missionB.portals.all());
+    merge(destination: Mission, missionB: Mission) {
+        destination.portals.add(...missionB.portals.all());
         missionB.portals.clear();
     }
+
+    split(source: Mission, at: number, destination: Mission) {
+        const toMove = source.portals.all().slice(at)
+        destination.portals.insert(0, ...toMove);
+        source.portals.remove(at, toMove.length)
+    }
+
+
 }

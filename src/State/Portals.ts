@@ -31,17 +31,17 @@ export class Portals {
         this.data.push(...portal);
     }
 
-    insert(index: number, portal: UMM_Portal) {
-        console.assert(!this.includes(portal), "portal is already in");
-        this.data.splice(index, 0, portal);
+    insert(index: number, ...portal: UMM_Portal[]) {
+        console.assert(!portal.some(p => this.includes(p)), "portal is already in");
+        this.data.splice(index, 0, ...portal);
     }
 
-    remove(index: number) {
-        this.data.splice(index, 1);
+    remove(index: number, count = 1) {
+        this.data.splice(index, count);
     }
 
     clear() {
-        this.data = [];
+        this.data.length = 0;
     }
 
     all(): UMM_Portal[] {
@@ -54,6 +54,18 @@ export class Portals {
 
     includes(portal: UMM_Portal): boolean {
         return this.data.some(x => x.guid === portal.guid);
+    }
+
+    indexOf(portal: UMM_Portal): number {
+        return this.data.findIndex(x => x.guid === portal.guid);
+    }
+
+    isStart(portal: UMM_Portal): boolean {
+        return this.data[0]?.guid === portal.guid;
+    }
+
+    isEnd(portal: UMM_Portal): boolean {
+        return this.data.at(-1)?.guid === portal.guid;
     }
 
     create(guid: string): UMM_Portal {
