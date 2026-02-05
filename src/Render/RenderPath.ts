@@ -137,8 +137,13 @@ export class RenderPath {
             portal_post && new L.LatLng(portal_post.location.latitude, portal_post.location.longitude)
         ];
 
-        if (!portal_pre) lls.splice(0, 1);
-        if (!portal_post) lls = [lls[1], lls[0]];
+        // special-case:
+        // single portal
+        if (!portal_pre && !portal_post) lls = [marker.getLatLng(), marker.getLatLng()];
+        // is start portal
+        else if (!portal_pre) lls.splice(0, 1);
+        // is end portal 
+        else if (!portal_post) lls = [lls[1], lls[0]];
 
 
         this.editDragLine = new L.Polyline(lls as L.LatLng[], {
