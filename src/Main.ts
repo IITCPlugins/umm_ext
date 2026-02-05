@@ -4,6 +4,8 @@ import { RenderPath } from "./UI/RenderPath";
 import { RenderNumbers } from "./UI/RenderNumbers";
 import { State } from "./State/State";
 import { addPortalToCurrentMission } from "./PortalAdd";
+import { about } from "./UI/Dialog/About";
+import { showUmmOptions } from "./UI/Dialog/Options";
 
 
 // eslint-disable-next-line unicorn/prevent-abbreviations
@@ -48,6 +50,7 @@ class UMM_Ext implements Plugin.Class {
         this.monkeyPatchNumbers();
         this.monkeyPatchMissionSelect();
         this.monkeyPatchPortalAdd();
+        this.monkeyPatchDialogs();
     }
 
 
@@ -125,6 +128,11 @@ class UMM_Ext implements Plugin.Class {
         window.addHook('portalSelected', (event) => addPortalToCurrentMission(event));
         window.removeHook('portalSelected', this.ori.addPortalToCurrentMission);
         this.ori.addPortalToCurrentMission = addPortalToCurrentMission;
+    }
+
+    monkeyPatchDialogs() {
+        this.ori.about = about;
+        this.ori.showUmmOptions = showUmmOptions;
     }
 }
 

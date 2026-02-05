@@ -11,6 +11,9 @@ export interface UMM {
     ummMissionNumbers: L.LayerGroup<any>;
     missionModeActive: boolean; // in edit mode
     missionModeResuming: boolean; // true while mission is activated (this triggers a portal select)
+    title: string;
+    version: string;
+    changelog: string;
 
     // methods
     updatePortalCountSidebar: () => void;
@@ -18,6 +21,7 @@ export interface UMM {
     setCurrentMission: (mission: number) => void;
     updateCurrentActiveMissionSidebar: (ummState: UMM_State) => void;
     reloadSettingsWindowIfNeeded: () => void;
+    loadFile: (event: JQuery.ChangeEvent) => void;
 }
 
 
@@ -43,6 +47,9 @@ export interface UMM_old extends UMM {
     addPortalToCurrentMission: (data: EventPortalSelected) => void; // REPLACED
     updateMissionPortalsDetails: (data: EventPortalDetailsUpdated) => void;  // removed/REPLACED
     notification: (message: string) => void;  // REPLACED
+
+    about: () => void; // REPLACED
+    showUmmOptions: () => void; // REPLACED
 }
 
 
