@@ -24,7 +24,7 @@ export const addPortalToCurrentMission = (data: EventPortalSelected) => {
     const portalToAdd = mission.portals.create(data.selectedPortalGuid);
 
     if (mission.portals.includes(portalToAdd)) {
-        if (mission.portals.get(-1)?.guid !== portalToAdd.guid) {
+        if (mission.portals.isEnd(portalToAdd)) {
             const pstate = state.get();
             notification(`${pstate.missionSetName}\nPortal already in mission #${pstate.currentMission + 1}`);
         }
@@ -44,7 +44,6 @@ export const addPortalToCurrentMission = (data: EventPortalSelected) => {
             }
         }
 
-        // TODO: if portal is in previous mission ask for "split"
         mission.portals.add(portalToAdd);
         state.save();
 
