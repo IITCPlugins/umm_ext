@@ -77,7 +77,7 @@ class UMM_Ext implements Plugin.Class {
             if (this.umm.missionModeActive) {
                 this.umm.toggleMissionMode();
             }
-            this.renderPath.drawMissions();
+            this.renderPath.redraw();
             this.renderNumbers.redraw();
         }
     }
@@ -86,17 +86,17 @@ class UMM_Ext implements Plugin.Class {
     // Patch - Path editing
     monkeyPatchDrawing() {
         // Patch - Inject our Path Renderer
-        this.umm.drawMissions = () => this.renderPath.drawMissions();
+        this.umm.drawMissions = () => this.renderPath.redraw();
 
         // Patch - redraw on mission mode toggle
         const ori = this.umm.toggleMissionMode;
         this.umm.toggleMissionMode = () => {
             ori();
-            this.renderPath.drawMissions();
+            this.renderPath.redraw();
         }
 
         // init repaint
-        this.renderPath.drawMissions();
+        this.renderPath.redraw();
     }
 
     // Patch - Autonumbers
@@ -154,7 +154,7 @@ class UMM_Ext implements Plugin.Class {
                     this.state.missions.split(preMission, index, mission);
 
                     this.state.save();
-                    this.renderPath.drawMissions();
+                    this.renderPath.redraw();
                     this.renderNumbers.redraw();
                     return;
                 }
@@ -164,7 +164,7 @@ class UMM_Ext implements Plugin.Class {
             mission.portals.add(portalToAdd);
             this.state.save();
 
-            this.renderPath.drawMissions();
+            this.renderPath.redraw();
             this.renderNumbers.redraw();
             this.umm.updatePortalCountSidebar();
 

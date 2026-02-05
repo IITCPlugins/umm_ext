@@ -31,7 +31,7 @@ export class RenderPath {
 
     }
 
-    drawMissions() {
+    redraw() {
         this.missionPaths.clearLayers();
 
         const editMode = main.umm.missionModeActive;
@@ -186,7 +186,7 @@ export class RenderPath {
 
         const snappedPortal = this.getSnapPortal(marker.getLatLng(), coordinatesList);
         if (!snappedPortal) {
-            this.drawMissions();
+            this.redraw();
             return;
         }
 
@@ -283,7 +283,7 @@ export class RenderPath {
 
     private saveStateAndRefresh() {
         main.state.save();
-        this.drawMissions();
+        this.redraw();
         main.umm.updatePortalCountSidebar();
         main.umm.refreshMissionNumbers();
 
