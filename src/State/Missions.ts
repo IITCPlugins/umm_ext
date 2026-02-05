@@ -39,6 +39,18 @@ export class Missions {
         return this.get(mission.id + 1);
     }
 
+    distanceToStart(id: number): number | undefined {
+        const mission = this.get(id);
+        if (!mission) return;
+
+        const previous = this.previous(mission);
+        const first = previous?.portals.getLatLngOf(-1);
+        const last = mission.portals.getLatLngOf(0);
+        if (!first || !last) return;
+
+        return first.distanceTo(last);
+    }
+
 
     merge(destination: Mission, missionB: Mission) {
         destination.portals.add(...missionB.portals.getRange());

@@ -15,7 +15,6 @@ export class Portals {
     }
 
     /**
-     * 
      * @param index negative values count from the end
      */
     get(index: number): UMM_Portal | undefined {
@@ -50,6 +49,15 @@ export class Portals {
 
     toLatLng(): L.LatLng[] {
         return this.data.map(portal => new L.LatLng(portal.location.latitude, portal.location.longitude));
+    }
+
+    /**
+     * @param index negative values count from the end
+     */
+    getLatLngOf(index: number): L.LatLng | undefined {
+        const portal = this.get(index);
+        if (!portal) return;
+        return new L.LatLng(portal.location.latitude, portal.location.longitude);
     }
 
     includes(portal: UMM_Portal): boolean {

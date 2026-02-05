@@ -4,6 +4,12 @@ import { notification } from "../Notification";
 import { dialogButton, dialogButtonClose } from "./Button";
 import { showUmmOptions } from "./Options";
 
+// FIXME: missing in IITCPluginKit 1.9.6
+declare global {
+    function formatDistance(distance: number): string;
+}
+
+
 const button = (label: string, click: () => void) => {
     return $("<button>", { text: label, click, class: "umm-mission-picker-btn" })
 }
@@ -13,9 +19,10 @@ export const editActiveMission = () => {
 
     const html = $("<div>", { class: "umm-mission-picker-btn" }).append(
         'Select a mission number:<br>',
-        $("<select>", { id: "umm-mission-picker", class: "umm-mission-picker" }),
+        $("<select>", { id: "umm-mission-picker", class: "umm-mission-picker", change: updateMissionInfo }),
         button("Select", onMissionSelect),
-        button("Zoom to mission", onZoomToMission)
+        button("Zoom to mission", onZoomToMission),
+        $("<div>", { id: "um-mission-pikcer-info" })
     );
 
     window.dialog({
@@ -39,12 +46,36 @@ export const editActiveMission = () => {
                 text: `${mission.id + 1} - waypoints ${mission.portals.length}`
             }))
     })
+
+    updateMissionInfo();
 };
 
 
 const selectedMission = (): Mission | undefined => {
     const missionNumber = parseInt($('#umm-mission-picker').val() as string);
     return main.state.missions.get(missionNumber);
+};
+
+
+const updateMissionInfo = () => {
+    const info = $("#um-mission-pikcer-info");
+    info.empty();
+
+    const mission = selectedMission();
+    if (!mission) return;
+
+    const missionLength = window.formatDistance(mission.getDistance());
+    const distanceToStart = main.state.missions.distanceToStart(mission.id);
+    const distanceToNext = main.state.missions.distanceToStart(mission.id + 1);
+
+
+    const table = `
+    Wapoints:\t${mission.portals.length}\n
+    Length:\t${missionLength}\n
+    to Start:\t${(distanceToStart && window.formatDistance(distanceToStart)) ?? "---"}\n
+    to Next:\t${(distanceToNext && window.formatDistance(distanceToNext)) ?? "---"}\n`;
+
+    info.html(window.convertTextToTableMagic(table));
 };
 
 

@@ -42,4 +42,8 @@ export class Mission {
         }
     }
 
+    getDistance(): number {
+        const locations = this.portals.toLatLng();
+        return locations.reduce((sum, ll, index, lls) => index > 0 ? sum + ll.distanceTo(lls[index - 1]) : 0, 0);
+    }
 }
