@@ -2,6 +2,11 @@ import { main } from "../../Main";
 import { about } from "./About";
 import { dialogButton, dialogButtonClose } from "./Button";
 
+
+const button = (label: string, click: () => void) => {
+    return $("<a>", { text: label, click })
+}
+
 export const showUmmOptions = () => {
     const ummState = main.state.get();
 
@@ -19,17 +24,17 @@ export const showUmmOptions = () => {
         $("<br>"),
         $("<b>", { text: "Mission options" }), $("<br>"),
         'Layers: <label style="user-select: none"><input type="checkbox" onclick="window.plugin.umm.toggleLayerPaths(this.checked)" id="umm-layercheckbox-paths"' + (window.map.hasLayer(main.umm.ummMissionPaths) ? ' checked' : '') + '>Mission Paths</label> <label style="user-select: none"><input type="checkbox" onclick="window.plugin.umm.toggleLayerNumbers(this.checked)" id="umm-layercheckbox-numbers"' + (window.map.hasLayer(main.umm.ummMissionNumbers) ? ' checked' : '') + '>Mission Numbers</label>',
-        '<a onclick="window.plugin.umm.editMissionSetDetails(); return false;">Edit banner details</a>',
-        '<a onclick="window.plugin.umm.editActiveMission(); return false;">Change active mission #</a>',
-        '<a onclick="window.plugin.umm.zoomAllMissions(); return false;">Zoom to view all missions</a>',
+        button("Edit banner details", main.umm.editMissionSetDetails),
+        button("Change active mission #", main.umm.editActiveMission),
+        button("Zoom to view all missions", main.umm.zoomAllMissions),
         $("<hr>"),
-        '<a onclick="window.plugin.umm.splitMissionOptions(); return false;">Split mission</a>',
-        '<a onclick="window.plugin.umm.mergeMissions(); return false;">Merge missions</a>',
-        '<a onclick="window.plugin.umm.reverseMission(); return false;">Reverse mission</a>',
+        button("Split mission", main.umm.splitMissionOptions),
+        button("Merge missions", main.umm.mergeMissions),
+        button("Reverse mission", main.umm.reverseMission),
         $("<hr>"),
         '<a onclick="if (confirm(\'Are you sure you want to clear ALL missions data?\')) window.plugin.umm.clearMissionData(); return false;">Clear ALL missions data</a>',
         '<b>Import/Export</b><br>',
-        '<a onclick="window.plugin.umm.exportData(); return false;">Export banner data to file</a>',
+        button("Export banner data to file", main.umm.exportData),
         '<div style="width:80%; margin: auto;"><b>Import banner data from file:</b><br>',
         '<input type="file" id="umm-import-file"></input></div>',
 

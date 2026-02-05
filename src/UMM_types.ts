@@ -22,10 +22,18 @@ export interface UMM {
     updateCurrentActiveMissionSidebar: (ummState: UMM_State) => void;
     reloadSettingsWindowIfNeeded: () => void;
     loadFile: (event: JQuery.ChangeEvent) => void;
+    editMissionSetDetails: () => void;
+    editActiveMission: () => void;
+    zoomAllMissions: () => void;
+    splitMissionOptions: () => void;
+    mergeMissions: () => void;
+    reverseMission: () => void;
+    exportData: () => void;
 }
 
 
-// All UMM functions
+// All UMM functions 
+// (these are already replaced)
 export interface UMM_old extends UMM {
     // properties
     ummMissionPaths: L.LayerGroup<any>;
