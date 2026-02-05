@@ -41,12 +41,12 @@ export class Missions {
 
 
     merge(destination: Mission, missionB: Mission) {
-        destination.portals.add(...missionB.portals.all());
+        destination.portals.add(...missionB.portals.getRange());
         missionB.portals.clear();
     }
 
     split(source: Mission, at: number, destination: Mission) {
-        const toMove = source.portals.all().slice(at)
+        const toMove = source.portals.getRange(at)
         destination.portals.insert(0, ...toMove);
         source.portals.remove(at, toMove.length)
     }

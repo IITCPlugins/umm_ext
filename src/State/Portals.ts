@@ -16,10 +16,14 @@ export class Portals {
 
     /**
      * 
-     * @param index negative values counting from end
+     * @param index negative values count from the end
      */
     get(index: number): UMM_Portal | undefined {
         return this.data.at(index);
+    }
+
+    getRange(start?: number, end?: number): UMM_Portal[] {
+        return this.data.slice(start, end);
     }
 
     set(index: number, portal: UMM_Portal) {
@@ -42,10 +46,6 @@ export class Portals {
 
     clear() {
         this.data.length = 0;
-    }
-
-    all(): UMM_Portal[] {
-        return this.data;
     }
 
     toLatLng(): L.LatLng[] {

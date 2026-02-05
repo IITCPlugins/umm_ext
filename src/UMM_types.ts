@@ -1,7 +1,9 @@
 /* eslint-disable unicorn/filename-case */
 
-// used UMM functions 
-// (to prevent we are using old functions in our new code)
+/**
+ * shared UMM functions 
+ *  to prevent we are using old functions in our new code
+ */
 export interface UMM {
 
     // properties
@@ -18,8 +20,9 @@ export interface UMM {
     reloadSettingsWindowIfNeeded: () => void;
 }
 
+
 // All UMM functions
-export interface UMM_old {
+export interface UMM_old extends UMM {
     // properties
     ummMissionPaths: L.LayerGroup<any>;
     ummMissionNumbers: L.LayerGroup<any>;
@@ -40,12 +43,6 @@ export interface UMM_old {
     addPortalToCurrentMission: (data: EventPortalSelected) => void; // REPLACED
     updateMissionPortalsDetails: (data: EventPortalDetailsUpdated) => void;  // removed/REPLACED
     notification: (message: string) => void;  // REPLACED
-
-    updatePortalCountSidebar: () => void;
-    toggleMissionMode: () => void;
-    setCurrentMission: (mission: number) => void;
-    updateCurrentActiveMissionSidebar: (ummState: UMM_State) => void;
-    reloadSettingsWindowIfNeeded: () => void;
 }
 
 
