@@ -34,4 +34,12 @@ export class Mission {
     getLocations(): L.LatLng[] {
         return this.portal_data.toLatLng();
     }
+
+    show() {
+        if (this.hasPortals()) {
+            const bounds = new L.LatLngBounds(this.getLocations()).pad(0.2);
+            window.map.fitBounds(bounds, { maxZoom: 18 });
+        }
+    }
+
 }

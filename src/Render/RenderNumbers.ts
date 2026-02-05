@@ -35,7 +35,7 @@ export class RenderNumbers {
                     html: icon,
 
                 }),
-                opacity: start.auto ? 0.5 : 1,
+                opacity: start.auto ? 0.4 : 1,
                 interactive: false
             });
 

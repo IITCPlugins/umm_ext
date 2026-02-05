@@ -171,8 +171,8 @@ export class State {
 
     showMission(mission: Mission) {
         if (mission.hasPortals()) {
-            const bounds = new L.LatLngBounds(mission.getLocations()).pad(0.2);
-            window.map.fitBounds(bounds);
+            mission.show();
+
             main.umm.updatePortalCountSidebar();
 
             if (main.umm.missionModeActive) {

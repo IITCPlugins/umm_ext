@@ -50,7 +50,7 @@ export interface UMM_Mission {
 }
 
 export interface UMM_Portal {
-    guid: string;
+    guid: PortalGUID;
     description: string;
     location: {
         latitude: number;
