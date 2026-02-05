@@ -3,9 +3,10 @@ import { UMM, UMM_old, UMM_State } from "./UMM_types";
 import { RenderPath } from "./UI/RenderPath";
 import { RenderNumbers } from "./UI/RenderNumbers";
 import { State } from "./State/State";
-import { addPortalToCurrentMission } from "./PortalAdd";
+import { addPortalToCurrentMission, clearMissionData } from "./Edits";
 import { about } from "./UI/Dialog/About";
 import { showUmmOptions } from "./UI/Dialog/Options";
+import { editActiveMission } from "./UI/Dialog/SelectMission";
 
 
 // eslint-disable-next-line unicorn/prevent-abbreviations
@@ -80,18 +81,7 @@ class UMM_Ext implements Plugin.Class {
 
         window.removeHook('portalDetailsUpdated', this.ori.updateMissionPortalsDetails);
 
-        this.ori.clearMissionData = () => {
-            this.state.reset();
-            this.state.save();
-
-            this.umm.updateCurrentActiveMissionSidebar(this.state.get());
-            this.umm.reloadSettingsWindowIfNeeded();
-            if (this.umm.missionModeActive) {
-                this.umm.toggleMissionMode();
-            }
-            this.renderPath.redraw();
-            this.renderNumbers.redraw();
-        }
+        this.ori.clearMissionData = clearMissionData;
     }
 
 
@@ -133,6 +123,7 @@ class UMM_Ext implements Plugin.Class {
     monkeyPatchDialogs() {
         this.ori.about = about;
         this.ori.showUmmOptions = showUmmOptions;
+        this.ori.editActiveMission = editActiveMission;
     }
 }
 

@@ -60,10 +60,16 @@ export class State {
     }
 
 
-
-
     getPlannedLength(): number {
         return this.theState.plannedBannerLength;
+    }
+
+    getBannerName(): string {
+        return this.theState.missionSetName;
+    }
+
+    getBannerDesc(): string {
+        return this.theState.missionSetDescription;
     }
 
 
@@ -88,6 +94,7 @@ export class State {
     get missions(): Missions {
         return new Missions(this.theState.missions);
     }
+
 
 
     generateMissionTitle(missNumber: number): string {

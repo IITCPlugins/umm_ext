@@ -53,3 +53,17 @@ export const addPortalToCurrentMission = (data: EventPortalSelected) => {
         notification(`${pstate.missionSetName}\nAdded to mission #${pstate.currentMission + 1}`)
     }
 }
+
+
+// TODO move to real function
+export const clearMissionData = () => {
+    main.state.reset();
+    main.state.save();
+
+    main.umm.updateCurrentActiveMissionSidebar(main.state.get());
+    main.umm.reloadSettingsWindowIfNeeded();
+    if (main.umm.missionModeActive) {
+        main.umm.toggleMissionMode();
+    }
+    main.redrawAll();
+}
