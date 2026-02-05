@@ -3,6 +3,7 @@ import { UMM_State } from "../UMM_types";
 import { main } from "../Main";
 import { migrateUmmVersion } from "./StateMigration";
 import { Missions } from "./Missions";
+import { notification } from "../UI/Notification";
 
 
 const STORAGE_KEY = "ultimate-mission-maker";
@@ -151,7 +152,7 @@ export class State {
         if (mission.hasPortals()) {
             this.showMission(mission);
         } else {
-            main.umm.notification(`${this.theState.missionSetName}\nStart of mission #${this.theState.currentMission + 1}\nSelect start portal.`);
+            notification(`${this.theState.missionSetName}\nStart of mission #${this.theState.currentMission + 1}\nSelect start portal.`);
         }
     }
 
@@ -176,9 +177,9 @@ export class State {
             main.umm.updatePortalCountSidebar();
 
             if (main.umm.missionModeActive) {
-                main.umm.notification(`Mission mode active.\n${this.theState.missionSetName}\nCurrent mission #${this.theState.currentMission + 1}\nSelect next portal`);
+                notification(`Mission mode active.\n${this.theState.missionSetName}\nCurrent mission #${this.theState.currentMission + 1}\nSelect next portal`);
             } else {
-                main.umm.notification(`${this.theState.missionSetName}\nCurrent active mission set to #${this.theState.currentMission + 1}`);
+                notification(`${this.theState.missionSetName}\nCurrent active mission set to #${this.theState.currentMission + 1}`);
             }
         }
     }

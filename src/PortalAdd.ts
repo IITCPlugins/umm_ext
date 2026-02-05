@@ -1,4 +1,5 @@
 import { main } from "./Main";
+import { notification } from "./UI/Notification";
 
 let lastPortal: PortalGUID;
 
@@ -25,7 +26,7 @@ export const addPortalToCurrentMission = (data: EventPortalSelected) => {
     if (mission.portals.includes(portalToAdd)) {
         if (mission.portals.get(-1)?.guid !== portalToAdd.guid) {
             const pstate = state.get();
-            main.umm.notification(`${pstate.missionSetName}\nPortal already in mission #${pstate.currentMission + 1}`);
+            notification(`${pstate.missionSetName}\nPortal already in mission #${pstate.currentMission + 1}`);
         }
     } else {
         const preMission = state.missions.previous(mission);
@@ -50,6 +51,6 @@ export const addPortalToCurrentMission = (data: EventPortalSelected) => {
         main.redrawAll();
 
         const pstate = state.get();
-        main.umm.notification(`${pstate.missionSetName}\nAdded to mission #${pstate.currentMission + 1}`)
+        notification(`${pstate.missionSetName}\nAdded to mission #${pstate.currentMission + 1}`)
     }
 }

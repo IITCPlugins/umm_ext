@@ -1,7 +1,7 @@
 import * as Plugin from "iitcpluginkit";
-import { UMM, UMM_State } from "./UMM_types";
-import { RenderPath } from "./Render/RenderPath";
-import { RenderNumbers } from "./Render/RenderNumbers";
+import { UMM, UMM_old, UMM_State } from "./UMM_types";
+import { RenderPath } from "./UI/RenderPath";
+import { RenderNumbers } from "./UI/RenderNumbers";
 import { State } from "./State/State";
 import { addPortalToCurrentMission } from "./PortalAdd";
 
@@ -32,6 +32,8 @@ class UMM_Ext implements Plugin.Class {
 
         this.patch();
     }
+
+    private get ori(): UMM_old { return this.umm as UMM_old; }
 
     redrawAll() {
         this.renderPath.redraw();
@@ -67,15 +69,15 @@ class UMM_Ext implements Plugin.Class {
 
     // Patch - State management
     monkeyPatchState() {
-        this.umm.getUmmState = () => this.state.get();
-        this.umm.saveUmmState = (_ummState: UMM_State) => {
+        this.ori.getUmmState = () => this.state.get();
+        this.ori.saveUmmState = (_ummState: UMM_State) => {
             // we assume the state is already updated
             this.state.save();
         };
 
-        window.removeHook('portalDetailsUpdated', this.umm.updateMissionPortalsDetails);
+        window.removeHook('portalDetailsUpdated', this.ori.updateMissionPortalsDetails);
 
-        this.umm.clearMissionData = () => {
+        this.ori.clearMissionData = () => {
             this.state.reset();
             this.state.save();
 
@@ -93,11 +95,11 @@ class UMM_Ext implements Plugin.Class {
     // Patch - Path editing
     monkeyPatchDrawing() {
         // Patch - Inject our Path Renderer
-        this.umm.drawMissions = () => this.renderPath.redraw();
+        this.ori.drawMissions = () => this.renderPath.redraw();
 
         // Patch - redraw on mission mode toggle
         const ori = this.umm.toggleMissionMode;
-        this.umm.toggleMissionMode = () => {
+        this.ori.toggleMissionMode = () => {
             ori();
             this.renderPath.redraw();
         }
@@ -109,20 +111,20 @@ class UMM_Ext implements Plugin.Class {
     // Patch - Autonumbers
     monkeyPatchNumbers() {
         // Patch - Inject our Number Renderer
-        this.umm.refreshMissionNumbers = () => this.renderNumbers.redraw();
+        this.ori.refreshMissionNumbers = () => this.renderNumbers.redraw();
     }
 
     // Patch - Select every mission - even when empty
     monkeyPatchMissionSelect() {
-        this.umm.nextMission = () => this.state.nextMission();
-        this.umm.previousMission = () => this.state.prevMission();
+        this.ori.nextMission = () => this.state.nextMission();
+        this.ori.previousMission = () => this.state.prevMission();
     }
 
     // Patch - refresh our drawing on new Portal add
     monkeyPatchPortalAdd() {
         window.addHook('portalSelected', (event) => addPortalToCurrentMission(event));
-        window.removeHook('portalSelected', this.umm.addPortalToCurrentMission);
-        this.umm.addPortalToCurrentMission = addPortalToCurrentMission;
+        window.removeHook('portalSelected', this.ori.addPortalToCurrentMission);
+        this.ori.addPortalToCurrentMission = addPortalToCurrentMission;
     }
 }
 

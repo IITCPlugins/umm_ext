@@ -1,6 +1,7 @@
 import { main } from "../Main";
 import { Mission } from "../State/Mission";
-import { UMM_Mission, UMM_Portal } from "../UMM_types";
+import { UMM_Portal } from "../UMM_types";
+import { notification } from "./Notification";
 
 type MarkerOptions = L.MarkerOptions & {
     portal: number;
@@ -43,12 +44,6 @@ export class RenderPath {
             else
                 this.drawMission(mission);
         });
-    }
-
-
-    private getMissionLocations(mission: UMM_Mission | undefined): L.LatLng[] {
-        if (!mission) return [];
-        return mission.portals.map(portal => new L.LatLng(portal.location.latitude, portal.location.longitude));
     }
 
 
@@ -162,11 +157,10 @@ export class RenderPath {
 
         const marker: L.Marker = event.target;
         const options: MarkerOptions = event.target.options;
-        const state = main.umm.getUmmState();
-        const mission = state.missions[options.missionId];
+        const mission = main.state.missions.get(options.missionId)!;
         console.assert(mission);
 
-        const snappedPortal = this.getSnapPortal(marker.getLatLng(), this.getMissionLocations(mission));
+        const snappedPortal = this.getSnapPortal(marker.getLatLng(), mission.getLocations());
         const newTarget = snappedPortal ? snappedPortal.getLatLng() : marker.getLatLng();
 
         const latlngs = this.editDragLine.getLatLngs();
@@ -282,7 +276,7 @@ export class RenderPath {
 
         mission.portals.remove(portal);
         this.saveStateAndRefresh();
-        main.umm.notification(`${mission.title}\nRemoved #${portal + 1} from mission`);
+        notification(`${mission.title}\nRemoved #${portal + 1} from mission`);
     }
 
 

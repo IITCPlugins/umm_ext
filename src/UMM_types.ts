@@ -1,8 +1,25 @@
 /* eslint-disable unicorn/filename-case */
 
-// Format of UMM plugin (partial)
+// used UMM functions 
+// (to prevent we are using old functions in our new code)
 export interface UMM {
 
+    // properties
+    ummMissionPaths: L.LayerGroup<any>;
+    ummMissionNumbers: L.LayerGroup<any>;
+    missionModeActive: boolean; // in edit mode
+    missionModeResuming: boolean; // true while mission is activated (this triggers a portal select)
+
+    // methods
+    updatePortalCountSidebar: () => void;
+    toggleMissionMode: () => void;
+    setCurrentMission: (mission: number) => void;
+    updateCurrentActiveMissionSidebar: (ummState: UMM_State) => void;
+    reloadSettingsWindowIfNeeded: () => void;
+}
+
+// All UMM functions
+export interface UMM_old {
     // properties
     ummMissionPaths: L.LayerGroup<any>;
     ummMissionNumbers: L.LayerGroup<any>;
@@ -22,9 +39,9 @@ export interface UMM {
 
     addPortalToCurrentMission: (data: EventPortalSelected) => void; // REPLACED
     updateMissionPortalsDetails: (data: EventPortalDetailsUpdated) => void;  // removed/REPLACED
+    notification: (message: string) => void;  // REPLACED
 
     updatePortalCountSidebar: () => void;
-    notification: (message: string) => void;
     toggleMissionMode: () => void;
     setCurrentMission: (mission: number) => void;
     updateCurrentActiveMissionSidebar: (ummState: UMM_State) => void;
