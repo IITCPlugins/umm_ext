@@ -27,6 +27,7 @@ export interface UMM {
     reverseMission: () => void;
     exportData: () => void;
     resumeOrStartNewMission: (state: UMM_State) => void;
+    addUmmButtons: (state: UMM_State) => void;
 }
 
 
