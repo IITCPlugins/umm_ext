@@ -1,4 +1,5 @@
 import { main } from "./Main";
+import { editMissionSetDetails } from "./UI/Dialog/MissionDetails";
 import { notification } from "./UI/Notification";
 
 let lastPortal: PortalGUID;
@@ -26,7 +27,7 @@ export const addPortalToCurrentMission = (data: EventPortalSelected) => {
     if (mission.portals.includes(portalToAdd)) {
         if (mission.portals.isEnd(portalToAdd)) {
             const pstate = state.get();
-            notification(`${pstate.missionSetName}\nPortal already in mission #${pstate.currentMission + 1}`);
+            notification(`${main.state.getBannerName()}\nPortal already in mission #${pstate.currentMission + 1}`);
         }
     } else {
         const preMission = state.missions.previous(mission);
@@ -50,12 +51,11 @@ export const addPortalToCurrentMission = (data: EventPortalSelected) => {
         main.redrawAll();
 
         const pstate = state.get();
-        notification(`${pstate.missionSetName}\nAdded to mission #${pstate.currentMission + 1}`)
+        notification(`${main.state.getBannerName()}\nAdded to mission #${pstate.currentMission + 1}`)
     }
 }
 
 
-// TODO move to real function
 export const clearMissionData = () => {
     main.state.reset();
     main.state.save();
@@ -63,7 +63,67 @@ export const clearMissionData = () => {
     main.umm.updateCurrentActiveMissionSidebar(main.state.get());
     main.umm.reloadSettingsWindowIfNeeded();
     if (main.umm.missionModeActive) {
-        main.umm.toggleMissionMode();
+        toggleMissionMode();
     }
     main.redrawAll();
+}
+
+
+export const removeLastPortal = () => {
+    const mission = main.state.getEditMission();
+
+    // If currentMission has 0 portals, refuse
+    if (mission && mission.portals.length > 0) {
+
+        mission.portals.remove(mission.portals.length - 1);
+        main.state.save();
+
+        main.redrawAll();
+
+        // Check if current mission still has portals, if so reset view to this portal
+        if (!mission.focusLastPortal()) {
+            // Clear out the portal view to allow for any portal to be selected as start portal
+            // eslint-disable-next-line unicorn/no-null
+            renderPortalDetails(null);
+            notification(`${main.state.getBannerName()}\nNo portals left in mission.\nSelect start portal`);
+        }
+    } else {
+        // If no more portals are left in the current mission
+        // Go back to the last portal of the previous mission (but don't delete it)
+        if (mission && mission.id > 0) {
+            main.umm.setCurrentMission(mission.id - 1);
+            main.state.save();
+
+            main.state.getEditMission()?.focusLastPortal();
+            notification(`${main.state.getBannerName()}\nLast mission removed\nSwitched to previous mission ${mission.id + 2}\n`);
+        } else {
+            notification(`${main.state.getBannerName()}\nCan't undo\nAlready on last mission\n`);
+        }
+    }
+};
+
+
+
+
+export const toggleMissionMode = () => {
+
+    if (main.umm.missionModeActive) {
+        main.umm.missionModeActive = false;
+        $('#umm-toggle-bookmarks').css("background-color", "");
+    } else {
+        if (!main.state.isValid()) {
+            // Mission data not set, ask for details, then attempt to enable mission mode again on Save
+            editMissionSetDetails(true);
+            notification("Mission mode inactive\nPlease enter mission data\nAnd try again.");
+            return
+        }
+
+        main.umm.missionModeActive = true;
+
+        main.umm.resumeOrStartNewMission(main.state.get());
+        $('#umm-toggle-bookmarks').css("background-color", "crimson");
+    }
+
+    main.renderPath.redraw();
+
 }

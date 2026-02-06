@@ -1,3 +1,4 @@
+import { toggleMissionMode } from "../../Edits";
 import { main } from "../../Main";
 import { notification } from "../Notification";
 import { dialogButton, dialogButtonClose } from "./Button";
@@ -60,7 +61,7 @@ const succesfulSave = (toggleMissionModeAfterSave: boolean) => {
         main.umm.updateCurrentActiveMissionSidebar(ummState);
         notification(`${ummState.missionSetName}\nMission details saved`);
         if (toggleMissionModeAfterSave) {
-            main.umm.toggleMissionMode();
+            toggleMissionMode();
         }
     }
 }

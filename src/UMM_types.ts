@@ -17,7 +17,6 @@ export interface UMM {
 
     // methods
     updatePortalCountSidebar: () => void;
-    toggleMissionMode: () => void;
     setCurrentMission: (mission: number) => void;
     updateCurrentActiveMissionSidebar: (ummState: UMM_State) => void;
     reloadSettingsWindowIfNeeded: () => void;
@@ -52,6 +51,9 @@ export interface UMM_old extends UMM {
     previousMission: () => void; // REPLACED
 
     addPortalToCurrentMission: (data: EventPortalSelected) => void; // REPLACED
+    undoPortal: () => void; // REPLACED
+    toggleMissionMode: () => void; // REPLACED
+
     updateMissionPortalsDetails: (data: EventPortalDetailsUpdated) => void;  // removed/REPLACED
     notification: (message: string) => void;  // REPLACED
 
@@ -59,6 +61,7 @@ export interface UMM_old extends UMM {
     showUmmOptions: () => void; // REPLACED
     editActiveMission: () => void; // REPLACED
     editMissionSetDetails: () => void; // REPLACED
+
 };
 
 

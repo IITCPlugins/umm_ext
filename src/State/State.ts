@@ -59,6 +59,13 @@ export class State {
         };
     }
 
+
+    isValid(): boolean {
+        return this.theState.missionSetName !== "" &&
+            this.theState.missionSetDescription !== "" &&
+            this.theState.plannedBannerLength > 0;
+    }
+
     get missions(): Missions {
         return new Missions(this.theState.missions);
     }
@@ -155,6 +162,16 @@ export class State {
 
     getEditMission(): Mission | undefined {
         return this.missions.get(this.theState.currentMission);
+    }
+
+
+    setCurrent(missionId: number) {
+        console.assert(missionId >= 0 && missionId < this.getPlannedLength(), "mission id out of bounds");
+        this.theState.currentMission = missionId;
+    }
+
+    getCurrent(): number {
+        return this.theState.currentMission;
     }
 
 

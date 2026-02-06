@@ -42,6 +42,17 @@ export class Mission {
         }
     }
 
+    focusLastPortal(): boolean {
+        const last_ll = this.portal_data.getLatLngOf(-1);
+        const last = this.portal_data.get(-1);
+        if (last && last_ll) {
+            window.map.setView(last_ll);
+            window.renderPortalDetails(last.guid);
+            return true;
+        }
+        return false;
+    }
+
     getDistance(): number {
         const locations = this.portals.toLatLng();
         return locations.reduce((sum, ll, index, lls) => index > 0 ? sum + ll.distanceTo(lls[index - 1]) : 0, 0);

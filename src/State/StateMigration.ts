@@ -89,10 +89,21 @@ export const migrateUmmVersion = (state: State, ummState: any): UMM_State => {
                 }
             }
         }
-
-        // UMM-EX uses empty missions
-        state.setPlannedLength(ummState.plannedBannerLength as number || 1);
     }
 
+    // UMM_ext
+    if (ummState.fileFormatVersion === 2) {
+
+        // we dont want undefined values
+        ummState.missionSetName ??= "";
+        ummState.missionSetDescription ??= '';
+        ummState.currentMission ??= 0;
+        ummState.plannedBannerLength ??= 1;
+        ummState.titleFormat ??= "T NN-M";
+
+        // fill mission array
+        state.setPlannedLength(ummState.plannedBannerLength as number || 1);
+
+    }
     return ummState as UMM_State;
 }
