@@ -22,7 +22,6 @@ export interface UMM {
     updateCurrentActiveMissionSidebar: (ummState: UMM_State) => void;
     reloadSettingsWindowIfNeeded: () => void;
     loadFile: (event: JQuery.ChangeEvent) => void;
-    editMissionSetDetails: () => void;
     zoomAllMissions: () => void;
     splitMissionOptions: () => void;
     mergeMissions: () => void;
@@ -59,6 +58,7 @@ export interface UMM_old extends UMM {
     about: () => void; // REPLACED
     showUmmOptions: () => void; // REPLACED
     editActiveMission: () => void; // REPLACED
+    editMissionSetDetails: () => void; // REPLACED
 };
 
 

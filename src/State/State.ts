@@ -63,18 +63,37 @@ export class State {
         return new Missions(this.theState.missions);
     }
 
-    getPlannedLength(): number {
-        return this.theState.plannedBannerLength;
-    }
-
     getBannerName(): string {
         return this.theState.missionSetName;
+    }
+
+    setBannerName(name: string) {
+        this.theState.missionSetName = name;
+        this.theState.missions.forEach((mission, id) => mission.missionTitle = this.generateMissionTitle(id));
     }
 
     getBannerDesc(): string {
         return this.theState.missionSetDescription;
     }
 
+    setBannerDesc(desc: string) {
+        this.theState.missionSetDescription = desc;
+        this.theState.missions.forEach(mission => mission.missionDescription = this.theState.missionSetDescription);
+    }
+
+    getTitleFormat(): string {
+        return this.theState.titleFormat;
+    }
+
+    setTitleFormat(name: string) {
+        this.theState.titleFormat = name;
+        this.theState.missions.forEach((mission, id) => mission.missionTitle = this.generateMissionTitle(id));
+    }
+
+
+    getPlannedLength(): number {
+        return this.theState.plannedBannerLength;
+    }
 
     setPlannedLength(count: number) {
         count = Math.max(count, 1)

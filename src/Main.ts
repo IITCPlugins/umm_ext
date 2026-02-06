@@ -7,6 +7,7 @@ import { addPortalToCurrentMission, clearMissionData } from "./Edits";
 import { about } from "./UI/Dialog/About";
 import { showUmmOptions } from "./UI/Dialog/Options";
 import { editActiveMission } from "./UI/Dialog/SelectMission";
+import { editMissionSetDetails } from "./UI/Dialog/MissionDetails";
 
 
 // eslint-disable-next-line unicorn/prevent-abbreviations
@@ -124,6 +125,7 @@ class UMM_Ext implements Plugin.Class {
         this.ori.about = about;
         this.ori.showUmmOptions = showUmmOptions;
         this.ori.editActiveMission = editActiveMission;
+        this.ori.editMissionSetDetails = editMissionSetDetails;
     }
 }
 

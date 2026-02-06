@@ -3,13 +3,13 @@ import { main } from "../../Main";
 import { State } from "../../State/State";
 import { about } from "./About";
 import { button, dialogButton, dialogButtonClose } from "./Button";
+import { editMissionSetDetails } from "./MissionDetails";
 import { editActiveMission } from "./SelectMission";
 
 
 
 export const showUmmOptions = () => {
     const state = main.state;
-    const ummState = state.get();
 
     const html = $("<div>", { class: "umm-options-list" }).append(
 
@@ -17,7 +17,7 @@ export const showUmmOptions = () => {
             $("<b>", { text: "Banner data" }), $("<br>"),
             'Banner name: <b><span>' + (state.getBannerName() ?? "N/A") + '</span></b><br>',
             'Banner description: <b><span>' + (state.getBannerDesc() ?? "N/A") + '</span></b><br>',
-            'Mission title format: <b><span>' + (ummState.titleFormat ?? "N/A") + '</span></b> <span title="Title format allows:&#10;N = Mission number without leading 0 (if required by banner length)&#10;NN = Mission number with leading 0&#10;M = Planned banner length&#10;T = (mission title)&#10; &#10;eg. T N-M or NN.M T">(?)</span><br>',
+            'Mission title format: <b><span>' + (state.getTitleFormat() ?? "N/A") + '</span></b> <span title="Title format allows:&#10;N = Mission number without leading 0 (if required by banner length)&#10;NN = Mission number with leading 0&#10;M = Planned banner length&#10;T = (mission title)&#10; &#10;eg. T N-M or NN.M T">(?)</span><br>',
             'Planned banner length: <b><span>' + state.getPlannedLength().toString() + '</span></b><br>',
             'Length: <b><span>' + window.formatDistance(state.missions.getTotalDistance()) + '</span></b><br>',
 
@@ -26,7 +26,7 @@ export const showUmmOptions = () => {
         $("<p>").append(
             $("<b>", { text: "Mission options" }), $("<br>"),
             'Layers: <label style="user-select: none"><input type="checkbox" onclick="window.plugin.umm.toggleLayerPaths(this.checked)" id="umm-layercheckbox-paths"' + (window.map.hasLayer(main.umm.ummMissionPaths) ? ' checked' : '') + '>Mission Paths</label> <label style="user-select: none"><input type="checkbox" onclick="window.plugin.umm.toggleLayerNumbers(this.checked)" id="umm-layercheckbox-numbers"' + (window.map.hasLayer(main.umm.ummMissionNumbers) ? ' checked' : '') + '>Mission Numbers</label>',
-            button("Edit banner details", main.umm.editMissionSetDetails, "w-full"),
+            button("Edit banner details", editMissionSetDetails, "w-full"),
             button("Change active mission #", editActiveMission, "w-full"),
             button("Zoom to view all missions", main.umm.zoomAllMissions, "w-full"),
         ),
