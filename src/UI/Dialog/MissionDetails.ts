@@ -1,5 +1,6 @@
 import { toggleMissionMode } from "../../Edits";
 import { main } from "../../Main";
+import { updateCurrentActiveMissionSidebar } from "../ButtonBar";
 import { notification } from "../Notification";
 import { dialogButton, dialogButtonClose } from "./Button";
 import { showUmmOptions } from "./Options";
@@ -57,9 +58,8 @@ const succesfulSave = (toggleMissionModeAfterSave: boolean) => {
         $('#umm-title-format').val() as string);
 
     if (isSavedSuccesful) {
-        const ummState = main.state.get();
-        main.umm.updateCurrentActiveMissionSidebar(ummState);
-        notification(`${ummState.missionSetName}\nMission details saved`);
+        updateCurrentActiveMissionSidebar(main.state);
+        notification(`${main.state.getBannerName()}\nMission details saved`);
         if (toggleMissionModeAfterSave) {
             toggleMissionMode();
         }

@@ -1,4 +1,5 @@
 import { main } from "./Main";
+import { updateCurrentActiveMissionSidebar } from "./UI/ButtonBar";
 import { editMissionSetDetails } from "./UI/Dialog/MissionDetails";
 import { notification } from "./UI/Notification";
 
@@ -60,7 +61,7 @@ export const clearMissionData = () => {
     main.state.reset();
     main.state.save();
 
-    main.umm.updateCurrentActiveMissionSidebar(main.state.get());
+    updateCurrentActiveMissionSidebar(main.state);
     main.umm.reloadSettingsWindowIfNeeded();
     if (main.umm.missionModeActive) {
         toggleMissionMode();

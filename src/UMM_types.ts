@@ -16,9 +16,7 @@ export interface UMM {
     changelog: string;
 
     // methods
-    updatePortalCountSidebar: () => void;
     setCurrentMission: (mission: number) => void;
-    updateCurrentActiveMissionSidebar: (ummState: UMM_State) => void;
     reloadSettingsWindowIfNeeded: () => void;
     loadFile: (event: JQuery.ChangeEvent) => void;
     zoomAllMissions: () => void;
@@ -27,8 +25,7 @@ export interface UMM {
     reverseMission: () => void;
     exportData: () => void;
     resumeOrStartNewMission: (state: UMM_State) => void;
-    addUmmButtons: (state: UMM_State) => void;
-}
+};
 
 
 // All UMM functions 
@@ -62,7 +59,9 @@ export interface UMM_old extends UMM {
     showUmmOptions: () => void; // REPLACED
     editActiveMission: () => void; // REPLACED
     editMissionSetDetails: () => void; // REPLACED
-
+    updateCurrentActiveMissionSidebar: (ummState: UMM_State) => void; // REPLACED
+    updatePortalCountSidebar: () => void; // REPLACED
+    addUmmButtons: (state: UMM_State) => void; // REPLACED
 };
 
 

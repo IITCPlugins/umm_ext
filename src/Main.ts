@@ -57,7 +57,8 @@ class UMM_Ext implements Plugin.Class {
         this.renderNumbers = new RenderNumbers(this.umm.ummMissionNumbers);
 
         this.patch();
-        main.umm.updateCurrentActiveMissionSidebar(main.state.get());
+        updateCurrentActiveMissionSidebar(main.state);
+        updatePortalCountSidebar();
     }
 
     private get ori(): UMM_old { return this.umm as UMM_old; }
@@ -65,7 +66,7 @@ class UMM_Ext implements Plugin.Class {
     redrawAll() {
         this.renderPath.redraw();
         this.renderNumbers.redraw();
-        this.umm.updatePortalCountSidebar();
+        updatePortalCountSidebar();
     }
 
     patch() {

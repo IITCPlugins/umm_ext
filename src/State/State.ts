@@ -4,6 +4,7 @@ import { main } from "../Main";
 import { migrateUmmVersion } from "./StateMigration";
 import { Missions } from "./Missions";
 import { notification } from "../UI/Notification";
+import { updatePortalCountSidebar } from "../UI/ButtonBar";
 
 
 const STORAGE_KEY = "ultimate-mission-maker";
@@ -214,7 +215,7 @@ export class State {
         if (mission.hasPortals()) {
             mission.show();
 
-            main.umm.updatePortalCountSidebar();
+            updatePortalCountSidebar();
 
             if (main.umm.missionModeActive) {
                 notification(`Mission mode active.\n${this.theState.missionSetName}\nCurrent mission #${this.theState.currentMission + 1}\nSelect next portal`);
