@@ -76,6 +76,10 @@ export class Portals {
         return this.data.at(-1)?.guid === portal.guid;
     }
 
+    reverse() {
+        this.data.reverse();
+    }
+
     create(guid: string): UMM_Portal {
         const iitcPortal = window.portals[guid];
         console.assert(iitcPortal, "portal not defined");

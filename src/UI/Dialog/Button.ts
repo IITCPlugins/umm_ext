@@ -1,4 +1,10 @@
 
+
+export const button = (label: string, click: () => void, classes?: string) => {
+    return $("<button>", { text: label, click, class: "umm-mission-btn " + (classes ?? "") })
+}
+
+
 export const dialogButton = (label: string, callback: (event?: JQuery.Event) => void) => {
     return <JQueryUI.ButtonOptions>{
         text: label,

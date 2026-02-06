@@ -1,5 +1,8 @@
-import { UMM_Mission } from "../UMM_types";
+import { UMM_Mission, UMM_Portal } from "../UMM_types";
 import { Mission } from "./Mission";
+
+export type ErrorReport = Record<string, number[]>;
+export const MIN_PORTALS_PER_MISSION = 6;
 
 export class Missions {
 
@@ -21,11 +24,19 @@ export class Missions {
     }
 
 
-    forEach(callback: (mission: Mission, index: number) => void) {
+    forEach(callback: (mission: Mission) => void) {
         this.data.forEach((missionData, index) => {
             const mission = new Mission(index, missionData);
-            callback(mission, index);
+            callback(mission);
         });
+    }
+
+    filter(callback: (mission: Mission) => boolean): Mission[] {
+        const result: Mission[] = [];
+        this.forEach(mission => {
+            if (callback(mission)) result.push(mission);
+        });
+        return result
     }
 
     previous(mission: Mission): Mission | undefined {
@@ -52,6 +63,26 @@ export class Missions {
     }
 
 
+    getTotalDistance(): number {
+        const waypoints: L.LatLng[] = [];
+        this.forEach(m => waypoints.push(...m.getLocations()));
+
+        return waypoints.reduce((sum, ll, index, lls) => index > 0 ? sum + ll.distanceTo(lls[index - 1]) : 0, 0)
+    }
+
+
+    invalide(): ErrorReport {
+        const errors: ErrorReport = {};
+
+        const notEnoughWaypoint = this.filter(m => m.portals.length < MIN_PORTALS_PER_MISSION)
+            .map(m => m.id);
+        if (notEnoughWaypoint.length > 0) {
+            errors["not enough waypoints"] = notEnoughWaypoint;
+        }
+
+        return errors;
+    }
+
     merge(destination: Mission, missionB: Mission) {
         destination.portals.add(...missionB.portals.getRange());
         missionB.portals.clear();
@@ -63,5 +94,26 @@ export class Missions {
         source.portals.remove(at, toMove.length)
     }
 
+    splitIntoMultiple(source: Mission, count: number) {
+        console.assert(count > 1, "nothing to split");
 
+        const total = source.portals.length;
+        const portalsPerMission = total / count;
+
+        const allPortals: UMM_Portal[] = [];
+        for (let i = 0; i < count; i++) {
+            const mission = this.get(source.id + i)!;
+            if (!mission) return;
+            allPortals.push(...mission.portals.getRange());
+        }
+
+        for (let i = 0; i < count; i++) {
+            const start = Math.floor(portalsPerMission * i);
+            const end = Math.floor(portalsPerMission * (i + 1));
+
+            const mission = this.get(source.id + i);
+            mission?.portals.clear();
+            mission?.portals.add(...allPortals.slice(start, end));
+        }
+    }
 }

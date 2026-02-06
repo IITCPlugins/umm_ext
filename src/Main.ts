@@ -21,7 +21,7 @@ class UMM_Ext implements Plugin.Class {
 
     init() {
         // eslint-disable-next-line @typescript-eslint/no-require-imports
-        require("./styles.css");
+        require("./styles.pcss");
 
         this.umm = (window.plugin as any).umm;
         if (!this.umm) {

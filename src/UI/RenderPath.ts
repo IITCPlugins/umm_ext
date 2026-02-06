@@ -37,9 +37,9 @@ export class RenderPath {
 
         const editMode = main.umm.missionModeActive;
 
-        main.state.missions.forEach((mission, missionId) => {
-            if (main.state.isCurrent(missionId) && editMode) {
-                this.drawEditMission(missionId, mission);
+        main.state.missions.forEach((mission) => {
+            if (main.state.isCurrent(mission.id) && editMode) {
+                this.drawEditMission(mission);
             }
             else
                 this.drawMission(mission);
@@ -58,17 +58,17 @@ export class RenderPath {
 
 
     // let _draggingLine = undefined;
-    private drawEditMission(missionId: number, mission: Mission) {
+    private drawEditMission(mission: Mission) {
         const coordinatesList = mission.getLocations();
 
         // Portal Markers
-        coordinatesList.forEach((ll, index) => this.createDragMarker(ll, index, missionId));
+        coordinatesList.forEach((ll, index) => this.createDragMarker(ll, index, mission.id));
 
         // MidPoint Marker
         coordinatesList.forEach((ll, index) => {
             if (index > 0) {
                 const half = this.getCenter(coordinatesList[index - 1], ll);
-                this.createDragMarker(half, index, missionId, true)
+                this.createDragMarker(half, index, mission.id, true)
             }
         });
 

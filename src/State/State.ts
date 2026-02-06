@@ -59,6 +59,9 @@ export class State {
         };
     }
 
+    get missions(): Missions {
+        return new Missions(this.theState.missions);
+    }
 
     getPlannedLength(): number {
         return this.theState.plannedBannerLength;
@@ -89,12 +92,6 @@ export class State {
             }
         }
     }
-
-
-    get missions(): Missions {
-        return new Missions(this.theState.missions);
-    }
-
 
 
     generateMissionTitle(missNumber: number): string {
