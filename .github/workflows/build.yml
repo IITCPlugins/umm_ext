@@ -1,0 +1,28 @@
+name: Build
+on:
+    push:
+        branches-ignore:
+            - '**'
+        tags:
+            - '*'
+permissions:
+    contents: write
+jobs:
+    build:
+        name: Build
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - uses: borales/actions-yarn@v4.2.0
+              with:
+                cmd: install
+            - uses: borales/actions-yarn@v4.2.0
+              with:
+                cmd: build:prod
+            - uses: softprops/action-gh-release@v2
+              with:
+                name: ${{ github.event.repository.name }} v${{ github.ref_name }}
+                draft: false
+                files:
+                    dist/iitc_plugin_UMM_Ext.user.js
+                    dist/iitc_plugin_UMM_Ext.meta.js
