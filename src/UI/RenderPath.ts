@@ -261,6 +261,7 @@ export class RenderPath {
         }
 
         if (candidates.length === 0) return;
+        // eslint-disable-next-line unicorn/no-array-sort
         candidates = candidates.sort((a, b) => a[0] - b[0]);
         return candidates[0][1];
     };

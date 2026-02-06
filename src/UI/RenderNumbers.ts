@@ -1,4 +1,5 @@
 import { main } from "../Main";
+import { MIN_PORTALS_PER_MISSION } from "../State/Missions";
 import { State } from "../State/State";
 
 interface MissionStart {
@@ -7,7 +8,6 @@ interface MissionStart {
     auto: boolean;
 }
 
-const MIN_PORTALS_PER_MISSION = 6;
 
 export class RenderNumbers {
 
