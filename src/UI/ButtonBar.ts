@@ -34,9 +34,6 @@ export const createToolbar = () => {
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-call
     window.map.addControl(new UMMToolbar());
-
-    updateCurrentActiveMissionSidebar(main.state);
-    updatePortalCountSidebar();
 };
 
 

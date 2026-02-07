@@ -88,32 +88,52 @@ export class Missions {
         missionB.portals.clear();
     }
 
+    mergeAll() {
+        const portals: UMM_Portal[] = []
+        this.data.forEach(m => {
+            portals.push(...m.portals);
+            portals.length = 0;
+        });
+
+        this.data[0].portals = portals;
+    }
+
+
     split(source: Mission, at: number, destination: Mission) {
         const toMove = source.portals.getRange(at)
         destination.portals.insert(0, ...toMove);
         source.portals.remove(at, toMove.length)
     }
 
-    splitIntoMultiple(source: Mission, count: number) {
+
+    splitIntoMultiple(source: Mission, count: number, restAtLast = false) {
         console.assert(count > 1, "nothing to split");
 
-        const total = source.portals.length;
-        const portalsPerMission = total / count;
+        const allPortals = this.getAllPortalsOf(source.id, count);
+        const total = allPortals.length;
+        let portalsPerMission = total / count;
+        if (restAtLast) portalsPerMission = Math.floor(portalsPerMission);
 
-        const allPortals: UMM_Portal[] = [];
-        for (let i = 0; i < count; i++) {
-            const mission = this.get(source.id + i)!;
-            if (!mission) return;
-            allPortals.push(...mission.portals.getRange());
-        }
 
         for (let i = 0; i < count; i++) {
             const start = Math.floor(portalsPerMission * i);
-            const end = Math.floor(portalsPerMission * (i + 1));
+            let end = Math.floor(portalsPerMission * (i + 1));
+            if (i !== count - 1) end = allPortals.length - 1;
 
             const mission = this.get(source.id + i);
             mission?.portals.clear();
             mission?.portals.add(...allPortals.slice(start, end));
         }
+    }
+
+
+    private getAllPortalsOf(from: number, count: number): UMM_Portal[] {
+        const allPortals: UMM_Portal[] = [];
+        for (let i = 0; i < count; i++) {
+            const mission = this.get(from + i)!;
+            if (mission) allPortals.push(...mission.portals.getRange());
+        }
+
+        return allPortals;
     }
 }

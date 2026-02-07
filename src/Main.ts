@@ -3,7 +3,7 @@ import { UMM, UMM_old, UMM_State } from "./UMM_types";
 import { RenderPath } from "./UI/RenderPath";
 import { RenderNumbers } from "./UI/RenderNumbers";
 import { State } from "./State/State";
-import { addPortalToCurrentMission, clearMissionData, removeLastPortal, toggleMissionMode } from "./Edits";
+import { addPortalToCurrentMission, clearMissionData, mergeMissions, removeLastPortal, reverseMission, splitMissionOptions, toggleMissionMode } from "./Edits";
 import { about } from "./UI/Dialog/About";
 import { showUmmOptions } from "./UI/Dialog/Options";
 import { editActiveMission } from "./UI/Dialog/SelectMission";
@@ -57,6 +57,7 @@ class UMM_Ext implements Plugin.Class {
         this.renderNumbers = new RenderNumbers(this.umm.ummMissionNumbers);
 
         this.patch();
+
         updateCurrentActiveMissionSidebar(main.state);
         updatePortalCountSidebar();
     }
@@ -67,6 +68,14 @@ class UMM_Ext implements Plugin.Class {
         this.renderPath.redraw();
         this.renderNumbers.redraw();
         updatePortalCountSidebar();
+    }
+
+    redrawAllTotal() {
+        updateCurrentActiveMissionSidebar(this.state)
+        this.umm.reloadSettingsWindowIfNeeded();
+        this.redrawAll();
+        this.umm.zoomAllMissions();
+        renderPortalDetails(window.selectedPortal);
     }
 
     patch() {
@@ -115,6 +124,7 @@ class UMM_Ext implements Plugin.Class {
     monkeyPatchDrawing() {
         // Patch - Inject our Path Renderer
         this.ori.drawMissions = () => this.renderPath.redraw();
+        this.ori.redrawUmmIitc = main.redrawAllTotal;
 
         // init repaint
         this.renderPath.redraw();
@@ -139,6 +149,9 @@ class UMM_Ext implements Plugin.Class {
         this.ori.addPortalToCurrentMission = addPortalToCurrentMission;
         this.ori.undoPortal = removeLastPortal;
         this.ori.toggleMissionMode = toggleMissionMode;
+        this.ori.splitMissionOptions = splitMissionOptions;
+        this.ori.mergeMissions = mergeMissions;
+        this.ori.reverseMission = reverseMission;
     }
 
     monkeyPatchDialogs() {
@@ -147,7 +160,7 @@ class UMM_Ext implements Plugin.Class {
         this.ori.editActiveMission = editActiveMission;
         this.ori.editMissionSetDetails = editMissionSetDetails;
 
-        this.ori.addUmmButtons = createToolbar
+        this.ori.addUmmButtons = createToolbar;
     }
 
     monkeyPatchToolbar() {
