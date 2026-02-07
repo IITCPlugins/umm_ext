@@ -13,16 +13,21 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v6
-            - uses: borales/actions-yarn@v5.0.0
+            - name: Install dependencies
+              run: yarn install
+            - name: Build Production
+              run: yarn build:prod
+            - name: Create Release
+              uses: softprops/action-gh-release@v2
               with:
-                cmd: install
-            - uses: borales/actions-yarn@v5.0.0
-              with:
-                cmd: build:prod
-            - uses: softprops/action-gh-release@v2
-              with:
-                name: ${{ github.event.repository.name }} v${{ github.ref_name }}
+                name: ${{ github.event.repository.name }} ${{ github.ref_name }}
                 draft: false
-                files:
-                    dist/iitc_plugin_UMM_Ext.user.js
-                    dist/iitc_plugin_UMM_Ext.meta.js
+                files: |
+                   - dist/iitc_plugin_UMM_Ext.user.js
+                   - dist/iitc_plugin_UMM_Ext.meta.js
+            - name: Git add Dist
+              uses: EndBug/add-and-commit@v9 # You can change this to use a specific version.
+              with: 
+                add: dist/* --force
+                message: Release ${{ github.ref_name }}
+
