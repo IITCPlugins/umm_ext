@@ -27,14 +27,14 @@ export const addPortalToCurrentMission = (data: EventPortalSelected) => {
 
     const portalToAdd = mission.portals.create(data.selectedPortalGuid);
 
-    if (mission.portals.includes(portalToAdd)) {
+    if (mission.portals.includes(portalToAdd.guid)) {
         if (mission.portals.isEnd(portalToAdd)) {
             const pstate = state.get();
             notification(`${main.state.getBannerName()}\nPortal already in mission #${pstate.currentMission + 1}`);
         }
     } else {
         const preMission = state.missions.previous(mission);
-        if (preMission && preMission.portals.includes(portalToAdd) &&
+        if (preMission && preMission.portals.includes(portalToAdd.guid) &&
             (!preMission.portals.isStart(portalToAdd) && !preMission.portals.isEnd(portalToAdd))
         ) {
             if (confirm("Split mission?")) {

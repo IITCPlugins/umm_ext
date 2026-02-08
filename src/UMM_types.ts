@@ -17,6 +17,7 @@ export interface UMM {
 
     // methods
     reloadSettingsWindowIfNeeded: () => void;
+    addWaypointEditorToPortal: () => void;
 };
 
 
@@ -97,6 +98,16 @@ export interface UMM_Portal {
     isStartPoint: boolean; // Unknown what NIA uses it for, seems false everywhere
     title: string;
     type: string;
-    objective: any;
+    objective: UMM_Objective;
+}
+
+export interface UMM_Objective {
+    type: string;
+    passphrase_params: UMM_Passphrase;
+}
+
+export interface UMM_Passphrase {
+    question: string;
+    _single_passphrase: string;
 }
 

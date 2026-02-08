@@ -1,6 +1,15 @@
 import { UMM_Portal } from "../UMM_types";
 
 
+export const PortalActions = [
+    { action: "HACK_PORTAL", label: "Hack portal" },
+    { action: "INSTALL_MOD", label: "Install mod" },
+    { action: "CAPTURE_PORTAL", label: "Capture portal" },
+    { action: "CREATE_LINK", label: "Create link" },
+    { action: "CREATE_FIELD", label: "Create field" },
+    { action: "PASSPHRASE", label: "Enter passphrase" },
+];
+
 
 export class Portals {
 
@@ -30,12 +39,12 @@ export class Portals {
     }
 
     add(...portal: UMM_Portal[]) {
-        console.assert(!portal.some(p => this.includes(p)), "portal is already in");
+        console.assert(!portal.some(p => this.includes(p.guid)), "portal is already in");
         this.data.push(...portal);
     }
 
     insert(index: number, ...portal: UMM_Portal[]) {
-        console.assert(!portal.some(p => this.includes(p)), "portal is already in");
+        console.assert(!portal.some(p => this.includes(p.guid)), "portal is already in");
         this.data.splice(index, 0, ...portal);
     }
 
@@ -60,13 +69,18 @@ export class Portals {
         return new L.LatLng(portal.location.latitude, portal.location.longitude);
     }
 
-    includes(portal: UMM_Portal): boolean {
-        return this.data.some(x => x.guid === portal.guid);
+    includes(guid: PortalGUID): boolean {
+        return this.data.some(x => x.guid === guid);
+    }
+
+    find(guid: PortalGUID): UMM_Portal | undefined {
+        return this.data.find(x => x.guid === guid);
     }
 
     indexOf(portal: UMM_Portal): number {
         return this.data.findIndex(x => x.guid === portal.guid);
     }
+
 
     isStart(portal: UMM_Portal): boolean {
         return this.data[0]?.guid === portal.guid;

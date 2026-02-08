@@ -145,4 +145,8 @@ export class Missions {
 
         return allPortals;
     }
+
+    getMissionsOfPortal(guid: PortalGUID): number[] {
+        return this.filter(mis => mis.portals.includes(guid)).map(m => m.id);
+    }
 }

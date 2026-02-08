@@ -19,3 +19,164 @@
 .umm-options-list {
   overflow: hidden;
 }
+
+.umm-notification {
+  width: 300px;
+  height: auto;
+  position: absolute;
+  left: 50%;
+  margin-left: -100px;
+  top: 20px;
+  z-index: 10000;
+  background-color: #383838;
+  color: #f0f0f0;
+  font-family: Calibri, sans-serif;
+  font-size: 20px;
+  padding: 10px;
+  text-align: center;
+  border-radius: 2px;
+  -webkit-box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1);
+  -moz-box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1);
+  box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1);
+}
+
+.umm-options-list a {
+  display: block;
+  color: #ffce00;
+  border: 1px solid #ffce00;
+  padding: 3px 0;
+  margin: 10px auto;
+  width: 80%;
+  text-align: center;
+  background: rgba(8, 48, 78, 0.9);
+}
+
+#dialog-umm-edit-mission-set-details {
+  background-color: rgba(8, 48, 78, 0.9);
+}
+
+.umm-edit-mission-set-details {
+  p {
+    margin: 5px 0 8px;
+    display: block;
+  }
+  label {
+    margin-bottom: 5px;
+    display: block;
+  }
+
+  input,
+  textarea {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+
+  textarea {
+    resize: vertical;
+    color: #ffce00;
+    background-color: #062844;
+    font-family: inherit;
+    width: calc(100% - 6px);
+  }
+
+  span.umm-error {
+    color: white;
+    display: block;
+    margin-bottom: 5px;
+    display: none;
+
+    b {
+      color: red;
+    }
+  }
+}
+
+.umm-dialog-button {
+  margin-left: 5px;
+}
+
+.umm-mission-marker .start {
+  fill: #16d4b2;
+  stroke: #005243;
+  stroke-miterlimit: 10;
+}
+
+.umm-mission-marker .active {
+  fill: #6832da;
+  stroke: #16043f;
+  stroke-miterlimit: 10;
+}
+
+.umm-mission-number {
+  font-size: 14px;
+  color: #000;
+  font-family: monospace;
+  text-align: center;
+  width: 34px;
+  left: 0;
+  top: 6px;
+  position: absolute;
+  font-weight: bold;
+}
+
+#umm-waypoint-editor {
+  border-top: 1px solid #20a8b1;
+  border-bottom: 1px solid #20a8b1;
+  padding: 8px 5px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  color: #ffce00;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+.umm-waypoint-editor-title {
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+.umm-waypoint-select-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.umm-waypoint-select-container > select {
+  background-color: #062844;
+  border: none;
+  color: #ffce00;
+  height: 24px;
+}
+
+#umm-mission-select {
+  width: 60px;
+}
+
+#umm-action-select {
+  width: 100%;
+  margin-left: 4px;
+}
+
+#umm-passphrase-container {
+  display: none;
+  flex-direction: column;
+  margin-top: 5px;
+
+  > span {
+    margin-bottom: 3px;
+  }
+
+  > input,
+  > textarea {
+    margin-bottom: 5px;
+    background-color: #062844;
+    min-height: 24px;
+    color: #ffce00;
+    font-family: "Arial";
+    padding: 3px;
+    border: none;
+    resize: vertical;
+  }
+}

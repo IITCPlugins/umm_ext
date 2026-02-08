@@ -215,7 +215,7 @@ export class RenderPath {
                     return;
                 }
             } else
-                if (mission.portals.length === 1 && preMission?.portals.includes(target)) {
+                if (mission.portals.length === 1 && preMission?.portals.includes(target.guid)) {
                     if (confirm("Split mission ?")) {
                         const index = preMission.portals.indexOf(target);
 
