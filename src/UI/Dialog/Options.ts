@@ -1,4 +1,5 @@
 import { clearMissionData, mergeMissions, reverseMission, splitMissionOptions } from "../../Edits";
+import { exportData, loadFileInputIITC } from "../../ImportExport";
 import { main } from "../../Main";
 import { State } from "../../State/State";
 import { about } from "./About";
@@ -38,7 +39,7 @@ export const showUmmOptions = () => {
         button("Clear ALL missions data", confirmClear, "w-full"),
 
         $("<b>", { text: "Import/Export" }), $("<br>"),
-        button("Export banner data to file", main.umm.exportData, "w-full"),
+        button("Export banner data to file", exportData, "w-full"),
         $("<div>").css({ width: 800, margin: "auto" }).append(
             '<b>Import banner data from file:</b><br>',
             $("<input>", { type: "file", change: confirmLoad }),
@@ -81,9 +82,9 @@ const confirmClear = () => {
     }
 };
 
-const confirmLoad = (event: JQuery.ChangeEvent) => {
+const confirmLoad = (event: Event) => {
     if (confirm("Are you sure you want to overwrite the current mission data?")) {
-        main.umm.loadFile(event);
+        void loadFileInputIITC(event);
     }
 };
 

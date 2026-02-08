@@ -3,7 +3,7 @@ import { UMM, UMM_old, UMM_State } from "./UMM_types";
 import { RenderPath } from "./UI/RenderPath";
 import { RenderNumbers } from "./UI/RenderNumbers";
 import { State } from "./State/State";
-import { addPortalToCurrentMission, clearMissionData, mergeMissions, removeLastPortal, reverseMission, splitMissionOptions, toggleMissionMode } from "./Edits";
+import { addPortalToCurrentMission, clearMissionData, mergeMissions, removeLastPortal, reverseMission, setCurrentMission, splitMissionOptions, toggleMissionMode } from "./Edits";
 import { about } from "./UI/Dialog/About";
 import { showUmmOptions } from "./UI/Dialog/Options";
 import { editActiveMission } from "./UI/Dialog/SelectMission";
@@ -152,6 +152,7 @@ class UMM_Ext implements Plugin.Class {
         this.ori.splitMissionOptions = splitMissionOptions;
         this.ori.mergeMissions = mergeMissions;
         this.ori.reverseMission = reverseMission;
+        this.ori.setCurrentMission = setCurrentMission;
     }
 
     monkeyPatchDialogs() {

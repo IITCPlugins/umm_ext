@@ -5,10 +5,11 @@ import { migrateUmmVersion } from "./StateMigration";
 import { Missions } from "./Missions";
 import { notification } from "../UI/Notification";
 import { updatePortalCountSidebar } from "../UI/ButtonBar";
+import { setCurrentMission } from "../Edits";
 
 
 const STORAGE_KEY = "ultimate-mission-maker";
-const fileFormatVersion = 2;
+export const fileFormatVersion = 2;
 
 
 export class State {
@@ -185,7 +186,7 @@ export class State {
         if (this.theState.currentMission >= this.theState.plannedBannerLength - 1) return;
 
         // Activate the new mission
-        main.umm.setCurrentMission(this.theState.currentMission + 1)
+        setCurrentMission(this.theState.currentMission + 1)
 
         const mission = this.missions.get(this.theState.currentMission)!;
         console.assert(mission, "no mission found");
@@ -201,7 +202,7 @@ export class State {
         if (this.theState.currentMission <= 0) return;
 
         // Activate the new mission
-        main.umm.setCurrentMission(this.theState.currentMission - 1)
+        setCurrentMission(this.theState.currentMission - 1)
 
         const mission = this.missions.get(this.theState.currentMission)!;
         console.assert(mission, "no mission found");
@@ -243,4 +244,25 @@ export class State {
 
         if (updated) this.save();
     }
+
+
+    checkAllPortals() {
+        let updated = false;
+
+        this.theState.missions.forEach(mission => {
+            mission.portals.forEach(portal => {
+                const iitcPortal = window.portals[portal.guid]?.options.data;
+                if (iitcPortal) {
+                    if (portal.imageUrl !== iitcPortal.image ||
+                        portal.title !== iitcPortal.title) {
+                        portal.imageUrl = iitcPortal.image;
+                        portal.title = iitcPortal.title;
+                        updated = true;
+                    }
+                }
+            });
+        });
+        if (updated) this.save();
+    }
+
 }

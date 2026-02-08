@@ -1,3 +1,4 @@
+import { setCurrentMission } from "../../Edits";
 import { main } from "../../Main";
 import { Mission } from "../../State/Mission";
 import { notification } from "../Notification";
@@ -91,7 +92,7 @@ const onMissionSelect = () => {
         return;
     }
 
-    main.umm.setCurrentMission(mission.id);
+    setCurrentMission(mission.id);
 
     if (main.umm.missionModeActive) {
         // eslint-disable-next-line unicorn/no-null

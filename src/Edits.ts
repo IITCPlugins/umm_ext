@@ -94,7 +94,7 @@ export const removeLastPortal = () => {
         // If no more portals are left in the current mission
         // Go back to the last portal of the previous mission (but don't delete it)
         if (mission && mission.id > 0) {
-            main.umm.setCurrentMission(mission.id - 1);
+            setCurrentMission(mission.id - 1);
             main.state.save();
 
             main.state.getEditMission()?.focusLastPortal();
@@ -233,5 +233,12 @@ export const reverseMission = () => {
     mission.reverse();
     state.save();
     main.redrawAll();
-    // renderPortalDetails(window.selectedPortal);
+}
+
+
+export const setCurrentMission = (missionId: number) => {
+    main.state.setCurrent(missionId);
+    main.state.save();
+    updateCurrentActiveMissionSidebar(main.state);
+    main.redrawAll();
 }
