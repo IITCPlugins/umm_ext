@@ -17,8 +17,6 @@ export interface UMM {
 
     // methods
     reloadSettingsWindowIfNeeded: () => void;
-    zoomAllMissions: () => void;
-    resumeOrStartNewMission: (state: UMM_State) => void;
 };
 
 
@@ -49,7 +47,8 @@ export interface UMM_old extends UMM {
     toggleMissionMode: () => void; // REPLACED
     splitMissionOptions: () => void; // REPLACED
     mergeMissions: (prompt: boolean) => void; // REPLACED
-    reverseMission: () => void;// REPLACED
+    reverseMission: () => void; // REPLACED
+    resumeOrStartNewMission: (state: UMM_State) => void; // REPLACED
 
     updateMissionPortalsDetails: (data: EventPortalDetailsUpdated) => void;  // removed/REPLACED
     notification: (message: string) => void;  // REPLACED
@@ -65,6 +64,7 @@ export interface UMM_old extends UMM {
     loadFile: (event: JQuery.ChangeEvent) => void;  // REPLACED
     exportData: () => void;  // REPLACED
     storeMissingData: () => void; // REPLACED - state.checkAllPortals
+    zoomAllMissions: () => void;  // REPLACED 
 };
 
 

@@ -121,12 +121,25 @@ export const toggleMissionMode = () => {
 
         main.umm.missionModeActive = true;
 
-        main.umm.resumeOrStartNewMission(main.state.get());
+        startEdit();
         $('#umm-toggle-bookmarks').css("background-color", "crimson");
     }
 
     main.renderPath.redraw();
+}
 
+
+export const startEdit = () => {
+    // If the currentMission already has portals, resume mission creation at last portal
+    const editMission = main.state.getEditMission();
+    if (editMission?.hasPortals()) {
+        main.umm.missionModeResuming = true;
+        editMission.show();
+        window.renderPortalDetails(editMission.portals.get(-1)!.guid);
+        notification(`${main.state.getBannerName()}\nMission mode active.\nResuming mission #${main.state.getCurrent() + 1}\nSelect next portal`);
+    } else {
+        notification(`${main.state.getBannerName()}\nMission mode active.\nSelect start portal for mission #${main.state.getCurrent() + 1}`);
+    }
 }
 
 

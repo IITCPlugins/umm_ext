@@ -1,5 +1,6 @@
 import { UMM_Mission, UMM_Portal } from "../UMM_types";
 import { Mission } from "./Mission";
+import { Portals } from "./Portals";
 
 export type ErrorReport = Record<string, number[]>;
 export const MIN_PORTALS_PER_MISSION = 6;
@@ -14,7 +15,7 @@ export class Missions {
 
 
     get(missionId: number): Mission | undefined {
-        const mis = this.data[missionId]
+        const mis = this.data[missionId];
         return mis && new Mission(missionId, mis);
     }
 
@@ -71,7 +72,7 @@ export class Missions {
     }
 
 
-    invalide(): ErrorReport {
+    validate(): ErrorReport {
         const errors: ErrorReport = {};
 
         const notEnoughWaypoint = this.filter(m => m.portals.length < MIN_PORTALS_PER_MISSION)
@@ -81,6 +82,14 @@ export class Missions {
         }
 
         return errors;
+    }
+
+    zoom() {
+        const location = this.data.flatMap(m => new Portals(m.portals).toLatLng())
+        if (location.length > 0) {
+            const bounds = new L.LatLngBounds(location).pad(0.1);
+            window.map.fitBounds(bounds, { maxZoom: 18 });
+        }
     }
 
     merge(destination: Mission, missionB: Mission) {

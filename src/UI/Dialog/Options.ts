@@ -29,7 +29,7 @@ export const showUmmOptions = () => {
             'Layers: <label style="user-select: none"><input type="checkbox" onclick="window.plugin.umm.toggleLayerPaths(this.checked)" id="umm-layercheckbox-paths"' + (window.map.hasLayer(main.umm.ummMissionPaths) ? ' checked' : '') + '>Mission Paths</label> <label style="user-select: none"><input type="checkbox" onclick="window.plugin.umm.toggleLayerNumbers(this.checked)" id="umm-layercheckbox-numbers"' + (window.map.hasLayer(main.umm.ummMissionNumbers) ? ' checked' : '') + '>Mission Numbers</label>',
             button("Edit banner details", editMissionSetDetails, "w-full"),
             button("Change active mission #", editActiveMission, "w-full"),
-            button("Zoom to view all missions", main.umm.zoomAllMissions, "w-full"),
+            button("Zoom to view all missions", () => state.missions.zoom(), "w-full"),
         ),
         $("<hr>"),
         button("Split mission", splitMissionOptions, "w-full"),
@@ -63,7 +63,7 @@ export const showUmmOptions = () => {
 const validateMissions = (state: State): string => {
     //                ummState.plannedBannerLength % 6 != 0 ? '<span style="color: red;"><b>Warning:</b></span> banner length is not a multiple of 6<br>' : "",
 
-    const invalidMissions = state.missions.invalide();
+    const invalidMissions = state.missions.validate();
 
     const result: string[] = [];
     for (const error in invalidMissions) {

@@ -3,7 +3,7 @@ import { UMM, UMM_old, UMM_State } from "./UMM_types";
 import { RenderPath } from "./UI/RenderPath";
 import { RenderNumbers } from "./UI/RenderNumbers";
 import { State } from "./State/State";
-import { addPortalToCurrentMission, clearMissionData, mergeMissions, removeLastPortal, reverseMission, setCurrentMission, splitMissionOptions, toggleMissionMode } from "./Edits";
+import { addPortalToCurrentMission, clearMissionData, mergeMissions, removeLastPortal, reverseMission, setCurrentMission, splitMissionOptions, startEdit, toggleMissionMode } from "./Edits";
 import { about } from "./UI/Dialog/About";
 import { showUmmOptions } from "./UI/Dialog/Options";
 import { editActiveMission } from "./UI/Dialog/SelectMission";
@@ -74,7 +74,7 @@ class UMM_Ext implements Plugin.Class {
         updateCurrentActiveMissionSidebar(this.state)
         this.umm.reloadSettingsWindowIfNeeded();
         this.redrawAll();
-        this.umm.zoomAllMissions();
+        this.state.missions.zoom();
         renderPortalDetails(window.selectedPortal);
     }
 
@@ -125,6 +125,7 @@ class UMM_Ext implements Plugin.Class {
         // Patch - Inject our Path Renderer
         this.ori.drawMissions = () => this.renderPath.redraw();
         this.ori.redrawUmmIitc = main.redrawAllTotal;
+        this.ori.zoomAllMissions = () => main.state.missions.zoom();
 
         // init repaint
         this.renderPath.redraw();
@@ -153,6 +154,7 @@ class UMM_Ext implements Plugin.Class {
         this.ori.mergeMissions = mergeMissions;
         this.ori.reverseMission = reverseMission;
         this.ori.setCurrentMission = setCurrentMission;
+        this.ori.resumeOrStartNewMission = startEdit;
     }
 
     monkeyPatchDialogs() {
@@ -162,7 +164,16 @@ class UMM_Ext implements Plugin.Class {
         this.ori.editMissionSetDetails = editMissionSetDetails;
 
         this.ori.addUmmButtons = createToolbar;
+
+        this.ori.reloadSettingsWindowIfNeeded = () => {
+            if (window.iitcLoaded) {
+                if ($("#dialog-umm-options").dialog('isOpen')) {
+                    showUmmOptions();
+                }
+            }
+        }
     }
+
 
     monkeyPatchToolbar() {
         this.ori.updateCurrentActiveMissionSidebar = () => updateCurrentActiveMissionSidebar(this.state);

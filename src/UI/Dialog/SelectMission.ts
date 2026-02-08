@@ -1,4 +1,4 @@
-import { setCurrentMission } from "../../Edits";
+import { setCurrentMission, startEdit } from "../../Edits";
 import { main } from "../../Main";
 import { Mission } from "../../State/Mission";
 import { notification } from "../Notification";
@@ -97,7 +97,7 @@ const onMissionSelect = () => {
     if (main.umm.missionModeActive) {
         // eslint-disable-next-line unicorn/no-null
         renderPortalDetails(null); // Avoid adding current portal to a mission
-        main.umm.resumeOrStartNewMission(main.state.get());
+        startEdit();
     } else {
         mission.show();
         notification(`Current working mission set to #${mission.id + 1}`);
