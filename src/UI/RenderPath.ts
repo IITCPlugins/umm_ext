@@ -17,8 +17,9 @@ export class RenderPath {
     private editDragLine: L.Polyline | undefined;
 
 
-    constructor(ummMissionPaths: L.LayerGroup<any>) {
-        this.missionPaths = ummMissionPaths;
+    constructor() {
+        this.missionPaths = new window.L.FeatureGroup();
+        window.addLayerGroup('UMM: Mission Paths', this.missionPaths, true);
 
         this.touchIcon = L.Browser.touch ?
             new L.DivIcon({
@@ -32,10 +33,20 @@ export class RenderPath {
 
     }
 
+
+    isVisible(): boolean {
+        return window.map.hasLayer(this.missionPaths);
+    }
+
+    isLayer(layer: L.ILayer): boolean {
+        return layer === this.missionPaths;
+    }
+
+
     redraw() {
         this.missionPaths.clearLayers();
 
-        const editMode = main.umm.missionModeActive;
+        const editMode = main.missionModeActive;
 
         main.state.missions.forEach((mission) => {
             if (main.state.isCurrent(mission.id) && editMode) {

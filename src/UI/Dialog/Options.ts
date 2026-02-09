@@ -28,8 +28,8 @@ export const showUmmOptions = () => {
         $("<p>").append(
             $("<b>", { text: "Mission options" }), $("<br>"),
             'Layers: ',
-            '<label style="user-select: none"><input type="checkbox" onclick="window.plugin.umm.toggleLayerPaths(this.checked)" id="umm-layercheckbox-paths"' + (window.map.hasLayer(main.umm.ummMissionPaths) ? ' checked' : '') + '>Mission Paths</label>',
-            '<label style="user-select: none"><input type="checkbox" onclick="window.plugin.umm.toggleLayerNumbers(this.checked)" id="umm-layercheckbox-numbers"' + (window.map.hasLayer(main.umm.ummMissionNumbers) ? ' checked' : '') + '>Mission Numbers</label>',
+            '<label style="user-select: none"><input type="checkbox" onclick="window.plugin.umm.toggleLayerPaths(this.checked)" id="umm-layercheckbox-paths"' + (main.renderPath.isVisible() ? ' checked' : '') + '>Mission Paths</label>',
+            '<label style="user-select: none"><input type="checkbox" onclick="window.plugin.umm.toggleLayerNumbers(this.checked)" id="umm-layercheckbox-numbers"' + (main.renderNumbers.isVisible() ? ' checked' : '') + '>Mission Numbers</label>',
             button("Edit banner details", editMissionSetDetails, "w-full"),
             button("Change active mission #", editActiveMission, "w-full"),
             button("Zoom to view all missions", () => state.missions.zoom(), "w-full"),
@@ -75,19 +75,19 @@ const destroy = () => {
 
 
 const onLayerAdd = (event: L.LeafletLayerEvent) => {
-    if (event.layer === main.umm.ummMissionPaths) {
+    if (main.renderPath.isLayer(event.layer)) {
         $('#umm-layercheckbox-paths').prop("checked", true);
     }
-    if (event.layer === main.umm.ummMissionNumbers) {
+    if (main.renderNumbers.isLayer(event.layer)) {
         $('#umm-layercheckbox-numbers').prop("checked", true);
     }
 };
 
 const onLayerRemove = (event: L.LeafletLayerEvent) => {
-    if (event.layer === main.umm.ummMissionPaths) {
+    if (main.renderPath.isLayer(event.layer)) {
         $('#umm-layercheckbox-paths').prop("checked", false);
     }
-    if (event.layer === main.umm.ummMissionNumbers) {
+    if (main.renderNumbers.isLayer(event.layer)) {
         $('#umm-layercheckbox-numbers').prop("checked", false);
     }
 };

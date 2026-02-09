@@ -13,9 +13,19 @@ export class RenderNumbers {
 
     private missionNumbers: L.LayerGroup<any>;
 
-    constructor(ummMissionNumbers: L.LayerGroup<any>) {
-        this.missionNumbers = ummMissionNumbers;
+    constructor() {
+        this.missionNumbers = new window.L.FeatureGroup();
+        window.addLayerGroup('UMM: Mission Numbers', this.missionNumbers, true);
     }
+
+    isVisible(): boolean {
+        return window.map.hasLayer(this.missionNumbers);
+    }
+
+    isLayer(layer: L.ILayer): boolean {
+        return layer === this.missionNumbers;
+    }
+
 
     redraw() {
         this.missionNumbers.clearLayers();

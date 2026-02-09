@@ -218,7 +218,7 @@ export class State {
 
             updatePortalCountSidebar();
 
-            if (main.umm.missionModeActive) {
+            if (main.missionModeActive) {
                 notification(`Mission mode active.\n${this.theState.missionSetName}\nCurrent mission #${this.theState.currentMission + 1}\nSelect next portal`);
             } else {
                 notification(`${this.theState.missionSetName}\nCurrent active mission set to #${this.theState.currentMission + 1}`);
