@@ -6,11 +6,11 @@
   "type": "module",
   "scripts": {
     "build": "yarn build:dev",
-    "build:dev": "yarn ipk build:dev",
-    "build:prod": "yarn ipk build:prod",
+    "build:dev": "yarn ipk build:dev; yarn merge",
+    "build:prod": "yarn ipk build:prod; yarn merge",
     "start": "yarn ipk fileserver",
     "autobuild": "yarn ipk autobuild",
-    "merge-userscripts": "node scripts/merge-userscripts.cjs"
+    "merge": "node scripts/merge-userscripts.cjs"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
