@@ -27,7 +27,7 @@ export const addWaypointEditorToPortal = () => {
     const passPhraseHtml = $("<div>", { id: "umm-passphrase-container" }); // Placeholder to be replaced with updatePassPhraseContent
     wayPointHtml.append(passPhraseHtml);
 
-    $("#portaldetails #randdetails").insertBefore(wayPointHtml);
+    $("#portaldetails #randdetails").before(wayPointHtml);
 
     // Make mission dropdown functional
     $("#umm-mission-select").on('change', () => {
@@ -58,8 +58,9 @@ const portalMissionSelectFactory = (validMissionIds: number[]): JQuery => {
         missionSelect.append(missionOption);
     })
 
-    // TODO select current Mission if possible
-    $("option", missionSelect).first().prop("selected", true);// For now select first mission as default
+    const current = main.state.getCurrent();
+    const preSelect = validMissionIds.includes(current) ? current : validMissionIds[0];
+    $(missionSelect).val(preSelect);
 
     return missionSelect;
 }
@@ -80,7 +81,10 @@ const portalActionSelectFactory = (portal: UMM_Portal): JQuery => {
 
 
 const updatePassPhraseContent = () => {
-    $("#umm-passphrase-container").replaceWith(passCodeBoxFactory(currentPortal()!));
+    const portal = currentPortal();
+    if (!portal) return;
+
+    $("#umm-passphrase-container").replaceWith(passCodeBoxFactory(portal));
     $("#umm-passphrase-container textarea").css({ "overflow-y": "hidden" });
 
     if ($("#umm-action-select").val() == "PASSPHRASE") {
@@ -135,7 +139,10 @@ const savePassPhrase = () => {
 
 
 const updateActionSelect = () => {
-    $("#umm-action-select").replaceWith(portalActionSelectFactory(currentPortal()!));
+    const portal = currentPortal();
+    if (!portal) return;
+
+    $("#umm-action-select").replaceWith(portalActionSelectFactory(portal));
 
     $("#umm-action-select").on('change', () => {
         if ($("#umm-action-select").val() == "PASSPHRASE") {
