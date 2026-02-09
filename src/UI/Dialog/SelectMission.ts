@@ -2,6 +2,7 @@ import { setCurrentMission, startEdit } from "../../Edits";
 import { main } from "../../Main";
 import { Mission } from "../../State/Mission";
 import { notification } from "../Notification";
+import { title, version } from "../Text";
 import { button, dialogButton, dialogButtonClose } from "./Button";
 import { showUmmOptions } from "./Options";
 
@@ -28,7 +29,7 @@ export const editActiveMission = () => {
 
     window.dialog({
         html: html,
-        title: `${main.umm.title} v${main.umm.version}`,
+        title: `${title} v${version}`,
         id: 'umm-options',
         width: 350,
         buttons: [
@@ -94,7 +95,7 @@ const onMissionSelect = () => {
 
     setCurrentMission(mission.id);
 
-    if (main.umm.missionModeActive) {
+    if (main.missionModeActive) {
         // eslint-disable-next-line unicorn/no-null
         renderPortalDetails(null); // Avoid adding current portal to a mission
         startEdit();

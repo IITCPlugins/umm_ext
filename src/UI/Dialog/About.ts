@@ -1,4 +1,4 @@
-import { main } from "../../Main";
+import { changelog, title, version } from "../Text";
 import { dialogButton, dialogButtonClose } from "./Button";
 import { showUmmOptions } from "./Options";
 
@@ -17,13 +17,13 @@ export const about = () => {
 
     const buttons = [
         dialogButton("< Main Menu", showUmmOptions),
-        dialogButton("Changelog", () => alert(main.umm.changelog)),
+        dialogButton("Changelog", () => dialog({ title: "Changelog", html: changelog })),
         dialogButtonClose()
     ];
 
     window.dialog({
         html: html,
-        title: `${main.umm.title} v${main.umm.version} - About`,
+        title: `${title} v${version} - About`,
         id: 'umm-options',
         width: 350,
         buttons: buttons

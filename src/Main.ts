@@ -16,22 +16,26 @@ import { addWaypointEditorToPortal } from "./UI/EditWaypoint";
 class UMM_Ext implements Plugin.Class {
 
     public umm: UMM;
-    private ummSetup: any;
 
     public renderPath: RenderPath;
     public renderNumbers: RenderNumbers;
     public state: State;
+    public missionModeActive: boolean;
+    public missionModeResuming: boolean; // TODO: move it to edit.ts?
 
 
     constructor() {
         // prevent UMM boot
         const index = window.bootPlugins.findIndex((x: any) => {
-            console.log(x.info.script.name);
             return x.info.script.name === "IITC Plugin: Ultimate Mission Maker";
         });
 
-        if (index !== -1) this.ummSetup = window.bootPlugins.splice(index, 1)[0];
+        if (index !== -1) {
+            console.info("Ultimate Mission Editor found - this is no longer required for UMM-Ext");
+            window.bootPlugins.splice(index, 1);
+        }
     }
+
 
     init() {
         // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -39,28 +43,41 @@ class UMM_Ext implements Plugin.Class {
 
         this.umm = (window.plugin as any).umm;
         if (!this.umm) {
+            // TODO REMOVE UMM
             console.error("UMM_Ext: UMM plugin not found!");
             return;
         }
 
-
-        if (this.ummSetup) {
-            console.log("boot UMM");
-            this.ori.addUmmButtons = createToolbar // used in setup
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-            this.ummSetup();
-        }
-
-
-
         this.state = new State();
+
+        $('body').append("<div class='umm-notification' style='display:none'></div>");
+
+        createToolbar();
+        $('#toolbox').append(
+            $('<a>', { text: "UMM", title: "Ultimate Mission Maker", click: () => $('.leaflet-umm.leaflet-bar').toggle() }));
+
+        // hide toolbar by default
+        $('.leaflet-umm.leaflet-bar').hide();
+
+        this.umm.ummMissionPaths = new window.L.FeatureGroup();
+        window.addLayerGroup('UMM: Mission Paths', this.umm.ummMissionPaths, true);
         this.renderPath = new RenderPath(this.umm.ummMissionPaths);
+
+
+        this.umm.ummMissionNumbers = new window.L.FeatureGroup();
+        window.addLayerGroup('UMM: Mission Numbers', this.umm.ummMissionNumbers, true);
         this.renderNumbers = new RenderNumbers(this.umm.ummMissionNumbers);
+
+        window.addHook('portalSelected', (event) => addPortalToCurrentMission(event));
+        window.addHook('portalDetailsUpdated', addWaypointEditorToPortal);
+        window.addHook('mapDataRefreshEnd', () => this.state.checkAllPortals()); // TODO: only do it if required
+
+        this.missionModeActive = false;
+        this.missionModeResuming = false;
 
         this.patch();
 
-        updateCurrentActiveMissionSidebar(main.state);
-        updatePortalCountSidebar();
+        this.redrawAllTotal();
     }
 
     private get ori(): UMM_old { return this.umm as UMM_old; }
@@ -72,7 +89,8 @@ class UMM_Ext implements Plugin.Class {
     }
 
     redrawAllTotal() {
-        updateCurrentActiveMissionSidebar(this.state)
+        updateCurrentActiveMissionSidebar(this.state);
+        updatePortalCountSidebar();
         this.umm.reloadSettingsWindowIfNeeded();
         this.redrawAll();
         this.state.missions.zoom();
@@ -80,7 +98,6 @@ class UMM_Ext implements Plugin.Class {
     }
 
     patch() {
-        this.replaceToolboxButton();
         this.monkeyPatchState();
         this.monkeyPatchDrawing();
         this.monkeyPatchNumbers();
@@ -91,21 +108,6 @@ class UMM_Ext implements Plugin.Class {
     }
 
 
-    // Patch - Use Toolbox as visibilty toggle
-    replaceToolboxButton() {
-        // delay removal, IDK who why when moves the button around
-        window.setTimeout(() => {
-            $('#toolbox a:contains("UMM Opt")').remove();
-            $('#toolbox_component a:contains("UMM Opt")').remove();
-        }, 500);
-
-        // create new
-        $('#toolbox').append(
-            $('<a>', { text: "UMM", title: "Ultimate Mission Maker", click: () => $('.leaflet-umm.leaflet-bar').toggle() }));
-
-        // hide toolbar as default
-        $('.leaflet-umm.leaflet-bar').hide();
-    }
 
     // Patch - State management
     monkeyPatchState() {
@@ -114,8 +116,6 @@ class UMM_Ext implements Plugin.Class {
             // we assume the state is already updated
             this.state.save();
         };
-
-        window.removeHook('portalDetailsUpdated', this.ori.updateMissionPortalsDetails);
 
         this.ori.clearMissionData = clearMissionData;
     }
@@ -146,8 +146,6 @@ class UMM_Ext implements Plugin.Class {
 
     // Patch - refresh our drawing on new Portal add
     monkeyPatchPortalEdits() {
-        window.addHook('portalSelected', (event) => addPortalToCurrentMission(event));
-        window.removeHook('portalSelected', this.ori.addPortalToCurrentMission);
         this.ori.addPortalToCurrentMission = addPortalToCurrentMission;
         this.ori.undoPortal = removeLastPortal;
         this.ori.toggleMissionMode = toggleMissionMode;
@@ -156,10 +154,6 @@ class UMM_Ext implements Plugin.Class {
         this.ori.reverseMission = reverseMission;
         this.ori.setCurrentMission = setCurrentMission;
         this.ori.resumeOrStartNewMission = startEdit;
-
-        window.removeHook('portalDetailsUpdated', this.ori.addWaypointEditorToPortal);
-        window.addHook('portalDetailsUpdated', addWaypointEditorToPortal);
-
     }
 
     monkeyPatchDialogs() {
@@ -186,50 +180,6 @@ class UMM_Ext implements Plugin.Class {
     }
 }
 
-/*
-  function setup() {
-
-    $('body').append("<div class='umm-notification' style='display:none'></div>");
-
-    thisPlugin.ummBookmarks = false;
-    thisPlugin.addUmmButtons(ummState);
-    $('#toolbox').append('<a onclick="window.plugin.umm.showUmmOptions()" accesskey="m">UMM Opt</a>');
-
-    thisPlugin.ummMissionPaths = new window.L.FeatureGroup();
-    window.addLayerGroup('UMM: Mission Paths', thisPlugin.ummMissionPaths, true);
-
-    thisPlugin.drawMissions();
-
-    thisPlugin.ummMissionNumbers = new window.L.FeatureGroup();
-    window.addLayerGroup('UMM: Mission Numbers', thisPlugin.ummMissionNumbers, true);
-
-    map.on('layeradd', function (obj) {
-      if (obj.layer === thisPlugin.ummMissionPaths) {
-        $('#umm-layercheckbox-paths').prop("checked", true);
-      }
-      if (obj.layer === thisPlugin.ummMissionNumbers) {
-        $('#umm-layercheckbox-numbers').prop("checked", true);
-      }
-    });
-    map.on('layerremove', function (obj) {
-      if (obj.layer === thisPlugin.ummMissionPaths) {
-        $('#umm-layercheckbox-paths').prop("checked", false);
-      }
-      if (obj.layer === thisPlugin.ummMissionNumbers) {
-        $('#umm-layercheckbox-numbers').prop("checked", false);
-      }
-    });
-
-    thisPlugin.refreshMissionNumbers();
-
-    window.addHook('portalSelected', thisPlugin.addPortalToCurrentMission); // changed from portalDetailsUpdated to portalSelected to speed up the path drawing
-    window.addHook('portalDetailsUpdated', thisPlugin.updateMissionPortalsDetails); // update all matching mission portal details (after drawing the path)
-    window.addHook('mapDataRefreshEnd', thisPlugin.storeMissingData);
-
-    window.addHook('portalDetailsUpdated', thisPlugin.addWaypointEditorToPortal); // update all matching mission portal details (after drawing the path)
-    thisPlugin.lastSelectedWaypoint = { missionId: 0, portalPositionInMission: 0 }
-  };
-*/
 
 /**
  * use "main" to access you main class from everywhere

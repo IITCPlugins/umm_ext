@@ -2,6 +2,7 @@ import { clearMissionData, mergeMissions, reverseMission, splitMissionOptions } 
 import { exportData, loadFileInput } from "../../ImportExport";
 import { main } from "../../Main";
 import { State } from "../../State/State";
+import { title, version } from "../Text";
 import { about } from "./About";
 import { button, dialogButton, dialogButtonClose } from "./Button";
 import { editMissionSetDetails } from "./MissionDetails";
@@ -26,7 +27,9 @@ export const showUmmOptions = () => {
         ),
         $("<p>").append(
             $("<b>", { text: "Mission options" }), $("<br>"),
-            'Layers: <label style="user-select: none"><input type="checkbox" onclick="window.plugin.umm.toggleLayerPaths(this.checked)" id="umm-layercheckbox-paths"' + (window.map.hasLayer(main.umm.ummMissionPaths) ? ' checked' : '') + '>Mission Paths</label> <label style="user-select: none"><input type="checkbox" onclick="window.plugin.umm.toggleLayerNumbers(this.checked)" id="umm-layercheckbox-numbers"' + (window.map.hasLayer(main.umm.ummMissionNumbers) ? ' checked' : '') + '>Mission Numbers</label>',
+            'Layers: ',
+            '<label style="user-select: none"><input type="checkbox" onclick="window.plugin.umm.toggleLayerPaths(this.checked)" id="umm-layercheckbox-paths"' + (window.map.hasLayer(main.umm.ummMissionPaths) ? ' checked' : '') + '>Mission Paths</label>',
+            '<label style="user-select: none"><input type="checkbox" onclick="window.plugin.umm.toggleLayerNumbers(this.checked)" id="umm-layercheckbox-numbers"' + (window.map.hasLayer(main.umm.ummMissionNumbers) ? ' checked' : '') + '>Mission Numbers</label>',
             button("Edit banner details", editMissionSetDetails, "w-full"),
             button("Change active mission #", editActiveMission, "w-full"),
             button("Zoom to view all missions", () => state.missions.zoom(), "w-full"),
@@ -47,16 +50,46 @@ export const showUmmOptions = () => {
         )
     );
 
+    // move this to option dialog
+    window.map.on('layeradd', onLayerAdd);
+    window.map.on('layerremove', onLayerRemove);
+
     window.dialog({
         html: html,
-        title: `${main.umm.title} v${main.umm.version}`,
+        title: `${title} v${version}`,
         id: 'umm-options',
         width: 350,
         buttons: [
             dialogButton("About this plugin", about),
             dialogButtonClose()
         ],
+        closeCallback: () => destroy()
     })
+};
+
+
+const destroy = () => {
+    window.map.off('layeradd', onLayerAdd);
+    window.map.off('layerremove', onLayerRemove);
+}
+
+
+const onLayerAdd = (event: L.LeafletLayerEvent) => {
+    if (event.layer === main.umm.ummMissionPaths) {
+        $('#umm-layercheckbox-paths').prop("checked", true);
+    }
+    if (event.layer === main.umm.ummMissionNumbers) {
+        $('#umm-layercheckbox-numbers').prop("checked", true);
+    }
+};
+
+const onLayerRemove = (event: L.LeafletLayerEvent) => {
+    if (event.layer === main.umm.ummMissionPaths) {
+        $('#umm-layercheckbox-paths').prop("checked", false);
+    }
+    if (event.layer === main.umm.ummMissionNumbers) {
+        $('#umm-layercheckbox-numbers').prop("checked", false);
+    }
 };
 
 

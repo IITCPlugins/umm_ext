@@ -4,6 +4,7 @@ import { dialogButton } from "./UI/Dialog/Button";
 import { editMissionSetDetails } from "./UI/Dialog/MissionDetails";
 import { showUmmOptions } from "./UI/Dialog/Options";
 import { notification } from "./UI/Notification";
+import { title } from "./UI/Text";
 
 let lastPortal: PortalGUID;
 
@@ -12,8 +13,8 @@ export const addPortalToCurrentMission = (data: EventPortalSelected) => {
     const state = main.state;
 
     // we are not in edit mode or it is the first selection
-    if (!main.umm.missionModeActive || main.umm.missionModeResuming) {
-        main.umm.missionModeResuming = false;
+    if (!main.missionModeActive || main.missionModeResuming) {
+        main.missionModeResuming = false;
         return;
     }
 
@@ -64,8 +65,7 @@ export const clearMissionData = () => {
     main.state.save();
 
     updateCurrentActiveMissionSidebar(main.state);
-    main.umm.reloadSettingsWindowIfNeeded();
-    if (main.umm.missionModeActive) {
+    if (main.missionModeActive) {
         toggleMissionMode();
     }
     main.redrawAll();
@@ -74,7 +74,7 @@ export const clearMissionData = () => {
 
 export const removeLastPortal = () => {
 
-    if (!main.umm.missionModeActive) {
+    if (!main.missionModeActive) {
         notification(`Only valid in edit mode`);
         return;
     }
@@ -114,8 +114,8 @@ export const removeLastPortal = () => {
 
 export const toggleMissionMode = () => {
 
-    if (main.umm.missionModeActive) {
-        main.umm.missionModeActive = false;
+    if (main.missionModeActive) {
+        main.missionModeActive = false;
         $('#umm-toggle-bookmarks').css("background-color", "");
     } else {
         if (!main.state.isValid()) {
@@ -125,7 +125,7 @@ export const toggleMissionMode = () => {
             return
         }
 
-        main.umm.missionModeActive = true;
+        main.missionModeActive = true;
 
         startEdit();
         $('#umm-toggle-bookmarks').css("background-color", "crimson");
@@ -139,7 +139,7 @@ export const startEdit = () => {
     // If the currentMission already has portals, resume mission creation at last portal
     const editMission = main.state.getEditMission();
     if (editMission?.hasPortals()) {
-        main.umm.missionModeResuming = true;
+        main.missionModeResuming = true;
         editMission.show();
         window.renderPortalDetails(editMission.portals.get(-1)!.guid);
         notification(`${main.state.getBannerName()}\nMission mode active.\nResuming mission #${main.state.getCurrent() + 1}\nSelect next portal`);
@@ -164,7 +164,7 @@ export const splitMissionOptions = () => {
 
     window.dialog({
         html: html,
-        title: `${main.umm.title} - Split mission options`,
+        title: `${title} - Split mission options`,
         id: 'umm-options',
         width: 350,
         buttons: buttons
