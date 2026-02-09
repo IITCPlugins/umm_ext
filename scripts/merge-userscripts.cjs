@@ -19,7 +19,7 @@ function extractHeader(content) {
 function addMatchToHeader(header) {
   return header.replace(
     /^(\/\/\s+@match.*)$/m,
-    "$1\n// @match           https://mission.ingress.com/*",
+    "$1\n// @match           https://missions.ingress.com/*",
   );
 }
 
