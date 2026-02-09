@@ -5,7 +5,7 @@ const repoRoot = path.resolve(__dirname, "..");
 const dist = path.join(repoRoot, "dist");
 const fileIITC = path.join(dist, "iitc.user.js");
 const fileEditor = path.join(dist, "editor.user.js");
-const outFile = path.join(dist, "combined.user.js");
+const outFile = path.join(dist, "iitc-ultimate-mission-maker.user.js");
 
 function read(file) {
   return fs.existsSync(file) ? fs.readFileSync(file, "utf8") : "";
@@ -14,6 +14,13 @@ function read(file) {
 function extractHeader(content) {
   const m = content.match(/\/\/ ==UserScript==[\s\S]*?\/\/ ==\/UserScript==/);
   return m ? m[0] : "";
+}
+
+function addMatchToHeader(header) {
+  return header.replace(
+    /^(\/\/\s+@match.*)$/m,
+    "$1\n// @match           https://mission.ingress.com/*",
+  );
 }
 
 function stripHeader(content) {
@@ -59,7 +66,8 @@ if (!a || !b) {
   process.exit();
 }
 
-const header = extractHeader(a) || extractHeader(b) || "";
+let header = extractHeader(a) || extractHeader(b) || "";
+header = addMatchToHeader(header);
 const partA = prepare(fileIITC, "wrapper_iitc");
 const partB = prepare(fileEditor, "wrapper_editor");
 
@@ -69,14 +77,18 @@ const combinedInit = `
   if (typeof GM_info !== 'undefined' && GM_info && GM_info.script)
     info.script = { version: GM_info.script.version, name: GM_info.script.name, description: GM_info.script.description };
   if (typeof unsafeWindow != 'undefined' || typeof GM_info == 'undefined' || GM_info.scriptHandler != 'Tampermonkey') {
+
+    var pluginContent;
+    if (window.location.host.match(/^intel\.ingress\.com$/i)) 
+      pluginContent = wrapper_iitc;
+    else 
+      pluginContent = wrapper_editor;
+    
     const script = document.createElement('script');
-    const code = '(' + wrapper_iitc + ')(' + JSON.stringify(info) + ');(' + wrapper_editor + ')(' + JSON.stringify(info) + ');';
+    const code = '(' + pluginContent + ')(' + JSON.stringify(info) + ');'
     script.appendChild(document.createTextNode(code));
     document.head.appendChild(script);
-  } else {
-    try { wrapper_iitc(info); } catch (e) {}
-    try { wrapper_editor(info); } catch (e) {}
-  }
+  } 
 })();
 `;
 
