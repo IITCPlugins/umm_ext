@@ -80,13 +80,9 @@ const portalActionSelectFactory = (portal: UMM_Portal): JQuery => {
 
 
 const updatePassPhraseContent = () => {
-    $("#umm-passphrase-container").replaceWith(passCodeBoxFactory($("#umm-mission-select").val()));
-    $("#umm-passphrase-container").children('textarea').each(function () {
-        this.setAttribute("style", "height:" + (this.scrollHeight) + "px;overflow-y:hidden;");
-    }).on("input", function () {
-        this.style.height = "auto";
-        this.style.height = (this.scrollHeight) + "px";
-    });
+    $("#umm-passphrase-container").replaceWith(passCodeBoxFactory(currentPortal()!));
+    $("#umm-passphrase-container textarea").css({ "overflow-y": "hidden" });
+
     if ($("#umm-action-select").val() == "PASSPHRASE") {
         $("#umm-passphrase-container").css('display', 'flex');
     }
@@ -139,21 +135,18 @@ const savePassPhrase = () => {
 
 
 const updateActionSelect = () => {
-    $("#umm-action-select").replaceWith(portalActionSelectFactory($("#umm-mission-select").val()));
+    $("#umm-action-select").replaceWith(portalActionSelectFactory(currentPortal()!));
 
-    $("#umm-action-select").on('change', function (e) {
+    $("#umm-action-select").on('change', () => {
         if ($("#umm-action-select").val() == "PASSPHRASE") {
             updatePassPhraseContent();
         } else {
             $("#umm-passphrase-container").hide();
         }
-        let ummState = thisPlugin.getUmmState();
-        let missionId = $("#umm-mission-select").val();
-        let portalId = findWayPointIdForSelectedPortalInMission(missionId);
-        let action = $("#umm-action-select").val();
-        ummState.missions[missionId].portals[portalId].objective.type = action;
-        thisPlugin.saveUmmState(ummState);
-        thisPlugin.notification("Portal action saved");
+
+        currentPortal()!.objective.type = $("#umm-action-select").val() as string;
+        main.state.save();
+        notification("Portal action saved");
     });
 }
 
