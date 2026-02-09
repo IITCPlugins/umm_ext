@@ -1,11 +1,7 @@
 import { Mission } from "./Mission";
 import { UMM_State } from "../UMM_types";
-import { main } from "../Main";
 import { migrateUmmVersion } from "./StateMigration";
 import { Missions } from "./Missions";
-import { notification } from "../UI/Notification";
-import { updatePortalCountSidebar } from "../UI/ButtonBar";
-import { setCurrentMission } from "../Edits";
 
 
 const STORAGE_KEY = "ultimate-mission-maker";
@@ -146,7 +142,7 @@ export class State {
             if (numberPattern) {
 
                 const length = numberPattern.length > 1 ? totalMissions.toString().length : 0;
-                const paddedNumber = window.zeroPad(missNumber, length);
+                const paddedNumber = this.zeroPad(missNumber, length);
                 title = title.replace(/N+/g, paddedNumber);
             }
         }
@@ -159,6 +155,9 @@ export class State {
         return title;
     }
 
+    private zeroPad(num: number, length: number): string {
+        return num.toString().padStart(length, '0');
+    }
 
     getEditMission(): Mission | undefined {
         return this.missions.get(this.theState.currentMission);
@@ -177,51 +176,6 @@ export class State {
 
     isCurrent(missionId: number): boolean {
         return this.theState.currentMission === missionId;
-    }
-
-
-    nextMission() {
-        if (this.theState.currentMission >= this.theState.plannedBannerLength - 1) return;
-
-        // Activate the new mission
-        setCurrentMission(this.theState.currentMission + 1)
-
-        const mission = this.missions.get(this.theState.currentMission)!;
-        console.assert(mission, "no mission found");
-
-        if (mission.hasPortals()) {
-            this.showMission(mission);
-        } else {
-            notification(`${this.theState.missionSetName}\nStart of mission #${this.theState.currentMission + 1}\nSelect start portal.`);
-        }
-    }
-
-    prevMission() {
-        if (this.theState.currentMission <= 0) return;
-
-        // Activate the new mission
-        setCurrentMission(this.theState.currentMission - 1)
-
-        const mission = this.missions.get(this.theState.currentMission)!;
-        console.assert(mission, "no mission found");
-
-        if (mission.hasPortals()) {
-            this.showMission(mission);
-        }
-    }
-
-    showMission(mission: Mission) {
-        if (mission.hasPortals()) {
-            mission.show();
-
-            updatePortalCountSidebar();
-
-            if (main.missionModeActive) {
-                notification(`Mission mode active.\n${this.theState.missionSetName}\nCurrent mission #${this.theState.currentMission + 1}\nSelect next portal`);
-            } else {
-                notification(`${this.theState.missionSetName}\nCurrent active mission set to #${this.theState.currentMission + 1}`);
-            }
-        }
     }
 
 

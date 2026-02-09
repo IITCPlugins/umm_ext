@@ -1,8 +1,10 @@
-import { removeLastPortal, toggleMissionMode } from "../Edits";
+import { removeLastPortal, setCurrentMission, toggleMissionMode } from "../Edits";
 import { main } from "../Main";
+import { Mission } from "../State/Mission";
 import { State } from "../State/State";
 import { showUmmOptions } from "./Dialog/Options";
 import { editActiveMission } from "./Dialog/SelectMission";
+import { notification } from "./Notification";
 
 // TODO use real files
 const imgBookmarks = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAATLSURBVGhD7ZoHqH5jHMdfe++9CcnKLnsWsjLKLiHZo5AthQjJlvwzSkqyIjObEJGysorsvSPz8znv+9NzT+c97xnvvZy63/p0z/Pc5z7n+Z5znvV7bm9a/0M9Du/AITCrGWPS/HAWfAXPwV4wM4xLC8JF8C3Y9t7fCe9DW0Nh4BtI6xYf2OEwJzTVHHAifA1R7zXwb+KN5LqJoSIDD8OWcBC8NsiTz+EMWBiqyrd5IHwAUc8ng58TjFhwP6hrqMjAI7AZpJoJdoanIMr9BJfBClCmHeBliL97CbaGIwfpCUZCZYZmg9AwA5vDKG0Cd8Kf4N/9DrfAupBqPXgIov53wbb5UFSpkdAwQ4dC3sCjUMVAXqvBDPgVoq4HYQ/QWBj9Eo6H2SFVJSOhIkOBBraAtloKLoTvIa3/FzgfHKGKVMtIKAy9AtGJxy0/15PhdbgeloEyjTRio2Wy5BNevH/ZSiONvAB23MnQyuAk5j2PMAMtArfCdbC0GRU10shtcFX/ciw6APbsX2Zv4nl4C3Y1A20E0Q4nO+XEt2z/cqga9ZE6mgdm6V/2TgPrd+Qp+1w14zJm3izV650H/t2NWapYlY3sCHfBqCcTWg4eA4fNn8GRyGHzbdgF6mh7+AGcNOcyo0CVjVwK/s6FZRU9DVFf4NqqqRaC5fuXhapsZAFwBr44S5XLdVPUleIENw7Zb51TUjXuI864J4CjTCrHe/vFHxD1BbdDW7k0+g6sb2MzBmpsxInKss9kqf4NngTzrgCHz6hP7CtbwTi0N3j/lbJUX42NbAg3wFFZqr+vcP31BXgjV8mngEbvhW1hMtXYSJHSFfFUaMXBTzVWI1MpJ1bb6nyjOmvkaLCtTguqs0YcLW+GtbNUh43k1Wkja0Cs2Tpr5BiwrftnqQ4buRxs68FZqsNGjLIYXXQxqaY7+38pO7m7zIhpqc4ZMZ71IdjONGjRCSNzg9tfY14GJFxJvwhT9kacfdsuJN1iexxhu/4CRys7ej7oXduIDVsfVoeYjHzdbrIMQhtYU6eDdRloWMIM5NK+TgzL4EN6ZBDsA3nVMmJ89k2Ick+Aw58mIm8DUPvCe+AnMJ8Z6A6wzANZarSMIUe9KW7a8qplxIZHmeBKMCjgXt7PoEyHgU/4VYhP7hJwD57uHo28+3C2g/z95GzIq7IRb2zIP8oEHto0lXV60GM995uBfHux33ePbywrvZ8HOotBXrXeyMcQZQLPLNrI+JdzQoR67HengvsMQ6qmPY9xyX4uRH/Lq5YRK3TkiHKeZWwKVWXZUVH1pppgJF7p3ZA/MQptA9eCT2wtMypoJzAYbt2/wU2wJoxLu0EMQvbZLOphWNIMn3yZoSpKDchnECdS1n8ftAkRGdeKEJQYIloHMjnOO5K0MZQ38BEcC4aMloQLII4TxLJ1zt5XAQeC+MwdAAzHFh7UNjGUN+DgcBwUnaU7cZ4E6QAy6ux9Ubga/Dwt/yN4hhlR+1JVMTTMwLDIeSpXBW6OInIpDslnQixDDMF6Fm/D/b3TgIaGjWClKjJ0D6QGPgWPDqoYyMvPyk77LER93stoZvwzgPc0kL4qtFbeUFsDRfIfDHxI0QfE0GsatB6bNHQOVP2EmsgNlAdEu2epaXVSvd4/r54FA9f01AsAAAAASUVORK5CYII=";
@@ -20,9 +22,9 @@ export const createToolbar = () => {
         onAdd: () => {
             const container = $("<div>", { class: "leaflet-umm leaflet-bar" }).append(
                 toolBarButton("umm-toggle-bookmarks", imgBookmarks, "UMM: Toggle Mission Mode", toggleMissionMode),
-                toolBarButton("umm-next-mission", imgNext, "UMM: Next Mission", () => main.state.nextMission()),
+                toolBarButton("umm-next-mission", imgNext, "UMM: Next Mission", nextMission),
                 toolBarButton("umm-edit-active-mission", undefined, "UMM: Select mission number", editActiveMission),
-                toolBarButton("umm-previous-mission", imgPrevious, "UMM: Previous Mission", () => main.state.prevMission()),
+                toolBarButton("umm-previous-mission", imgPrevious, "UMM: Previous Mission", prevMission),
                 toolBarButton("umm-number-of-portals", undefined, "UMM: Number of portals in current mission"),
                 toolBarButton("umm-undo", imgUndo, "UMM: Remove Last", removeLastPortal),
                 toolBarButton("umm-opt", imgOpt, "UMM: Opt", showUmmOptions),
@@ -75,5 +77,52 @@ export const updatePortalCountSidebar = () => {
         $('#umm-number-of-portals').text(`P${count}`);
     } else {
         $('#umm-number-of-portals').text(`${count}`);
+    }
+}
+
+
+const nextMission = () => {
+    const state = main.state;
+    if (state.getCurrent() >= state.getPlannedLength() - 1) return;
+
+    // Activate the new mission
+    setCurrentMission(state.getCurrent() + 1)
+
+    const mission = state.getEditMission()!;
+    console.assert(mission, "no mission found");
+
+    if (mission.hasPortals()) {
+        showMission(mission);
+    } else {
+        if (main.missionModeActive) {
+            notification(`${state.getBannerName()}\nStart of mission #${state.getCurrent() + 1}\nSelect start portal.`);
+        }
+    }
+}
+
+const prevMission = () => {
+    const state = main.state;
+    if (state.getCurrent() <= 0) return;
+
+    // Activate the new mission
+    setCurrentMission(state.getCurrent() - 1)
+
+    const mission = state.getEditMission()!;
+    console.assert(mission, "no mission found");
+
+    showMission(mission);
+}
+
+const showMission = (mission: Mission) => {
+    if (mission.hasPortals()) {
+        mission.show();
+
+        updatePortalCountSidebar();
+
+        if (main.missionModeActive) {
+            notification(`Mission mode active.\n${main.state.getBannerName()}\nCurrent mission #${main.state.getCurrent() + 1}\nSelect next portal`);
+        } else {
+            notification(`${main.state.getBannerName()}\nCurrent active mission set to #${main.state.getCurrent() + 1}`);
+        }
     }
 }
