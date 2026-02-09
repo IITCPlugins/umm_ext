@@ -7,14 +7,15 @@ import { notification } from "./UI/Notification";
 import { title } from "./UI/Text";
 
 let lastPortal: PortalGUID;
+let missionModeResuming = false;
 
 export const addPortalToCurrentMission = (data: EventPortalSelected) => {
 
     const state = main.state;
 
     // we are not in edit mode or it is the first selection
-    if (!main.missionModeActive || main.missionModeResuming) {
-        main.missionModeResuming = false;
+    if (!main.missionModeActive || missionModeResuming) {
+        missionModeResuming = false;
         return;
     }
 
@@ -139,7 +140,7 @@ export const startEdit = () => {
     // If the currentMission already has portals, resume mission creation at last portal
     const editMission = main.state.getEditMission();
     if (editMission?.hasPortals()) {
-        main.missionModeResuming = true;
+        missionModeResuming = true;
         editMission.show();
         window.renderPortalDetails(editMission.portals.get(-1)!.guid);
         notification(`${main.state.getBannerName()}\nMission mode active.\nResuming mission #${main.state.getCurrent() + 1}\nSelect next portal`);

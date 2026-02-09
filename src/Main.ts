@@ -14,7 +14,6 @@ class UMM_Ext implements Plugin.Class {
     public renderNumbers: RenderNumbers;
     public state: State;
     public missionModeActive: boolean;
-    public missionModeResuming: boolean; // TODO: move it to edit.ts?
 
 
     constructor() {
@@ -54,7 +53,6 @@ class UMM_Ext implements Plugin.Class {
         window.addHook('mapDataRefreshEnd', () => this.state.checkAllPortals()); // TODO: only do it if required
 
         this.missionModeActive = false;
-        this.missionModeResuming = false;
 
         this.redrawAllTotal();
     }
