@@ -24,7 +24,7 @@ export const createToolbar = () => {
                 toolBarButton("umm-toggle-bookmarks", imgBookmarks, "UMM: Toggle Mission Mode", toggleMissionMode),
                 toolBarButton("umm-next-mission", imgNext, "UMM: Next Mission", nextMission),
                 toolBarButton("umm-edit-active-mission", undefined, "UMM: Select mission number", editActiveMission),
-                toolBarButton("umm-previous-mission", imgPrevious, "UMM: Previous Mission", prevMission),
+                toolBarButton("umm-previous-mission", imgPrevious, "UMM: Previous Mission", previousMission),
                 toolBarButton("umm-number-of-portals", undefined, "UMM: Number of portals in current mission"),
                 toolBarButton("umm-undo", imgUndo, "UMM: Remove Last", removeLastPortal),
                 toolBarButton("umm-opt", imgOpt, "UMM: Opt", showUmmOptions),
@@ -100,7 +100,7 @@ const nextMission = () => {
     }
 }
 
-const prevMission = () => {
+const previousMission = () => {
     const state = main.state;
     if (state.getCurrent() <= 0) return;
 

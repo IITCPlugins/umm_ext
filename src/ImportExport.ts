@@ -1,10 +1,9 @@
-import { main } from "./Main";
-import { fileFormatVersion } from "./State/State";
+import { fileFormatVersion, State } from "./State/State";
 import { migrateUmmVersion } from "./State/StateMigration";
 import { notification } from "./UI/Notification";
 
-export const exportData = () => {
-    const ummState = main.state.get();
+export const exportData = (state: State) => {
+    const ummState = state.get();
     const data = JSON.stringify(ummState);
     const sanitizedName = ummState.missionSetName.replace(/[\W_]+/g, " ");
     const filename = sanitizedName + "-mission-data.json";
@@ -23,7 +22,7 @@ export const exportData = () => {
 }
 
 
-export const loadFileInput = async (event: Event): Promise<boolean> => {
+export const loadFileInput = async (event: Event, state: State): Promise<boolean> => {
     const files = (event.target as HTMLInputElement).files;
     if (!files || files?.length === 1) {
         alert("No file selected! Please select a mission file in JSON format and try again.");
@@ -37,10 +36,10 @@ export const loadFileInput = async (event: Event): Promise<boolean> => {
         return false;
     }
 
-    return loadFile(files[0]);
+    return loadFile(state, files[0]);
 }
 
-export const loadFile = async (inputFile: File): Promise<boolean> => {
+export const loadFile = async (state: State, inputFile: File): Promise<boolean> => {
 
     const text = await inputFile.text()
 
@@ -49,10 +48,10 @@ export const loadFile = async (inputFile: File): Promise<boolean> => {
         alert("UMM: You've attempted to load data that's newer than what's supported by this version of UMM. Please update the plugin and try again. Data has not been loaded.");
         return false;
     }
-    migrateUmmVersion(main.state, ummState);
-    main.state.save();
+    migrateUmmVersion(state, ummState);
+    state.save();
 
-    notification(`Banner data loaded:\n${main.state.getBannerName()}`);
+    notification(`Banner data loaded:\n${state.getBannerName()}`);
 
     return true;
 };

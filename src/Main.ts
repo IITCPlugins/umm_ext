@@ -10,9 +10,9 @@ import { addWaypointEditorToPortal } from "./UI/EditWaypoint";
 // eslint-disable-next-line unicorn/prevent-abbreviations
 class UMM_Ext implements Plugin.Class {
 
+    public state: State;
     public renderPath: RenderPath;
     public renderNumbers: RenderNumbers;
-    public state: State;
     public missionModeActive: boolean;
 
 
@@ -78,9 +78,5 @@ class UMM_Ext implements Plugin.Class {
  * use "main" to access you main class from everywhere
  * (same as window.plugin.UMM_Ext)
  */
-export let main: UMM_Ext;
-// TODO rework this. Current classes have to many dependencies. Editor Plugin will trigger this.
-if (window.iitcLoaded) {
-    main = new UMM_Ext();
-    Plugin.Register(main, "UMM_Ext");
-}
+export const main = new UMM_Ext();
+Plugin.Register(main, "UMM_Ext");

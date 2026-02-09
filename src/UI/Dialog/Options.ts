@@ -42,7 +42,7 @@ export const showUmmOptions = () => {
         button("Clear ALL missions data", confirmClear, "w-full"),
 
         $("<b>", { text: "Import/Export" }), $("<br>"),
-        button("Export banner data to file", exportData, "w-full"),
+        button("Export banner data to file", () => exportData(main.state), "w-full"),
         $("<div>").css({ width: 800, margin: "auto" }).append(
             '<b>Import banner data from file:</b><br>',
             $("<input>", { type: "file", change: confirmLoad }),
@@ -117,7 +117,7 @@ const confirmClear = () => {
 
 const confirmLoad = async (event: Event) => {
     if (confirm("Are you sure you want to overwrite the current mission data?")) {
-        await loadFileInput(event);
+        await loadFileInput(event, main.state);
         main.state.checkAllPortals();
         main.redrawAllTotal();
     }
