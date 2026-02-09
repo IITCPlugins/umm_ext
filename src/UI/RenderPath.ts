@@ -51,7 +51,8 @@ export class RenderPath {
         const geodesicPolyline = new L.GeodesicPolyline(mission.getLocations(), {
             color: "crimson",
             weight: 5,
-            smoothFactor: 1
+            smoothFactor: 1,
+            interactive: false
         });
         this.missionPaths.addLayer(geodesicPolyline);
     }
