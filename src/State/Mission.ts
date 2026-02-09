@@ -27,6 +27,10 @@ export class Mission {
         return this.missionID;
     }
 
+    get description(): string {
+        return this.data.missionDescription;
+    }
+
     hasPortals(): boolean {
         return this.portal_data.length > 0;
     }

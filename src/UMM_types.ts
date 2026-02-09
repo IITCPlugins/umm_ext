@@ -94,10 +94,10 @@ export interface UMM_Portal {
         longitude: number;
     };
     imageUrl: string;
-    isOrnamented: boolean; // Unknown what it does, seems false everwhere
-    isStartPoint: boolean; // Unknown what NIA uses it for, seems false everywhere
+    isOrnamented: boolean;  // only used in MEPoral - can be removed
+    isStartPoint: boolean;  // only used in MEPoral - can be removed
     title: string;
-    type: string;
+    type: string; // only used in MEPoral - can be removed
     objective: UMM_Objective;
 }
 

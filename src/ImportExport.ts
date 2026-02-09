@@ -22,47 +22,37 @@ export const exportData = () => {
     }
 }
 
-export const loadFileInputIITC = async (event: Event) => {
-    await loadFileInput(event);
-    main.state.checkAllPortals();
-    main.redrawAllTotal();
-}
 
-export const loadFileInputMission = async (event: Event) => {
-    await loadFileInput(event);
-    // thisPlugin.setActiveBannerTitle();
-    // thisPlugin.generateMissionSelect();
-}
-
-
-export const loadFileInput = (event: Event) => {
+export const loadFileInput = async (event: Event): Promise<boolean> => {
     const files = (event.target as HTMLInputElement).files;
     if (!files || files?.length === 1) {
         alert("No file selected! Please select a mission file in JSON format and try again.");
         $("#umm-import-file").val('');
-        return;
+        return false;
     }
 
     if (files[0].type != 'application/json') {
         $("#umm-import-file").val('');
         alert((files[0].name) + " has not been recognized as JSON file. Make sure you've loaded the right file.");
-        return;
+        return false;
     }
 
     return loadFile(files[0]);
 }
 
-export const loadFile = async (inputFile: File) => {
+export const loadFile = async (inputFile: File): Promise<boolean> => {
 
     const text = await inputFile.text()
 
     const ummState = JSON.parse(text);
     if (ummState.fileFormatVersion > fileFormatVersion) {
         alert("UMM: You've attempted to load data that's newer than what's supported by this version of UMM. Please update the plugin and try again. Data has not been loaded.");
-        return;
+        return false;
     }
     migrateUmmVersion(main.state, ummState);
     main.state.save();
 
     notification(`Banner data loaded:\n${main.state.getBannerName()}`);
+
+    return true;
 };

@@ -1,5 +1,5 @@
 import { clearMissionData, mergeMissions, reverseMission, splitMissionOptions } from "../../Edits";
-import { exportData, loadFileInputIITC } from "../../ImportExport";
+import { exportData, loadFileInput } from "../../ImportExport";
 import { main } from "../../Main";
 import { State } from "../../State/State";
 import { about } from "./About";
@@ -82,9 +82,11 @@ const confirmClear = () => {
     }
 };
 
-const confirmLoad = (event: Event) => {
+const confirmLoad = async (event: Event) => {
     if (confirm("Are you sure you want to overwrite the current mission data?")) {
-        void loadFileInputIITC(event);
+        await loadFileInput(event);
+        main.state.checkAllPortals();
+        main.redrawAllTotal();
     }
 };
 

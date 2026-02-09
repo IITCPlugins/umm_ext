@@ -4,10 +4,7 @@
     "target": "ES2017",
     "outDir": "dist/",
     "moduleResolution": "node",
-    "typeRoots": [
-      "node_modules/@types",
-      "types"
-    ],
+    "typeRoots": ["node_modules/@types", "types"],
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
     "noImplicitAny": true,
@@ -17,14 +14,7 @@
     "strictFunctionTypes": true,
     "noUnusedLocals": true
   },
-  "types": [
-    "webpack-env"
-  ],
-  "files": [
-    "src/Main.ts"
-  ],
-  "include": [
-    "types/*.d.ts",
-    "./src/**/*.ts"
-  ]
+  "types": ["webpack-env"],
+  "files": ["src/Main.ts", "src_MissionEditor/Main.ts"],
+  "include": ["types/*.d.ts", "./src/**/*.ts"]
 }
