@@ -68,26 +68,24 @@ class UMM_Editor {
 
         $('.navbar-header').append(
             $("<div>", { id: "umm-badge", text: "UMM:" }),
-            $("<div>", { id: "umm-mission-editor-bar", text: "UMM:" }).append(
+            $("<div>", { id: "umm-mission-editor-bar" }).append(
                 $("<div>", { id: "umm-mission-title" }),
                 $("<div>", { style: "display: inline-block" }).append(
-                    $("<input>", { id: "umm-import-file" }),
-                    $("<label>", { for: "umm-import-file", class: "umm-upload-label", text: "& nbsp;" })
+                    $("<input>", { id: "umm-import-file", type: "file" }),
+                    $("<label>", { for: "umm-import-file", class: "umm-upload-label", html: "&nbsp;" })
                 ),
                 $("<div>", { id: "umm-mission-picker-wrapper" }).append(
                     $("<select>", { id: "umm-mission-picker", class: "umm-mission-picker" }),
-                    $("<button>", { id: "umm-mission-picker-btn", class: "umm-mission-picker-btn", click: this.importMission, disabled: true }),
+                    $("<button>", { id: "umm-mission-picker-btn", class: "umm-mission-picker-btn", text: "Import", click: () => this.importMission() /*, disabled: true*/ }),
                 )
             )
         );
-
 
         this.state = new State();
 
         this.setActiveBannerTitle();
         this.bindFileImport();
         this.generateMissionSelect();
-
     }
 
 
@@ -101,14 +99,14 @@ class UMM_Editor {
 
 
     bindFileImport() {
-        $("#umm-import-file").on('change', async (event: Event) => {
+        $("#umm-import-file")[0].addEventListener('change', async (event: Event) => {
             if (this.state.getBannerName() !== "") {
                 if (!confirm("Are you sure you want to load this file? Doing so will overwrite any previously imported UMM data. Your existing missions will not be affected.")) {
                     return;
                 }
             }
             $("#umm-mission-title").text("Loading banner... ");
-            await loadFileInput(event);
+            await loadFileInput(event, this.state);
             this.setActiveBannerTitle();
             this.generateMissionSelect();
         });
@@ -122,10 +120,11 @@ class UMM_Editor {
 
         this.state.missions.forEach(mission => {
             container.append(
-                $("<option", { value: mission.id, text: `${mission.id + 1}: ${mission.title}` })
-                    .prop("selected", mission.id === selectedMission)
+                $("<option>", { value: mission.id, text: `${mission.id + 1}: ${mission.title}` })
             )
         })
+
+        $("#umm-mission-picker").val(selectedMission);
 
         if (this.state.missions.count() > 0) {
             $("#umm-mission-picker-btn").prop("disabled", false);
@@ -288,7 +287,7 @@ class UMM_Editor {
 
 
 
-    async reloadMAT(missionId: number) {
+    reloadMAT(missionId: number) {
         const angularApp = this.getAngularApp();
         const angularHttp = angularApp.injector().get('$http');
         const angularApi = angularApp.injector().get('Api');
