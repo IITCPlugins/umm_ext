@@ -18,8 +18,6 @@ export class State {
 
     constructor() {
         this.load();
-
-        window.addHook("portalDetailsUpdated", event => this.checkPortal(event));
     }
 
 

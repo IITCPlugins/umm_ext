@@ -51,6 +51,7 @@ class UMM_Ext implements Plugin.Class {
         window.addHook('portalSelected', (event) => addPortalToCurrentMission(event));
         window.addHook('portalDetailsUpdated', addWaypointEditorToPortal);
         window.addHook('mapDataRefreshEnd', () => this.state.checkAllPortals()); // TODO: only do it if required
+        window.addHook("portalDetailsUpdated", event => this.state.checkPortal(event));
 
         this.missionModeActive = false;
 
