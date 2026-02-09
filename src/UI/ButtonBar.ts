@@ -24,7 +24,7 @@ export const createToolbar = () => {
                 toolBarButton("umm-edit-active-mission", undefined, "UMM: Select mission number", editActiveMission),
                 toolBarButton("umm-previous-mission", imgPrevious, "UMM: Previous Mission", () => main.state.prevMission()),
                 toolBarButton("umm-number-of-portals", undefined, "UMM: Number of portals in current mission"),
-                toolBarButton("umm-undo", imgUndo, "UMM: Undo", removeLastPortal),
+                toolBarButton("umm-undo", imgUndo, "UMM: Remove Last", removeLastPortal),
                 toolBarButton("umm-opt", imgOpt, "UMM: Opt", showUmmOptions),
             );
 

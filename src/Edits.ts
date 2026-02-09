@@ -73,6 +73,12 @@ export const clearMissionData = () => {
 
 
 export const removeLastPortal = () => {
+
+    if (!main.umm.missionModeActive) {
+        notification(`Only valid in edit mode`);
+        return;
+    }
+
     const mission = main.state.getEditMission();
 
     // If currentMission has 0 portals, refuse
