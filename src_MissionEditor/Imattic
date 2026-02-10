@@ -1,0 +1,17 @@
+// IMATTIC api
+
+/*
+const createCategory = (name: string) => {
+    //create category elements
+    var newCategory = {
+        id: missionScope.categoryContent.length,
+        name: categoryName,
+        missions: [],
+        collapse: false,
+        sortCriteria: 'initial'
+    };
+    missionScope.categoryContent.push(newCategory);
+    storeCategoryContent(missionScope.categoryContent);
+    generateAllMissions();
+}
+*/

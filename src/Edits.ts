@@ -1,5 +1,5 @@
 import { main } from "./Main";
-import { updateCurrentActiveMissionSidebar } from "./UI/ButtonBar";
+import { updateCurrentActiveMissionSidebar, updatePortalCountSidebar } from "./UI/ButtonBar";
 import { dialogButton } from "./UI/Dialog/Button";
 import { editMissionSetDetails } from "./UI/Dialog/MissionDetails";
 import { showUmmOptions } from "./UI/Dialog/Options";
@@ -222,7 +222,7 @@ const splitMission = (numMissions: number, remainderAtEnd: boolean) => {
         main.state.missions.splitIntoMultiple(mission, numMissions, remainderAtEnd);
         main.state.save();
         main.redrawAll();
-        main.redrawAllTotal();
+        updatePortalCountSidebar();
     }
 };
 

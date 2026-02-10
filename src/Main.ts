@@ -55,21 +55,14 @@ class UMM_Ext implements Plugin.Class {
 
         this.missionModeActive = false;
 
-        this.redrawAllTotal();
+        this.redrawAll();
+        updateCurrentActiveMissionSidebar(this.state);
     }
 
     redrawAll() {
         this.renderPath.redraw();
         this.renderNumbers.redraw();
         updatePortalCountSidebar();
-    }
-
-    redrawAllTotal() {
-        updateCurrentActiveMissionSidebar(this.state);
-        updatePortalCountSidebar();
-        this.redrawAll();
-        this.state.missions.zoom();
-        renderPortalDetails(window.selectedPortal);
     }
 }
 

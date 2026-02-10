@@ -2,6 +2,7 @@ import { clearMissionData, mergeMissions, reverseMission, splitMissionOptions } 
 import { exportData, loadFileInput } from "../../ImportExport";
 import { main } from "../../Main";
 import { State } from "../../State/State";
+import { updateCurrentActiveMissionSidebar, updatePortalCountSidebar } from "../ButtonBar";
 import { title, version } from "../Text";
 import { about } from "./About";
 import { button, dialogButton, dialogButtonClose } from "./Button";
@@ -119,7 +120,11 @@ const confirmLoad = async (event: Event) => {
     if (confirm("Are you sure you want to overwrite the current mission data?")) {
         await loadFileInput(event, main.state);
         main.state.checkAllPortals();
-        main.redrawAllTotal();
+
+        main.redrawAll();
+        updateCurrentActiveMissionSidebar(main.state);
+        updatePortalCountSidebar();
+        main.state.missions.zoom();
     }
 };
 
