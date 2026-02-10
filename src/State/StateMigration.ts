@@ -1,5 +1,5 @@
 import { UMM_State } from "../UMM_types";
-import { State } from "./State";
+import { Missions } from "./Missions";
 
 export const migrateUmmVersion = (state: State, ummState: any): UMM_State => {
 
@@ -54,7 +54,7 @@ export const migrateUmmVersion = (state: State, ummState: any): UMM_State => {
                 for (const mission in ummState.missions) {
 
                     const plannedLength: number = (ummState.plannedBannerLength > 0 ? ummState.plannedBannerLength : ummState.missions.length);
-                    const missionTitle = state.generateMissionTitleEx(parseInt(mission) + 1, plannedLength, ummState.missionSetName as string, ummState.titleFormat as string);
+                    const missionTitle = Missions.generateMissionTitle(parseInt(mission) + 1, plannedLength, ummState.missionSetName as string, ummState.titleFormat as string);
                     newMissions.push({ missionTitle: missionTitle, missionDescription: ummState.missionSetDescription, portals: ummState.missions[mission] })
                 }
                 ummState.missions = newMissions;

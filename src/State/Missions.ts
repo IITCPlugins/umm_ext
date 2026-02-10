@@ -7,6 +7,43 @@ export const MIN_PORTALS_PER_MISSION = 6;
 
 export class Missions {
 
+
+    static generateMissionTitle(missNumber: number, plannedBannerLength: number | undefined, missSetName: string | undefined, missNameFormat: string | undefined): string {
+        // eslint-disable-next-line unicorn/prefer-default-parameters
+        const format = missNameFormat ?? "";
+
+        if (!format) {
+            return "";
+        }
+
+        let title = format;
+        const totalMissions = plannedBannerLength ?? 0;
+
+        // Replace total mission count (M+)
+        if (totalMissions >= 1) {
+            title = title.replace(/M+/g, totalMissions.toString());
+        }
+
+        // Replace mission number (N or N+)
+        if (missNumber >= 0) {
+            const numberPattern = format.match(/N+/g)?.[0];
+            if (numberPattern) {
+
+                const length = numberPattern.length > 1 ? totalMissions.toString().length : 0;
+                const paddedNumber = missNumber.toString().padStart(length, '0');
+                title = title.replace(/N+/g, paddedNumber);
+            }
+        }
+
+        // Replace mission set name (T)
+        if (missSetName?.trim()) {
+            title = title.replace(/T/g, missSetName);
+        }
+
+        return title;
+    }
+
+
     private data: UMM_Mission[];
 
     constructor(data: UMM_Mission[]) {
@@ -149,4 +186,6 @@ export class Missions {
     getMissionsOfPortal(guid: PortalGUID): number[] {
         return this.filter(mis => mis.portals.includes(guid)).map(m => m.id);
     }
+
+
 }

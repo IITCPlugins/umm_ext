@@ -116,48 +116,10 @@ export class State {
     }
 
 
-    generateMissionTitle(missNumber: number): string {
-        return this.generateMissionTitleEx(missNumber, this.getPlannedLength(), this.theState.missionSetName, this.theState.titleFormat);
+    private generateMissionTitle(missNumber: number): string {
+        return Missions.generateMissionTitle(missNumber, this.getPlannedLength(), this.theState.missionSetName, this.theState.titleFormat);
     }
 
-    generateMissionTitleEx(missNumber: number, plannedBannerLength: number | undefined, missSetName: string | undefined, missNameFormat: string | undefined): string {
-        // eslint-disable-next-line unicorn/prefer-default-parameters
-        const format = missNameFormat ?? "";
-
-        if (!format) {
-            return "";
-        }
-
-        let title = format;
-        const totalMissions = plannedBannerLength ?? 0;
-
-        // Replace total mission count (M+)
-        if (totalMissions >= 1) {
-            title = title.replace(/M+/g, totalMissions.toString());
-        }
-
-        // Replace mission number (N or N+)
-        if (missNumber >= 0) {
-            const numberPattern = format.match(/N+/g)?.[0];
-            if (numberPattern) {
-
-                const length = numberPattern.length > 1 ? totalMissions.toString().length : 0;
-                const paddedNumber = this.zeroPad(missNumber, length);
-                title = title.replace(/N+/g, paddedNumber);
-            }
-        }
-
-        // Replace mission set name (T)
-        if (missSetName?.trim()) {
-            title = title.replace(/T/g, missSetName);
-        }
-
-        return title;
-    }
-
-    private zeroPad(num: number, length: number): string {
-        return num.toString().padStart(length, '0');
-    }
 
     getEditMission(): Mission | undefined {
         return this.missions.get(this.theState.currentMission);

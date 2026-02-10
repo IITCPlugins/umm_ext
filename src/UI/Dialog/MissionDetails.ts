@@ -1,5 +1,6 @@
 import { toggleMissionMode } from "../../Edits";
 import { main } from "../../Main";
+import { Missions } from "../../State/Missions";
 import { updateCurrentActiveMissionSidebar } from "../ButtonBar";
 import { notification } from "../Notification";
 import { version } from "../Text";
@@ -69,7 +70,7 @@ const succesfulSave = (toggleMissionModeAfterSave: boolean) => {
 
 const updateMissionTitlePreview = () => {
     if ($('#umm-mission-set-name').val() != "" && $('#umm-title-format').val() != "" && !isNaN(parseInt($('#umm-banner-length').val() as string))) {
-        const missionTitle = main.state.generateMissionTitleEx(
+        const missionTitle = Missions.generateMissionTitle(
             1,
             parseInt($('#umm-banner-length').val() as string),
             $('#umm-mission-set-name').val() as string,
