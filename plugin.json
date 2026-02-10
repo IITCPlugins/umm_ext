@@ -5,5 +5,6 @@
   "author": "McBen, Vashiru, j00rtje, DanielOnDiordna ",
   "entry": "src/Main.ts",
   "minimize": false,
-  "changelog": ""
+  "changelog": "CHANGELOG.md",
+  "downloadURL": "https://github.com/IITCPlugins/umm_ext/raw/refs/heads/main/dist/iitc_plugin_UMM_Ext.user.js"
 }
