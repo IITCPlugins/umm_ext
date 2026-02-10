@@ -24,7 +24,7 @@ export const exportData = (state: State) => {
 
 export const loadFileInput = async (event: Event, state: State): Promise<boolean> => {
     const files = (event.target as HTMLInputElement).files;
-    if (!files || files?.length === 1) {
+    if (files?.length !== 1) {
         alert("No file selected! Please select a mission file in JSON format and try again.");
         $("#umm-import-file").val('');
         return false;
