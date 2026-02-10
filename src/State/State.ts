@@ -26,15 +26,28 @@ export class State {
         this.reset();
         const data = localStorage.getItem(STORAGE_KEY)
         if (data) {
-            const anyState = JSON.parse(data);
-            this.theState = migrateUmmVersion(this, anyState);
+            this.import(data);
         }
     }
 
 
     save() {
         this.setPlannedLength(this.theState.plannedBannerLength); // TODO: remove when "get" is private/removed
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(this.theState));
+        localStorage.setItem(STORAGE_KEY, this.asString());
+    }
+
+
+    import(jsonString: string) {
+        const anyState = JSON.parse(jsonString);
+        this.theState = migrateUmmVersion(anyState);
+
+        // make sure Missions are initialized
+        this.setPlannedLength(this.getPlannedLength() || 1);
+    }
+
+
+    asString(): string {
+        return JSON.stringify(this.theState);
     }
 
 

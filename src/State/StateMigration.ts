@@ -1,7 +1,14 @@
 import { UMM_State } from "../UMM_types";
 import { Missions } from "./Missions";
+import { fileFormatVersion } from "./State";
 
-export const migrateUmmVersion = (state: State, ummState: any): UMM_State => {
+
+export const migrateUmmVersion = (ummState: any): UMM_State => {
+
+    if (ummState.fileFormatVersion > fileFormatVersion) {
+        throw new Error("UMM: You've attempted to load data that's newer than what's supported by this version of UMM. Please update the plugin and try again. Data has not been loaded.");
+    }
+
 
     // Original beta didn't have a fileFormatVersion yet
     if (ummState.fileFormatVersion === undefined || ummState.fileFormatVersion === "") {
@@ -100,10 +107,7 @@ export const migrateUmmVersion = (state: State, ummState: any): UMM_State => {
         ummState.currentMission ??= 0;
         ummState.plannedBannerLength ??= 1;
         ummState.titleFormat ??= "T NN-M";
-
-        // fill mission array
-        state.setPlannedLength(ummState.plannedBannerLength as number || 1);
-
     }
+
     return ummState as UMM_State;
 }

@@ -1,11 +1,10 @@
-import { fileFormatVersion, State } from "./State/State";
-import { migrateUmmVersion } from "./State/StateMigration";
+import { State } from "./State/State";
 import { notification } from "./UI/Notification";
 
+
 export const exportData = (state: State) => {
-    const ummState = state.get();
-    const data = JSON.stringify(ummState);
-    const sanitizedName = ummState.missionSetName.replace(/[\W_]+/g, " ");
+    const data = state.asString();
+    const sanitizedName = state.getBannerName().replace(/[\W_]+/g, " ");
     const filename = sanitizedName + "-mission-data.json";
 
     if (typeof window.saveFile == 'function') {
@@ -39,18 +38,19 @@ export const loadFileInput = async (event: Event, state: State): Promise<boolean
     return loadFile(state, files[0]);
 }
 
+
 export const loadFile = async (state: State, inputFile: File): Promise<boolean> => {
 
     const text = await inputFile.text()
 
-    const ummState = JSON.parse(text);
-    if (ummState.fileFormatVersion > fileFormatVersion) {
-        alert("UMM: You've attempted to load data that's newer than what's supported by this version of UMM. Please update the plugin and try again. Data has not been loaded.");
+    try {
+        state.import(text);
+    } catch (error) {
+        notification(`Loadgin error: \n${error}`);
         return false;
     }
-    migrateUmmVersion(state, ummState);
-    state.save();
 
+    state.save();
     notification(`Banner data loaded:\n${state.getBannerName()}`);
 
     return true;
