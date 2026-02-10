@@ -30,7 +30,7 @@ export class Missions {
             if (numberPattern) {
 
                 const length = numberPattern.length > 1 ? totalMissions.toString().length : 0;
-                const paddedNumber = missNumber.toString().padStart(length, '0');
+                const paddedNumber = (missNumber + 1).toString().padStart(length, '0');
                 title = title.replace(/N+/g, paddedNumber);
             }
         }
