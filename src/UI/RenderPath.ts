@@ -6,7 +6,7 @@ import { notification } from "./Notification";
 type MarkerOptions = L.MarkerOptions & {
     portal: number;
     missionId: number;
-    isMidPoint: boolean;
+    isMidPoint?: boolean;
 }
 
 // TODO: D&D should be handled elsewhere
@@ -51,9 +51,9 @@ export class RenderPath {
         main.state.missions.forEach((mission) => {
             if (main.state.isCurrent(mission.id) && editMode) {
                 this.drawEditMission(mission);
-            }
-            else
+            } else {
                 this.drawMission(mission);
+            }
         });
     }
 
@@ -80,7 +80,7 @@ export class RenderPath {
         coordinatesList.forEach((ll, index) => {
             if (index > 0) {
                 const half = this.getCenter(coordinatesList[index - 1], ll);
-                this.createDragMarker(half, index, mission.id, true)
+                this.createDragMarker(half, index, mission.id, true);
             }
         });
 
@@ -127,8 +127,11 @@ export class RenderPath {
         const options: MarkerOptions = event.target.options;
         const isMidPoint = options.isMidPoint;
 
-        const mission = main.state.missions.get(options.missionId)!;
-        console.assert(mission);
+        const mission = main.state.missions.get(options.missionId);
+        if (!mission) {
+            console.warn("onMarkerDragStart: mission not found", options.missionId);
+            return;
+        }
 
         if (this.editDragLine) {
             this.missionPaths.removeLayer(this.editDragLine);
@@ -138,7 +141,7 @@ export class RenderPath {
         const portal_pre = portal > 0 ? mission.portals.get(portal - 1) : undefined;
         const portal_post = mission.portals.get(portal + (isMidPoint ? 0 : 1));
 
-        let lls = [
+        let lls: (L.LatLng | undefined)[] = [
             portal_pre && new L.LatLng(portal_pre.location.latitude, portal_pre.location.longitude),
             marker.getLatLng(),
             portal_post && new L.LatLng(portal_post.location.latitude, portal_post.location.longitude)
@@ -169,8 +172,8 @@ export class RenderPath {
 
         const marker: L.Marker = event.target;
         const options: MarkerOptions = event.target.options;
-        const mission = main.state.missions.get(options.missionId)!;
-        console.assert(mission);
+        const mission = main.state.missions.get(options.missionId);
+        if (!mission) return;
 
         const snappedPortal = this.getSnapPortal(marker.getLatLng(), mission.getLocations());
         const newTarget = snappedPortal ? snappedPortal.getLatLng() : marker.getLatLng();
@@ -190,8 +193,12 @@ export class RenderPath {
 
         const marker: L.Marker = event.target;
         const options: MarkerOptions = event.target.options;
-        const mission = main.state.missions.get(options.missionId)!;
-        console.assert(mission);
+        const mission = main.state.missions.get(options.missionId);
+        if (!mission) {
+            console.warn("onMarkerDragEnd: mission not found", options.missionId);
+            this.redraw();
+            return;
+        }
 
         const coordinatesList = mission.getLocations();
 
@@ -201,13 +208,13 @@ export class RenderPath {
             return;
         }
 
-        // insert portal
         const portalToAdd = mission.portals.create(snappedPortal.options.guid);
 
-        if (options.isMidPoint)
+        if (options.isMidPoint) {
             mission.portals.insert(options.portal, portalToAdd);
-        else
+        } else {
             this.movePortal(mission, options.portal, portalToAdd);
+        }
 
         this.saveStateAndRefresh();
     }
@@ -284,8 +291,8 @@ export class RenderPath {
         const portal = options.portal;
         if (options.isMidPoint) return;
 
-        const mission = main.state.missions.get(options.missionId)!;
-        console.assert(mission);
+        const mission = main.state.missions.get(options.missionId);
+        if (!mission) return;
 
         mission.portals.remove(portal);
         this.saveStateAndRefresh();
