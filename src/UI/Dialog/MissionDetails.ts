@@ -42,7 +42,7 @@ export const editMissionSetDetails = (toggleMissionModeAfterSave = false) => {
         width: 400,
         buttons: [
             dialogButton("< Main Menu", showUmmOptions),
-            dialogButton("Save", () => succesfulSave(toggleMissionModeAfterSave)),
+            dialogButton("Save", () => successfulSave(toggleMissionModeAfterSave)),
             dialogButtonClose()
         ]
     });
@@ -52,14 +52,22 @@ export const editMissionSetDetails = (toggleMissionModeAfterSave = false) => {
     $('#umm-mission-set-name, #umm-mission-set-description, #umm-banner-length, #umm-title-format').on('input', updateMissionTitlePreview);
 };
 
-const succesfulSave = (toggleMissionModeAfterSave: boolean) => {
-    const isSavedSuccesful = saveMissionSetDetails(
-        $('#umm-mission-set-name').val() as string,
-        $('#umm-mission-set-description').val() as string,
-        $('#umm-banner-length').val() as string,
-        $('#umm-title-format').val() as string);
+const getFormValues = () => ({
+    name: $('#umm-mission-set-name').val() as string,
+    description: $('#umm-mission-set-description').val() as string,
+    length: $('#umm-banner-length').val() as string,
+    format: $('#umm-title-format').val() as string
+});
 
-    if (isSavedSuccesful) {
+const successfulSave = (toggleMissionModeAfterSave: boolean) => {
+    const values = getFormValues();
+    const isSavedSuccessful = saveMissionSetDetails(
+        values.name,
+        values.description,
+        values.length,
+        values.format);
+
+    if (isSavedSuccessful) {
         updateCurrentActiveMissionSidebar(main.state);
         bannerNotification(`Mission details saved`);
         if (toggleMissionModeAfterSave) {
@@ -69,12 +77,15 @@ const succesfulSave = (toggleMissionModeAfterSave: boolean) => {
 }
 
 const updateMissionTitlePreview = () => {
-    if ($('#umm-mission-set-name').val() != "" && $('#umm-title-format').val() != "" && !isNaN(parseInt($('#umm-banner-length').val() as string))) {
+    const values = getFormValues();
+    const plannedLength = parseInt(values.length);
+
+    if (values.name.length > 0 && values.format.length > 0 && !isNaN(plannedLength)) {
         const missionTitle = Missions.generateMissionTitle(
             1,
-            parseInt($('#umm-banner-length').val() as string),
-            $('#umm-mission-set-name').val() as string,
-            $('#umm-title-format').val() as string
+            plannedLength,
+            values.name,
+            values.format
         );
         $('#umm-mission-title-preview').text(missionTitle);
     } else {
@@ -83,47 +94,44 @@ const updateMissionTitlePreview = () => {
 }
 
 
+const setFieldError = (elementId: string, hasError: boolean) => {
+    $(elementId).css('display', hasError ? 'block' : 'none');
+};
+
 const saveMissionSetDetails = (missionSetName?: string, missionSetDescription?: string, plannedBannerLength?: string, titleFormat?: string): boolean => {
-    let shouldStoreData = true;
+    let isValid = true;
 
-    if (missionSetName && missionSetName != "") {
+    const hasName = missionSetName && missionSetName.length > 0;
+    if (hasName) {
         main.state.setBannerName(missionSetName);
-        $('#umm-mission-set-name-error').css('display', 'none');
-    } else {
-        shouldStoreData = false;
-        $('#umm-mission-set-name-error').css('display', 'block');
     }
+    setFieldError('#umm-mission-set-name-error', !hasName);
+    isValid = isValid && !!hasName;
 
-    if (missionSetDescription && missionSetDescription != "") {
+    const hasDescription = missionSetDescription && missionSetDescription.length > 0;
+    if (hasDescription) {
         main.state.setBannerDesc(missionSetDescription);
-        $('#umm-mission-set-description-error').css('display', 'none');
-    } else {
-        shouldStoreData = false;
-        $('#umm-mission-set-description-error').css('display', 'block');
     }
+    setFieldError('#umm-mission-set-description-error', !hasDescription);
+    isValid = isValid && !!hasDescription;
 
     const plannedLength = parseInt(plannedBannerLength ?? "");
-    if (plannedLength && !isNaN(plannedLength)) {
+    const hasValidLength = plannedLength && !isNaN(plannedLength);
+    if (hasValidLength) {
         main.state.setPlannedLength(plannedLength);
-        $('#umm-mission-planned-banner-length-error').css('display', 'none');
-    } else {
-        shouldStoreData = false;
-        $('#umm-mission-planned-banner-length-error').css('display', 'block');
     }
+    setFieldError('#umm-mission-planned-banner-length-error', !hasValidLength);
+    isValid = isValid && !!hasValidLength;
 
-    if (titleFormat && titleFormat != "") {
+    const hasFormat = titleFormat && titleFormat.length > 0;
+    if (hasFormat) {
         main.state.setTitleFormat(titleFormat);
-        $('#umm-mission-title-format-error').css('display', 'none');
-    } else {
-        shouldStoreData = false;
-        $('#umm-mission-title-format-error').css('display', 'block');
     }
+    setFieldError('#umm-mission-title-format-error', !hasFormat);
+    isValid = isValid && !!hasFormat;
 
-
-    if (shouldStoreData) {
+    if (isValid) {
         main.state.save();
-        return true;
-    } else {
-        return false;
     }
+    return isValid;
 }
