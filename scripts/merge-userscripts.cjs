@@ -5,7 +5,8 @@ const repoRoot = path.resolve(__dirname, "..");
 const dist = path.join(repoRoot, "dist");
 const fileIITC = path.join(dist, "iitc.user.js");
 const fileEditor = path.join(dist, "editor.user.js");
-const outFile = path.join(dist, "iitc-ultimate-mission-maker.user.js");
+const outFile = path.join(dist, "iitc_plugin_UMM_Ext.user.js");
+const outFileMeta = path.join(dist, "iitc_plugin_UMM_Ext.meta.js");
 
 function read(file) {
   return fs.existsSync(file) ? fs.readFileSync(file, "utf8") : "";
@@ -98,6 +99,8 @@ const out = [header.trim(), "", partA, "", partB, "", combinedInit]
 
 fs.writeFileSync(outFile, out, "utf8");
 console.log("Wrote merged userscript to", outFile);
+
+fs.writeFileSync(outFileMeta, header, "utf8");
 
 // Exit with success
 process.exitCode = 0;
