@@ -84,6 +84,11 @@ const updateMissionInfo = () => {
     info.html(window.convertTextToTableMagic(table));
 };
 
+const refreshMissionUI = () => {
+    updateMissionInfo();
+    updateMissionList();
+    main.redrawAll();
+};
 
 const onMissionSelect = () => {
     const mission = selectedMission();
@@ -148,9 +153,7 @@ const onMissionSplit = () => {
 
     missions.splitIntoMultiple(mission, count);
     main.state.save();
-    updateMissionInfo();
-    updateMissionList();
-    main.redrawAll();
+    refreshMissionUI();
 };
 
 
@@ -168,9 +171,7 @@ const onMergePrevious = () => {
 
     main.state.missions.merge(previous, mission);
     main.state.save();
-    updateMissionInfo();
-    updateMissionList();
-    main.redrawAll();
+    refreshMissionUI();
 };
 
 const onMergePost = () => {
@@ -184,9 +185,7 @@ const onMergePost = () => {
 
     main.state.missions.merge(mission, next);
     main.state.save();
-    updateMissionInfo();
-    updateMissionList();
-    main.redrawAll();
+    refreshMissionUI();
 };
 
 const onMissionReverse = () => {
@@ -195,8 +194,7 @@ const onMissionReverse = () => {
 
     mission.portals.reverse();
     main.state.save();
-    updateMissionInfo();
-    main.redrawAll();
+    refreshMissionUI();
 };
 
 
