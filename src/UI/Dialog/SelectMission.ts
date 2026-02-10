@@ -17,10 +17,10 @@ export const editActiveMission = () => {
 
     const html = $("<div>", { class: "umm-mission-picker-btn" }).append(
         'Select a mission number:<br>',
-        $("<select>", { id: "umm-mission-picker", class: "umm-mission-picker", change: updateMissionInfo }).css({ "margit-right": "1em" }),
+        $("<select>", { id: "umm-mission-picker", class: "umm-mission-picker", change: updateMissionInfo }).css({ "margin-right": "1em" }),
         button("Select", onMissionSelect),
         button("Zoom to mission", onZoomToMission),
-        $("<div>", { id: "um-mission-pikcer-info" }),
+        $("<div>", { id: "umm-mission-picker-info" }),
         button("Split", onMissionSplit),
         button("Reverse", onMissionReverse), $("<br>"),
         button("Merge with previous", onMergePrevious),
@@ -64,7 +64,7 @@ const updateMissionList = () => {
 }
 
 const updateMissionInfo = () => {
-    const info = $("#um-mission-pikcer-info");
+    const info = $("#umm-mission-picker-info");
     info.empty();
 
     const mission = selectedMission();
