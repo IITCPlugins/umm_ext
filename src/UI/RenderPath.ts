@@ -265,25 +265,27 @@ export class RenderPath {
 
     private getSnapPortal(unsnappedLatLng: L.LatLng, ignore: L.LatLng[] = []): IITC.Portal | undefined {
         const containerPoint = window.map.latLngToContainerPoint(unsnappedLatLng);
-        let candidates: [number, IITC.Portal][] = [];
+        let best_portal: IITC.Portal | undefined = undefined;
+        let best_distance = Infinity;
         for (const guid in window.portals) {
             const portal = window.portals[guid];
             const ll = portal.getLatLng();
             if (ignore.some(x => x.equals(ll))) continue;
 
             const pp = window.map.latLngToContainerPoint(ll);
-            const options = portal.options as unknown as { weight: number, radius: number }; // missing Leaflet typing
+            const options = portal.options as unknown as { weight: number; radius: number };  // type: missing Leaflet
             const size = options.weight + options.radius * 5; // allow some extra space for easier snapping
             const distance = pp.distanceTo(containerPoint);
             if (distance > size) continue;
-            candidates.push([distance, portal]);
+
+            if (distance < best_distance) {
+                best_distance = distance;
+                best_portal = portal;
+            }
         }
 
-        if (candidates.length === 0) return;
-        // eslint-disable-next-line unicorn/no-array-sort
-        candidates = candidates.sort((a, b) => a[0] - b[0]);
-        return candidates[0][1];
-    };
+        return best_portal;
+    }
 
 
     private onMarkerDblClick(event: L.LeafletMouseEvent) {
