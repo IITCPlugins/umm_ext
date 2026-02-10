@@ -23,11 +23,11 @@ jobs:
           name: ${{ github.event.repository.name }} ${{ github.ref_name }}
           draft: false
           files: |
-            - dist/iitc_plugin_UMM_Ext.user.js
-            - dist/iitc_plugin_UMM_Ext.meta.js
+            dist/iitc_plugin_UMM_Ext.user.js
+            dist/iitc_plugin_UMM_Ext.meta.js
       - name: Git add Dist
         uses: EndBug/add-and-commit@v9
         with:
           add: dist/* --force
           message: Release ${{ github.ref_name }}
-          push: origin main --force
+          push: origin HEAD:main --force
