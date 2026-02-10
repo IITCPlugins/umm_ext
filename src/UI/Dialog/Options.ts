@@ -95,8 +95,6 @@ const onLayerRemove = (event: L.LeafletLayerEvent) => {
 
 
 const validateMissions = (state: State): string => {
-    //                ummState.plannedBannerLength % 6 != 0 ? '<span style="color: red;"><b>Warning:</b></span> banner length is not a multiple of 6<br>' : "",
-
     const invalidMissions = state.missions.validate();
 
     const result: string[] = [];

@@ -1,5 +1,10 @@
+import { main } from "../Main";
 
 let notificationTimer: number;
+
+export const bannerNotification = (message: string): void =>
+    notification(`${main.state.getBannerName()}\n${message}`);
+
 
 export const notification = (notificationText: string, isPersistent = false) => {
     $('.umm-notification').hide();

@@ -3,7 +3,7 @@ import { updateCurrentActiveMissionSidebar, updatePortalCountSidebar } from "./U
 import { dialogButton } from "./UI/Dialog/Button";
 import { editMissionSetDetails } from "./UI/Dialog/MissionDetails";
 import { showUmmOptions } from "./UI/Dialog/Options";
-import { notification } from "./UI/Notification";
+import { bannerNotification, notification } from "./UI/Notification";
 import { title } from "./UI/Text";
 
 let lastPortal: PortalGUID;
@@ -142,11 +142,11 @@ export const startEdit = () => {
         missionModeResuming = true;
         editMission.show();
         window.renderPortalDetails(editMission.portals.get(-1)!.guid);
-        notification(`${main.state.getBannerName()}\nMission mode active.\nResuming mission #${main.state.getCurrent() + 1}\nSelect next portal`);
+        bannerNotification(`Mission mode active.\nResuming mission #${missionNumber}\nSelect next portal`);
     } else {
-        notification(`${main.state.getBannerName()}\nMission mode active.\nSelect start portal for mission #${main.state.getCurrent() + 1}`);
+        bannerNotification(`Mission mode active.\nSelect start portal for mission #${missionNumber}`);
     }
-}
+};
 
 
 export const splitMissionOptions = () => {
@@ -163,11 +163,11 @@ export const splitMissionOptions = () => {
     ];
 
     window.dialog({
-        html: html,
+        html,
         title: `${title} - Split mission options`,
         id: 'umm-options',
         width: 350,
-        buttons: buttons
+        buttons,
     });
 };
 
@@ -255,9 +255,9 @@ export const reverseMission = () => {
 }
 
 
-export const setCurrentMission = (missionId: number) => {
+export const setCurrentMission = (missionId: number): void => {
     main.state.setCurrent(missionId);
     main.state.save();
     updateCurrentActiveMissionSidebar(main.state);
     main.redrawAll();
-}
+};

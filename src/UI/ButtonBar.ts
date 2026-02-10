@@ -4,7 +4,7 @@ import { Mission } from "../State/Mission";
 import { State } from "../State/State";
 import { showUmmOptions } from "./Dialog/Options";
 import { editActiveMission } from "./Dialog/SelectMission";
-import { notification } from "./Notification";
+import { bannerNotification } from "./Notification";
 
 import imgBookmarks from "../assets/bookmarks.png";
 import imgNext from "../assets/next.png";
@@ -95,7 +95,7 @@ const nextMission = () => {
         showMission(mission);
     } else {
         if (main.missionModeActive) {
-            notification(`${state.getBannerName()}\nStart of mission #${state.getCurrent() + 1}\nSelect start portal.`);
+            bannerNotification(`Start of mission #${state.getCurrent() + 1}\nSelect start portal.`);
         }
     }
 }
@@ -120,9 +120,9 @@ const showMission = (mission: Mission) => {
         updatePortalCountSidebar();
 
         if (main.missionModeActive) {
-            notification(`Mission mode active.\n${main.state.getBannerName()}\nCurrent mission #${main.state.getCurrent() + 1}\nSelect next portal`);
+            bannerNotification(`Mission mode active.\nCurrent mission #${main.state.getCurrent() + 1}\nSelect next portal`);
         } else {
-            notification(`${main.state.getBannerName()}\nCurrent active mission set to #${main.state.getCurrent() + 1}`);
+            bannerNotification(`Current active mission set to #${main.state.getCurrent() + 1}`);
         }
     }
 }
