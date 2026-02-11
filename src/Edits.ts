@@ -138,6 +138,7 @@ export const toggleMissionMode = () => {
 export const startEdit = () => {
     // If the currentMission already has portals, resume mission creation at last portal
     const editMission = main.state.getEditMission();
+    const missionNumber = main.state.getCurrent() + 1;
     if (editMission?.hasPortals()) {
         missionModeResuming = true;
         editMission.show();
