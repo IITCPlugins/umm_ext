@@ -3,7 +3,6 @@ import { main } from "../../Main";
 import { Missions } from "../../State/Missions";
 import { updateCurrentActiveMissionSidebar } from "../ButtonBar";
 import { bannerNotification } from "../Notification";
-import { version } from "../Text";
 import { dialogButton, dialogButtonClose } from "./Button";
 import { showUmmOptions } from "./Options";
 
@@ -37,7 +36,7 @@ export const editMissionSetDetails = (toggleMissionModeAfterSave = false) => {
 
     window.dialog({
         html: html,
-        title: `Edit banner details - UMM v${version}`,
+        title: `Edit banner details - UMM v${VERSION}`,
         id: 'umm-options',
         width: 400,
         buttons: [

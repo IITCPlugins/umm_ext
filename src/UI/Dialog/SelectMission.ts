@@ -2,7 +2,7 @@ import { setCurrentMission, startEdit } from "../../Edits";
 import { main } from "../../Main";
 import { Mission } from "../../State/Mission";
 import { notification } from "../Notification";
-import { title, version } from "../Text";
+import { title } from "../Text";
 import { button, dialogButton, dialogButtonClose } from "./Button";
 import { showUmmOptions } from "./Options";
 
@@ -29,7 +29,7 @@ export const editActiveMission = () => {
 
     window.dialog({
         html: html,
-        title: `${title} v${version}`,
+        title: `${title} v${VERSION}`,
         id: 'umm-options',
         width: 350,
         buttons: [

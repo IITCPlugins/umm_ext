@@ -3,7 +3,7 @@ import { exportData, loadFileInput } from "../../ImportExport";
 import { main } from "../../Main";
 import { State } from "../../State/State";
 import { updateCurrentActiveMissionSidebar, updatePortalCountSidebar } from "../ButtonBar";
-import { title, version } from "../Text";
+import { title } from "../Text";
 import { about } from "./About";
 import { button, dialogButton, dialogButtonClose } from "./Button";
 import { editMissionSetDetails } from "./MissionDetails";
@@ -57,7 +57,7 @@ export const showUmmOptions = () => {
 
     window.dialog({
         html: html,
-        title: `${title} v${version}`,
+        title: `${title} v${VERSION}`,
         id: 'umm-options',
         width: 350,
         buttons: [
