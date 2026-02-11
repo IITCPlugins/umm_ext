@@ -2,7 +2,7 @@ import { setCurrentMission, startEdit } from "../../Edits";
 import { main } from "../../Main";
 import { Mission } from "../../State/Mission";
 import { notification } from "../Notification";
-import { title } from "../Text";
+import { title } from "../../Text/Text";
 import { button, dialogButton, dialogButtonClose } from "./Button";
 import { showUmmOptions } from "./Options";
 

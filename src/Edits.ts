@@ -4,7 +4,7 @@ import { dialogButton } from "./UI/Dialog/Button";
 import { editMissionSetDetails } from "./UI/Dialog/MissionDetails";
 import { showUmmOptions } from "./UI/Dialog/Options";
 import { bannerNotification, notification } from "./UI/Notification";
-import { title } from "./UI/Text";
+import { title } from "./Text/Text";
 
 let lastPortal: PortalGUID;
 let missionModeResuming = false;

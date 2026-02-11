@@ -3,7 +3,7 @@ import { exportData, loadFileInput } from "../../ImportExport";
 import { main } from "../../Main";
 import { State } from "../../State/State";
 import { updateCurrentActiveMissionSidebar, updatePortalCountSidebar } from "../ButtonBar";
-import { title } from "../Text";
+import { title } from "../../Text/Text";
 import { about } from "./About";
 import { button, dialogButton, dialogButtonClose } from "./Button";
 import { editMissionSetDetails } from "./MissionDetails";

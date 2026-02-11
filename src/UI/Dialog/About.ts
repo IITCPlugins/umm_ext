@@ -1,4 +1,4 @@
-import { changelog, title } from "../Text";
+import { changelog, title } from "../../Text/Text";
 import { dialogButton, dialogButtonClose } from "./Button";
 import { showUmmOptions } from "./Options";
 
