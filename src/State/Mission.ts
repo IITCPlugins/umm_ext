@@ -1,5 +1,6 @@
 import { Portals } from "./Portals";
 import { UMM_Mission } from "../UMM_types";
+import { State } from "./State";
 
 
 
@@ -9,10 +10,10 @@ export class Mission {
     private data: UMM_Mission;
     private portal_data: Portals;
 
-    constructor(id: number, data: UMM_Mission) {
+    constructor(state: State, id: number, data: UMM_Mission) {
         this.missionID = id;
         this.data = data;
-        this.portal_data = new Portals(data.portals);
+        this.portal_data = new Portals(state, data.portals);
     }
 
     get title(): string {
