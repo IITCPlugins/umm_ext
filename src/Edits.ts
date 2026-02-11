@@ -31,8 +31,7 @@ export const addPortalToCurrentMission = (data: EventPortalSelected) => {
 
     if (mission.portals.includes(portalToAdd.guid)) {
         if (mission.portals.isEnd(portalToAdd)) {
-            const pstate = state.get();
-            notification(`${main.state.getBannerName()}\nPortal already in mission #${pstate.currentMission + 1}`);
+            notification(`${main.state.getBannerName()}\nPortal already in mission #${main.state.getCurrent() + 1}`);
         }
     } else {
         const preMission = state.missions.previous(mission);

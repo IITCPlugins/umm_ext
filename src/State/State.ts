@@ -16,12 +16,6 @@ export class State {
         this.load();
     }
 
-
-    get(): UMM_State {
-        return this.theState;
-    }
-
-
     load() {
         this.reset();
         const data = localStorage.getItem(STORAGE_KEY)

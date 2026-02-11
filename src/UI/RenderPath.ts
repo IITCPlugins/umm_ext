@@ -230,7 +230,7 @@ export class RenderPath {
             if (preMission?.portals.isEnd(target)) {
                 if (confirm("Merge mission ?")) {
                     missions.merge(preMission, mission);
-                    main.state.get().currentMission = preMission.id;
+                    main.state.setCurrent(preMission.id);
                     return;
                 }
             } else
