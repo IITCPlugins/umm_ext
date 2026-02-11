@@ -42,6 +42,13 @@ export class RenderPath {
         return layer === this.missionPaths;
     }
 
+    toggle(show: boolean) {
+        if (show) {
+            window.map.addLayer(this.missionPaths);
+        } else {
+            window.map.removeLayer(this.missionPaths);
+        }
+    }
 
     redraw() {
         this.missionPaths.clearLayers();

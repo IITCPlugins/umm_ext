@@ -29,8 +29,18 @@ export const showUmmOptions = () => {
         $("<p>").append(
             $("<b>", { text: "Mission options" }), $("<br>"),
             'Layers: ',
-            '<label style="user-select: none"><input type="checkbox" onclick="window.plugin.umm.toggleLayerPaths(this.checked)" id="umm-layercheckbox-paths"' + (main.renderPath.isVisible() ? ' checked' : '') + '>Mission Paths</label>',
-            '<label style="user-select: none"><input type="checkbox" onclick="window.plugin.umm.toggleLayerNumbers(this.checked)" id="umm-layercheckbox-numbers"' + (main.renderNumbers.isVisible() ? ' checked' : '') + '>Mission Numbers</label>',
+            '<label style="user-select: none">Mission Paths</label>',
+            $("<input>", {
+                type: "checkbox",
+                click: (event: Event) => tooglePathsLayer((event.target as HTMLInputElement).checked),
+                checked: main.renderPath.isVisible()
+            }),
+            '<label style="user-select: none">Mission Numbers</label>',
+            $("<input>", {
+                type: "checkbox",
+                click: (event: Event) => toggleLayerNumbers((event.target as HTMLInputElement).checked),
+                checked: main.renderNumbers.isVisible()
+            }),
             button("Edit banner details", editMissionSetDetails, "w-full"),
             button("Change active mission #", editActiveMission, "w-full"),
             button("Zoom to view all missions", () => state.missions.zoom(), "w-full"),
@@ -126,3 +136,6 @@ const confirmLoad = async (event: Event) => {
     }
 };
 
+
+const tooglePathsLayer = (show: boolean) => main.renderPath.toggle(show);
+const toggleLayerNumbers = (show: boolean) => main.renderNumbers.toggle(show);

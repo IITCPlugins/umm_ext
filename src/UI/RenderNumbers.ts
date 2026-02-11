@@ -26,6 +26,13 @@ export class RenderNumbers {
         return layer === this.missionNumbers;
     }
 
+    toggle(show: boolean) {
+        if (show) {
+            window.map.addLayer(this.missionNumbers);
+        } else {
+            window.map.removeLayer(this.missionNumbers);
+        }
+    }
 
     redraw() {
         this.missionNumbers.clearLayers();
