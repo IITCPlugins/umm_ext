@@ -178,16 +178,6 @@ export const splitMissionOptions = () => {
 
 
 const splitMissionStart = (remainderAtEnd: boolean) => {
-    if (main.state.getPlannedLength() > 1) {
-        if (confirm("It's currently only supported to split 1 single mission, do you want to merge all missions now and continue?\r\n\r\nThis can't be undone.")) {
-            main.state.missions.mergeAll();
-            splitMissionStart(remainderAtEnd);
-            return;
-        } else {
-            return;
-        }
-    }
-
     const portalsCount = main.state.missions.get(0)?.portals.length ?? 0;
     const preset = Math.min(main.state.getPlannedLength(), portalsCount);
     const numMissionString = prompt(`In how many missions do you want to split your banner (1-${portalsCount})?\r\rRecommended number is a multiple of 6.`, preset.toString());
