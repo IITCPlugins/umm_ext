@@ -196,28 +196,37 @@ const splitMissionStart = (remainderAtEnd: boolean) => {
         return
     }
 
-    splitMission(numMissions, remainderAtEnd);
+    void splitMission(numMissions, remainderAtEnd);
 }
 
 
-const splitMission = (numMissions: number, remainderAtEnd: boolean) => {
+const splitMission = async (numMissions: number, remainderAtEnd: boolean) => {
 
     const mission = main.state.missions.get(0);
     if (!mission) return;
+
+    let hasPortals = false;
+    for (let i = 0; i < numMissions; i++) hasPortals ||= main.state.missions.get(i)?.hasPortals() === true;
+    if (hasPortals) {
+        if (!await confirmDialog({ message: "Merge missione before split?", details: "Mission(s) already contain portals. These will be merged into one" })) {
+            return;
+        }
+    }
 
     const numPortals = mission?.portals.length;
     const numPortalsPerMission = Math.floor(numPortals / numMissions);
     const numRestPortals = numPortals % numMissions;
 
-    let textMessage = `Your path of ${numPortals} will be divided into ${numMissions} missions of ${numPortalsPerMission} portals each.`
+    const message = `Your path of ${numPortals} will be divided into ${numMissions} missions of ${numPortalsPerMission} portals each.`
+    let details = ""
     if (numRestPortals > 0) {
-        textMessage += remainderAtEnd ?
+        details += remainderAtEnd ?
             ` The remaining ${numRestPortals} portal(s) will be added to the last mission.` :
             ` The remaining ${numRestPortals} portal(s) will be equaly divided between the first missions.`;
     }
-    textMessage += `\r\n\r\nThis process can be reversed using the merge missions feature. Do you want to continue?`;
+    details += `\r\n\r\nThis process can be reversed using the merge missions feature. Do you want to continue?`;
 
-    if (confirm(textMessage)) {
+    if (await confirmDialog({ message, details })) {
         main.state.missions.splitIntoMultiple(mission, numMissions, remainderAtEnd);
         main.state.save();
         main.redrawAll();
