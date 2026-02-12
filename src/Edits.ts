@@ -6,23 +6,25 @@ import { showUmmOptions } from "./UI/Dialog/Options";
 import { bannerNotification, notification } from "./UI/Notification";
 import { title } from "./Text/Text";
 
-let lastPortal: PortalGUID;
+let lastPortal: PortalGUID | undefined;
 let missionModeResuming = false;
 
-export const addPortalToCurrentMission = (data: EventPortalSelected) => {
+export const addPortalToCurrentMission = async (data: EventPortalSelected) => {
 
-    const state = main.state;
-
-    // we are not in edit mode or it is the first selection
-    if (!main.missionModeActive || missionModeResuming) {
-        missionModeResuming = false;
-        return;
-    }
-
+    // same or nothing selected
     if (lastPortal === data.selectedPortalGuid) {
         return;
     }
     lastPortal = data.selectedPortalGuid;
+    if (!data.selectedPortalGuid) return;
+
+
+    // we are not in edit mode or it is the first selection
+    const state = main.state;
+    if (!main.missionModeActive || missionModeResuming) {
+        missionModeResuming = false;
+        return;
+    }
 
     const mission = state.getEditMission();
     if (!mission) return;
@@ -83,8 +85,11 @@ export const removeLastPortal = () => {
     // If currentMission has 0 portals, refuse
     if (mission && mission.portals.length > 0) {
 
+        lastPortal = undefined;
+
         mission.portals.remove(mission.portals.length - 1);
         main.state.save();
+
 
         main.redrawAll();
 
