@@ -226,8 +226,11 @@ const splitMission = (numMissions: number, remainderAtEnd: boolean) => {
 };
 
 
-export const mergeMissions = () => {
-    if (!confirm("Are you sure you want to merge all your missions into 1?\r\n\r\nThis can't be undone.")) {
+export const mergeMissions = async () => {
+    if (!await confirmDialog({
+        message: "Merge mission?",
+        details: "Are you sure you want to merge all your missions into 1?\r\n\r\nThis can't be undone."
+    })) {
         return;
     }
 

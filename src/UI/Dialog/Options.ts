@@ -6,6 +6,7 @@ import { updateCurrentActiveMissionSidebar, updatePortalCountSidebar } from "../
 import { title } from "../../Text/Text";
 import { about } from "./About";
 import { button, dialogButton, dialogButtonClose } from "./Button";
+import { confirmDialog } from "./Confirm";
 import { editMissionSetDetails } from "./MissionDetails";
 import { editActiveMission } from "./SelectMission";
 
@@ -115,17 +116,24 @@ const validateMissions = (state: State): string => {
 
 
     return result.join("<br>");
-}
+};
 
 
-const confirmClear = () => {
-    if (confirm("Are you sure you want to clear ALL missions data?")) {
+const confirmClear = async () => {
+    if (await confirmDialog({
+        message: "Clear all Mission data?",
+        details: "Are you sure you want to clear ALL missions data?"
+    })) {
         clearMissionData();
     }
 };
 
+
 const confirmLoad = async (event: Event) => {
-    if (confirm("Are you sure you want to overwrite the current mission data?")) {
+    if (await confirmDialog({
+        message: "Overwrite current data?",
+        details: "Are you sure you want to overwrite the current mission data?"
+    })) {
         await loadFileInput(event, main.state);
         main.state.checkAllPortals();
 
