@@ -34,7 +34,7 @@ export const addPortalToCurrentMission = async (data: EventPortalSelected) => {
 
     if (mission.portals.includes(portalToAdd.guid)) {
         if (mission.portals.isEnd(portalToAdd)) {
-            notification(`${main.state.getBannerName()}\nPortal already in mission #${main.state.getCurrent() + 1}`);
+            bannerNotification(`Portal already in mission #${main.state.getCurrent() + 1}`);
         }
     } else {
         const preMission = state.missions.previous(mission);
