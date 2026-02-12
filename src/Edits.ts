@@ -5,6 +5,7 @@ import { editMissionSetDetails } from "./UI/Dialog/MissionDetails";
 import { showUmmOptions } from "./UI/Dialog/Options";
 import { bannerNotification, notification } from "./UI/Notification";
 import { title } from "./Text/Text";
+import { confirmDialog } from "./UI/Dialog/Confirm";
 
 let lastPortal: PortalGUID | undefined;
 let missionModeResuming = false;
@@ -40,7 +41,10 @@ export const addPortalToCurrentMission = async (data: EventPortalSelected) => {
         if (mission.portals.length === 0 && preMission && preMission.portals.includes(portalToAdd.guid) &&
             (!preMission.portals.isStart(portalToAdd) && !preMission.portals.isEnd(portalToAdd))
         ) {
-            if (confirm("Split mission?")) {
+            if (await confirmDialog({
+                message: "Split mission?",
+                details: "Your start portal overlaps another mission's portal. Reuse it or split the previous mission?"
+            })) {
                 const index = preMission.portals.indexOf(portalToAdd);
                 mission.portals.clear();
                 state.missions.split(preMission, index, mission);
