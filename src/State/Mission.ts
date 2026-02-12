@@ -62,6 +62,10 @@ export class Mission {
         return locations.reduce((sum, ll, index, lls) => index > 0 ? sum + ll.distanceTo(lls[index - 1]) : 0, 0);
     }
 
+    clear() {
+        this.portal_data.clear();
+    }
+
     reverse() {
         this.portal_data.reverse();
     }

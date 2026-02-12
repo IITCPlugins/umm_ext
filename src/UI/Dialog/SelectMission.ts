@@ -22,6 +22,7 @@ export const editActiveMission = () => {
         button("Zoom to mission", onZoomToMission),
         $("<div>", { id: "umm-mission-picker-info" }),
         button("Split", onMissionSplit),
+        button("Clear", onMissionClear),
         button("Reverse", onMissionReverse), $("<br>"),
         button("Merge with previous", onMergePrevious),
         button("Merge next into this", onMergePost),
@@ -192,9 +193,22 @@ const onMissionReverse = () => {
     const mission = selectedMission();
     if (!mission) return;
 
-    mission.portals.reverse();
+    mission.reverse();
     main.state.save();
     refreshMissionUI();
 };
+
+const onMissionClear = () => {
+    const mission = getSelectedMission();
+    if (!mission) return;
+
+    if (!confirm("This will remove all portals")) return;
+
+    mission.clear();
+    main.state.save();
+    refreshMissionUI();
+};
+
+
 
 
