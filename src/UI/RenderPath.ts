@@ -1,6 +1,7 @@
 import { main } from "../Main";
 import { Mission } from "../State/Mission";
 import { UMM_Portal } from "../UMM_types";
+import { confirmDialog } from "./Dialog/Confirm";
 import { notification } from "./Notification";
 
 type MarkerOptions = L.MarkerOptions & {
@@ -117,7 +118,7 @@ export class RenderPath {
         marker
             .on("drag", event => { this.onMarkerDrag(event as L.LeafletMouseEvent); })
             .on("dragstart", event => { this.onMarkerDragStart(event); })
-            .on("dragend", event => { this.onMarkerDragEnd(event as L.LeafletDragEndEvent); })
+            .on("dragend", event => { void this.onMarkerDragEnd(event as L.LeafletDragEndEvent); })
             .on("dblclick", event => { this.onMarkerDblClick(event as L.LeafletMouseEvent); });
     }
 
@@ -192,7 +193,7 @@ export class RenderPath {
     }
 
 
-    private onMarkerDragEnd(event: L.LeafletDragEndEvent) {
+    private async onMarkerDragEnd(event: L.LeafletDragEndEvent) {
         if (this.editDragLine) {
             this.missionPaths.removeLayer(this.editDragLine);
             this.editDragLine = undefined;
@@ -220,14 +221,14 @@ export class RenderPath {
         if (options.isMidPoint) {
             mission.portals.insert(options.portal, portalToAdd);
         } else {
-            this.movePortal(mission, options.portal, portalToAdd);
+            await this.movePortal(mission, options.portal, portalToAdd);
         }
 
         this.saveStateAndRefresh();
     }
 
 
-    private movePortal(mission: Mission, portalID: number, target: UMM_Portal) {
+    private async movePortal(mission: Mission, portalID: number, target: UMM_Portal) {
 
         // drag portal to last mission -> merge?
         if (portalID === 0) {
@@ -235,14 +236,14 @@ export class RenderPath {
             const preMission = missions.previous(mission);
 
             if (preMission?.portals.isEnd(target)) {
-                if (confirm("Merge mission ?")) {
+                if (await confirmDialog({ message: "Merge mission ?" })) {
                     missions.merge(preMission, mission);
                     main.state.setCurrent(preMission.id);
                     return;
                 }
             } else
                 if (mission.portals.length === 1 && preMission?.portals.includes(target.guid)) {
-                    if (confirm("Split mission ?")) {
+                    if (await confirmDialog({ message: "Split mission ?" })) {
                         const index = preMission.portals.indexOf(target);
 
                         mission.portals.clear();
@@ -258,7 +259,7 @@ export class RenderPath {
 
             const postMission = missions.next(mission);
             if (postMission?.portals.isStart(target)) {
-                if (confirm("Merge mission ?")) {
+                if (await confirmDialog({ message: "Merge mission ?" })) {
                     missions.merge(mission, postMission);
                     return;
                 }

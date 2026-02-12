@@ -5,6 +5,7 @@ import { notification } from "../Notification";
 import { title } from "../../Text/Text";
 import { button, dialogButton, dialogButtonClose } from "./Button";
 import { showUmmOptions } from "./Options";
+import { confirmDialog } from "./Confirm";
 
 // FIXME: missing in IITCPluginKit 1.9.6
 declare global {
@@ -125,7 +126,7 @@ const onZoomToMission = () => {
 
 
 
-const onMissionSplit = () => {
+const onMissionSplit = async () => {
     const missions = main.state.missions;
 
     const mission = selectedMission();
@@ -149,8 +150,11 @@ const onMissionSplit = () => {
         if (current?.portals.length > 0) mustMerge = true;
     }
 
-    if (mustMerge) if (!confirm("Mission(s) already contain portals.\nMission(s) will be merge first?")) return;
-
+    if (mustMerge) {
+        if (!await confirmDialog({ message: "Merge missione before split?", details: "Mission(s) already contain portals. These will be merged into one" })) {
+            return;
+        }
+    }
 
     missions.splitIntoMultiple(mission, count);
     main.state.save();

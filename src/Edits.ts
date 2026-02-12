@@ -5,6 +5,7 @@ import { editMissionSetDetails } from "./UI/Dialog/MissionDetails";
 import { showUmmOptions } from "./UI/Dialog/Options";
 import { bannerNotification, notification } from "./UI/Notification";
 import { title } from "./Text/Text";
+import { confirmDialog } from "./UI/Dialog/Confirm";
 
 let lastPortal: PortalGUID | undefined;
 let missionModeResuming = false;
@@ -40,7 +41,10 @@ export const addPortalToCurrentMission = async (data: EventPortalSelected) => {
         if (mission.portals.length === 0 && preMission && preMission.portals.includes(portalToAdd.guid) &&
             (!preMission.portals.isStart(portalToAdd) && !preMission.portals.isEnd(portalToAdd))
         ) {
-            if (confirm("Split mission?")) {
+            if (await confirmDialog({
+                message: "Split mission?",
+                details: "Your start portal overlaps another mission's portal. Reuse it or split the previous mission?"
+            })) {
                 const index = preMission.portals.indexOf(portalToAdd);
                 mission.portals.clear();
                 state.missions.split(preMission, index, mission);
@@ -192,28 +196,37 @@ const splitMissionStart = (remainderAtEnd: boolean) => {
         return
     }
 
-    splitMission(numMissions, remainderAtEnd);
+    void splitMission(numMissions, remainderAtEnd);
 }
 
 
-const splitMission = (numMissions: number, remainderAtEnd: boolean) => {
+const splitMission = async (numMissions: number, remainderAtEnd: boolean) => {
 
     const mission = main.state.missions.get(0);
     if (!mission) return;
+
+    let hasPortals = false;
+    for (let i = 0; i < numMissions; i++) hasPortals ||= main.state.missions.get(i)?.hasPortals() === true;
+    if (hasPortals) {
+        if (!await confirmDialog({ message: "Merge missione before split?", details: "Mission(s) already contain portals. These will be merged into one" })) {
+            return;
+        }
+    }
 
     const numPortals = mission?.portals.length;
     const numPortalsPerMission = Math.floor(numPortals / numMissions);
     const numRestPortals = numPortals % numMissions;
 
-    let textMessage = `Your path of ${numPortals} will be divided into ${numMissions} missions of ${numPortalsPerMission} portals each.`
+    const message = `Your path of ${numPortals} will be divided into ${numMissions} missions of ${numPortalsPerMission} portals each.`
+    let details = ""
     if (numRestPortals > 0) {
-        textMessage += remainderAtEnd ?
+        details += remainderAtEnd ?
             ` The remaining ${numRestPortals} portal(s) will be added to the last mission.` :
             ` The remaining ${numRestPortals} portal(s) will be equaly divided between the first missions.`;
     }
-    textMessage += `\r\n\r\nThis process can be reversed using the merge missions feature. Do you want to continue?`;
+    details += `\r\n\r\nThis process can be reversed using the merge missions feature. Do you want to continue?`;
 
-    if (confirm(textMessage)) {
+    if (await confirmDialog({ message, details })) {
         main.state.missions.splitIntoMultiple(mission, numMissions, remainderAtEnd);
         main.state.save();
         main.redrawAll();
@@ -222,8 +235,11 @@ const splitMission = (numMissions: number, remainderAtEnd: boolean) => {
 };
 
 
-export const mergeMissions = () => {
-    if (!confirm("Are you sure you want to merge all your missions into 1?\r\n\r\nThis can't be undone.")) {
+export const mergeMissions = async () => {
+    if (!await confirmDialog({
+        message: "Merge mission?",
+        details: "Are you sure you want to merge all your missions into 1?\r\n\r\nThis can't be undone."
+    })) {
         return;
     }
 

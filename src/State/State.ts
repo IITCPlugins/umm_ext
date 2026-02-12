@@ -63,6 +63,13 @@ export class State {
     }
 
 
+    isEmpty(): boolean {
+        return this.theState.missionSetName === "" &&
+            this.theState.missionSetDescription === "" &&
+            this.theState.missions.every(m => m.portals.length === 0)
+    }
+
+
     isValid(): boolean {
         return this.theState.missionSetName !== "" &&
             this.theState.missionSetDescription !== "" &&
