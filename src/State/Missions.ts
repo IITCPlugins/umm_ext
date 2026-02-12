@@ -164,7 +164,7 @@ export class Missions {
         for (let i = 0; i < count; i++) {
             const start = Math.floor(portalsPerMission * i);
             let end = Math.floor(portalsPerMission * (i + 1));
-            if (i !== count - 1) end = allPortals.length - 1;
+            if (i === count - 1) end = allPortals.length;
 
             const mission = this.get(source.id + i);
             mission?.portals.clear();
