@@ -67,7 +67,7 @@ export class RenderPath {
 
     private drawMission(mission: Mission) {
         const geodesicPolyline = new L.GeodesicPolyline(mission.getLocations(), {
-            color: "crimson",
+            color: main.state.isCurrent(mission.id) ? "#ff9a00" : "crimson",
             weight: 5,
             smoothFactor: 1,
             interactive: false
