@@ -1,7 +1,6 @@
 import { removeLastPortal, setCurrentMission, toggleMissionMode } from "../Edits";
 import { main } from "../Main";
 import { Mission } from "../State/Mission";
-import { State } from "../State/State";
 import { showUmmOptions } from "./Dialog/Options";
 import { editActiveMission } from "./Dialog/SelectMission";
 import { bannerNotification } from "./Notification";
@@ -36,13 +35,16 @@ export const createToolbar = () => {
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-call
     window.map.addControl(new UMMToolbar());
+
+    main.state.onSelectedMissionChange.do(onMissionNumberChanged);
+    main.state.onMissionPortal.do(onMissionPortalsChanged);
+
+    onMissionNumberChanged();
+    onMissionPortalsChanged();
 };
 
 
 const toolBarButton = (id: string, image: string | undefined, tooltip: string, click?: () => void): JQuery => {
-
-    // width = "16" height = 16" style="margin - top: 7px; "></a>').on('click dblclick', '#umm-toggle-bookmarks', function (event) {
-
     return $("<a>", {
         id,
         class: "umm-control",
@@ -53,7 +55,9 @@ const toolBarButton = (id: string, image: string | undefined, tooltip: string, c
 }
 
 
-export const updateCurrentActiveMissionSidebar = (state: State) => {
+export const onMissionNumberChanged = () => {
+    const state = main.state;
+
     $('#umm-edit-active-mission').text(state.getCurrent() + 1);
     $('#umm-edit-active-mission').css("background-color", "white");
     $('#umm-next-mission img').css("opacity", "100%");
@@ -68,10 +72,12 @@ export const updateCurrentActiveMissionSidebar = (state: State) => {
     if (current === 0) {
         $('#umm-previous-mission').children('img').css("opacity", "30%");
     }
+
+    onMissionPortalsChanged();
 }
 
 
-export const updatePortalCountSidebar = () => {
+export const onMissionPortalsChanged = () => {
     const count = main.state.getEditMission()?.portals.length ?? 0;
     if (count < 1000) {
         $('#umm-number-of-portals').text(`P${count}`);
@@ -117,7 +123,7 @@ const showMission = (mission: Mission) => {
     if (mission.hasPortals()) {
         mission.show();
 
-        updatePortalCountSidebar();
+        onMissionPortalsChanged();
 
         if (main.missionModeActive) {
             bannerNotification(main.state, `Mission mode active.\nCurrent mission #${main.state.getCurrent() + 1}\nSelect next portal`);

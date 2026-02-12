@@ -2,7 +2,6 @@ import { clearMissionData, mergeMissions, reverseMission, splitMissionOptions } 
 import { exportData, loadFileInput } from "../../ImportExport";
 import { main } from "../../Main";
 import { State } from "../../State/State";
-import { updateCurrentActiveMissionSidebar, updatePortalCountSidebar } from "../ButtonBar";
 import { title } from "../../Text/Text";
 import { about } from "./About";
 import { button, dialogButton, dialogButtonClose } from "./Button";
@@ -149,8 +148,6 @@ const confirmLoad = async (event: Event) => {
         main.state.checkAllPortals();
 
         main.redrawAll();
-        updateCurrentActiveMissionSidebar(main.state);
-        updatePortalCountSidebar();
         main.state.missions.zoom();
     }
 };

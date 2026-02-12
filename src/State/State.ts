@@ -44,6 +44,9 @@ export class State {
 
         // make sure Missions are initialized
         this.setPlannedLength(this.getPlannedLength() || 1);
+        this.onMissionChange.trigger();
+        this.onMissionPortal.trigger();
+        this.onSelectedMissionChange.trigger();
     }
 
 

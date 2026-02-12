@@ -1,5 +1,4 @@
 import { main } from "./Main";
-import { updateCurrentActiveMissionSidebar, updatePortalCountSidebar } from "./UI/ButtonBar";
 import { dialogButton } from "./UI/Dialog/Button";
 import { editMissionSetDetails } from "./UI/Dialog/MissionDetails";
 import { showUmmOptions } from "./UI/Dialog/Options";
@@ -67,7 +66,6 @@ export const clearMissionData = () => {
     main.state.reset();
     main.state.save();
 
-    updateCurrentActiveMissionSidebar(main.state);
     if (main.missionModeActive) {
         toggleMissionMode();
     }
@@ -228,7 +226,6 @@ const splitMission = async (numMissions: number, remainderAtEnd: boolean) => {
         main.state.missions.splitIntoMultiple(mission, numMissions, remainderAtEnd);
         main.state.save();
         main.redrawAll();
-        updatePortalCountSidebar();
     }
 };
 
@@ -267,6 +264,5 @@ export const reverseMission = () => {
 export const setCurrentMission = (missionId: number): void => {
     main.state.setCurrent(missionId);
     main.state.save();
-    updateCurrentActiveMissionSidebar(main.state);
     main.redrawAll();
 };
