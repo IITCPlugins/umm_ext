@@ -107,7 +107,6 @@ const updateMissionInfo = () => {
 const refreshMissionUI = () => {
     updateMissionInfo();
     updateMissionList();
-    main.redrawAll();
 };
 
 

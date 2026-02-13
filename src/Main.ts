@@ -54,12 +54,7 @@ class UMM_Ext implements Plugin.Class {
 
         this.missionModeActive = false;
 
-        this.redrawAll();
         this.renderPath.redraw();
-    }
-
-    redrawAll() {
-        // this.renderPath.redraw();
         this.renderNumbers.redraw();
     }
 

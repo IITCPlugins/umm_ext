@@ -230,7 +230,7 @@ export class RenderPath {
             await this.movePortal(mission, options.portal, portalToAdd);
         }
 
-        this.saveStateAndRefresh();
+        main.state.save();
     }
 
 
@@ -311,13 +311,7 @@ export class RenderPath {
         if (!mission) return;
 
         mission.portals.remove(portal);
-        this.saveStateAndRefresh();
-        notification(`${mission.title}\nRemoved #${portal + 1} from mission`);
-    }
-
-
-    private saveStateAndRefresh() {
         main.state.save();
-        main.redrawAll();
+        notification(`${mission.title}\nRemoved #${portal + 1} from mission`);
     }
 }

@@ -146,8 +146,6 @@ const confirmLoad = async (event: Event) => {
     ) {
         await loadFileInput(event, main.state);
         main.state.checkAllPortals();
-
-        main.redrawAll();
         main.state.missions.zoom();
     }
 };
