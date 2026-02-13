@@ -21,16 +21,6 @@ export const confirmDialog = (options: Options): Promise<boolean> => {
             );
         }
 
-        const newDialog = window.dialog({
-            html: message,
-            title: options.title,
-            dialogClass: "umm-confirm " + (options.title ? "" : " no_title"),
-            resizable: false,
-            modal: true,
-            closeOnEscape: false
-        });
-
-
         const buttons: JQueryUI.ButtonOptions[] = [
             {
                 text: "No",
@@ -48,20 +38,30 @@ export const confirmDialog = (options: Options): Promise<boolean> => {
             }
         ];
 
-        newDialog.dialog("option", "buttons", buttons);
+        const newDialog = window.dialog({
+            html: message,
+            title: options.title,
+            dialogClass: "umm-confirm " + (options.title ? "" : " no_title"),
+            resizable: false,
+            modal: true,
+            closeOnEscape: false,
+            buttons
+        });
+
+        newDialog.parent().find("button:eq(1)").css({ float: "left" });
 
         newDialog.closest(".ui-dialog").trigger("focus");
         newDialog.closest(".ui-dialog").on("keydown", event => {
             if (event.key === "Enter") {
                 event.preventDefault();
                 event.stopPropagation();
-                newDialog.parent().find("button:eq(1)").trigger("click");
+                newDialog.parent().find("button:eq(2)").trigger("click");
                 return false;
             }
             if (event.key === "Escape") {
                 event.preventDefault();
                 event.stopPropagation();
-                newDialog.parent().find("button:eq(2)").trigger("click");
+                newDialog.parent().find("button:eq(1)").trigger("click");
                 return false;
             }
 
