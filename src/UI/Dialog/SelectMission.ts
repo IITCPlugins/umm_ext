@@ -45,7 +45,7 @@ export const editActiveMission = () => {
 };
 
 
-const selectedMission = (): Mission | undefined => {
+const getSelectedMission = (): Mission | undefined => {
     const missionNumber = parseInt($('#umm-mission-picker').val() as string);
     return main.state.missions.get(missionNumber);
 };
@@ -69,7 +69,7 @@ const updateMissionInfo = () => {
     const info = $("#umm-mission-picker-info");
     info.empty();
 
-    const mission = selectedMission();
+    const mission = getSelectedMission();
     if (!mission) return;
 
     const missionLength = window.formatDistance(mission.getDistance());
@@ -93,7 +93,7 @@ const refreshMissionUI = () => {
 };
 
 const onMissionSelect = () => {
-    const mission = selectedMission();
+    const mission = getSelectedMission();
 
     if (!mission || main.state.isCurrent(mission.id)) {
         notification("Active mission not changed.");
@@ -115,7 +115,7 @@ const onMissionSelect = () => {
 
 
 const onZoomToMission = () => {
-    const mission = selectedMission();
+    const mission = getSelectedMission();
 
     if (mission) {
         mission.show();
@@ -129,7 +129,7 @@ const onZoomToMission = () => {
 const onMissionSplit = async () => {
     const missions = main.state.missions;
 
-    const mission = selectedMission();
+    const mission = getSelectedMission();
     if (!mission) return;
 
     let next = missions.next(mission);
@@ -165,7 +165,7 @@ const onMissionSplit = async () => {
 const onMergePrevious = () => {
     const missions = main.state.missions;
 
-    const mission = selectedMission();
+    const mission = getSelectedMission();
     if (!mission) return;
     let previous = missions.previous(mission);
     if (!previous) {
@@ -182,7 +182,7 @@ const onMergePrevious = () => {
 const onMergePost = () => {
     const missions = main.state.missions;
 
-    const mission = selectedMission();
+    const mission = getSelectedMission();
     if (!mission) return;
     let next = missions.next(mission);
     while (next?.portals.length === 0) next = missions.next(next);
@@ -194,7 +194,7 @@ const onMergePost = () => {
 };
 
 const onMissionReverse = () => {
-    const mission = selectedMission();
+    const mission = getSelectedMission();
     if (!mission) return;
 
     mission.reverse();
