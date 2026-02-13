@@ -1,3 +1,4 @@
+import { debounce } from "../Helper/Debounce";
 import { main } from "../Main";
 import { Mission } from "../State/Mission";
 import { UMM_Portal } from "../UMM_types";
@@ -32,6 +33,9 @@ export class RenderPath {
                 className: "leaflet-div-icon leaflet-editing-icon"
             });
 
+        main.state.onMissionChange.do(this.redraw);
+        main.state.onMissionPortal.do(this.redraw);
+        main.state.onSelectedMissionChange.do(this.redraw);
     }
 
 
@@ -51,7 +55,8 @@ export class RenderPath {
         }
     }
 
-    redraw() {
+
+    redrawNow = () => {
         this.missionPaths.clearLayers();
 
         const editMode = main.missionModeActive;
@@ -63,7 +68,8 @@ export class RenderPath {
                 this.drawMission(mission);
             }
         });
-    }
+    };
+    redraw = debounce(this.redrawNow);
 
 
     private drawMission(mission: Mission) {
