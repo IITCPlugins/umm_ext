@@ -111,6 +111,10 @@ export class Missions {
         return waypoints.reduce((sum, ll, index, lls) => index > 0 ? sum + ll.distanceTo(lls[index - 1]) : 0, 0)
     }
 
+    getWaypointCount(): number {
+        return this.data.reduce((count, mis) => count + mis.portals.length, 0)
+    }
+
 
     validate(): ErrorReport {
         const errors: ErrorReport = {};

@@ -9,25 +9,38 @@ import { confirmDialog } from "./Confirm";
 import { editMissionSetDetails } from "./MissionDetails";
 import { editActiveMission } from "./SelectMission";
 
+const lable = (lable: string): JQuery => {
+    return $("<td>", { text: lable });
+}
 
+const stat = (id: string): JQuery => {
+    return $("<td>").append($("<span>", { class: "stat", id }));
+}
 
 export const showUmmOptions = () => {
     const state = main.state;
 
     const html = $("<div>", { class: "umm-options-list" }).append(
-        $("<p>").append(
-            $("<b>", { text: "Banner data" }), $("<br>"),
-            "Banner name:", $("<span>", { class: "stat", id: "umm_opt_bannername" }), $("<br>"),
-            "Banner description:", $("<span>", { class: "stat", id: "umm_opt_bannerdesc" }), $("<br>"),
-            'Mission title format: <b><span  id="umm_opt_bannerformat"></span></b> <span title="Title format allows:&#10;N = Mission number without leading 0 (if required by banner length)&#10;NN = Mission number with leading 0&#10;M = Planned banner length&#10;T = (mission title)&#10; &#10;eg. T N-M or NN.M T">(?)</span><br>',
-            "Planned banner length::", $("<span>", { class: "stat", id: "umm_opt_bannerlength" }), $("<br>"),
-            "Length:", $("<span>", { class: "stat", id: "umm_opt_bannerdistance" }), $("<br>"),
-
-            validateMissions(state),
+        $("<p>", { class: "banner_info" }).append(
+            $("<div>", { class: "title", id: "umm_opt_bannername" }),
+            $("<div>", { class: "description", id: "umm_opt_bannerdesc" }),
+            "<table><tr>",
+            lable("Title format"),
+            stat("umm_opt_bannerformat").append(
+                $("<span>", { text: "(?)", title: "Title format allows:&#10;N = Mission number without leading 0 (if required by banner length)&#10;NN = Mission number with leading 0&#10;M = Planned banner length&#10;T = (mission title)&#10; &#10;eg. T N-M or NN.M T" }),
+            ),
+            $("<td>").css({ width: "2em" }),
+            lable("Missions"), stat("umm_opt_bannerlength"),
+            "</tr><tr>",
+            lable("Waypoints"), stat("umm_opt_waypoints"),
+            $("<td>"),
+            lable("Length"), stat("umm_opt_bannerdistance"),
+            "</tr></table>",
+            $("<div>", { id: "umm_opt_error" }),
+            button("Edit", () => editMissionSetDetails(), "editButtom"),
         ),
         $("<p>").append(
-            $("<b>", { text: "Mission options" }), $("<br>"),
-            'Layers: ',
+            'Layers:',
             '<label style="user-select: none">Mission Paths</label>',
             $("<input>", {
                 type: "checkbox",
@@ -40,7 +53,6 @@ export const showUmmOptions = () => {
                 click: (event: Event) => toggleLayerNumbers((event.target as HTMLInputElement).checked),
                 checked: main.renderNumbers.isVisible()
             }),
-            button("Edit banner details", () => editMissionSetDetails(), "w-full"),
             button("Change active mission #", editActiveMission, "w-full"),
             button("Zoom to view all missions", () => state.missions.zoom(), "w-full"),
         ),
@@ -48,8 +60,8 @@ export const showUmmOptions = () => {
         button("Split mission", splitMissionOptions, "w-full"),
         button("Merge missions", mergeMissions, "w-full"),
         button("Reverse mission", reverseMission, "w-full"),
-        $("<hr>"),
         button("Clear ALL missions data", confirmClear, "w-full"),
+        $("<hr>"),
 
         $("<b>", { text: "Import/Export" }), $("<br>"),
         button("Export banner data to file", () => exportData(main.state), "w-full"),
@@ -112,10 +124,12 @@ const updateDialog = () => {
     $("#umm_opt_bannerdesc").text(state.getBannerDesc() ?? "N/A");
     $("#umm_opt_bannerformat").text(state.getTitleFormat() ?? "N/A");
     $("#umm_opt_bannerlength").text(state.getPlannedLength().toString());
+    $("#umm_opt_waypoints").text(state.missions.getWaypointCount().toString());
     $("#umm_opt_bannerdistance").text(window.formatDistance(state.missions.getTotalDistance()));
 
-    // TODO: validateMissions(state),
-    validateMissions(state);
+    $("#umm_opt_error")
+        .empty()
+        .append(validateMissions(state));
 };
 
 
@@ -125,7 +139,7 @@ const validateMissions = (state: State): string => {
     const result: string[] = [];
     for (const error in invalidMissions) {
         const numbers = invalidMissions[error].map(n => n + 1).join(", ");
-        result.push(`<span style="color: red;"><b>${error}:</b></span> Mission: ${numbers}`);
+        result.push(`<span class="error">${error}:</span></br>Mission: ${numbers}`);
     };
 
 
