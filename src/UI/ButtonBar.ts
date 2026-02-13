@@ -95,7 +95,7 @@ const nextMission = () => {
         showMission(mission);
     } else {
         if (main.missionModeActive) {
-            bannerNotification(`Start of mission #${state.getCurrent() + 1}\nSelect start portal.`);
+            bannerNotification(state, `Start of mission #${state.getCurrent() + 1}\nSelect start portal.`);
         }
     }
 }
@@ -120,9 +120,9 @@ const showMission = (mission: Mission) => {
         updatePortalCountSidebar();
 
         if (main.missionModeActive) {
-            bannerNotification(`Mission mode active.\nCurrent mission #${main.state.getCurrent() + 1}\nSelect next portal`);
+            bannerNotification(main.state, `Mission mode active.\nCurrent mission #${main.state.getCurrent() + 1}\nSelect next portal`);
         } else {
-            bannerNotification(`Current active mission set to #${main.state.getCurrent() + 1}`);
+            bannerNotification(main.state, `Current active mission set to #${main.state.getCurrent() + 1}`);
         }
     }
 }

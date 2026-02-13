@@ -1,21 +1,23 @@
-import { main } from "../Main";
+import { State } from "../State/State";
 
-let notificationTimer: number;
-
-export const bannerNotification = (message: string): void =>
-    notification(`${main.state.getBannerName()}\n${message}`);
+const NOTIFICATION_TIME = 3000;
 
 
-export const notification = (notificationText: string, isPersistent = false) => {
-    $('.umm-notification').hide();
-    const notification = $('.umm-notification').text(notificationText);
-    notification.html(notification.html().replace(/\n/g, '<br/>'));
-    $('.umm-notification').show();
+export const bannerNotification = (state: State, message: string): void =>
+    notification(`${state.getBannerName()}\n${message}`);
 
-    window.clearTimeout(notificationTimer);
-    if (!isPersistent) {
-        notificationTimer = window.setTimeout(() => {
-            $('.umm-notification').fadeOut(400);
-        }, 3000);
+
+
+export const notification = (notificationText: string, presistend = false) => {
+    $('.umm-notification').remove();
+
+    notificationText = notificationText.replace(/\n/g, '<br/>');
+    const notification = $("<div>", { class: "umm-notification", html: notificationText });
+    $('body').append(notification);
+
+    if (!presistend) {
+        window.setTimeout(() => {
+            $('.umm-notification').fadeOut(400, () => notification.remove());
+        }, NOTIFICATION_TIME);
     }
 }

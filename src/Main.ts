@@ -36,8 +36,6 @@ class UMM_Ext implements Plugin.Class {
 
         this.state = new State();
 
-        $('body').append("<div class='umm-notification' style='display:none'></div>");
-
         createToolbar();
         $('#toolbox').append(
             $('<a>', { text: "UMM", title: "Ultimate Mission Maker", click: () => this.toggleUMMBar() }));

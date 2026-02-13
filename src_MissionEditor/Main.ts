@@ -63,9 +63,6 @@ class UMM_Editor {
         require("./styles.pcss");
 
 
-        $('body').append("<div class='umm-notification' style='display:none'></div>");
-
-
         $('.navbar-header').append(
             $("<div>", { id: "umm-badge", text: "UMM:" }),
             $("<div>", { id: "umm-mission-editor-bar" }).append(
@@ -220,7 +217,7 @@ class UMM_Editor {
                         // When the mission has been saved, refresh it
                         notification('Refreshing mission...', true);
                         const app = this.getAngularApp();
-                        void this.reloadMAT(app.mission.mission_id);
+                        this.reloadMAT(app.mission.mission_id);
                     }
                 }
                 // Wait for a little bit before trigging the first refresh to increase reliability of pending save detection

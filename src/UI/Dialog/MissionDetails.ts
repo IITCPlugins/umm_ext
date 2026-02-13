@@ -67,8 +67,7 @@ const successfulSave = (toggleMissionModeAfterSave: boolean) => {
         values.format);
 
     if (isSavedSuccessful) {
-        updateCurrentActiveMissionSidebar(main.state);
-        bannerNotification(`Mission details saved`);
+        bannerNotification(main.state, `Mission details saved`);
         if (toggleMissionModeAfterSave) {
             toggleMissionMode();
         }

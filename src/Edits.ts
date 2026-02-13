@@ -34,7 +34,7 @@ export const addPortalToCurrentMission = async (data: EventPortalSelected) => {
 
     if (mission.portals.includes(portalToAdd.guid)) {
         if (mission.portals.isEnd(portalToAdd)) {
-            bannerNotification(`Portal already in mission #${main.state.getCurrent() + 1}`);
+            bannerNotification(state, `Portal already in mission #${main.state.getCurrent() + 1}`);
         }
     } else {
         const preMission = state.missions.previous(mission);
@@ -151,9 +151,9 @@ export const startEdit = () => {
         missionModeResuming = true;
         editMission.show();
         window.renderPortalDetails(editMission.portals.get(-1)!.guid);
-        bannerNotification(`Mission mode active.\nResuming mission #${missionNumber}\nSelect next portal`);
+        bannerNotification(main.state, `Mission mode active.\nResuming mission #${missionNumber}\nSelect next portal`);
     } else {
-        bannerNotification(`Mission mode active.\nSelect start portal for mission #${missionNumber}`);
+        bannerNotification(main.state, `Mission mode active.\nSelect start portal for mission #${missionNumber}`);
     }
 };
 
