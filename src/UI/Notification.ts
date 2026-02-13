@@ -3,6 +3,7 @@ import { State } from "../State/State";
 const NOTIFICATION_TIME = 3000;
 
 
+
 export const bannerNotification = (state: State, message: string): void =>
     notification(`${state.getBannerName()}\n${message}`);
 

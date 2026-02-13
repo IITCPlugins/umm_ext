@@ -8,7 +8,6 @@ import { title } from "./Text/Text";
 import { confirmDialog } from "./UI/Dialog/Confirm";
 
 let lastPortal: PortalGUID | undefined;
-let missionModeResuming = false;
 
 export const addPortalToCurrentMission = async (data: EventPortalSelected) => {
 
@@ -22,8 +21,7 @@ export const addPortalToCurrentMission = async (data: EventPortalSelected) => {
 
     // we are not in edit mode or it is the first selection
     const state = main.state;
-    if (!main.missionModeActive || missionModeResuming) {
-        missionModeResuming = false;
+    if (!main.missionModeActive) {
         return;
     }
 
@@ -148,9 +146,9 @@ export const startEdit = () => {
     const editMission = main.state.getEditMission();
     const missionNumber = main.state.getCurrent() + 1;
     if (editMission?.hasPortals()) {
-        missionModeResuming = true;
         editMission.show();
-        window.renderPortalDetails(editMission.portals.get(-1)!.guid);
+        lastPortal = editMission.portals.get(-1)!.guid;
+        window.renderPortalDetails(lastPortal);
         bannerNotification(main.state, `Mission mode active.\nResuming mission #${missionNumber}\nSelect next portal`);
     } else {
         bannerNotification(main.state, `Mission mode active.\nSelect start portal for mission #${missionNumber}`);
