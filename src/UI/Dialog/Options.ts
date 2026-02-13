@@ -68,7 +68,7 @@ export const showUmmOptions = () => {
 
     window.dialog({
         html: html,
-        title: `${title} v${VERSION}`,
+        title: `${title} ${VERSION}`,
         id: 'umm-options',
         width: 350,
         buttons: [

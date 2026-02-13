@@ -2,8 +2,10 @@
 // @name            IITC plugin: UMM_Ext
 // @id              iitc_plugin_UMM_Ext
 // @category        Misc
-// @version         1.0.alpha
+// @version         1.2.260213.100037
 // @namespace       https://github.com/IITC-CE/ingress-intel-total-conversion
+// @updateURL       https://github.com/IITCPlugins/umm_ext/raw/refs/heads/main/dist/iitc_plugin_UMM_Ext.user.js/iitc.meta.js
+// @downloadURL     https://github.com/IITCPlugins/umm_ext/raw/refs/heads/main/dist/iitc_plugin_UMM_Ext.user.js/iitc.user.js
 // @description     Ultimate Mission Maker - Extended
 // @match           https://intel.ingress.com/*
 // @match           https://missions.ingress.com/*

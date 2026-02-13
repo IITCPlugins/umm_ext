@@ -36,7 +36,7 @@ export const editMissionSetDetails = (toggleMissionModeAfterSave = false) => {
 
     window.dialog({
         html: html,
-        title: `Edit banner details - UMM v${VERSION}`,
+        title: `Edit banner details - UMM ${VERSION}`,
         id: 'umm-options',
         width: 400,
         buttons: [

@@ -23,7 +23,7 @@ export const about = () => {
 
     window.dialog({
         html: html,
-        title: `${title} v${VERSION} - About`,
+        title: `${title} ${VERSION} - About`,
         id: 'umm-options',
         width: 350,
         buttons: buttons
