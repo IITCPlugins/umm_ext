@@ -5,6 +5,7 @@ import { State } from "./State/State";
 import { addPortalToCurrentMission } from "./Edits";
 import { createToolbar, updateCurrentActiveMissionSidebar, updatePortalCountSidebar } from "./UI/ButtonBar";
 import { addWaypointEditorToPortal } from "./UI/EditWaypoint";
+import { editMissionSetDetails } from "./UI/Dialog/MissionDetails";
 
 
 // eslint-disable-next-line unicorn/prevent-abbreviations
@@ -39,7 +40,7 @@ class UMM_Ext implements Plugin.Class {
 
         createToolbar();
         $('#toolbox').append(
-            $('<a>', { text: "UMM", title: "Ultimate Mission Maker", click: () => $('.leaflet-umm.leaflet-bar').toggle() }));
+            $('<a>', { text: "UMM", title: "Ultimate Mission Maker", click: () => this.toggleUMMBar() }));
 
         // hide toolbar by default
         $('.leaflet-umm.leaflet-bar').hide();
@@ -63,6 +64,18 @@ class UMM_Ext implements Plugin.Class {
         this.renderPath.redraw();
         this.renderNumbers.redraw();
         updatePortalCountSidebar();
+    }
+
+    toggleUMMBar() {
+        $('.leaflet-umm.leaflet-bar').toggle();
+
+        if ($('.leaflet-umm.leaflet-bar').is(":visible")) {
+            if (this.state.isEmpty()) {
+                editMissionSetDetails();
+            } else {
+                this.state.missions.zoom();
+            }
+        }
     }
 }
 
