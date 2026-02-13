@@ -42,7 +42,7 @@ export const showUmmOptions = () => {
                 click: (event: Event) => toggleLayerNumbers((event.target as HTMLInputElement).checked),
                 checked: main.renderNumbers.isVisible()
             }),
-            button("Edit banner details", editMissionSetDetails, "w-full"),
+            button("Edit banner details", () => editMissionSetDetails(), "w-full"),
             button("Change active mission #", editActiveMission, "w-full"),
             button("Zoom to view all missions", () => state.missions.zoom(), "w-full"),
         ),

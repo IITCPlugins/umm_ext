@@ -72,6 +72,7 @@ const successfulSave = (toggleMissionModeAfterSave: boolean) => {
         if (toggleMissionModeAfterSave) {
             toggleMissionMode();
         }
+        $("#umm-options").dialog("close");
     }
 }
 
