@@ -1,4 +1,4 @@
-import { setCurrentMission, startEdit } from "../../Edits";
+import { setCurrentMission, startEdit, toggleMissionMode } from "../../Edits";
 import { main } from "../../Main";
 import { Mission } from "../../State/Mission";
 import { notification } from "../Notification";
@@ -18,9 +18,13 @@ export const editActiveMission = () => {
 
     const html = $("<div>", { class: "umm-mission-picker-btn" }).append(
         'Select a mission number:<br>',
-        $("<select>", { id: "umm-mission-picker", class: "umm-mission-picker", change: updateMissionInfo }).css({ "margin-right": "1em" }),
-        button("Select", onMissionSelect),
-        button("Zoom to mission", onZoomToMission),
+        button("<", onPreviousMission).css({ "margin-right": 0 }),
+        $("<select>", { id: "umm-mission-picker", class: "umm-mission-picker", change: onMissionSelect }),
+        button(">", onNextMission),
+        $("<div>").append(
+            button("Edit", onStartEdit),
+            button("Zoom to mission", onZoomToMission).css({ "margin-left": "1em" })
+        ),
         $("<div>", { id: "umm-mission-picker-info" }),
         button("Split", onMissionSplit),
         button("Clear", onMissionClear),
@@ -110,6 +114,20 @@ const refreshMissionUI = () => {
 };
 
 
+const onPreviousMission = () => {
+    const mission = main.state.getCurrent();
+    if (mission > 0) {
+        setCurrentMission(mission - 1);
+    }
+};
+
+const onNextMission = () => {
+    const mission = main.state.getCurrent();
+    if (mission < main.state.getPlannedLength() - 1) {
+        setCurrentMission(mission + 1);
+    }
+};
+
 const onMissionSelect = () => {
     const mission = getSelectedMission();
 
@@ -119,18 +137,18 @@ const onMissionSelect = () => {
     }
 
     setCurrentMission(mission.id);
-
-    if (main.missionModeActive) {
-        // eslint-disable-next-line unicorn/no-null
-        renderPortalDetails(null); // Avoid adding current portal to a mission
-        startEdit();
-    } else {
-        mission.show();
-        notification(`Current working mission set to #${mission.id + 1}`);
-    }
-    $("#dialog-umm-options").dialog("close");
 };
 
+const onStartEdit = () => {
+
+    if (!main.missionModeActive) toggleMissionMode();
+
+    // eslint-disable-next-line unicorn/no-null
+    renderPortalDetails(null); // Avoid adding current portal to a mission
+    startEdit();
+
+    $("#dialog-umm-options").dialog("close");
+};
 
 const onZoomToMission = () => {
     const mission = getSelectedMission();
@@ -220,11 +238,11 @@ const onMissionReverse = () => {
     refreshMissionUI();
 };
 
-const onMissionClear = () => {
+const onMissionClear = async () => {
     const mission = getSelectedMission();
     if (!mission) return;
 
-    if (!confirm("This will remove all portals")) return;
+    if (!await confirmDialog({ message: "This will remove all portals" })) return;
 
     mission.clear();
     main.state.save();
