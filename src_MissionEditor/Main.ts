@@ -10,7 +10,12 @@ import { UMM_Objective, UMM_Portal } from "../src/UMM_types";
 const ummLogo = "https://lh3.googleusercontent.com/s0kCRS7KE-i0gQhbH_gx-qxvC2kHBJ9TDITirnpzSJnEDV-QVDio5OFl8bJ8OC8EhPGGFOFje5HeO9M6RDklZ971e8aSPeLs";
 
 
-interface AScope {
+interface ME_APP {
+    injector: () => any;
+    scope: () => ME_SCOPE;
+};
+
+interface ME_SCOPE {
     mission: {
         mission_id: number;
         definition: {
@@ -23,10 +28,10 @@ interface AScope {
     pendingSave: boolean;
     $apply: (callback?: () => void) => void;
     addWaypoint: (portal: MEPortal) => void;
-    injector: () => any;
     isWaypointSelected: (b: AMarker) => boolean;
     setSelectedWaypoint: (b: AMarker, f: boolean) => void;
-};
+}
+
 
 interface AMarker {
     _poi?: {
@@ -66,10 +71,10 @@ class UMM_Editor {
         $('.navbar-header').append(
             $("<div>", { id: "umm-badge", text: "UMM:" }),
             $("<div>", { id: "umm-mission-editor-bar" }).append(
-                $("<div>", { id: "umm-mission-title" }),
-                $("<div>", { style: "display: inline-block" }).append(
+                $("<div>", { id: "umm-mission-title", click: () => $("#umm-import-file").trigger("click") }),
+                $("<div>", { style: "margin-top: 0.3em;" }).append(
                     $("<input>", { id: "umm-import-file", type: "file" }),
-                    $("<label>", { for: "umm-import-file", class: "umm-upload-label", html: "&nbsp;" })
+                    $("<label>", { for: "umm-import-file", class: "umm-upload-label" })
                 ),
                 $("<div>", { id: "umm-mission-picker-wrapper" }).append(
                     $("<select>", { id: "umm-mission-picker", class: "umm-mission-picker" }),
@@ -136,7 +141,7 @@ class UMM_Editor {
 
         const mission = main.state.getEditMission();
 
-        const angularApp = this.getAngularApp();
+        const angularScope = this.getAngularAppScope();
 
         if (!mission || mission.title === "" || mission.description === '' && mission.portals.length === 0) {
             notification('There is no mission data loaded');
@@ -148,7 +153,7 @@ class UMM_Editor {
             return;
         }
 
-        if (!angularApp.mission) {
+        if (!angularScope.mission) {
             notification('You can not import a mission on the preview page\nStart with Create New Mission');
             return;
         }
@@ -158,26 +163,31 @@ class UMM_Editor {
             return;
         }
 
-        if (angularApp.mission.definition.waypoints.length > 0) {
+        if (angularScope.mission.definition.waypoints.length > 0) {
             if (!confirm("Your current mission already contains portals/waypoints. Are you sure you want to overwrite these?")) {
                 return;
             }
         }
 
-        this.resetWaypoints(angularApp);
+        this.resetWaypoints(angularScope);
 
-        angularApp.mission.definition.name = mission.title;
-        angularApp.mission.definition.description = mission.description;
+        angularScope.mission.definition.name = mission.title;
+        angularScope.mission.definition.description = mission.description;
+
+        // disable setSelectedWaypoint
+        const mock = angularScope.setSelectedWaypoint;
+        angularScope.setSelectedWaypoint = () => 0;
 
         let missingImagesCount = 0;
         mission.portals.getRange().forEach(portal => {
             const { mePortal, hasError } = this.createPortal(portal);
             if (hasError) missingImagesCount++;
-            angularApp.addWaypoint(mePortal);
+            angularScope.addWaypoint(mePortal);
         })
+        angularScope.setSelectedWaypoint = mock;
 
         // for (let portal in scope.mission.definition.waypoints) {
-        angularApp.mission.definition.waypoints.forEach((aportal, index) => {
+        angularScope.mission.definition.waypoints.forEach((aportal, index) => {
             // We can't overwrite objective at once, because we need to retain the constructor inside passphrase_params
             const portal = mission.portals.get(index)!;
             aportal.objective!.type = portal.objective.type;
@@ -186,11 +196,9 @@ class UMM_Editor {
             aportal.objective!.passphrase_params._single_passphrase = portal.objective.passphrase_params._single_passphrase;
         })
 
-        angularApp.$apply();
+        angularScope.$apply();
 
-
-        // @ts-ignore
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+        const angularApp = this.getAngularApp();
         const angularTimeout = angularApp.injector().get('$timeout');
         // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         angularTimeout(() => {
@@ -211,38 +219,37 @@ class UMM_Editor {
                             isMissionSaving = true;
                         }
                     }
-                    if (angularApp.pendingSave || isMissionSaving) {
+                    if (angularScope.pendingSave || isMissionSaving) {
                         triggerRefresh();
                     } else {
                         // When the mission has been saved, refresh it
                         notification('Refreshing mission...', true);
-                        const app = this.getAngularApp();
-                        this.reloadMAT(app.mission.mission_id);
+                        const scope = this.getAngularAppScope();
+                        this.reloadMAT(scope.mission.mission_id);
                     }
                 }
                 // Wait for a little bit before trigging the first refresh to increase reliability of pending save detection
                 setTimeout(triggerRefresh, 200);
             } else {
-                notification('UMM Mission import succesful:\n' + angularApp.mission.definition.name);
+                notification('UMM Mission import succesful:\n' + angularScope.mission.definition.name);
             }
         })
     }
 
 
-    getAngularApp(): AScope {
+    getAngularApp(): ME_APP {
         // Get angular container
-        const container = document.getElementsByClassName('container')[0]
+        const container = document.getElementsByClassName('container')[0];
         // Get angular element
         // @ts-ignore
-        const ngElement = angular.element(container);
-        // Get angular scope
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-        const scope: AScope = ngElement.scope();
-        return scope;
+        return angular.element(container) as ME_APP;
     }
 
+    getAngularAppScope(): ME_SCOPE {
+        return this.getAngularApp().scope();
+    }
 
-    resetWaypoints(scope: AScope) {
+    resetWaypoints(scope: ME_SCOPE) {
         // Waypoints are the actual portals that get submitted
         scope.mission.definition.waypoints = [];
         // Waypointmarkers are the markers displayed on the map
@@ -296,10 +303,10 @@ class UMM_Editor {
         angularHttp.post(angularApi.GET_MISSION, { mission_id: missionId }).success((data: any) => {
 
             data = wireUtil.convertMissionWireToLocal(data.mission, data.pois);
-            const angularApp = this.getAngularApp();
+            const angularscope = this.getAngularAppScope();
 
             // Replace mission data with the mission data retrieved from the server
-            angularApp.mission = data;
+            angularscope.mission = data;
 
             // AngularTimeout to fix double $digest issue
             angularTimeout(() => {
@@ -307,7 +314,7 @@ class UMM_Editor {
                 // Without this, they become non-interactive
 
                 // waypointMarkerProcessing, copied from MAT r1227
-                angularApp.waypointMarkers = ((waypoints): any[] => {
+                angularscope.waypointMarkers = ((waypoints): any[] => {
                     const d: any[] = [];
 
                     // Processing of individual waypoints, copied from MAT r595
@@ -317,10 +324,10 @@ class UMM_Editor {
                             return {
                                 id: Math.floor(1e10 * Math.random()),
                                 location: b._poi.location,
-                                icon: angularApp.isWaypointSelected(b) ? styles.SELECTED_WAYPOINT_ICON : styles.WAYPOINT_ICON,
+                                icon: angularscope.isWaypointSelected(b) ? styles.SELECTED_WAYPOINT_ICON : styles.WAYPOINT_ICON,
                                 onClicked: function () {
-                                    angularApp.$apply(() => {
-                                        angularApp.setSelectedWaypoint(b, !0)
+                                    angularscope.$apply(() => {
+                                        angularscope.setSelectedWaypoint(b, !0)
                                     })
                                 },
                                 options: {
@@ -340,9 +347,9 @@ class UMM_Editor {
                         d.push(c)
                     });
                     return d;
-                })(angularApp.mission.definition.waypoints);
-                angularApp.$apply();
-                notification('UMM Mission import succesful:\n' + angularApp.mission.definition.name);
+                })(angularscope.mission.definition.waypoints);
+                angularscope.$apply();
+                notification('UMM Mission import succesful:\n' + angularscope.mission.definition.name);
             });
 
         }).catch(() => {
