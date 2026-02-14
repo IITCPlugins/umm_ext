@@ -17,7 +17,7 @@ export const about = () => {
 
     const buttons = [
         dialogButton("< Main Menu", showUmmOptions),
-        dialogButton("Changelog", () => dialog({ title: "Changelog", html: changelog })),
+        dialogButton("Changelog", () => dialog({ title: "Changelog", html: changelog.replace(/\n/gm, "<br/>") })),
         dialogButtonClose()
     ];
 
