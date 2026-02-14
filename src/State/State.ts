@@ -2,6 +2,7 @@ import { Mission } from "./Mission";
 import { UMM_State } from "../UMM_types";
 import { migrateUmmVersion } from "./StateMigration";
 import { Missions } from "./Missions";
+import { Trigger } from "../Helper/Trigger";
 
 
 const STORAGE_KEY = "ultimate-mission-maker";
@@ -15,6 +16,12 @@ export class State {
     constructor() {
         this.load();
     }
+
+    // Events
+    public onSelectedMissionChange: Trigger = new Trigger();
+    public onMissionChange: Trigger = new Trigger();
+    public onMissionPortal: Trigger = new Trigger();
+
 
     load() {
         this.reset();
@@ -37,6 +44,9 @@ export class State {
 
         // make sure Missions are initialized
         this.setPlannedLength(this.getPlannedLength() || 1);
+        this.onMissionChange.trigger();
+        this.onMissionPortal.trigger();
+        this.onSelectedMissionChange.trigger();
     }
 
 
@@ -60,6 +70,8 @@ export class State {
                     portals: []
                 }],
         };
+
+        this.onMissionChange.trigger();
     }
 
 
@@ -77,7 +89,7 @@ export class State {
     }
 
     get missions(): Missions {
-        return new Missions(this.theState.missions);
+        return new Missions(this, this.theState.missions);
     }
 
     getBannerName(): string {
@@ -87,6 +99,8 @@ export class State {
     setBannerName(name: string) {
         this.theState.missionSetName = name;
         this.theState.missions.forEach((mission, id) => mission.missionTitle = this.generateMissionTitle(id));
+
+        this.onMissionChange.trigger();
     }
 
     getBannerDesc(): string {
@@ -96,6 +110,8 @@ export class State {
     setBannerDesc(desc: string) {
         this.theState.missionSetDescription = desc;
         this.theState.missions.forEach(mission => mission.missionDescription = this.theState.missionSetDescription);
+
+        this.onMissionChange.trigger();
     }
 
     getTitleFormat(): string {
@@ -105,6 +121,8 @@ export class State {
     setTitleFormat(name: string) {
         this.theState.titleFormat = name;
         this.theState.missions.forEach((mission, id) => mission.missionTitle = this.generateMissionTitle(id));
+
+        this.onMissionChange.trigger();
     }
 
 
@@ -127,6 +145,8 @@ export class State {
                 })
             }
         }
+
+        this.onMissionChange.trigger();
     }
 
 
@@ -143,6 +163,8 @@ export class State {
     setCurrent(missionId: number) {
         console.assert(missionId >= 0 && missionId < this.getPlannedLength(), "mission id out of bounds");
         this.theState.currentMission = missionId;
+
+        this.onSelectedMissionChange.trigger();
     }
 
     getCurrent(): number {
@@ -192,5 +214,4 @@ export class State {
         });
         if (updated) this.save();
     }
-
 }

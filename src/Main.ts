@@ -3,7 +3,7 @@ import { RenderPath } from "./UI/RenderPath";
 import { RenderNumbers } from "./UI/RenderNumbers";
 import { State } from "./State/State";
 import { addPortalToCurrentMission } from "./Edits";
-import { createToolbar, updateCurrentActiveMissionSidebar, updatePortalCountSidebar } from "./UI/ButtonBar";
+import { createToolbar } from "./UI/ButtonBar";
 import { addWaypointEditorToPortal } from "./UI/EditWaypoint";
 import { editMissionSetDetails } from "./UI/Dialog/MissionDetails";
 
@@ -54,14 +54,8 @@ class UMM_Ext implements Plugin.Class {
 
         this.missionModeActive = false;
 
-        this.redrawAll();
-        updateCurrentActiveMissionSidebar(this.state);
-    }
-
-    redrawAll() {
         this.renderPath.redraw();
         this.renderNumbers.redraw();
-        updatePortalCountSidebar();
     }
 
     toggleUMMBar() {

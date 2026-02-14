@@ -1,5 +1,4 @@
 import { main } from "./Main";
-import { updateCurrentActiveMissionSidebar, updatePortalCountSidebar } from "./UI/ButtonBar";
 import { dialogButton } from "./UI/Dialog/Button";
 import { editMissionSetDetails } from "./UI/Dialog/MissionDetails";
 import { showUmmOptions } from "./UI/Dialog/Options";
@@ -48,15 +47,12 @@ export const addPortalToCurrentMission = async (data: EventPortalSelected) => {
                 state.missions.split(preMission, index, mission);
 
                 state.save();
-                main.redrawAll();
                 return;
             }
         }
 
         mission.portals.add(portalToAdd);
         state.save();
-
-        main.redrawAll();
 
         notification(`${main.state.getBannerName()}\nAdded to mission #${main.state.getCurrent() + 1}`)
     }
@@ -67,11 +63,9 @@ export const clearMissionData = () => {
     main.state.reset();
     main.state.save();
 
-    updateCurrentActiveMissionSidebar(main.state);
     if (main.missionModeActive) {
         toggleMissionMode();
     }
-    main.redrawAll();
 }
 
 
@@ -92,8 +86,6 @@ export const removeLastPortal = () => {
         mission.portals.remove(mission.portals.length - 1);
         main.state.save();
 
-
-        main.redrawAll();
 
         // Check if current mission still has portals, if so reset view to this portal
         if (!mission.focusLastPortal()) {
@@ -227,8 +219,6 @@ const splitMission = async (numMissions: number, remainderAtEnd: boolean) => {
     if (await confirmDialog({ message, details })) {
         main.state.missions.splitIntoMultiple(mission, numMissions, remainderAtEnd);
         main.state.save();
-        main.redrawAll();
-        updatePortalCountSidebar();
     }
 };
 
@@ -243,7 +233,6 @@ export const mergeMissions = async () => {
 
     main.state.missions.mergeAll();
     main.state.setCurrent(0);
-    main.redrawAll();
 }
 
 
@@ -260,13 +249,10 @@ export const reverseMission = () => {
 
     mission.reverse();
     state.save();
-    main.redrawAll();
 }
 
 
 export const setCurrentMission = (missionId: number): void => {
     main.state.setCurrent(missionId);
     main.state.save();
-    updateCurrentActiveMissionSidebar(main.state);
-    main.redrawAll();
 };

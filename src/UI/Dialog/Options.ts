@@ -2,7 +2,6 @@ import { clearMissionData, mergeMissions, reverseMission, splitMissionOptions } 
 import { exportData, loadFileInput } from "../../ImportExport";
 import { main } from "../../Main";
 import { State } from "../../State/State";
-import { updateCurrentActiveMissionSidebar, updatePortalCountSidebar } from "../ButtonBar";
 import { title } from "../../Text/Text";
 import { about } from "./About";
 import { button, dialogButton, dialogButtonClose } from "./Button";
@@ -16,14 +15,13 @@ export const showUmmOptions = () => {
     const state = main.state;
 
     const html = $("<div>", { class: "umm-options-list" }).append(
-
         $("<p>").append(
             $("<b>", { text: "Banner data" }), $("<br>"),
-            'Banner name: <b><span>' + (state.getBannerName() ?? "N/A") + '</span></b><br>',
-            'Banner description: <b><span>' + (state.getBannerDesc() ?? "N/A") + '</span></b><br>',
-            'Mission title format: <b><span>' + (state.getTitleFormat() ?? "N/A") + '</span></b> <span title="Title format allows:&#10;N = Mission number without leading 0 (if required by banner length)&#10;NN = Mission number with leading 0&#10;M = Planned banner length&#10;T = (mission title)&#10; &#10;eg. T N-M or NN.M T">(?)</span><br>',
-            'Planned banner length: <b><span>' + state.getPlannedLength().toString() + '</span></b><br>',
-            'Length: <b><span>' + window.formatDistance(state.missions.getTotalDistance()) + '</span></b><br>',
+            "Banner name:", $("<span>", { class: "stat", id: "umm_opt_bannername" }), $("<br>"),
+            "Banner description:", $("<span>", { class: "stat", id: "umm_opt_bannerdesc" }), $("<br>"),
+            'Mission title format: <b><span  id="umm_opt_bannerformat"></span></b> <span title="Title format allows:&#10;N = Mission number without leading 0 (if required by banner length)&#10;NN = Mission number with leading 0&#10;M = Planned banner length&#10;T = (mission title)&#10; &#10;eg. T N-M or NN.M T">(?)</span><br>',
+            "Planned banner length::", $("<span>", { class: "stat", id: "umm_opt_bannerlength" }), $("<br>"),
+            "Length:", $("<span>", { class: "stat", id: "umm_opt_bannerdistance" }), $("<br>"),
 
             validateMissions(state),
         ),
@@ -62,10 +60,6 @@ export const showUmmOptions = () => {
         )
     );
 
-    // move this to option dialog
-    window.map.on('layeradd', onLayerAdd);
-    window.map.on('layerremove', onLayerRemove);
-
     window.dialog({
         html: html,
         title: `${title} ${VERSION}`,
@@ -77,12 +71,19 @@ export const showUmmOptions = () => {
         ],
         closeCallback: () => destroy()
     })
+
+
+    window.map.on('layeradd', onLayerAdd);
+    window.map.on('layerremove', onLayerRemove);
+    main.state.onMissionChange.do(updateDialog);
+    updateDialog();
 };
 
 
 const destroy = () => {
     window.map.off('layeradd', onLayerAdd);
     window.map.off('layerremove', onLayerRemove);
+    main.state.onMissionChange.dont(updateDialog);
 }
 
 
@@ -102,6 +103,19 @@ const onLayerRemove = (event: L.LeafletLayerEvent) => {
     if (main.renderNumbers.isLayer(event.layer)) {
         $('#umm-layercheckbox-numbers').prop("checked", false);
     }
+};
+
+
+const updateDialog = () => {
+    const state = main.state;
+    $("#umm_opt_bannername").text(state.getBannerName() ?? "N/A");
+    $("#umm_opt_bannerdesc").text(state.getBannerDesc() ?? "N/A");
+    $("#umm_opt_bannerformat").text(state.getTitleFormat() ?? "N/A");
+    $("#umm_opt_bannerlength").text(state.getPlannedLength().toString());
+    $("#umm_opt_bannerdistance").text(window.formatDistance(state.missions.getTotalDistance()));
+
+    // TODO: validateMissions(state),
+    validateMissions(state);
 };
 
 
@@ -132,10 +146,6 @@ const confirmLoad = async (event: Event) => {
     ) {
         await loadFileInput(event, main.state);
         main.state.checkAllPortals();
-
-        main.redrawAll();
-        updateCurrentActiveMissionSidebar(main.state);
-        updatePortalCountSidebar();
         main.state.missions.zoom();
     }
 };

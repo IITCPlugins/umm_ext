@@ -1,3 +1,4 @@
+import { debounce } from "../Helper/Debounce";
 import { main } from "../Main";
 import { MIN_PORTALS_PER_MISSION } from "../State/Missions";
 import { State } from "../State/State";
@@ -16,6 +17,10 @@ export class RenderNumbers {
     constructor() {
         this.missionNumbers = new window.L.FeatureGroup();
         window.addLayerGroup('UMM: Mission Numbers', this.missionNumbers, true);
+
+        main.state.onMissionChange.do(this.redraw);
+        main.state.onMissionPortal.do(this.redraw);
+        main.state.onSelectedMissionChange.do(this.redraw);
     }
 
     isVisible(): boolean {
@@ -34,7 +39,7 @@ export class RenderNumbers {
         }
     }
 
-    redraw() {
+    redrawNow = () => {
         this.missionNumbers.clearLayers();
 
         const state = main.state;
@@ -59,6 +64,7 @@ export class RenderNumbers {
             this.missionNumbers.addLayer(marker);
         });
     }
+    redraw = debounce(this.redrawNow);
 
     getMissionStarts(state: State): MissionStart[] {
         const missions: MissionStart[] = [];

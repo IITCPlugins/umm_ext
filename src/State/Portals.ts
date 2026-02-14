@@ -1,4 +1,5 @@
 import { UMM_Portal } from "../UMM_types";
+import { State } from "./State";
 
 
 export const PortalActions = [
@@ -13,9 +14,11 @@ export const PortalActions = [
 
 export class Portals {
 
+    private state: State;
     private data: UMM_Portal[];
 
-    constructor(data: UMM_Portal[]) {
+    constructor(state: State, data: UMM_Portal[]) {
+        this.state = state;
         this.data = data;
     }
 
@@ -36,24 +39,29 @@ export class Portals {
 
     set(index: number, portal: UMM_Portal) {
         this.data[index] = portal;
+        this.state.onMissionPortal.trigger();
     }
 
     add(...portal: UMM_Portal[]) {
         console.assert(!portal.some(p => this.includes(p.guid)), "portal is already in");
         this.data.push(...portal);
+        this.state.onMissionPortal.trigger();
     }
 
     insert(index: number, ...portal: UMM_Portal[]) {
         console.assert(!portal.some(p => this.includes(p.guid)), "portal is already in");
         this.data.splice(index, 0, ...portal);
+        this.state.onMissionPortal.trigger();
     }
 
     remove(index: number, count = 1) {
         this.data.splice(index, count);
+        this.state.onMissionPortal.trigger();
     }
 
     clear() {
         this.data.length = 0;
+        this.state.onMissionPortal.trigger();
     }
 
     toLatLng(): L.LatLng[] {
@@ -92,6 +100,7 @@ export class Portals {
 
     reverse() {
         this.data.reverse();
+        this.state.onMissionPortal.trigger();
     }
 
     create(guid: string): UMM_Portal {

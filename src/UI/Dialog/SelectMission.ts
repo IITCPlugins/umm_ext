@@ -30,19 +30,28 @@ export const editActiveMission = () => {
     );
 
     window.dialog({
-        html: html,
+        html,
         title: `${title} ${VERSION}`,
         id: 'umm-options',
         width: 350,
         buttons: [
             dialogButton("< Main Menu", showUmmOptions),
             dialogButtonClose()
-        ]
+        ],
+        closeCallback: destroy
     })
+
+    main.state.onSelectedMissionChange.do(updateSelection);
+    main.state.onMissionPortal.do(updateMissionInfo);
 
     updateMissionList();
     updateMissionInfo();
 };
+
+
+const destroy = () => {
+    main.state.onSelectedMissionChange.dont(updateSelection);
+}
 
 
 const getSelectedMission = (): Mission | undefined => {
@@ -62,10 +71,18 @@ const updateMissionList = () => {
                 text: `${mission.id + 1} - waypoints ${mission.portals.length}`
             }))
     })
+};
 
+
+const updateSelection = () => {
+    const current = main.state.getCurrent();
+    $("#umm-mission-picker").val(current);
+    updateMissionInfo();
 }
 
+
 const updateMissionInfo = () => {
+
     const info = $("#umm-mission-picker-info");
     info.empty();
 
@@ -86,11 +103,12 @@ const updateMissionInfo = () => {
     info.html(window.convertTextToTableMagic(table));
 };
 
+
 const refreshMissionUI = () => {
     updateMissionInfo();
     updateMissionList();
-    main.redrawAll();
 };
+
 
 const onMissionSelect = () => {
     const mission = getSelectedMission();

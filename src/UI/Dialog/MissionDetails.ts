@@ -1,7 +1,6 @@
 import { toggleMissionMode } from "../../Edits";
 import { main } from "../../Main";
 import { Missions } from "../../State/Missions";
-import { updateCurrentActiveMissionSidebar } from "../ButtonBar";
 import { bannerNotification } from "../Notification";
 import { dialogButton, dialogButtonClose } from "./Button";
 import { showUmmOptions } from "./Options";

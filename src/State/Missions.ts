@@ -1,6 +1,7 @@
 import { UMM_Mission, UMM_Portal } from "../UMM_types";
 import { Mission } from "./Mission";
 import { Portals } from "./Portals";
+import { State } from "./State";
 
 export type ErrorReport = Record<string, number[]>;
 export const MIN_PORTALS_PER_MISSION = 6;
@@ -44,16 +45,18 @@ export class Missions {
     }
 
 
+    private state: State;
     private data: UMM_Mission[];
 
-    constructor(data: UMM_Mission[]) {
+    constructor(state: State, data: UMM_Mission[]) {
+        this.state = state;
         this.data = data;
     }
 
 
     get(missionId: number): Mission | undefined {
         const mis = this.data[missionId];
-        return mis && new Mission(missionId, mis);
+        return mis && new Mission(this.state, missionId, mis);
     }
 
 
@@ -64,7 +67,7 @@ export class Missions {
 
     forEach(callback: (mission: Mission) => void) {
         this.data.forEach((missionData, index) => {
-            const mission = new Mission(index, missionData);
+            const mission = new Mission(this.state, index, missionData);
             callback(mission);
         });
     }
@@ -122,7 +125,7 @@ export class Missions {
     }
 
     zoom() {
-        const location = this.data.flatMap(m => new Portals(m.portals).toLatLng())
+        const location = this.data.flatMap(m => new Portals(this.state, m.portals).toLatLng())
         if (location.length > 0) {
             const bounds = new L.LatLngBounds(location).pad(0.1);
             window.map.fitBounds(bounds, { maxZoom: 18 });
