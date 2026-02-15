@@ -9,16 +9,21 @@ type MarkerOptions = L.MarkerOptions & {
     isMidPoint?: boolean;
 }
 
-const touchIcon: L.DivIcon = L.Browser.touch ?
-    new L.DivIcon({
-        iconSize: new L.Point(20, 20),
-        className: "leaflet-div-icon leaflet-editing-icon leaflet-touch-icon"
-    }) :
-    new L.DivIcon({
-        iconSize: new L.Point(8, 8),
-        className: "leaflet-div-icon leaflet-editing-icon"
-    });
-
+let icon: L.DivIcon;
+const touchIcon = (): L.DivIcon => {
+    if (!icon) {
+        icon = L.Browser.touch ?
+            new L.DivIcon({
+                iconSize: new L.Point(20, 20),
+                className: "leaflet-div-icon leaflet-editing-icon leaflet-touch-icon"
+            }) :
+            new L.DivIcon({
+                iconSize: new L.Point(8, 8),
+                className: "leaflet-div-icon leaflet-editing-icon"
+            });
+    }
+    return icon;
+}
 
 export class DragMarker {
 
@@ -34,7 +39,7 @@ export class DragMarker {
         this.layer = layer;
         this.startLocation = location;
         this.marker = new L.Marker(location, <MarkerOptions>{
-            icon: touchIcon,
+            icon: touchIcon(),
             draggable: true,
             zIndexOffset: 7000,
             opacity: isDummy ? 0.4 : 1,
