@@ -16,5 +16,5 @@
   },
   "types": ["webpack-env"],
   "files": ["src/Main.ts", "src_MissionEditor/Main.ts"],
-  "include": ["types/*.d.ts"]
+  "include": ["types/*.d.ts", "src/**/*.ts"]
 }

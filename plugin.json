@@ -1,7 +1,8 @@
 {
-  "name": "IITC plugin: UMM_Ext",
+  "name": "IITC plugin: Ultimate Mission Maker - Extended",
   "id": "iitc_plugin_UMM_Ext",
   "description": "Ultimate Mission Maker - Extended",
+  "category": "Mission",
   "author": "McBen, Vashiru, j00rtje, DanielOnDiordna ",
   "entry": "src/Main.ts",
   "minimize": false,
