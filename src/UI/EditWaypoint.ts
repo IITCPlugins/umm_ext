@@ -1,7 +1,6 @@
 import { main } from "../Main";
 import { PortalActions } from "../State/Portals";
 import { UMM_Passphrase, UMM_Portal } from "../UMM_types";
-import { notification } from "./Notification";
 
 
 export const addWaypointEditorToPortal = () => {
@@ -98,7 +97,7 @@ const passCodeBoxFactory = (portal: UMM_Portal): JQuery => {
     const questionSpan = $("<span>", { text: "Question" });
 
     const ppQuestion = portal.objective.passphrase_params.question ?? "";
-    const question = $("<textarea>", { id: "umm-passphrase-question", type: "text", row: 1, value: ppQuestion });
+    const question = $("<textarea>", { id: "umm-passphrase-question", type: "text", row: 1 }).val(ppQuestion);
     question.on("blur", () => savePassPhrase());
 
     const passPhraseSpan = $("<span>", { text: "Passphrase" });
@@ -133,7 +132,6 @@ const savePassPhrase = () => {
     };
     portal.objective.passphrase_params = passphrase_params;
     main.state.save();
-    notification("Question and passphrase saved");
 }
 
 
@@ -153,7 +151,6 @@ const updateActionSelect = () => {
 
         currentPortal()!.objective.type = $("#umm-action-select").val() as string;
         main.state.save();
-        notification("Portal action saved");
     });
 }
 
