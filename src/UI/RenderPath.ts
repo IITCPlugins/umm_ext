@@ -1,37 +1,20 @@
 import { debounce } from "../Helper/Debounce";
 import { main } from "../Main";
 import { Mission } from "../State/Mission";
-import { UMM_Portal } from "../UMM_types";
-import { confirmDialog } from "./Dialog/Confirm";
-import { notification } from "./Notification";
+import { DragMarker } from "./DragMarker";
 import { RenderBase } from "./RenderBase";
 
-type MarkerOptions = L.MarkerOptions & {
-    portal: number;
-    missionId: number;
-    isMidPoint?: boolean;
-}
 
-// TODO: D&D should be handled elsewhere
 export class RenderPath extends RenderBase {
 
-    private touchIcon: L.DivIcon;
-    private editDragLine: L.Polyline | undefined;
+    private dragMarkers: DragMarker[];
 
 
     constructor() {
         super();
         window.addLayerGroup('UMM: Mission Paths', this.layer, true);
 
-        this.touchIcon = L.Browser.touch ?
-            new L.DivIcon({
-                iconSize: new L.Point(20, 20),
-                className: "leaflet-div-icon leaflet-editing-icon leaflet-touch-icon"
-            }) :
-            new L.DivIcon({
-                iconSize: new L.Point(8, 8),
-                className: "leaflet-div-icon leaflet-editing-icon"
-            });
+        this.dragMarkers = [];
 
         main.state.onMissionChange.do(this.redraw);
         main.state.onMissionPortal.do(this.redraw);
@@ -42,6 +25,8 @@ export class RenderPath extends RenderBase {
 
     redrawNow = () => {
         this.layer.clearLayers();
+        this.dragMarkers.forEach(m => m.destroy());
+        this.dragMarkers = [];
 
         const editMode = main.missionModeActive;
 
@@ -72,13 +57,13 @@ export class RenderPath extends RenderBase {
         const coordinatesList = mission.getLocations();
 
         // Portal Markers
-        coordinatesList.forEach((ll, index) => this.createDragMarker(ll, index, mission.id));
+        coordinatesList.forEach((ll, index) => this.createDragMarker(ll, index, mission));
 
         // MidPoint Marker
         coordinatesList.forEach((ll, index) => {
             if (index > 0) {
                 const half = this.getCenter(coordinatesList[index - 1], ll);
-                this.createDragMarker(half, index, mission.id, true);
+                this.createDragMarker(half, index, mission, true);
             }
         });
 
@@ -92,24 +77,10 @@ export class RenderPath extends RenderBase {
     }
 
 
-    private createDragMarker(location: L.LatLng, portalId: number, missionId: number, dummy = false) {
-        const marker = new L.Marker(location, <MarkerOptions>{
-            icon: this.touchIcon,
-            draggable: true,
-            zIndexOffset: 7000,
-            opacity: dummy ? 0.4 : 1,
-            portal: portalId,
-            missionId: missionId,
-            isMidPoint: dummy
-        });
-
-        this.layer.addLayer(marker);
-
-        marker
-            .on("drag", event => { this.onMarkerDrag(event as L.LeafletMouseEvent); })
-            .on("dragstart", event => { this.onMarkerDragStart(event); })
-            .on("dragend", event => { void this.onMarkerDragEnd(event as L.LeafletDragEndEvent); })
-            .on("dblclick", event => { this.onMarkerDblClick(event as L.LeafletMouseEvent); });
+    private createDragMarker(location: L.LatLng, portalId: number, mission: Mission, dummy = false) {
+        this.dragMarkers.push(
+            new DragMarker(this.layer, location, portalId, mission, dummy)
+        );
     }
 
 
@@ -117,185 +88,5 @@ export class RenderPath extends RenderBase {
         const p1 = window.map.project(l1);
         const p2 = window.map.project(l2);
         return window.map.unproject(p1.add(p2).divideBy(2));
-    }
-
-
-    private onMarkerDragStart(event: L.LeafletEvent) {
-        const marker: L.Marker = event.target;
-        const options: MarkerOptions = event.target.options;
-        const isMidPoint = options.isMidPoint;
-
-        const mission = main.state.missions.get(options.missionId);
-        if (!mission) {
-            console.warn("onMarkerDragStart: mission not found", options.missionId);
-            return;
-        }
-
-        if (this.editDragLine) {
-            this.layer.removeLayer(this.editDragLine);
-        }
-
-        const portal = options.portal;
-        const portal_pre = portal > 0 ? mission.portals.get(portal - 1) : undefined;
-        const portal_post = mission.portals.get(portal + (isMidPoint ? 0 : 1));
-
-        let lls: (L.LatLng | undefined)[] = [
-            portal_pre && new L.LatLng(portal_pre.location.latitude, portal_pre.location.longitude),
-            marker.getLatLng(),
-            portal_post && new L.LatLng(portal_post.location.latitude, portal_post.location.longitude)
-        ];
-
-        // special-case:
-        // single portal
-        if (!portal_pre && !portal_post) lls = [marker.getLatLng(), marker.getLatLng()];
-        // is start portal
-        else if (!portal_pre) lls.splice(0, 1);
-        // is end portal 
-        else if (!portal_post) lls = [lls[1], lls[0]];
-
-
-        this.editDragLine = new L.Polyline(lls as L.LatLng[], {
-            color: "#ff9a00",
-            weight: 3,
-            dashArray: '5,5',
-            pointerEvents: 'none'
-        });
-
-        this.layer.addLayer(this.editDragLine);
-    }
-
-
-    private onMarkerDrag(event: L.LeafletMouseEvent) {
-        if (!this.editDragLine) return;
-
-        const marker: L.Marker = event.target;
-        const options: MarkerOptions = event.target.options;
-        const mission = main.state.missions.get(options.missionId);
-        if (!mission) return;
-
-        const snappedPortal = this.getSnapPortal(marker.getLatLng(), mission.getLocations());
-        const newTarget = snappedPortal ? snappedPortal.getLatLng() : marker.getLatLng();
-
-        const latlngs = this.editDragLine.getLatLngs();
-        const index = latlngs.length === 3 ? 1 : 0;
-        latlngs[index] = newTarget;
-        this.editDragLine.setLatLngs(latlngs);
-    }
-
-
-    private async onMarkerDragEnd(event: L.LeafletDragEndEvent) {
-        if (this.editDragLine) {
-            this.layer.removeLayer(this.editDragLine);
-            this.editDragLine = undefined;
-        }
-
-        const marker: L.Marker = event.target;
-        const options: MarkerOptions = event.target.options;
-        const mission = main.state.missions.get(options.missionId);
-        if (!mission) {
-            console.warn("onMarkerDragEnd: mission not found", options.missionId);
-            this.redraw();
-            return;
-        }
-
-        const coordinatesList = mission.getLocations();
-
-        const snappedPortal = this.getSnapPortal(marker.getLatLng(), coordinatesList);
-        if (!snappedPortal) {
-            this.redraw();
-            return;
-        }
-
-        const portalToAdd = mission.portals.create(snappedPortal.options.guid);
-
-        if (options.isMidPoint) {
-            mission.portals.insert(options.portal, portalToAdd);
-        } else {
-            await this.movePortal(mission, options.portal, portalToAdd);
-        }
-
-        main.state.save();
-    }
-
-
-    private async movePortal(mission: Mission, portalID: number, target: UMM_Portal) {
-
-        // drag portal to last mission -> merge?
-        if (portalID === 0) {
-            const missions = main.state.missions;
-            const preMission = missions.previous(mission);
-
-            if (preMission?.portals.isEnd(target)) {
-                if (await confirmDialog({ message: "Merge mission ?" })) {
-                    missions.merge(preMission, mission);
-                    main.state.setCurrent(preMission.id);
-                    return;
-                }
-            } else
-                if (mission.portals.length === 1 && preMission?.portals.includes(target.guid)) {
-                    if (await confirmDialog({ message: "Split mission ?" })) {
-                        const index = preMission.portals.indexOf(target);
-
-                        mission.portals.clear();
-                        missions.split(preMission, index, mission);
-                        return;
-                    }
-                }
-        }
-
-        // drag portal to next mission -> merge?
-        if (portalID === mission.portals.length - 1) {
-            const missions = main.state.missions;
-
-            const postMission = missions.next(mission);
-            if (postMission?.portals.isStart(target)) {
-                if (await confirmDialog({ message: "Merge mission ?" })) {
-                    missions.merge(mission, postMission);
-                    return;
-                }
-            }
-        }
-
-
-        mission.portals.set(portalID, target);
-    }
-
-
-    private getSnapPortal(unsnappedLatLng: L.LatLng, ignore: L.LatLng[] = []): IITC.Portal | undefined {
-        const containerPoint = window.map.latLngToContainerPoint(unsnappedLatLng);
-        let best_portal: IITC.Portal | undefined = undefined;
-        let best_distance = Infinity;
-        for (const guid in window.portals) {
-            const portal = window.portals[guid];
-            const ll = portal.getLatLng();
-            if (ignore.some(x => x.equals(ll))) continue;
-
-            const pp = window.map.latLngToContainerPoint(ll);
-            const options = portal.options as unknown as { weight: number; radius: number };  // type: missing Leaflet
-            const size = options.weight + options.radius * 5; // allow some extra space for easier snapping
-            const distance = pp.distanceTo(containerPoint);
-            if (distance > size) continue;
-
-            if (distance < best_distance) {
-                best_distance = distance;
-                best_portal = portal;
-            }
-        }
-
-        return best_portal;
-    }
-
-
-    private onMarkerDblClick(event: L.LeafletMouseEvent) {
-        const options: MarkerOptions = event.target.options;
-        const portal = options.portal;
-        if (options.isMidPoint) return;
-
-        const mission = main.state.missions.get(options.missionId);
-        if (!mission) return;
-
-        mission.portals.remove(portal);
-        main.state.save();
-        notification(`${mission.title}\nRemoved #${portal + 1} from mission`);
     }
 }
