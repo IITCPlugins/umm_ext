@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name            IITC plugin: UMM_Ext
+// @name            IITC plugin: Ultimate Mission Maker - Extended
 // @id              iitc_plugin_UMM_Ext
-// @category        Misc
-// @version         1.2.260213.100037
+// @category        Mission
+// @version         1.0.beta
 // @namespace       https://github.com/IITC-CE/ingress-intel-total-conversion
 // @updateURL       https://github.com/IITCPlugins/umm_ext/raw/refs/heads/main/dist/iitc_plugin_UMM_Ext.user.js/iitc.meta.js
 // @downloadURL     https://github.com/IITCPlugins/umm_ext/raw/refs/heads/main/dist/iitc_plugin_UMM_Ext.user.js/iitc.user.js
@@ -12,1007 +12,2357 @@
 // @author          McBen, Vashiru, j00rtje, DanielOnDiordna 
 // @icon64          data:image/png;base64,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
 // ==/UserScript==
-function wrapper_iitc(SCRIPT_INFO) {
-/*
- * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
- * This devtool is neither made for production nor for readable output files.
- * It uses "eval()" calls to create a separate source file in the browser devtools.
- * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
- * or disable the default devtool with "devtool: false".
- * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+/**
+ * v1.0
+ * 
+ * - init
+ * 
+ * This is a code conversation of the Ultimate Mission Maker.
+ * 
  */
-/******/ (() => { // webpackBootstrap
-/******/ 	"use strict";
-/******/ 	var __webpack_modules__ = ({
-
-/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[1].use[2]!./src/styles.pcss"
-/*!*****************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[1].use[2]!./src/styles.pcss ***!
-  \*****************************************************************************************************************************************************************/
-(module, __webpack_exports__, __webpack_require__) {
-
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/noSourceMaps.js */ \"./node_modules/css-loader/dist/runtime/noSourceMaps.js\");\n/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/api.js */ \"./node_modules/css-loader/dist/runtime/api.js\");\n/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);\n// Imports\n\n\nvar ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));\n// Module\n___CSS_LOADER_EXPORT___.push([module.id, `#um-mission-pikcer-info{border:1px solid #ff0;border-radius:2px;margin:1em 4px 4px}.umm-mission-btn{margin-bottom:2px;margin-right:1em;margin-top:2px}.umm-mission-btn.w-full{width:90%}.umm-options-list{overflow:hidden}.umm-notification{background-color:#383838;border-radius:2px;-webkit-box-shadow:0 0 24px -1px #383838;-moz-box-shadow:0 0 24px -1px #383838;box-shadow:0 0 24px -1px #383838;color:#f0f0f0;font-family:Calibri,sans-serif;font-size:20px;height:auto;left:50%;margin-left:-100px;padding:10px;position:absolute;text-align:center;top:20px;width:300px;z-index:10000}.umm-options-list a{background:rgba(8,48,78,.9);border:1px solid #ffce00;color:#ffce00;display:block;margin:10px auto;padding:3px 0;text-align:center;width:80%}#dialog-umm-edit-mission-set-details{background-color:rgba(8,48,78,.9)}.umm-edit-mission-set-details p{display:block;margin:5px 0 8px}.umm-edit-mission-set-details label{display:block;margin-bottom:5px}.umm-edit-mission-set-details input,.umm-edit-mission-set-details textarea{margin-bottom:15px;width:100%}.umm-edit-mission-set-details textarea{background-color:#062844;color:#ffce00;font-family:inherit;resize:vertical;width:calc(100% - 6px)}.umm-edit-mission-set-details span.umm-error{color:#fff;display:block;display:none;margin-bottom:5px}.umm-edit-mission-set-details span.umm-error b{color:red}.umm-dialog-button{margin-left:5px}.umm-mission-marker .start{fill:#16d4b2;stroke:#005243;stroke-miterlimit:10}.umm-mission-marker .active{fill:#6832da;stroke:#16043f;stroke-miterlimit:10}.umm-mission-number{color:#000;font-family:monospace;font-size:14px;font-weight:700;left:0;position:absolute;text-align:center;top:6px;width:34px}#umm-waypoint-editor{border-bottom:1px solid #20a8b1;border-top:1px solid #20a8b1;box-sizing:border-box;color:#ffce00;display:flex;flex-direction:column;margin-bottom:10px;margin-top:10px;padding:8px 5px;width:100%}.umm-waypoint-editor-title{font-weight:700;margin-bottom:6px}.umm-waypoint-select-container{display:flex;flex-direction:row;width:100%}.umm-waypoint-select-container>select{background-color:#062844;border:none;color:#ffce00;height:24px}#umm-mission-select{width:60px}#umm-action-select{margin-left:4px;width:100%}#umm-passphrase-container{display:none;flex-direction:column;margin-top:5px}#umm-passphrase-container>span{margin-bottom:3px}#umm-passphrase-container>input,#umm-passphrase-container>textarea{background-color:#062844;border:none;color:#ffce00;font-family:Arial;margin-bottom:5px;min-height:24px;padding:3px;resize:vertical}.umm-confirm.no_title .ui-dialog-titlebar{display:none}.umm-confirm .header{font-size:1.4em;line-height:1.4em;margin:10px;overflow:hidden;text-align:center;text-overflow:ellipsis}.umm-confirm .details{color:#ccc;text-align:center}`, \"\"]);\n// Exports\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);\n\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/styles.pcss?./node_modules/css-loader/dist/cjs.js??ruleSet%5B1%5D.rules%5B1%5D.use%5B1%5D!./node_modules/postcss-loader/dist/cjs.js??ruleSet%5B1%5D.rules%5B1%5D.use%5B2%5D\n}");
-
-/***/ },
-
-/***/ "./node_modules/css-loader/dist/runtime/api.js"
-/*!*****************************************************!*\
-  !*** ./node_modules/css-loader/dist/runtime/api.js ***!
-  \*****************************************************/
-(module) {
-
-eval("{\n\n/*\n  MIT License http://www.opensource.org/licenses/mit-license.php\n  Author Tobias Koppers @sokra\n*/\nmodule.exports = function (cssWithMappingToString) {\n  var list = [];\n\n  // return the list of modules as css string\n  list.toString = function toString() {\n    return this.map(function (item) {\n      var content = \"\";\n      var needLayer = typeof item[5] !== \"undefined\";\n      if (item[4]) {\n        content += \"@supports (\".concat(item[4], \") {\");\n      }\n      if (item[2]) {\n        content += \"@media \".concat(item[2], \" {\");\n      }\n      if (needLayer) {\n        content += \"@layer\".concat(item[5].length > 0 ? \" \".concat(item[5]) : \"\", \" {\");\n      }\n      content += cssWithMappingToString(item);\n      if (needLayer) {\n        content += \"}\";\n      }\n      if (item[2]) {\n        content += \"}\";\n      }\n      if (item[4]) {\n        content += \"}\";\n      }\n      return content;\n    }).join(\"\");\n  };\n\n  // import a list of modules into the list\n  list.i = function i(modules, media, dedupe, supports, layer) {\n    if (typeof modules === \"string\") {\n      modules = [[null, modules, undefined]];\n    }\n    var alreadyImportedModules = {};\n    if (dedupe) {\n      for (var k = 0; k < this.length; k++) {\n        var id = this[k][0];\n        if (id != null) {\n          alreadyImportedModules[id] = true;\n        }\n      }\n    }\n    for (var _k = 0; _k < modules.length; _k++) {\n      var item = [].concat(modules[_k]);\n      if (dedupe && alreadyImportedModules[item[0]]) {\n        continue;\n      }\n      if (typeof layer !== \"undefined\") {\n        if (typeof item[5] === \"undefined\") {\n          item[5] = layer;\n        } else {\n          item[1] = \"@layer\".concat(item[5].length > 0 ? \" \".concat(item[5]) : \"\", \" {\").concat(item[1], \"}\");\n          item[5] = layer;\n        }\n      }\n      if (media) {\n        if (!item[2]) {\n          item[2] = media;\n        } else {\n          item[1] = \"@media \".concat(item[2], \" {\").concat(item[1], \"}\");\n          item[2] = media;\n        }\n      }\n      if (supports) {\n        if (!item[4]) {\n          item[4] = \"\".concat(supports);\n        } else {\n          item[1] = \"@supports (\".concat(item[4], \") {\").concat(item[1], \"}\");\n          item[4] = supports;\n        }\n      }\n      list.push(item);\n    }\n  };\n  return list;\n};\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./node_modules/css-loader/dist/runtime/api.js?\n}");
-
-/***/ },
-
-/***/ "./node_modules/css-loader/dist/runtime/noSourceMaps.js"
-/*!**************************************************************!*\
-  !*** ./node_modules/css-loader/dist/runtime/noSourceMaps.js ***!
-  \**************************************************************/
-(module) {
-
-eval("{\n\nmodule.exports = function (i) {\n  return i[1];\n};\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./node_modules/css-loader/dist/runtime/noSourceMaps.js?\n}");
-
-/***/ },
-
-/***/ "./node_modules/iitcpluginkit/dist/Plugin.js"
-/*!***************************************************!*\
-  !*** ./node_modules/iitcpluginkit/dist/Plugin.js ***!
-  \***************************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   Register: () => (/* binding */ Register)\n/* harmony export */ });\n/*\n*   Usage example:\n\n    import * as Plugin from \"../plugin\";\n\n    class myPlugin implements Plugin.Class {\n        init() {\n            console.log(\"Hello World!\");\n        }\n    }\n\n    Plugin.Register(new myPlugin(), \"myPlugin\");\n*/\n/// <reference path=\"../types/index.d.ts\" />\nfunction Register(plugin, name) {\n    const setup = () => {\n        window.plugin[name] = plugin;\n        window.plugin[name].init();\n    };\n    setup.info = SCRIPT_INFO;\n    if (!window.bootPlugins) {\n        window.bootPlugins = [];\n    }\n    window.bootPlugins.push(setup);\n    if (window.iitcLoaded) {\n        setup();\n    }\n}\n\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./node_modules/iitcpluginkit/dist/Plugin.js?\n}");
-
-/***/ },
-
-/***/ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js"
-/*!****************************************************************************!*\
-  !*** ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js ***!
-  \****************************************************************************/
-(module) {
-
-eval("{\n\nvar stylesInDOM = [];\nfunction getIndexByIdentifier(identifier) {\n  var result = -1;\n  for (var i = 0; i < stylesInDOM.length; i++) {\n    if (stylesInDOM[i].identifier === identifier) {\n      result = i;\n      break;\n    }\n  }\n  return result;\n}\nfunction modulesToDom(list, options) {\n  var idCountMap = {};\n  var identifiers = [];\n  for (var i = 0; i < list.length; i++) {\n    var item = list[i];\n    var id = options.base ? item[0] + options.base : item[0];\n    var count = idCountMap[id] || 0;\n    var identifier = \"\".concat(id, \" \").concat(count);\n    idCountMap[id] = count + 1;\n    var indexByIdentifier = getIndexByIdentifier(identifier);\n    var obj = {\n      css: item[1],\n      media: item[2],\n      sourceMap: item[3],\n      supports: item[4],\n      layer: item[5]\n    };\n    if (indexByIdentifier !== -1) {\n      stylesInDOM[indexByIdentifier].references++;\n      stylesInDOM[indexByIdentifier].updater(obj);\n    } else {\n      var updater = addElementStyle(obj, options);\n      options.byIndex = i;\n      stylesInDOM.splice(i, 0, {\n        identifier: identifier,\n        updater: updater,\n        references: 1\n      });\n    }\n    identifiers.push(identifier);\n  }\n  return identifiers;\n}\nfunction addElementStyle(obj, options) {\n  var api = options.domAPI(options);\n  api.update(obj);\n  var updater = function updater(newObj) {\n    if (newObj) {\n      if (newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap && newObj.supports === obj.supports && newObj.layer === obj.layer) {\n        return;\n      }\n      api.update(obj = newObj);\n    } else {\n      api.remove();\n    }\n  };\n  return updater;\n}\nmodule.exports = function (list, options) {\n  options = options || {};\n  list = list || [];\n  var lastIdentifiers = modulesToDom(list, options);\n  return function update(newList) {\n    newList = newList || [];\n    for (var i = 0; i < lastIdentifiers.length; i++) {\n      var identifier = lastIdentifiers[i];\n      var index = getIndexByIdentifier(identifier);\n      stylesInDOM[index].references--;\n    }\n    var newLastIdentifiers = modulesToDom(newList, options);\n    for (var _i = 0; _i < lastIdentifiers.length; _i++) {\n      var _identifier = lastIdentifiers[_i];\n      var _index = getIndexByIdentifier(_identifier);\n      if (stylesInDOM[_index].references === 0) {\n        stylesInDOM[_index].updater();\n        stylesInDOM.splice(_index, 1);\n      }\n    }\n    lastIdentifiers = newLastIdentifiers;\n  };\n};\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js?\n}");
-
-/***/ },
-
-/***/ "./node_modules/style-loader/dist/runtime/insertBySelector.js"
-/*!********************************************************************!*\
-  !*** ./node_modules/style-loader/dist/runtime/insertBySelector.js ***!
-  \********************************************************************/
-(module) {
-
-eval("{\n\nvar memo = {};\n\n/* istanbul ignore next  */\nfunction getTarget(target) {\n  if (typeof memo[target] === \"undefined\") {\n    var styleTarget = document.querySelector(target);\n\n    // Special case to return head of iframe instead of iframe itself\n    if (window.HTMLIFrameElement && styleTarget instanceof window.HTMLIFrameElement) {\n      try {\n        // This will throw an exception if access to iframe is blocked\n        // due to cross-origin restrictions\n        styleTarget = styleTarget.contentDocument.head;\n      } catch (e) {\n        // istanbul ignore next\n        styleTarget = null;\n      }\n    }\n    memo[target] = styleTarget;\n  }\n  return memo[target];\n}\n\n/* istanbul ignore next  */\nfunction insertBySelector(insert, style) {\n  var target = getTarget(insert);\n  if (!target) {\n    throw new Error(\"Couldn't find a style target. This probably means that the value for the 'insert' parameter is invalid.\");\n  }\n  target.appendChild(style);\n}\nmodule.exports = insertBySelector;\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./node_modules/style-loader/dist/runtime/insertBySelector.js?\n}");
-
-/***/ },
-
-/***/ "./node_modules/style-loader/dist/runtime/insertStyleElement.js"
-/*!**********************************************************************!*\
-  !*** ./node_modules/style-loader/dist/runtime/insertStyleElement.js ***!
-  \**********************************************************************/
-(module) {
-
-eval("{\n\n/* istanbul ignore next  */\nfunction insertStyleElement(options) {\n  var element = document.createElement(\"style\");\n  options.setAttributes(element, options.attributes);\n  options.insert(element, options.options);\n  return element;\n}\nmodule.exports = insertStyleElement;\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./node_modules/style-loader/dist/runtime/insertStyleElement.js?\n}");
-
-/***/ },
-
-/***/ "./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js"
-/*!**********************************************************************************!*\
-  !*** ./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js ***!
-  \**********************************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-eval("{\n\n/* istanbul ignore next  */\nfunction setAttributesWithoutAttributes(styleElement) {\n  var nonce =  true ? __webpack_require__.nc : 0;\n  if (nonce) {\n    styleElement.setAttribute(\"nonce\", nonce);\n  }\n}\nmodule.exports = setAttributesWithoutAttributes;\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js?\n}");
-
-/***/ },
-
-/***/ "./node_modules/style-loader/dist/runtime/styleDomAPI.js"
-/*!***************************************************************!*\
-  !*** ./node_modules/style-loader/dist/runtime/styleDomAPI.js ***!
-  \***************************************************************/
-(module) {
-
-eval("{\n\n/* istanbul ignore next  */\nfunction apply(styleElement, options, obj) {\n  var css = \"\";\n  if (obj.supports) {\n    css += \"@supports (\".concat(obj.supports, \") {\");\n  }\n  if (obj.media) {\n    css += \"@media \".concat(obj.media, \" {\");\n  }\n  var needLayer = typeof obj.layer !== \"undefined\";\n  if (needLayer) {\n    css += \"@layer\".concat(obj.layer.length > 0 ? \" \".concat(obj.layer) : \"\", \" {\");\n  }\n  css += obj.css;\n  if (needLayer) {\n    css += \"}\";\n  }\n  if (obj.media) {\n    css += \"}\";\n  }\n  if (obj.supports) {\n    css += \"}\";\n  }\n  var sourceMap = obj.sourceMap;\n  if (sourceMap && typeof btoa !== \"undefined\") {\n    css += \"\\n/*# sourceMappingURL=data:application/json;base64,\".concat(btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))), \" */\");\n  }\n\n  // For old IE\n  /* istanbul ignore if  */\n  options.styleTagTransform(css, styleElement, options.options);\n}\nfunction removeStyleElement(styleElement) {\n  // istanbul ignore if\n  if (styleElement.parentNode === null) {\n    return false;\n  }\n  styleElement.parentNode.removeChild(styleElement);\n}\n\n/* istanbul ignore next  */\nfunction domAPI(options) {\n  if (typeof document === \"undefined\") {\n    return {\n      update: function update() {},\n      remove: function remove() {}\n    };\n  }\n  var styleElement = options.insertStyleElement(options);\n  return {\n    update: function update(obj) {\n      apply(styleElement, options, obj);\n    },\n    remove: function remove() {\n      removeStyleElement(styleElement);\n    }\n  };\n}\nmodule.exports = domAPI;\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./node_modules/style-loader/dist/runtime/styleDomAPI.js?\n}");
-
-/***/ },
-
-/***/ "./node_modules/style-loader/dist/runtime/styleTagTransform.js"
-/*!*********************************************************************!*\
-  !*** ./node_modules/style-loader/dist/runtime/styleTagTransform.js ***!
-  \*********************************************************************/
-(module) {
-
-eval("{\n\n/* istanbul ignore next  */\nfunction styleTagTransform(css, styleElement) {\n  if (styleElement.styleSheet) {\n    styleElement.styleSheet.cssText = css;\n  } else {\n    while (styleElement.firstChild) {\n      styleElement.removeChild(styleElement.firstChild);\n    }\n    styleElement.appendChild(document.createTextNode(css));\n  }\n}\nmodule.exports = styleTagTransform;\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./node_modules/style-loader/dist/runtime/styleTagTransform.js?\n}");
-
-/***/ },
-
-/***/ "./src/Edits.ts"
-/*!**********************!*\
-  !*** ./src/Edits.ts ***!
-  \**********************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   addPortalToCurrentMission: () => (/* binding */ addPortalToCurrentMission),\n/* harmony export */   clearMissionData: () => (/* binding */ clearMissionData),\n/* harmony export */   mergeMissions: () => (/* binding */ mergeMissions),\n/* harmony export */   removeLastPortal: () => (/* binding */ removeLastPortal),\n/* harmony export */   reverseMission: () => (/* binding */ reverseMission),\n/* harmony export */   setCurrentMission: () => (/* binding */ setCurrentMission),\n/* harmony export */   splitMissionOptions: () => (/* binding */ splitMissionOptions),\n/* harmony export */   startEdit: () => (/* binding */ startEdit),\n/* harmony export */   toggleMissionMode: () => (/* binding */ toggleMissionMode)\n/* harmony export */ });\n/* harmony import */ var _Main__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Main */ \"./src/Main.ts\");\n/* harmony import */ var _UI_ButtonBar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./UI/ButtonBar */ \"./src/UI/ButtonBar.ts\");\n/* harmony import */ var _UI_Dialog_Button__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./UI/Dialog/Button */ \"./src/UI/Dialog/Button.ts\");\n/* harmony import */ var _UI_Dialog_MissionDetails__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./UI/Dialog/MissionDetails */ \"./src/UI/Dialog/MissionDetails.ts\");\n/* harmony import */ var _UI_Dialog_Options__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./UI/Dialog/Options */ \"./src/UI/Dialog/Options.ts\");\n/* harmony import */ var _UI_Notification__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./UI/Notification */ \"./src/UI/Notification.ts\");\n/* harmony import */ var _Text_Text__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Text/Text */ \"./src/Text/Text.ts\");\n/* harmony import */ var _UI_Dialog_Confirm__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./UI/Dialog/Confirm */ \"./src/UI/Dialog/Confirm.ts\");\n\n\n\n\n\n\n\n\nlet lastPortal;\nlet missionModeResuming = false;\nconst addPortalToCurrentMission = async (data) => {\n    // same or nothing selected\n    if (lastPortal === data.selectedPortalGuid) {\n        return;\n    }\n    lastPortal = data.selectedPortalGuid;\n    if (!data.selectedPortalGuid)\n        return;\n    // we are not in edit mode or it is the first selection\n    const state = _Main__WEBPACK_IMPORTED_MODULE_0__.main.state;\n    if (!_Main__WEBPACK_IMPORTED_MODULE_0__.main.missionModeActive || missionModeResuming) {\n        missionModeResuming = false;\n        return;\n    }\n    const mission = state.getEditMission();\n    if (!mission)\n        return;\n    const portalToAdd = mission.portals.create(data.selectedPortalGuid);\n    if (mission.portals.includes(portalToAdd.guid)) {\n        if (mission.portals.isEnd(portalToAdd)) {\n            (0,_UI_Notification__WEBPACK_IMPORTED_MODULE_5__.bannerNotification)(`Portal already in mission #${_Main__WEBPACK_IMPORTED_MODULE_0__.main.state.getCurrent() + 1}`);\n        }\n    }\n    else {\n        const preMission = state.missions.previous(mission);\n        if (mission.portals.length === 0 && preMission && preMission.portals.includes(portalToAdd.guid) &&\n            (!preMission.portals.isStart(portalToAdd) && !preMission.portals.isEnd(portalToAdd))) {\n            if (await (0,_UI_Dialog_Confirm__WEBPACK_IMPORTED_MODULE_7__.confirmDialog)({\n                message: \"Split mission?\",\n                details: \"Your start portal overlaps another mission's portal. Reuse it or split the previous mission?\"\n            })) {\n                const index = preMission.portals.indexOf(portalToAdd);\n                mission.portals.clear();\n                state.missions.split(preMission, index, mission);\n                state.save();\n                _Main__WEBPACK_IMPORTED_MODULE_0__.main.redrawAll();\n                return;\n            }\n        }\n        mission.portals.add(portalToAdd);\n        state.save();\n        _Main__WEBPACK_IMPORTED_MODULE_0__.main.redrawAll();\n        (0,_UI_Notification__WEBPACK_IMPORTED_MODULE_5__.notification)(`${_Main__WEBPACK_IMPORTED_MODULE_0__.main.state.getBannerName()}\\nAdded to mission #${_Main__WEBPACK_IMPORTED_MODULE_0__.main.state.getCurrent() + 1}`);\n    }\n};\nconst clearMissionData = () => {\n    _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.reset();\n    _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.save();\n    (0,_UI_ButtonBar__WEBPACK_IMPORTED_MODULE_1__.updateCurrentActiveMissionSidebar)(_Main__WEBPACK_IMPORTED_MODULE_0__.main.state);\n    if (_Main__WEBPACK_IMPORTED_MODULE_0__.main.missionModeActive) {\n        toggleMissionMode();\n    }\n    _Main__WEBPACK_IMPORTED_MODULE_0__.main.redrawAll();\n};\nconst removeLastPortal = () => {\n    var _a;\n    if (!_Main__WEBPACK_IMPORTED_MODULE_0__.main.missionModeActive) {\n        (0,_UI_Notification__WEBPACK_IMPORTED_MODULE_5__.notification)(`Only valid in edit mode`);\n        return;\n    }\n    const mission = _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.getEditMission();\n    // If currentMission has 0 portals, refuse\n    if (mission && mission.portals.length > 0) {\n        lastPortal = undefined;\n        mission.portals.remove(mission.portals.length - 1);\n        _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.save();\n        _Main__WEBPACK_IMPORTED_MODULE_0__.main.redrawAll();\n        // Check if current mission still has portals, if so reset view to this portal\n        if (!mission.focusLastPortal()) {\n            // Clear out the portal view to allow for any portal to be selected as start portal\n            // eslint-disable-next-line unicorn/no-null\n            renderPortalDetails(null);\n            (0,_UI_Notification__WEBPACK_IMPORTED_MODULE_5__.notification)(`${_Main__WEBPACK_IMPORTED_MODULE_0__.main.state.getBannerName()}\\nNo portals left in mission.\\nSelect start portal`);\n        }\n    }\n    else {\n        // If no more portals are left in the current mission\n        // Go back to the last portal of the previous mission (but don't delete it)\n        if (mission && mission.id > 0) {\n            setCurrentMission(mission.id - 1);\n            _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.save();\n            (_a = _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.getEditMission()) === null || _a === void 0 ? void 0 : _a.focusLastPortal();\n            (0,_UI_Notification__WEBPACK_IMPORTED_MODULE_5__.notification)(`${_Main__WEBPACK_IMPORTED_MODULE_0__.main.state.getBannerName()}\\nLast mission removed\\nSwitched to previous mission ${mission.id + 2}\\n`);\n        }\n        else {\n            (0,_UI_Notification__WEBPACK_IMPORTED_MODULE_5__.notification)(`${_Main__WEBPACK_IMPORTED_MODULE_0__.main.state.getBannerName()}\\nCan't undo\\nAlready on last mission\\n`);\n        }\n    }\n};\nconst toggleMissionMode = () => {\n    if (_Main__WEBPACK_IMPORTED_MODULE_0__.main.missionModeActive) {\n        _Main__WEBPACK_IMPORTED_MODULE_0__.main.missionModeActive = false;\n        $('#umm-toggle-bookmarks').css(\"background-color\", \"\");\n    }\n    else {\n        if (!_Main__WEBPACK_IMPORTED_MODULE_0__.main.state.isValid()) {\n            // Mission data not set, ask for details, then attempt to enable mission mode again on Save\n            (0,_UI_Dialog_MissionDetails__WEBPACK_IMPORTED_MODULE_3__.editMissionSetDetails)(true);\n            (0,_UI_Notification__WEBPACK_IMPORTED_MODULE_5__.notification)(\"Mission mode inactive\\nPlease enter mission data\\nAnd try again.\");\n            return;\n        }\n        _Main__WEBPACK_IMPORTED_MODULE_0__.main.missionModeActive = true;\n        startEdit();\n        $('#umm-toggle-bookmarks').css(\"background-color\", \"crimson\");\n    }\n    _Main__WEBPACK_IMPORTED_MODULE_0__.main.renderPath.redraw();\n};\nconst startEdit = () => {\n    // If the currentMission already has portals, resume mission creation at last portal\n    const editMission = _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.getEditMission();\n    const missionNumber = _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.getCurrent() + 1;\n    if (editMission === null || editMission === void 0 ? void 0 : editMission.hasPortals()) {\n        missionModeResuming = true;\n        editMission.show();\n        window.renderPortalDetails(editMission.portals.get(-1).guid);\n        (0,_UI_Notification__WEBPACK_IMPORTED_MODULE_5__.bannerNotification)(`Mission mode active.\\nResuming mission #${missionNumber}\\nSelect next portal`);\n    }\n    else {\n        (0,_UI_Notification__WEBPACK_IMPORTED_MODULE_5__.bannerNotification)(`Mission mode active.\\nSelect start portal for mission #${missionNumber}`);\n    }\n};\nconst splitMissionOptions = () => {\n    let html = '<div class=\"umm-split-mission-options\">';\n    html = `<b>How do you want to split your mission?</b><br><br>\n      <b>Remainder at the end:</b> All missions will contain the same amount of portals, any portals left over after splitting are added to the last mission.<br><br>\n      <b>Balanced:</b> Split the banner into missions of the same length, if any portals are left over after splitting, earlier missions will get 1 portal extra to balance it out.\n      `;\n    const buttons = [\n        (0,_UI_Dialog_Button__WEBPACK_IMPORTED_MODULE_2__.dialogButton)(\"< Main Menu\", _UI_Dialog_Options__WEBPACK_IMPORTED_MODULE_4__.showUmmOptions),\n        (0,_UI_Dialog_Button__WEBPACK_IMPORTED_MODULE_2__.dialogButton)(\"Remainder at end\", () => splitMissionStart(true)),\n        (0,_UI_Dialog_Button__WEBPACK_IMPORTED_MODULE_2__.dialogButton)(\"Balanced\", () => splitMissionStart(false)),\n    ];\n    window.dialog({\n        html,\n        title: `${_Text_Text__WEBPACK_IMPORTED_MODULE_6__.title} - Split mission options`,\n        id: 'umm-options',\n        width: 350,\n        buttons,\n    });\n};\nconst splitMissionStart = (remainderAtEnd) => {\n    var _a, _b;\n    const portalsCount = (_b = (_a = _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.missions.get(0)) === null || _a === void 0 ? void 0 : _a.portals.length) !== null && _b !== void 0 ? _b : 0;\n    const preset = Math.min(_Main__WEBPACK_IMPORTED_MODULE_0__.main.state.getPlannedLength(), portalsCount);\n    const numMissionString = prompt(`In how many missions do you want to split your banner (1-${portalsCount})?\\r\\rRecommended number is a multiple of 6.`, preset.toString());\n    if (numMissionString === null)\n        return;\n    const numMissions = parseInt(numMissionString);\n    if (numMissions > portalsCount) {\n        alert(`Can't split into more missions than there are portals in your current path. Please try again with a number between 1 and ${portalsCount}`);\n        return;\n    }\n    else if (numMissions < 1 || !Number.isInteger(numMissions)) {\n        alert(`Invalid input. Please try again with a number between 1 and ${portalsCount}`);\n        return;\n    }\n    void splitMission(numMissions, remainderAtEnd);\n};\nconst splitMission = async (numMissions, remainderAtEnd) => {\n    var _a;\n    const mission = _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.missions.get(0);\n    if (!mission)\n        return;\n    let hasPortals = false;\n    for (let i = 0; i < numMissions; i++)\n        hasPortals || (hasPortals = ((_a = _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.missions.get(i)) === null || _a === void 0 ? void 0 : _a.hasPortals()) === true);\n    if (hasPortals) {\n        if (!await (0,_UI_Dialog_Confirm__WEBPACK_IMPORTED_MODULE_7__.confirmDialog)({ message: \"Merge missione before split?\", details: \"Mission(s) already contain portals. These will be merged into one\" })) {\n            return;\n        }\n    }\n    const numPortals = mission === null || mission === void 0 ? void 0 : mission.portals.length;\n    const numPortalsPerMission = Math.floor(numPortals / numMissions);\n    const numRestPortals = numPortals % numMissions;\n    const message = `Your path of ${numPortals} will be divided into ${numMissions} missions of ${numPortalsPerMission} portals each.`;\n    let details = \"\";\n    if (numRestPortals > 0) {\n        details += remainderAtEnd ?\n            ` The remaining ${numRestPortals} portal(s) will be added to the last mission.` :\n            ` The remaining ${numRestPortals} portal(s) will be equaly divided between the first missions.`;\n    }\n    details += `\\r\\n\\r\\nThis process can be reversed using the merge missions feature. Do you want to continue?`;\n    if (await (0,_UI_Dialog_Confirm__WEBPACK_IMPORTED_MODULE_7__.confirmDialog)({ message, details })) {\n        _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.missions.splitIntoMultiple(mission, numMissions, remainderAtEnd);\n        _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.save();\n        _Main__WEBPACK_IMPORTED_MODULE_0__.main.redrawAll();\n        (0,_UI_ButtonBar__WEBPACK_IMPORTED_MODULE_1__.updatePortalCountSidebar)();\n    }\n};\nconst mergeMissions = async () => {\n    if (!await (0,_UI_Dialog_Confirm__WEBPACK_IMPORTED_MODULE_7__.confirmDialog)({\n        message: \"Merge mission?\",\n        details: \"Are you sure you want to merge all your missions into 1?\\r\\n\\r\\nThis can't be undone.\"\n    })) {\n        return;\n    }\n    _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.missions.mergeAll();\n    _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.setCurrent(0);\n    _Main__WEBPACK_IMPORTED_MODULE_0__.main.redrawAll();\n};\nconst reverseMission = () => {\n    const state = _Main__WEBPACK_IMPORTED_MODULE_0__.main.state;\n    const missionToReverse = prompt(`Which mission do you want to reverse (1-${state.getPlannedLength()})?`, (state.getCurrent() + 1).toString());\n    if (missionToReverse === null)\n        return;\n    const mission = state.missions.get(parseInt(missionToReverse));\n    if (!mission) {\n        alert(`This mission doesn't exist, enter a value between 1-${state.getPlannedLength()}.`);\n        return;\n    }\n    mission.reverse();\n    state.save();\n    _Main__WEBPACK_IMPORTED_MODULE_0__.main.redrawAll();\n};\nconst setCurrentMission = (missionId) => {\n    _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.setCurrent(missionId);\n    _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.save();\n    (0,_UI_ButtonBar__WEBPACK_IMPORTED_MODULE_1__.updateCurrentActiveMissionSidebar)(_Main__WEBPACK_IMPORTED_MODULE_0__.main.state);\n    _Main__WEBPACK_IMPORTED_MODULE_0__.main.redrawAll();\n};\n\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/Edits.ts?\n}");
-
-/***/ },
-
-/***/ "./src/ImportExport.ts"
-/*!*****************************!*\
-  !*** ./src/ImportExport.ts ***!
-  \*****************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   exportData: () => (/* binding */ exportData),\n/* harmony export */   loadFile: () => (/* binding */ loadFile),\n/* harmony export */   loadFileInput: () => (/* binding */ loadFileInput)\n/* harmony export */ });\n/* harmony import */ var _UI_Notification__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UI/Notification */ \"./src/UI/Notification.ts\");\n\nconst exportData = (state) => {\n    const data = state.asString();\n    const sanitizedName = state.getBannerName().replace(/[\\W_]+/g, \" \");\n    const filename = sanitizedName + \"-mission-data.json\";\n    if (typeof window.saveFile == 'function') {\n        window.saveFile(data, filename, \"application/json\");\n    }\n    else if (typeof android !== 'undefined' && (android === null || android === void 0 ? void 0 : android.saveFile)) {\n        android.saveFile(filename, \"application/json\", data);\n    }\n    else if (!window.isSmartphone()) { // pc method\n        // fall back\n        const a = document.createElement('a');\n        a.href = \"data:text/json;charset=utf-8,\" + encodeURIComponent(data);\n        a.download = filename;\n        a.click();\n    }\n};\nconst loadFileInput = async (event, state) => {\n    const files = event.target.files;\n    if ((files === null || files === void 0 ? void 0 : files.length) !== 1) {\n        alert(\"No file selected! Please select a mission file in JSON format and try again.\");\n        $(\"#umm-import-file\").val('');\n        return false;\n    }\n    if (files[0].type != 'application/json') {\n        $(\"#umm-import-file\").val('');\n        alert((files[0].name) + \" has not been recognized as JSON file. Make sure you've loaded the right file.\");\n        return false;\n    }\n    return loadFile(state, files[0]);\n};\nconst loadFile = async (state, inputFile) => {\n    const text = await inputFile.text();\n    try {\n        state.import(text);\n    }\n    catch (error) {\n        (0,_UI_Notification__WEBPACK_IMPORTED_MODULE_0__.notification)(`Loadgin error: \\n${error}`);\n        return false;\n    }\n    state.save();\n    (0,_UI_Notification__WEBPACK_IMPORTED_MODULE_0__.notification)(`Banner data loaded:\\n${state.getBannerName()}`);\n    return true;\n};\n\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/ImportExport.ts?\n}");
-
-/***/ },
-
-/***/ "./src/Main.ts"
-/*!*********************!*\
-  !*** ./src/Main.ts ***!
-  \*********************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   main: () => (/* binding */ main)\n/* harmony export */ });\n/* harmony import */ var iitcpluginkit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! iitcpluginkit */ \"./node_modules/iitcpluginkit/dist/Plugin.js\");\n/* harmony import */ var _UI_RenderPath__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./UI/RenderPath */ \"./src/UI/RenderPath.ts\");\n/* harmony import */ var _UI_RenderNumbers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./UI/RenderNumbers */ \"./src/UI/RenderNumbers.ts\");\n/* harmony import */ var _State_State__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./State/State */ \"./src/State/State.ts\");\n/* harmony import */ var _Edits__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Edits */ \"./src/Edits.ts\");\n/* harmony import */ var _UI_ButtonBar__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./UI/ButtonBar */ \"./src/UI/ButtonBar.ts\");\n/* harmony import */ var _UI_EditWaypoint__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./UI/EditWaypoint */ \"./src/UI/EditWaypoint.ts\");\n/* harmony import */ var _UI_Dialog_MissionDetails__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./UI/Dialog/MissionDetails */ \"./src/UI/Dialog/MissionDetails.ts\");\n\n\n\n\n\n\n\n\n// eslint-disable-next-line unicorn/prevent-abbreviations\nclass UMM_Ext {\n    constructor() {\n        console.log(\"UMM-VERSION\", \"v1.2\");\n        // prevent UMM boot\n        const index = window.bootPlugins.findIndex((x) => {\n            return x.info.script.name === \"IITC Plugin: Ultimate Mission Maker\";\n        });\n        if (index !== -1) {\n            console.info(\"Ultimate Mission Editor found - this is no longer required for UMM-Ext\");\n            window.bootPlugins.splice(index, 1);\n        }\n    }\n    init() {\n        // eslint-disable-next-line @typescript-eslint/no-require-imports\n        __webpack_require__(/*! ./styles.pcss */ \"./src/styles.pcss\");\n        this.state = new _State_State__WEBPACK_IMPORTED_MODULE_3__.State();\n        $('body').append(\"<div class='umm-notification' style='display:none'></div>\");\n        (0,_UI_ButtonBar__WEBPACK_IMPORTED_MODULE_5__.createToolbar)();\n        $('#toolbox').append($('<a>', { text: \"UMM\", title: \"Ultimate Mission Maker\", click: () => this.toggleUMMBar() }));\n        // hide toolbar by default\n        $('.leaflet-umm.leaflet-bar').hide();\n        this.renderPath = new _UI_RenderPath__WEBPACK_IMPORTED_MODULE_1__.RenderPath();\n        this.renderNumbers = new _UI_RenderNumbers__WEBPACK_IMPORTED_MODULE_2__.RenderNumbers();\n        window.addHook('portalSelected', (event) => (0,_Edits__WEBPACK_IMPORTED_MODULE_4__.addPortalToCurrentMission)(event));\n        window.addHook('portalDetailsUpdated', _UI_EditWaypoint__WEBPACK_IMPORTED_MODULE_6__.addWaypointEditorToPortal);\n        window.addHook('mapDataRefreshEnd', () => this.state.checkAllPortals()); // TODO: only do it if required\n        window.addHook(\"portalDetailsUpdated\", event => this.state.checkPortal(event));\n        this.missionModeActive = false;\n        this.redrawAll();\n        (0,_UI_ButtonBar__WEBPACK_IMPORTED_MODULE_5__.updateCurrentActiveMissionSidebar)(this.state);\n    }\n    redrawAll() {\n        this.renderPath.redraw();\n        this.renderNumbers.redraw();\n        (0,_UI_ButtonBar__WEBPACK_IMPORTED_MODULE_5__.updatePortalCountSidebar)();\n    }\n    toggleUMMBar() {\n        $('.leaflet-umm.leaflet-bar').toggle();\n        if ($('.leaflet-umm.leaflet-bar').is(\":visible\")) {\n            if (this.state.isEmpty()) {\n                (0,_UI_Dialog_MissionDetails__WEBPACK_IMPORTED_MODULE_7__.editMissionSetDetails)();\n            }\n            else {\n                this.state.missions.zoom();\n            }\n        }\n    }\n}\n/**\n * use \"main\" to access you main class from everywhere\n * (same as window.plugin.UMM_Ext)\n */\nconst main = new UMM_Ext();\niitcpluginkit__WEBPACK_IMPORTED_MODULE_0__.Register(main, \"UMM_Ext\");\n\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/Main.ts?\n}");
-
-/***/ },
-
-/***/ "./src/State/Mission.ts"
-/*!******************************!*\
-  !*** ./src/State/Mission.ts ***!
-  \******************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   Mission: () => (/* binding */ Mission)\n/* harmony export */ });\n/* harmony import */ var _Portals__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Portals */ \"./src/State/Portals.ts\");\n\nclass Mission {\n    constructor(id, data) {\n        this.missionID = id;\n        this.data = data;\n        this.portal_data = new _Portals__WEBPACK_IMPORTED_MODULE_0__.Portals(data.portals);\n    }\n    get title() {\n        return this.data.missionTitle;\n    }\n    get portals() {\n        return this.portal_data;\n    }\n    get id() {\n        return this.missionID;\n    }\n    get description() {\n        return this.data.missionDescription;\n    }\n    hasPortals() {\n        return this.portal_data.length > 0;\n    }\n    getLocations() {\n        return this.portal_data.toLatLng();\n    }\n    show() {\n        if (this.hasPortals()) {\n            const bounds = new L.LatLngBounds(this.getLocations()).pad(0.2);\n            window.map.fitBounds(bounds, { maxZoom: 18 });\n        }\n    }\n    focusLastPortal() {\n        const last_ll = this.portal_data.getLatLngOf(-1);\n        const last = this.portal_data.get(-1);\n        if (last && last_ll) {\n            window.map.setView(last_ll);\n            window.renderPortalDetails(last.guid);\n            return true;\n        }\n        return false;\n    }\n    getDistance() {\n        const locations = this.portals.toLatLng();\n        return locations.reduce((sum, ll, index, lls) => index > 0 ? sum + ll.distanceTo(lls[index - 1]) : 0, 0);\n    }\n    clear() {\n        this.portal_data.clear();\n    }\n    reverse() {\n        this.portal_data.reverse();\n    }\n}\n\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/State/Mission.ts?\n}");
-
-/***/ },
-
-/***/ "./src/State/Missions.ts"
-/*!*******************************!*\
-  !*** ./src/State/Missions.ts ***!
-  \*******************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   MIN_PORTALS_PER_MISSION: () => (/* binding */ MIN_PORTALS_PER_MISSION),\n/* harmony export */   Missions: () => (/* binding */ Missions)\n/* harmony export */ });\n/* harmony import */ var _Mission__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Mission */ \"./src/State/Mission.ts\");\n/* harmony import */ var _Portals__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Portals */ \"./src/State/Portals.ts\");\n\n\nconst MIN_PORTALS_PER_MISSION = 6;\nclass Missions {\n    static generateMissionTitle(missNumber, plannedBannerLength, missSetName, missNameFormat) {\n        var _a;\n        // eslint-disable-next-line unicorn/prefer-default-parameters\n        const format = missNameFormat !== null && missNameFormat !== void 0 ? missNameFormat : \"\";\n        if (!format) {\n            return \"\";\n        }\n        let title = format;\n        const totalMissions = plannedBannerLength !== null && plannedBannerLength !== void 0 ? plannedBannerLength : 0;\n        // Replace total mission count (M+)\n        if (totalMissions >= 1) {\n            title = title.replace(/M+/g, totalMissions.toString());\n        }\n        // Replace mission number (N or N+)\n        if (missNumber >= 0) {\n            const numberPattern = (_a = format.match(/N+/g)) === null || _a === void 0 ? void 0 : _a[0];\n            if (numberPattern) {\n                const length = numberPattern.length > 1 ? totalMissions.toString().length : 0;\n                const paddedNumber = (missNumber + 1).toString().padStart(length, '0');\n                title = title.replace(/N+/g, paddedNumber);\n            }\n        }\n        // Replace mission set name (T)\n        if (missSetName === null || missSetName === void 0 ? void 0 : missSetName.trim()) {\n            title = title.replace(/T/g, missSetName);\n        }\n        return title;\n    }\n    constructor(data) {\n        this.data = data;\n    }\n    get(missionId) {\n        const mis = this.data[missionId];\n        return mis && new _Mission__WEBPACK_IMPORTED_MODULE_0__.Mission(missionId, mis);\n    }\n    count() {\n        return this.data.length;\n    }\n    forEach(callback) {\n        this.data.forEach((missionData, index) => {\n            const mission = new _Mission__WEBPACK_IMPORTED_MODULE_0__.Mission(index, missionData);\n            callback(mission);\n        });\n    }\n    filter(callback) {\n        const result = [];\n        this.forEach(mission => {\n            if (callback(mission))\n                result.push(mission);\n        });\n        return result;\n    }\n    previous(mission) {\n        var _a;\n        let preMissionID = mission.id - 1;\n        let preMission;\n        while (!((_a = (preMission = this.get(preMissionID))) === null || _a === void 0 ? void 0 : _a.hasPortals()) && preMissionID > 0)\n            preMissionID--;\n        return preMission;\n    }\n    next(mission) {\n        return this.get(mission.id + 1);\n    }\n    distanceToStart(id) {\n        const mission = this.get(id);\n        if (!mission)\n            return;\n        const previous = this.previous(mission);\n        const first = previous === null || previous === void 0 ? void 0 : previous.portals.getLatLngOf(-1);\n        const last = mission.portals.getLatLngOf(0);\n        if (!first || !last)\n            return;\n        return first.distanceTo(last);\n    }\n    getTotalDistance() {\n        const waypoints = [];\n        this.forEach(m => waypoints.push(...m.getLocations()));\n        return waypoints.reduce((sum, ll, index, lls) => index > 0 ? sum + ll.distanceTo(lls[index - 1]) : 0, 0);\n    }\n    validate() {\n        const errors = {};\n        const notEnoughWaypoint = this.filter(m => m.portals.length < MIN_PORTALS_PER_MISSION)\n            .map(m => m.id);\n        if (notEnoughWaypoint.length > 0) {\n            errors[\"not enough waypoints\"] = notEnoughWaypoint;\n        }\n        return errors;\n    }\n    zoom() {\n        const location = this.data.flatMap(m => new _Portals__WEBPACK_IMPORTED_MODULE_1__.Portals(m.portals).toLatLng());\n        if (location.length > 0) {\n            const bounds = new L.LatLngBounds(location).pad(0.1);\n            window.map.fitBounds(bounds, { maxZoom: 18 });\n        }\n    }\n    merge(destination, missionB) {\n        destination.portals.add(...missionB.portals.getRange());\n        missionB.portals.clear();\n    }\n    mergeAll() {\n        const portals = [];\n        this.data.forEach(m => {\n            portals.push(...m.portals);\n            portals.length = 0;\n        });\n        this.data[0].portals = portals;\n    }\n    split(source, at, destination) {\n        const toMove = source.portals.getRange(at);\n        destination.portals.insert(0, ...toMove);\n        source.portals.remove(at, toMove.length);\n    }\n    splitIntoMultiple(source, count, restAtLast = false) {\n        console.assert(count > 1, \"nothing to split\");\n        const allPortals = this.getAllPortalsOf(source.id, count);\n        const total = allPortals.length;\n        let portalsPerMission = total / count;\n        if (restAtLast)\n            portalsPerMission = Math.floor(portalsPerMission);\n        for (let i = 0; i < count; i++) {\n            const start = Math.floor(portalsPerMission * i);\n            let end = Math.floor(portalsPerMission * (i + 1));\n            if (i === count - 1)\n                end = allPortals.length;\n            const mission = this.get(source.id + i);\n            mission === null || mission === void 0 ? void 0 : mission.portals.clear();\n            mission === null || mission === void 0 ? void 0 : mission.portals.add(...allPortals.slice(start, end));\n        }\n    }\n    getAllPortalsOf(from, count) {\n        const allPortals = [];\n        for (let i = 0; i < count; i++) {\n            const mission = this.get(from + i);\n            if (mission)\n                allPortals.push(...mission.portals.getRange());\n        }\n        return allPortals;\n    }\n    getMissionsOfPortal(guid) {\n        return this.filter(mis => mis.portals.includes(guid)).map(m => m.id);\n    }\n}\n\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/State/Missions.ts?\n}");
-
-/***/ },
-
-/***/ "./src/State/Portals.ts"
-/*!******************************!*\
-  !*** ./src/State/Portals.ts ***!
-  \******************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   PortalActions: () => (/* binding */ PortalActions),\n/* harmony export */   Portals: () => (/* binding */ Portals)\n/* harmony export */ });\nconst PortalActions = [\n    { action: \"HACK_PORTAL\", label: \"Hack portal\" },\n    { action: \"INSTALL_MOD\", label: \"Install mod\" },\n    { action: \"CAPTURE_PORTAL\", label: \"Capture portal\" },\n    { action: \"CREATE_LINK\", label: \"Create link\" },\n    { action: \"CREATE_FIELD\", label: \"Create field\" },\n    { action: \"PASSPHRASE\", label: \"Enter passphrase\" },\n];\nclass Portals {\n    constructor(data) {\n        this.data = data;\n    }\n    get length() {\n        return this.data.length;\n    }\n    /**\n     * @param index negative values count from the end\n     */\n    get(index) {\n        return this.data.at(index);\n    }\n    getRange(start, end) {\n        return this.data.slice(start, end);\n    }\n    set(index, portal) {\n        this.data[index] = portal;\n    }\n    add(...portal) {\n        console.assert(!portal.some(p => this.includes(p.guid)), \"portal is already in\");\n        this.data.push(...portal);\n    }\n    insert(index, ...portal) {\n        console.assert(!portal.some(p => this.includes(p.guid)), \"portal is already in\");\n        this.data.splice(index, 0, ...portal);\n    }\n    remove(index, count = 1) {\n        this.data.splice(index, count);\n    }\n    clear() {\n        this.data.length = 0;\n    }\n    toLatLng() {\n        return this.data.map(portal => new L.LatLng(portal.location.latitude, portal.location.longitude));\n    }\n    /**\n     * @param index negative values count from the end\n     */\n    getLatLngOf(index) {\n        const portal = this.get(index);\n        if (!portal)\n            return;\n        return new L.LatLng(portal.location.latitude, portal.location.longitude);\n    }\n    includes(guid) {\n        return this.data.some(x => x.guid === guid);\n    }\n    find(guid) {\n        return this.data.find(x => x.guid === guid);\n    }\n    indexOf(portal) {\n        return this.data.findIndex(x => x.guid === portal.guid);\n    }\n    isStart(portal) {\n        var _a;\n        return ((_a = this.data[0]) === null || _a === void 0 ? void 0 : _a.guid) === portal.guid;\n    }\n    isEnd(portal) {\n        var _a;\n        return ((_a = this.data.at(-1)) === null || _a === void 0 ? void 0 : _a.guid) === portal.guid;\n    }\n    reverse() {\n        this.data.reverse();\n    }\n    create(guid) {\n        const iitcPortal = window.portals[guid];\n        console.assert(iitcPortal, \"portal not defined\");\n        // TODO try to get full details of iitc-cache\n        const options = iitcPortal.options.data;\n        const ll = iitcPortal.getLatLng();\n        return {\n            guid,\n            title: options.title || '[undefined]',\n            imageUrl: options.image,\n            description: \"\",\n            location: { latitude: ll.lat, longitude: ll.lng },\n            isOrnamented: false,\n            isStartPoint: false,\n            type: \"PORTAL\",\n            objective: { type: \"HACK_PORTAL\", passphrase_params: { question: \"\", _single_passphrase: \"\" } }\n        };\n    }\n}\n\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/State/Portals.ts?\n}");
-
-/***/ },
-
-/***/ "./src/State/State.ts"
-/*!****************************!*\
-  !*** ./src/State/State.ts ***!
-  \****************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   State: () => (/* binding */ State),\n/* harmony export */   fileFormatVersion: () => (/* binding */ fileFormatVersion)\n/* harmony export */ });\n/* harmony import */ var _StateMigration__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./StateMigration */ \"./src/State/StateMigration.ts\");\n/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Missions */ \"./src/State/Missions.ts\");\n\n\nconst STORAGE_KEY = \"ultimate-mission-maker\";\nconst fileFormatVersion = 2;\nclass State {\n    constructor() {\n        this.load();\n    }\n    load() {\n        this.reset();\n        const data = localStorage.getItem(STORAGE_KEY);\n        if (data) {\n            this.import(data);\n        }\n    }\n    save() {\n        this.setPlannedLength(this.theState.plannedBannerLength); // TODO: remove when \"get\" is private/removed\n        localStorage.setItem(STORAGE_KEY, this.asString());\n    }\n    import(jsonString) {\n        const anyState = JSON.parse(jsonString);\n        this.theState = (0,_StateMigration__WEBPACK_IMPORTED_MODULE_0__.migrateUmmVersion)(anyState);\n        // make sure Missions are initialized\n        this.setPlannedLength(this.getPlannedLength() || 1);\n    }\n    asString() {\n        return JSON.stringify(this.theState);\n    }\n    reset() {\n        this.theState = {\n            missionSetName: '',\n            missionSetDescription: '',\n            currentMission: 0,\n            plannedBannerLength: 1,\n            titleFormat: \"T NN-M\",\n            fileFormatVersion: fileFormatVersion,\n            missions: [\n                {\n                    missionTitle: '',\n                    missionDescription: '',\n                    portals: []\n                }\n            ],\n        };\n    }\n    isEmpty() {\n        return this.theState.missionSetName === \"\" &&\n            this.theState.missionSetDescription === \"\" &&\n            this.theState.missions.every(m => m.portals.length === 0);\n    }\n    isValid() {\n        return this.theState.missionSetName !== \"\" &&\n            this.theState.missionSetDescription !== \"\" &&\n            this.theState.plannedBannerLength > 0;\n    }\n    get missions() {\n        return new _Missions__WEBPACK_IMPORTED_MODULE_1__.Missions(this.theState.missions);\n    }\n    getBannerName() {\n        return this.theState.missionSetName;\n    }\n    setBannerName(name) {\n        this.theState.missionSetName = name;\n        this.theState.missions.forEach((mission, id) => mission.missionTitle = this.generateMissionTitle(id));\n    }\n    getBannerDesc() {\n        return this.theState.missionSetDescription;\n    }\n    setBannerDesc(desc) {\n        this.theState.missionSetDescription = desc;\n        this.theState.missions.forEach(mission => mission.missionDescription = this.theState.missionSetDescription);\n    }\n    getTitleFormat() {\n        return this.theState.titleFormat;\n    }\n    setTitleFormat(name) {\n        this.theState.titleFormat = name;\n        this.theState.missions.forEach((mission, id) => mission.missionTitle = this.generateMissionTitle(id));\n    }\n    getPlannedLength() {\n        return this.theState.plannedBannerLength;\n    }\n    setPlannedLength(count) {\n        count = Math.max(count, 1);\n        this.theState.plannedBannerLength = count;\n        if (this.theState.missions.length > count) {\n            this.theState.missions = this.theState.missions.slice(0, count);\n        }\n        else {\n            for (let id = this.theState.missions.length; id < count; id++) {\n                this.theState.missions.push({\n                    missionTitle: this.generateMissionTitle(id),\n                    missionDescription: this.theState.missionSetDescription,\n                    portals: []\n                });\n            }\n        }\n    }\n    generateMissionTitle(missNumber) {\n        return _Missions__WEBPACK_IMPORTED_MODULE_1__.Missions.generateMissionTitle(missNumber, this.getPlannedLength(), this.theState.missionSetName, this.theState.titleFormat);\n    }\n    getEditMission() {\n        return this.missions.get(this.theState.currentMission);\n    }\n    setCurrent(missionId) {\n        console.assert(missionId >= 0 && missionId < this.getPlannedLength(), \"mission id out of bounds\");\n        this.theState.currentMission = missionId;\n    }\n    getCurrent() {\n        return this.theState.currentMission;\n    }\n    isCurrent(missionId) {\n        return this.theState.currentMission === missionId;\n    }\n    checkPortal(event) {\n        let updated = false;\n        this.theState.missions.forEach(mission => {\n            const portal = mission.portals.find(x => x.guid === event.guid);\n            if (portal) {\n                if (portal.imageUrl !== event.portalData.image ||\n                    portal.title !== event.portalData.title) {\n                    portal.imageUrl = event.portalData.image;\n                    portal.title = event.portalData.title;\n                    updated = true;\n                }\n            }\n        });\n        if (updated)\n            this.save();\n    }\n    checkAllPortals() {\n        let updated = false;\n        this.theState.missions.forEach(mission => {\n            mission.portals.forEach(portal => {\n                var _a;\n                const iitcPortal = (_a = window.portals[portal.guid]) === null || _a === void 0 ? void 0 : _a.options.data;\n                if (iitcPortal) {\n                    if (portal.imageUrl !== iitcPortal.image ||\n                        portal.title !== iitcPortal.title) {\n                        portal.imageUrl = iitcPortal.image;\n                        portal.title = iitcPortal.title;\n                        updated = true;\n                    }\n                }\n            });\n        });\n        if (updated)\n            this.save();\n    }\n}\n\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/State/State.ts?\n}");
-
-/***/ },
-
-/***/ "./src/State/StateMigration.ts"
-/*!*************************************!*\
-  !*** ./src/State/StateMigration.ts ***!
-  \*************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   migrateUmmVersion: () => (/* binding */ migrateUmmVersion)\n/* harmony export */ });\n/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Missions */ \"./src/State/Missions.ts\");\n/* harmony import */ var _State__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./State */ \"./src/State/State.ts\");\n\n\nconst migrateUmmVersion = (ummState) => {\n    var _a, _b, _c, _d, _e;\n    if (ummState.fileFormatVersion > _State__WEBPACK_IMPORTED_MODULE_1__.fileFormatVersion) {\n        throw new Error(\"UMM: You've attempted to load data that's newer than what's supported by this version of UMM. Please update the plugin and try again. Data has not been loaded.\");\n    }\n    // Original beta didn't have a fileFormatVersion yet\n    if (ummState.fileFormatVersion === undefined || ummState.fileFormatVersion === \"\") {\n        // Because of slight variations on BETA's we do some checks to avoid overwriting any data\n        const undefinedOrEmptyString = (value) => {\n            if (value == undefined || value == \"\") {\n                return true;\n            }\n            return false;\n        };\n        if (undefinedOrEmptyString(ummState.missionSetName)) {\n            // Check if old name was set, if so, use that for missionSetName, otherwise set blank\n            if (undefinedOrEmptyString(ummState.missionName)) {\n                ummState.missionSetName = '';\n            }\n            else {\n                ummState.missionSetName = ummState.missionName;\n                delete ummState.missionName; // Remove old field from state\n            }\n        }\n        if (undefinedOrEmptyString(ummState.missionSetDescription)) {\n            if (undefinedOrEmptyString(ummState.missionDescription)) {\n                ummState.missionSetDescription = '';\n            }\n            else {\n                ummState.missionSetDescription = ummState.missionDescription;\n                delete ummState.missionDescription; // Remove old field from state\n            }\n        }\n        if (undefinedOrEmptyString(ummState.titleFormat)) {\n            ummState.titleFormat = 'T NN-M';\n        }\n        // Rename numberofMissions to plannedBannerLength if present, otherwise set to current banner length\n        if (ummState.numberOfMissions === undefined) {\n            ummState.plannedBannerLength = Object.keys(ummState.missions).length;\n        }\n        else {\n            ummState.plannedBannerLength = ummState.numberOfMissions;\n            delete ummState.numberOfMissions;\n        }\n        // Check if the data is using the oldest beta format or a newer version, newer versions don't need converting for V1.\n        if (!Object.keys(ummState.missions[0]).includes(\"portals\")) {\n            // Old format detected, check if data is present\n            if (ummState.missions[0][0].guid) {\n                // Data present, convert necessary\n                const newMissions = [];\n                for (const mission in ummState.missions) {\n                    const plannedLength = (ummState.plannedBannerLength > 0 ? ummState.plannedBannerLength : ummState.missions.length);\n                    const missionTitle = _Missions__WEBPACK_IMPORTED_MODULE_0__.Missions.generateMissionTitle(parseInt(mission) + 1, plannedLength, ummState.missionSetName, ummState.titleFormat);\n                    newMissions.push({ missionTitle: missionTitle, missionDescription: ummState.missionSetDescription, portals: ummState.missions[mission] });\n                }\n                ummState.missions = newMissions;\n            }\n            else {\n                // No data detected, just set it to an empty state.\n                ummState.missions = [{ missionTitle: '', missionDescription: '', portals: [] }];\n            }\n        }\n        ummState.fileFormatVersion = 1;\n    }\n    if (ummState.fileFormatVersion === 1) {\n        // FileFormatVersion 2 supports custom objectives for portals\n        // Valid type values are: HACK_PORTAL, INSTALL_MOD, CAPTURE_PORTAL, CREATE_LINK, CREATE_FIELD, PASSPHRASE\n        // NIA will ignore passphrase_params if type is not passphrase\n        for (const mission in ummState.missions) {\n            for (const portal in ummState.missions[mission].portals) {\n                ummState.missions[mission].portals[portal].objective = { type: \"HACK_PORTAL\", passphrase_params: { question: \"\", _single_passphrase: \"\" } };\n            }\n        }\n        ummState.fileFormatVersion = 2;\n    }\n    if (ummState.fileFormatVersion === 2) {\n        // Bugfix for 0.4.0, unintentionally it had objective type HACK rather than HACK_PORTAL, not a full new fileFormatVersion\n        for (const mission in ummState.missions) {\n            for (const portal in ummState.missions[mission].portals) {\n                if (ummState.missions[mission].portals[portal].objective.type === \"HACK\") {\n                    ummState.missions[mission].portals[portal].objective.type = \"HACK_PORTAL\";\n                }\n            }\n        }\n    }\n    // UMM_ext\n    if (ummState.fileFormatVersion === 2) {\n        // we dont want undefined values\n        (_a = ummState.missionSetName) !== null && _a !== void 0 ? _a : (ummState.missionSetName = \"\");\n        (_b = ummState.missionSetDescription) !== null && _b !== void 0 ? _b : (ummState.missionSetDescription = '');\n        (_c = ummState.currentMission) !== null && _c !== void 0 ? _c : (ummState.currentMission = 0);\n        (_d = ummState.plannedBannerLength) !== null && _d !== void 0 ? _d : (ummState.plannedBannerLength = 1);\n        (_e = ummState.titleFormat) !== null && _e !== void 0 ? _e : (ummState.titleFormat = \"T NN-M\");\n    }\n    return ummState;\n};\n\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/State/StateMigration.ts?\n}");
-
-/***/ },
-
-/***/ "./src/Text/Text.ts"
-/*!**************************!*\
-  !*** ./src/Text/Text.ts ***!
-  \**************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   MissionNumberQuestions: () => (/* binding */ MissionNumberQuestions),\n/* harmony export */   author: () => (/* binding */ author),\n/* harmony export */   changelog: () => (/* binding */ changelog),\n/* harmony export */   title: () => (/* binding */ title)\n/* harmony export */ });\nconst title = 'Ultimate Mission Maker EX';\nconst author = 'Vashiru, j00rtje, DanielOnDiordna, McBen';\nconst changelog = `\n  Changelog:\n\n  Version 1.0 - Alpha\n  - Complete rewrite from the ground up, based on UMM v0.7.3\n  - Toolbar hidden by default; enable via the Toolbox \"UMM\" command\n  - Mission Portal drag-and-drop support\n  - Preview potential mission split points\n  - Select-Mission Dialog with integrated split and merge commands\n  TODO: test mobile\n  `;\nconst MissionNumberQuestions = [\n    \"What number is this mission ?\",\n    \"Which mission number is this ?\",\n    \"What is the mission number ?\",\n    \"Which number does this mission have ?\",\n    \"What is this mission’s number ?\",\n    \"Which mission index is this ?\",\n    \"What is the index of this mission ?\",\n    \"Which position does this mission have ?\",\n    \"What is the position of this mission ?\",\n    \"Which mission slot is this ?\",\n    \"What number does this mission have in the banner ?\",\n    \"Which banner number is this mission ?\",\n    \"What is this mission’s banner position ?\",\n    \"Which mission number is shown in the banner ?\",\n    \"What number identifies this mission in the series ?\",\n    \"Which number does this mission have in the sequence ?\",\n    \"What is the mission’s number in the series ?\",\n    \"Which mission position is this in the banner ?\",\n    \"What number is assigned to this banner mission ?\",\n    \"Which number marks this mission in the banner ?\",\n    \"What mission number are you playing right now ?\",\n    \"Which mission number are you currently on ?\",\n    \"What number are you on in this banner ?\",\n    \"Which mission number are you completing now ?\",\n    \"What is the current mission number ?\",\n    \"Which number is this step of the banner ?\",\n    \"What number is this step in the mission series ?\",\n    \"Which mission step number is this ?\",\n    \"What is the step number of this mission ?\",\n    \"Which number corresponds to this mission step ?\",\n    \"Identify the mission number of this mission.\",\n    \"Select the mission number for this mission.\",\n    \"Determine this mission’s number.\",\n    \"State the number of this mission.\",\n    \"Indicate the index of this mission.\",\n    \"Specify the position number of this mission.\",\n    \"What ordinal number does this mission have ?\",\n    \"Which ordinal position is this mission ?\",\n    \"What numeric identifier does this mission have ?\",\n    \"Which numeric index applies to this mission ?\",\n    \"What is the mission number you are answering ?\",\n    \"Which number corresponds to this exact mission ?\",\n    \"What number is displayed for this mission ?\",\n    \"Which mission number is written here ?\",\n    \"What is the official number of this mission ?\",\n    \"Which mission number was assigned here ?\",\n    \"What number labels this mission ?\",\n    \"Which number tags this mission ?\",\n    \"What is the mission’s assigned number ?\",\n    \"Which number marks this mission ?\",\n    \"What is this mission’s index number ?\",\n    \"Which index number is this mission ?\",\n    \"What is the banner index of this mission ?\",\n    \"Which banner index applies here ?\",\n    \"What position number does this mission have ?\",\n    \"Which position number is this mission ?\",\n    \"What is the mission’s position number ?\",\n    \"Which slot number is this mission ?\",\n    \"What is this mission’s slot number ?\",\n    \"Which slot position is this mission ?\",\n    \"What number identifies this mission in the banner ?\",\n    \"Which number identifies this mission in the banner ?\",\n    \"What is the number assigned to this mission ?\",\n    \"Which number is assigned to this mission ?\",\n    \"What is this mission’s series number ?\",\n    \"Which series number is this mission ?\",\n    \"What is the banner series number of this mission ?\",\n    \"Which banner series number is this mission ?\",\n    \"What number corresponds to this banner entry ?\",\n    \"Which number corresponds to this banner entry ?\"\n];\n\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/Text/Text.ts?\n}");
-
-/***/ },
-
-/***/ "./src/UI/ButtonBar.ts"
-/*!*****************************!*\
-  !*** ./src/UI/ButtonBar.ts ***!
-  \*****************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   createToolbar: () => (/* binding */ createToolbar),\n/* harmony export */   updateCurrentActiveMissionSidebar: () => (/* binding */ updateCurrentActiveMissionSidebar),\n/* harmony export */   updatePortalCountSidebar: () => (/* binding */ updatePortalCountSidebar)\n/* harmony export */ });\n/* harmony import */ var _Edits__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Edits */ \"./src/Edits.ts\");\n/* harmony import */ var _Main__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Main */ \"./src/Main.ts\");\n/* harmony import */ var _Dialog_Options__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Dialog/Options */ \"./src/UI/Dialog/Options.ts\");\n/* harmony import */ var _Dialog_SelectMission__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Dialog/SelectMission */ \"./src/UI/Dialog/SelectMission.ts\");\n/* harmony import */ var _Notification__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Notification */ \"./src/UI/Notification.ts\");\n/* harmony import */ var _assets_bookmarks_png__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../assets/bookmarks.png */ \"./src/assets/bookmarks.png\");\n/* harmony import */ var _assets_next_png__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../assets/next.png */ \"./src/assets/next.png\");\n/* harmony import */ var _assets_previous_png__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../assets/previous.png */ \"./src/assets/previous.png\");\n/* harmony import */ var _assets_undo_png__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../assets/undo.png */ \"./src/assets/undo.png\");\n/* harmony import */ var _assets_options_png__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../assets/options.png */ \"./src/assets/options.png\");\n\n\n\n\n\n\n\n\n\n\nconst createToolbar = () => {\n    const UMMToolbar = L.Control.extend({\n        options: {\n            position: 'topleft'\n        },\n        onAdd: () => {\n            const container = $(\"<div>\", { class: \"leaflet-umm leaflet-bar\" }).append(toolBarButton(\"umm-toggle-bookmarks\", _assets_bookmarks_png__WEBPACK_IMPORTED_MODULE_5__, \"UMM: Toggle Mission Mode\", _Edits__WEBPACK_IMPORTED_MODULE_0__.toggleMissionMode), toolBarButton(\"umm-next-mission\", _assets_next_png__WEBPACK_IMPORTED_MODULE_6__, \"UMM: Next Mission\", nextMission), toolBarButton(\"umm-edit-active-mission\", undefined, \"UMM: Select mission number\", _Dialog_SelectMission__WEBPACK_IMPORTED_MODULE_3__.editActiveMission), toolBarButton(\"umm-previous-mission\", _assets_previous_png__WEBPACK_IMPORTED_MODULE_7__, \"UMM: Previous Mission\", previousMission), toolBarButton(\"umm-number-of-portals\", undefined, \"UMM: Number of portals in current mission\"), toolBarButton(\"umm-undo\", _assets_undo_png__WEBPACK_IMPORTED_MODULE_8__, \"UMM: Remove Last\", _Edits__WEBPACK_IMPORTED_MODULE_0__.removeLastPortal), toolBarButton(\"umm-opt\", _assets_options_png__WEBPACK_IMPORTED_MODULE_9__, \"UMM: Opt\", _Dialog_Options__WEBPACK_IMPORTED_MODULE_2__.showUmmOptions));\n            return container[0];\n        }\n    });\n    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-call\n    window.map.addControl(new UMMToolbar());\n};\nconst toolBarButton = (id, image, tooltip, click) => {\n    // width = \"16\" height = 16\" style=\"margin - top: 7px; \"></a>').on('click dblclick', '#umm-toggle-bookmarks', function (event) {\n    return $(\"<a>\", {\n        id,\n        class: \"umm-control\",\n        title: window.isSmartphone() ? \"\" : tooltip\n    })\n        .on(\"click dblclick\", ((event) => { event.stopPropagation(); if (click)\n        click(); }))\n        .append($(\"<img>\", { src: image }).css({ width: 16, height: 16, \"margin-top\": \"7px\" }));\n};\nconst updateCurrentActiveMissionSidebar = (state) => {\n    $('#umm-edit-active-mission').text(state.getCurrent() + 1);\n    $('#umm-edit-active-mission').css(\"background-color\", \"white\");\n    $('#umm-next-mission img').css(\"opacity\", \"100%\");\n    $('#umm-previous-mission img').css(\"opacity\", \"100%\");\n    const current = state.getCurrent();\n    if (current >= state.getPlannedLength() - 1) {\n        $('#umm-next-mission').children('img').css(\"opacity\", \"30%\");\n        $('#umm-edit-active-mission').css(\"background-color\", \"orange\");\n    }\n    if (current === 0) {\n        $('#umm-previous-mission').children('img').css(\"opacity\", \"30%\");\n    }\n};\nconst updatePortalCountSidebar = () => {\n    var _a, _b;\n    const count = (_b = (_a = _Main__WEBPACK_IMPORTED_MODULE_1__.main.state.getEditMission()) === null || _a === void 0 ? void 0 : _a.portals.length) !== null && _b !== void 0 ? _b : 0;\n    if (count < 1000) {\n        $('#umm-number-of-portals').text(`P${count}`);\n    }\n    else {\n        $('#umm-number-of-portals').text(`${count}`);\n    }\n};\nconst nextMission = () => {\n    const state = _Main__WEBPACK_IMPORTED_MODULE_1__.main.state;\n    if (state.getCurrent() >= state.getPlannedLength() - 1)\n        return;\n    // Activate the new mission\n    (0,_Edits__WEBPACK_IMPORTED_MODULE_0__.setCurrentMission)(state.getCurrent() + 1);\n    const mission = state.getEditMission();\n    console.assert(mission, \"no mission found\");\n    if (mission.hasPortals()) {\n        showMission(mission);\n    }\n    else {\n        if (_Main__WEBPACK_IMPORTED_MODULE_1__.main.missionModeActive) {\n            (0,_Notification__WEBPACK_IMPORTED_MODULE_4__.bannerNotification)(`Start of mission #${state.getCurrent() + 1}\\nSelect start portal.`);\n        }\n    }\n};\nconst previousMission = () => {\n    const state = _Main__WEBPACK_IMPORTED_MODULE_1__.main.state;\n    if (state.getCurrent() <= 0)\n        return;\n    // Activate the new mission\n    (0,_Edits__WEBPACK_IMPORTED_MODULE_0__.setCurrentMission)(state.getCurrent() - 1);\n    const mission = state.getEditMission();\n    console.assert(mission, \"no mission found\");\n    showMission(mission);\n};\nconst showMission = (mission) => {\n    if (mission.hasPortals()) {\n        mission.show();\n        updatePortalCountSidebar();\n        if (_Main__WEBPACK_IMPORTED_MODULE_1__.main.missionModeActive) {\n            (0,_Notification__WEBPACK_IMPORTED_MODULE_4__.bannerNotification)(`Mission mode active.\\nCurrent mission #${_Main__WEBPACK_IMPORTED_MODULE_1__.main.state.getCurrent() + 1}\\nSelect next portal`);\n        }\n        else {\n            (0,_Notification__WEBPACK_IMPORTED_MODULE_4__.bannerNotification)(`Current active mission set to #${_Main__WEBPACK_IMPORTED_MODULE_1__.main.state.getCurrent() + 1}`);\n        }\n    }\n};\n\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/UI/ButtonBar.ts?\n}");
-
-/***/ },
-
-/***/ "./src/UI/Dialog/About.ts"
-/*!********************************!*\
-  !*** ./src/UI/Dialog/About.ts ***!
-  \********************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   about: () => (/* binding */ about)\n/* harmony export */ });\n/* harmony import */ var _Text_Text__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Text/Text */ \"./src/Text/Text.ts\");\n/* harmony import */ var _Button__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Button */ \"./src/UI/Dialog/Button.ts\");\n/* harmony import */ var _Options__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Options */ \"./src/UI/Dialog/Options.ts\");\n\n\n\nconst about = () => {\n    let html = '<div class=\"umm-options-list\">';\n    html += 'In short: Create missions in IITC, export as a json file:<br>';\n    html += '<a href=\"https://intel.ingress.com/\" target=\"_blank\"' + (/^intel\\.ingress\\.com$/i.test(window.location.host) ? ' style=\"color: #bbb; pointer-events: none; cursor: default;\"' : '') + '>https://intel.ingress.com/</a>';\n    html += 'Then open the mission creator and load the json file.<br>';\n    html += 'Start creating missions and import the UMM data for every mission:<br>';\n    html += '<a href=\"https://missions.ingress.com/\" target=\"_blank\"' + (/^missions\\.ingress\\.com$/i.test(window.location.host) ? ' style=\"color: #bbb; pointer-events: none; cursor: default;\"' : '') + '>https://missions.ingress.com/</a>';\n    html += 'Documentation for this plugin can be found at:<br>';\n    html += '<a href=\"https://umm.8bitnoise.rocks/\" target=\"_blank\">https://umm.8bitnoise.rocks/</a>';\n    html += 'Questions, feature requests and tips:<br>';\n    html += '<a href=\"https://t.me/joinchat/j9T9eLfa3VJlZWE0\" target=\"_blank\">Telegram: [XF] Ultimate Mission Maker</a>';\n    html += '</div>';\n    const buttons = [\n        (0,_Button__WEBPACK_IMPORTED_MODULE_1__.dialogButton)(\"< Main Menu\", _Options__WEBPACK_IMPORTED_MODULE_2__.showUmmOptions),\n        (0,_Button__WEBPACK_IMPORTED_MODULE_1__.dialogButton)(\"Changelog\", () => dialog({ title: \"Changelog\", html: _Text_Text__WEBPACK_IMPORTED_MODULE_0__.changelog })),\n        (0,_Button__WEBPACK_IMPORTED_MODULE_1__.dialogButtonClose)()\n    ];\n    window.dialog({\n        html: html,\n        title: `${_Text_Text__WEBPACK_IMPORTED_MODULE_0__.title} v${\"v1.2\"} - About`,\n        id: 'umm-options',\n        width: 350,\n        buttons: buttons\n    });\n};\n\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/UI/Dialog/About.ts?\n}");
-
-/***/ },
-
-/***/ "./src/UI/Dialog/Button.ts"
-/*!*********************************!*\
-  !*** ./src/UI/Dialog/Button.ts ***!
-  \*********************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   button: () => (/* binding */ button),\n/* harmony export */   dialogButton: () => (/* binding */ dialogButton),\n/* harmony export */   dialogButtonClose: () => (/* binding */ dialogButtonClose)\n/* harmony export */ });\nconst button = (label, click, classes) => {\n    return $(\"<button>\", { text: label, click, class: \"umm-mission-btn \" + (classes !== null && classes !== void 0 ? classes : \"\") });\n};\nconst dialogButton = (label, callback) => {\n    return {\n        text: label,\n        click: callback,\n        class: \"umm-dialog-button\"\n    };\n};\nconst dialogButtonClose = () => {\n    // return dialogButton(\"Close\", function () { $(this).dialog(\"close\") });\n    return dialogButton(\"Close\", event => {\n        // jquery-ui and arrow functions won't work well\n        const dialog = $(event.currentTarget).parents(\".ui-dialog\").children(\".ui-dialog-content\");\n        dialog.dialog(\"close\");\n    });\n};\n\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/UI/Dialog/Button.ts?\n}");
-
-/***/ },
-
-/***/ "./src/UI/Dialog/Confirm.ts"
-/*!**********************************!*\
-  !*** ./src/UI/Dialog/Confirm.ts ***!
-  \**********************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   confirmDialog: () => (/* binding */ confirmDialog)\n/* harmony export */ });\nconst confirmDialog = (options) => {\n    return new Promise((resolve, _) => {\n        const message = $(\"<div>\");\n        message.append($(\"<div>\", { class: \"header\" }).append(options.message));\n        if (options.details) {\n            message.append($(\"<hr>\"), $(\"<div>\", { class: \"details\" }).append(options.details));\n        }\n        const buttons = [\n            {\n                text: \"No\",\n                click: () => {\n                    newDialog.dialog(\"close\");\n                    resolve(false);\n                }\n            },\n            {\n                text: \"Yes\",\n                click: () => {\n                    newDialog.dialog(\"close\");\n                    resolve(true);\n                }\n            }\n        ];\n        const newDialog = window.dialog({\n            html: message,\n            title: options.title,\n            dialogClass: \"umm-confirm \" + (options.title ? \"\" : \" no_title\"),\n            resizable: false,\n            modal: true,\n            closeOnEscape: false,\n            buttons\n        });\n        newDialog.parent().find(\"button:eq(1)\").css({ float: \"left\" });\n        newDialog.closest(\".ui-dialog\").trigger(\"focus\");\n        newDialog.closest(\".ui-dialog\").on(\"keydown\", event => {\n            if (event.key === \"Enter\") {\n                event.preventDefault();\n                event.stopPropagation();\n                newDialog.parent().find(\"button:eq(2)\").trigger(\"click\");\n                return false;\n            }\n            if (event.key === \"Escape\") {\n                event.preventDefault();\n                event.stopPropagation();\n                newDialog.parent().find(\"button:eq(1)\").trigger(\"click\");\n                return false;\n            }\n            return true;\n        });\n        newDialog.dialog(\"moveToTop\");\n    });\n};\n\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/UI/Dialog/Confirm.ts?\n}");
-
-/***/ },
-
-/***/ "./src/UI/Dialog/MissionDetails.ts"
-/*!*****************************************!*\
-  !*** ./src/UI/Dialog/MissionDetails.ts ***!
-  \*****************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   editMissionSetDetails: () => (/* binding */ editMissionSetDetails)\n/* harmony export */ });\n/* harmony import */ var _Edits__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Edits */ \"./src/Edits.ts\");\n/* harmony import */ var _Main__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Main */ \"./src/Main.ts\");\n/* harmony import */ var _State_Missions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../State/Missions */ \"./src/State/Missions.ts\");\n/* harmony import */ var _ButtonBar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../ButtonBar */ \"./src/UI/ButtonBar.ts\");\n/* harmony import */ var _Notification__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Notification */ \"./src/UI/Notification.ts\");\n/* harmony import */ var _Button__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Button */ \"./src/UI/Dialog/Button.ts\");\n/* harmony import */ var _Options__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Options */ \"./src/UI/Dialog/Options.ts\");\n\n\n\n\n\n\n\nconst editMissionSetDetails = (toggleMissionModeAfterSave = false) => {\n    var _a;\n    const state = _Main__WEBPACK_IMPORTED_MODULE_1__.main.state;\n    let html = '<div class=\"umm-edit-mission-set-details\">';\n    html += '<b>Banner details</b>';\n    html += '<p>Please enter the details for your banner. All fields are required.</p><br>';\n    html += `<label for=\"umm-mission-set-name\"><b>Banner name</b> (max. 50 characters)</label>\n      <span class=\"umm-error\" id=\"umm-mission-set-name-error\"><b>Error: </b>Please enter a valid banner name</span>\n      <input id=\"umm-mission-set-name\" name=\"umm-mission-set-name\" type=\"text\" placeholder=\"Enter name for the banner\" maxlength=\"50\" value=\"${state.getBannerName()}\">`;\n    html += `<label for=\"umm-mission-set-description\"><b>Banner description</b> (max. 200 characters)</label>\n      <span class=\"umm-error\" id=\"umm-mission-set-description-error\"><b>Error: </b>Please enter a valid banner description</span>\n      <textarea id=\"umm-mission-set-description\" name=\"umm-mission-set-description\" placeholder=\"Enter description for the banner\" maxlength=\"200\" rows=\"5\">${state.getBannerDesc()}</textarea>`;\n    html += `<label for=\"umm-banner-length\"><b>Planned banner length</b>, min. ${Math.max(state.missions.count(), 1)} mission(s)</label>\n      <span class=\"umm-error\" id=\"umm-mission-planned-banner-length-error\"><b>Error: </b>Please enter a valid banner length</span>\n      <input id=\"umm-banner-length\" name=\"umm-banner-length\" type=\"number\" placeholder=\"Enter length of banner set\" min=\"1\" value=\"${Math.max(state.getPlannedLength(), 1)}\">`;\n    html += `<label for=\"umm-title-format\"><b>Title format</b></label>\n      <span class=\"umm-error\" id=\"umm-mission-title-format-error\"><b>Error: </b>Please enter a valid title-format</span>\n      <p>Title format allows:<br>N = Mission number without leading 0<br>NN = Mission number with leading 0 (if required by banner length)<br>M = Planned banner length<br>T = (banner title)<br>Examples:T NN-M (default) or NN.M T</p>\n      <input id=\"umm-title-format\" name=\"umm-title-format\" type=\"text\" placeholder=\"Enter a title format\" value=\"${(_a = state.getTitleFormat()) !== null && _a !== void 0 ? _a : \"T NN-M\"}\" style=\"margin-bottom: 5px;\">\n      <b>Preview: </b><span id=\"umm-mission-title-preview\"></span>`;\n    html += '</div>';\n    window.dialog({\n        html: html,\n        title: `Edit banner details - UMM v${\"v1.2\"}`,\n        id: 'umm-options',\n        width: 400,\n        buttons: [\n            (0,_Button__WEBPACK_IMPORTED_MODULE_5__.dialogButton)(\"< Main Menu\", _Options__WEBPACK_IMPORTED_MODULE_6__.showUmmOptions),\n            (0,_Button__WEBPACK_IMPORTED_MODULE_5__.dialogButton)(\"Save\", () => successfulSave(toggleMissionModeAfterSave)),\n            (0,_Button__WEBPACK_IMPORTED_MODULE_5__.dialogButtonClose)()\n        ]\n    });\n    updateMissionTitlePreview();\n    $('#umm-mission-set-name, #umm-mission-set-description, #umm-banner-length, #umm-title-format').on('input', updateMissionTitlePreview);\n};\nconst getFormValues = () => ({\n    name: $('#umm-mission-set-name').val(),\n    description: $('#umm-mission-set-description').val(),\n    length: $('#umm-banner-length').val(),\n    format: $('#umm-title-format').val()\n});\nconst successfulSave = (toggleMissionModeAfterSave) => {\n    const values = getFormValues();\n    const isSavedSuccessful = saveMissionSetDetails(values.name, values.description, values.length, values.format);\n    if (isSavedSuccessful) {\n        (0,_ButtonBar__WEBPACK_IMPORTED_MODULE_3__.updateCurrentActiveMissionSidebar)(_Main__WEBPACK_IMPORTED_MODULE_1__.main.state);\n        (0,_Notification__WEBPACK_IMPORTED_MODULE_4__.bannerNotification)(`Mission details saved`);\n        if (toggleMissionModeAfterSave) {\n            (0,_Edits__WEBPACK_IMPORTED_MODULE_0__.toggleMissionMode)();\n        }\n        $(\"#umm-options\").dialog(\"close\");\n    }\n};\nconst updateMissionTitlePreview = () => {\n    const values = getFormValues();\n    const plannedLength = parseInt(values.length);\n    if (values.name.length > 0 && values.format.length > 0 && !isNaN(plannedLength)) {\n        const missionTitle = _State_Missions__WEBPACK_IMPORTED_MODULE_2__.Missions.generateMissionTitle(1, plannedLength, values.name, values.format);\n        $('#umm-mission-title-preview').text(missionTitle);\n    }\n    else {\n        $('#umm-mission-title-preview').text(\"Fill in all required fields\");\n    }\n};\nconst setFieldError = (elementId, hasError) => {\n    $(elementId).css('display', hasError ? 'block' : 'none');\n};\nconst saveMissionSetDetails = (missionSetName, missionSetDescription, plannedBannerLength, titleFormat) => {\n    let isValid = true;\n    const hasName = missionSetName && missionSetName.length > 0;\n    if (hasName) {\n        _Main__WEBPACK_IMPORTED_MODULE_1__.main.state.setBannerName(missionSetName);\n    }\n    setFieldError('#umm-mission-set-name-error', !hasName);\n    isValid = isValid && !!hasName;\n    const hasDescription = missionSetDescription && missionSetDescription.length > 0;\n    if (hasDescription) {\n        _Main__WEBPACK_IMPORTED_MODULE_1__.main.state.setBannerDesc(missionSetDescription);\n    }\n    setFieldError('#umm-mission-set-description-error', !hasDescription);\n    isValid = isValid && !!hasDescription;\n    const plannedLength = parseInt(plannedBannerLength !== null && plannedBannerLength !== void 0 ? plannedBannerLength : \"\");\n    const hasValidLength = plannedLength && !isNaN(plannedLength);\n    if (hasValidLength) {\n        _Main__WEBPACK_IMPORTED_MODULE_1__.main.state.setPlannedLength(plannedLength);\n    }\n    setFieldError('#umm-mission-planned-banner-length-error', !hasValidLength);\n    isValid = isValid && !!hasValidLength;\n    const hasFormat = titleFormat && titleFormat.length > 0;\n    if (hasFormat) {\n        _Main__WEBPACK_IMPORTED_MODULE_1__.main.state.setTitleFormat(titleFormat);\n    }\n    setFieldError('#umm-mission-title-format-error', !hasFormat);\n    isValid = isValid && !!hasFormat;\n    if (isValid) {\n        _Main__WEBPACK_IMPORTED_MODULE_1__.main.state.save();\n    }\n    return isValid;\n};\n\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/UI/Dialog/MissionDetails.ts?\n}");
-
-/***/ },
-
-/***/ "./src/UI/Dialog/Options.ts"
-/*!**********************************!*\
-  !*** ./src/UI/Dialog/Options.ts ***!
-  \**********************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   showUmmOptions: () => (/* binding */ showUmmOptions)\n/* harmony export */ });\n/* harmony import */ var _Edits__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Edits */ \"./src/Edits.ts\");\n/* harmony import */ var _ImportExport__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../ImportExport */ \"./src/ImportExport.ts\");\n/* harmony import */ var _Main__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../Main */ \"./src/Main.ts\");\n/* harmony import */ var _ButtonBar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../ButtonBar */ \"./src/UI/ButtonBar.ts\");\n/* harmony import */ var _Text_Text__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../Text/Text */ \"./src/Text/Text.ts\");\n/* harmony import */ var _About__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./About */ \"./src/UI/Dialog/About.ts\");\n/* harmony import */ var _Button__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Button */ \"./src/UI/Dialog/Button.ts\");\n/* harmony import */ var _Confirm__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Confirm */ \"./src/UI/Dialog/Confirm.ts\");\n/* harmony import */ var _MissionDetails__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./MissionDetails */ \"./src/UI/Dialog/MissionDetails.ts\");\n/* harmony import */ var _SelectMission__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./SelectMission */ \"./src/UI/Dialog/SelectMission.ts\");\n\n\n\n\n\n\n\n\n\n\nconst showUmmOptions = () => {\n    var _a, _b, _c;\n    const state = _Main__WEBPACK_IMPORTED_MODULE_2__.main.state;\n    const html = $(\"<div>\", { class: \"umm-options-list\" }).append($(\"<p>\").append($(\"<b>\", { text: \"Banner data\" }), $(\"<br>\"), 'Banner name: <b><span>' + ((_a = state.getBannerName()) !== null && _a !== void 0 ? _a : \"N/A\") + '</span></b><br>', 'Banner description: <b><span>' + ((_b = state.getBannerDesc()) !== null && _b !== void 0 ? _b : \"N/A\") + '</span></b><br>', 'Mission title format: <b><span>' + ((_c = state.getTitleFormat()) !== null && _c !== void 0 ? _c : \"N/A\") + '</span></b> <span title=\"Title format allows:&#10;N = Mission number without leading 0 (if required by banner length)&#10;NN = Mission number with leading 0&#10;M = Planned banner length&#10;T = (mission title)&#10; &#10;eg. T N-M or NN.M T\">(?)</span><br>', 'Planned banner length: <b><span>' + state.getPlannedLength().toString() + '</span></b><br>', 'Length: <b><span>' + window.formatDistance(state.missions.getTotalDistance()) + '</span></b><br>', validateMissions(state)), $(\"<p>\").append($(\"<b>\", { text: \"Mission options\" }), $(\"<br>\"), 'Layers: ', '<label style=\"user-select: none\">Mission Paths</label>', $(\"<input>\", {\n        type: \"checkbox\",\n        click: (event) => tooglePathsLayer(event.target.checked),\n        checked: _Main__WEBPACK_IMPORTED_MODULE_2__.main.renderPath.isVisible()\n    }), '<label style=\"user-select: none\">Mission Numbers</label>', $(\"<input>\", {\n        type: \"checkbox\",\n        click: (event) => toggleLayerNumbers(event.target.checked),\n        checked: _Main__WEBPACK_IMPORTED_MODULE_2__.main.renderNumbers.isVisible()\n    }), (0,_Button__WEBPACK_IMPORTED_MODULE_6__.button)(\"Edit banner details\", () => (0,_MissionDetails__WEBPACK_IMPORTED_MODULE_8__.editMissionSetDetails)(), \"w-full\"), (0,_Button__WEBPACK_IMPORTED_MODULE_6__.button)(\"Change active mission #\", _SelectMission__WEBPACK_IMPORTED_MODULE_9__.editActiveMission, \"w-full\"), (0,_Button__WEBPACK_IMPORTED_MODULE_6__.button)(\"Zoom to view all missions\", () => state.missions.zoom(), \"w-full\")), $(\"<hr>\"), (0,_Button__WEBPACK_IMPORTED_MODULE_6__.button)(\"Split mission\", _Edits__WEBPACK_IMPORTED_MODULE_0__.splitMissionOptions, \"w-full\"), (0,_Button__WEBPACK_IMPORTED_MODULE_6__.button)(\"Merge missions\", _Edits__WEBPACK_IMPORTED_MODULE_0__.mergeMissions, \"w-full\"), (0,_Button__WEBPACK_IMPORTED_MODULE_6__.button)(\"Reverse mission\", _Edits__WEBPACK_IMPORTED_MODULE_0__.reverseMission, \"w-full\"), $(\"<hr>\"), (0,_Button__WEBPACK_IMPORTED_MODULE_6__.button)(\"Clear ALL missions data\", confirmClear, \"w-full\"), $(\"<b>\", { text: \"Import/Export\" }), $(\"<br>\"), (0,_Button__WEBPACK_IMPORTED_MODULE_6__.button)(\"Export banner data to file\", () => (0,_ImportExport__WEBPACK_IMPORTED_MODULE_1__.exportData)(_Main__WEBPACK_IMPORTED_MODULE_2__.main.state), \"w-full\"), $(\"<div>\").css({ width: 800, margin: \"auto\" }).append('<b>Import banner data from file:</b><br>', $(\"<input>\", { type: \"file\", change: confirmLoad })));\n    // move this to option dialog\n    window.map.on('layeradd', onLayerAdd);\n    window.map.on('layerremove', onLayerRemove);\n    window.dialog({\n        html: html,\n        title: `${_Text_Text__WEBPACK_IMPORTED_MODULE_4__.title} v${\"v1.2\"}`,\n        id: 'umm-options',\n        width: 350,\n        buttons: [\n            (0,_Button__WEBPACK_IMPORTED_MODULE_6__.dialogButton)(\"About this plugin\", _About__WEBPACK_IMPORTED_MODULE_5__.about),\n            (0,_Button__WEBPACK_IMPORTED_MODULE_6__.dialogButtonClose)()\n        ],\n        closeCallback: () => destroy()\n    });\n};\nconst destroy = () => {\n    window.map.off('layeradd', onLayerAdd);\n    window.map.off('layerremove', onLayerRemove);\n};\nconst onLayerAdd = (event) => {\n    if (_Main__WEBPACK_IMPORTED_MODULE_2__.main.renderPath.isLayer(event.layer)) {\n        $('#umm-layercheckbox-paths').prop(\"checked\", true);\n    }\n    if (_Main__WEBPACK_IMPORTED_MODULE_2__.main.renderNumbers.isLayer(event.layer)) {\n        $('#umm-layercheckbox-numbers').prop(\"checked\", true);\n    }\n};\nconst onLayerRemove = (event) => {\n    if (_Main__WEBPACK_IMPORTED_MODULE_2__.main.renderPath.isLayer(event.layer)) {\n        $('#umm-layercheckbox-paths').prop(\"checked\", false);\n    }\n    if (_Main__WEBPACK_IMPORTED_MODULE_2__.main.renderNumbers.isLayer(event.layer)) {\n        $('#umm-layercheckbox-numbers').prop(\"checked\", false);\n    }\n};\nconst validateMissions = (state) => {\n    const invalidMissions = state.missions.validate();\n    const result = [];\n    for (const error in invalidMissions) {\n        const numbers = invalidMissions[error].map(n => n + 1).join(\", \");\n        result.push(`<span style=\"color: red;\"><b>${error}:</b></span> Mission: ${numbers}`);\n    }\n    ;\n    return result.join(\"<br>\");\n};\nconst confirmClear = async () => {\n    if (await (0,_Confirm__WEBPACK_IMPORTED_MODULE_7__.confirmDialog)({ message: \"Clear all Mission data?\", details: \"Removes mission settings and waypoints. This action cannot be undone.\" })) {\n        (0,_Edits__WEBPACK_IMPORTED_MODULE_0__.clearMissionData)();\n    }\n};\nconst confirmLoad = async (event) => {\n    if (_Main__WEBPACK_IMPORTED_MODULE_2__.main.state.isEmpty() ||\n        await (0,_Confirm__WEBPACK_IMPORTED_MODULE_7__.confirmDialog)({ message: \"Overwrite current data?\", details: \"All current missions will be replaced by the imported data.\" })) {\n        await (0,_ImportExport__WEBPACK_IMPORTED_MODULE_1__.loadFileInput)(event, _Main__WEBPACK_IMPORTED_MODULE_2__.main.state);\n        _Main__WEBPACK_IMPORTED_MODULE_2__.main.state.checkAllPortals();\n        _Main__WEBPACK_IMPORTED_MODULE_2__.main.redrawAll();\n        (0,_ButtonBar__WEBPACK_IMPORTED_MODULE_3__.updateCurrentActiveMissionSidebar)(_Main__WEBPACK_IMPORTED_MODULE_2__.main.state);\n        (0,_ButtonBar__WEBPACK_IMPORTED_MODULE_3__.updatePortalCountSidebar)();\n        _Main__WEBPACK_IMPORTED_MODULE_2__.main.state.missions.zoom();\n    }\n};\nconst tooglePathsLayer = (show) => _Main__WEBPACK_IMPORTED_MODULE_2__.main.renderPath.toggle(show);\nconst toggleLayerNumbers = (show) => _Main__WEBPACK_IMPORTED_MODULE_2__.main.renderNumbers.toggle(show);\n\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/UI/Dialog/Options.ts?\n}");
-
-/***/ },
-
-/***/ "./src/UI/Dialog/SelectMission.ts"
-/*!****************************************!*\
-  !*** ./src/UI/Dialog/SelectMission.ts ***!
-  \****************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   editActiveMission: () => (/* binding */ editActiveMission)\n/* harmony export */ });\n/* harmony import */ var _Edits__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Edits */ \"./src/Edits.ts\");\n/* harmony import */ var _Main__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Main */ \"./src/Main.ts\");\n/* harmony import */ var _Notification__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Notification */ \"./src/UI/Notification.ts\");\n/* harmony import */ var _Text_Text__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../Text/Text */ \"./src/Text/Text.ts\");\n/* harmony import */ var _Button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Button */ \"./src/UI/Dialog/Button.ts\");\n/* harmony import */ var _Options__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Options */ \"./src/UI/Dialog/Options.ts\");\n/* harmony import */ var _Confirm__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Confirm */ \"./src/UI/Dialog/Confirm.ts\");\n\n\n\n\n\n\n\nconst editActiveMission = () => {\n    const html = $(\"<div>\", { class: \"umm-mission-picker-btn\" }).append('Select a mission number:<br>', $(\"<select>\", { id: \"umm-mission-picker\", class: \"umm-mission-picker\", change: updateMissionInfo }).css({ \"margin-right\": \"1em\" }), (0,_Button__WEBPACK_IMPORTED_MODULE_4__.button)(\"Select\", onMissionSelect), (0,_Button__WEBPACK_IMPORTED_MODULE_4__.button)(\"Zoom to mission\", onZoomToMission), $(\"<div>\", { id: \"umm-mission-picker-info\" }), (0,_Button__WEBPACK_IMPORTED_MODULE_4__.button)(\"Split\", onMissionSplit), (0,_Button__WEBPACK_IMPORTED_MODULE_4__.button)(\"Clear\", onMissionClear), (0,_Button__WEBPACK_IMPORTED_MODULE_4__.button)(\"Reverse\", onMissionReverse), $(\"<br>\"), (0,_Button__WEBPACK_IMPORTED_MODULE_4__.button)(\"Merge with previous\", onMergePrevious), (0,_Button__WEBPACK_IMPORTED_MODULE_4__.button)(\"Merge next into this\", onMergePost));\n    window.dialog({\n        html: html,\n        title: `${_Text_Text__WEBPACK_IMPORTED_MODULE_3__.title} v${\"v1.2\"}`,\n        id: 'umm-options',\n        width: 350,\n        buttons: [\n            (0,_Button__WEBPACK_IMPORTED_MODULE_4__.dialogButton)(\"< Main Menu\", _Options__WEBPACK_IMPORTED_MODULE_5__.showUmmOptions),\n            (0,_Button__WEBPACK_IMPORTED_MODULE_4__.dialogButtonClose)()\n        ]\n    });\n    updateMissionList();\n    updateMissionInfo();\n};\nconst getSelectedMission = () => {\n    const missionNumber = parseInt($('#umm-mission-picker').val());\n    return _Main__WEBPACK_IMPORTED_MODULE_1__.main.state.missions.get(missionNumber);\n};\nconst updateMissionList = () => {\n    const select = $(\"#umm-mission-picker\").empty();\n    const state = _Main__WEBPACK_IMPORTED_MODULE_1__.main.state;\n    state.missions.forEach(mission => {\n        select.append($(\"<option>\", {\n            value: mission.id,\n            selected: state.isCurrent(mission.id),\n            text: `${mission.id + 1} - waypoints ${mission.portals.length}`\n        }));\n    });\n};\nconst updateMissionInfo = () => {\n    var _a, _b;\n    const info = $(\"#umm-mission-picker-info\");\n    info.empty();\n    const mission = getSelectedMission();\n    if (!mission)\n        return;\n    const missionLength = window.formatDistance(mission.getDistance());\n    const distanceToStart = _Main__WEBPACK_IMPORTED_MODULE_1__.main.state.missions.distanceToStart(mission.id);\n    const distanceToNext = _Main__WEBPACK_IMPORTED_MODULE_1__.main.state.missions.distanceToStart(mission.id + 1);\n    const table = `\n    Wapoints:\\t${mission.portals.length}\\n\n    Length:\\t${missionLength}\\n\n    to Start:\\t${(_a = (distanceToStart && window.formatDistance(distanceToStart))) !== null && _a !== void 0 ? _a : \"---\"}\\n\n    to Next:\\t${(_b = (distanceToNext && window.formatDistance(distanceToNext))) !== null && _b !== void 0 ? _b : \"---\"}\\n`;\n    info.html(window.convertTextToTableMagic(table));\n};\nconst refreshMissionUI = () => {\n    updateMissionInfo();\n    updateMissionList();\n    _Main__WEBPACK_IMPORTED_MODULE_1__.main.redrawAll();\n};\nconst onMissionSelect = () => {\n    const mission = getSelectedMission();\n    if (!mission || _Main__WEBPACK_IMPORTED_MODULE_1__.main.state.isCurrent(mission.id)) {\n        (0,_Notification__WEBPACK_IMPORTED_MODULE_2__.notification)(\"Active mission not changed.\");\n        return;\n    }\n    (0,_Edits__WEBPACK_IMPORTED_MODULE_0__.setCurrentMission)(mission.id);\n    if (_Main__WEBPACK_IMPORTED_MODULE_1__.main.missionModeActive) {\n        // eslint-disable-next-line unicorn/no-null\n        renderPortalDetails(null); // Avoid adding current portal to a mission\n        (0,_Edits__WEBPACK_IMPORTED_MODULE_0__.startEdit)();\n    }\n    else {\n        mission.show();\n        (0,_Notification__WEBPACK_IMPORTED_MODULE_2__.notification)(`Current working mission set to #${mission.id + 1}`);\n    }\n    $(\"#dialog-umm-options\").dialog(\"close\");\n};\nconst onZoomToMission = () => {\n    const mission = getSelectedMission();\n    if (mission) {\n        mission.show();\n    }\n    else {\n        (0,_Notification__WEBPACK_IMPORTED_MODULE_2__.notification)(\"Can't zoom in on this mission. No portals.\");\n    }\n};\nconst onMissionSplit = async () => {\n    var _a, _b;\n    const missions = _Main__WEBPACK_IMPORTED_MODULE_1__.main.state.missions;\n    const mission = getSelectedMission();\n    if (!mission)\n        return;\n    let next = missions.next(mission);\n    while ((next === null || next === void 0 ? void 0 : next.portals.length) === 0)\n        next = missions.next(next);\n    const endMissionId = (_a = next === null || next === void 0 ? void 0 : next.id) !== null && _a !== void 0 ? _a : _Main__WEBPACK_IMPORTED_MODULE_1__.main.state.getPlannedLength();\n    let count = parseInt((_b = prompt(\"Split inhow many missions should be divided among?\", (endMissionId - mission.id).toString())) !== null && _b !== void 0 ? _b : \"0\");\n    if (count < 2)\n        return;\n    count = Math.min(count, _Main__WEBPACK_IMPORTED_MODULE_1__.main.state.getPlannedLength() - mission.id);\n    let mustMerge = false;\n    for (let i = 1; i < count; i++) {\n        const current = missions.get(mission.id + i);\n        if ((current === null || current === void 0 ? void 0 : current.portals.length) > 0)\n            mustMerge = true;\n    }\n    if (mustMerge) {\n        if (!await (0,_Confirm__WEBPACK_IMPORTED_MODULE_6__.confirmDialog)({ message: \"Merge missione before split?\", details: \"Mission(s) already contain portals. These will be merged into one\" })) {\n            return;\n        }\n    }\n    missions.splitIntoMultiple(mission, count);\n    _Main__WEBPACK_IMPORTED_MODULE_1__.main.state.save();\n    refreshMissionUI();\n};\nconst onMergePrevious = () => {\n    const missions = _Main__WEBPACK_IMPORTED_MODULE_1__.main.state.missions;\n    const mission = getSelectedMission();\n    if (!mission)\n        return;\n    let previous = missions.previous(mission);\n    if (!previous) {\n        if (mission.id === 0)\n            return;\n        previous = missions.get(0);\n        console.assert(previous);\n    }\n    _Main__WEBPACK_IMPORTED_MODULE_1__.main.state.missions.merge(previous, mission);\n    _Main__WEBPACK_IMPORTED_MODULE_1__.main.state.save();\n    refreshMissionUI();\n};\nconst onMergePost = () => {\n    const missions = _Main__WEBPACK_IMPORTED_MODULE_1__.main.state.missions;\n    const mission = getSelectedMission();\n    if (!mission)\n        return;\n    let next = missions.next(mission);\n    while ((next === null || next === void 0 ? void 0 : next.portals.length) === 0)\n        next = missions.next(next);\n    if (!next)\n        return;\n    _Main__WEBPACK_IMPORTED_MODULE_1__.main.state.missions.merge(mission, next);\n    _Main__WEBPACK_IMPORTED_MODULE_1__.main.state.save();\n    refreshMissionUI();\n};\nconst onMissionReverse = () => {\n    const mission = getSelectedMission();\n    if (!mission)\n        return;\n    mission.reverse();\n    _Main__WEBPACK_IMPORTED_MODULE_1__.main.state.save();\n    refreshMissionUI();\n};\nconst onMissionClear = () => {\n    const mission = getSelectedMission();\n    if (!mission)\n        return;\n    if (!confirm(\"This will remove all portals\"))\n        return;\n    mission.clear();\n    _Main__WEBPACK_IMPORTED_MODULE_1__.main.state.save();\n    refreshMissionUI();\n};\n\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/UI/Dialog/SelectMission.ts?\n}");
-
-/***/ },
-
-/***/ "./src/UI/EditWaypoint.ts"
-/*!********************************!*\
-  !*** ./src/UI/EditWaypoint.ts ***!
-  \********************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   addWaypointEditorToPortal: () => (/* binding */ addWaypointEditorToPortal)\n/* harmony export */ });\n/* harmony import */ var _Main__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Main */ \"./src/Main.ts\");\n/* harmony import */ var _State_Portals__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../State/Portals */ \"./src/State/Portals.ts\");\n/* harmony import */ var _Notification__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Notification */ \"./src/UI/Notification.ts\");\n\n\n\nconst addWaypointEditorToPortal = () => {\n    var _a;\n    const state = _Main__WEBPACK_IMPORTED_MODULE_0__.main.state;\n    const missions = state.missions.getMissionsOfPortal((_a = window.selectedPortal) !== null && _a !== void 0 ? _a : \"\");\n    if (missions.length === 0)\n        return;\n    const wayPointHtml = $(\"<div>\", { id: \"umm-waypoint-editor\" });\n    // Construct waypoint editor HTML\n    const ummTitle = $(\"<span>\", { text: \"UMM Waypoint Editor\", class: \"umm-waypoint-editor-title\" });\n    wayPointHtml.append(ummTitle);\n    const waypointSelectContainer = $(\"<div>\", { class: \"umm-waypoint-select-container\" });\n    waypointSelectContainer.append(portalMissionSelectFactory(missions));\n    const actionSelect = $(\"<select>\", { id: \"umm-action-select\" });\n    waypointSelectContainer.append(actionSelect);\n    wayPointHtml.append(waypointSelectContainer);\n    const passPhraseHtml = $(\"<div>\", { id: \"umm-passphrase-container\" }); // Placeholder to be replaced with updatePassPhraseContent\n    wayPointHtml.append(passPhraseHtml);\n    $(\"#portaldetails #randdetails\").before(wayPointHtml);\n    // Make mission dropdown functional\n    $(\"#umm-mission-select\").on('change', () => {\n        if ($(\"#umm-mission-select\").val() === \"#\") {\n            // If no mission is selected, disable other dropdowns\n            $(\"#umm-action-select\").prop(\"disabled\", true);\n            $(\"#umm-passphrase-container\").hide();\n        }\n        else {\n            // If a different mission is selected, update the waypoint selector and action selector to reflect the new portal(s)\n            updateActionSelect();\n            updatePassPhraseContent();\n        }\n    });\n    updateActionSelect(); // Replace action placeholder\n    updatePassPhraseContent(); // Replace passphrase placeholder\n};\nconst portalMissionSelectFactory = (validMissionIds) => {\n    const missionSelect = $(\"<select>\", { id: \"umm-mission-select\" });\n    const missionOption = $(\"<option>\", { value: \"#\", text: \"Select mission\" });\n    missionSelect.append(missionOption);\n    validMissionIds.forEach(id => {\n        const missionOption = $(\"<option>\", { value: id, text: id + 1 });\n        missionSelect.append(missionOption);\n    });\n    const current = _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.getCurrent();\n    const preSelect = validMissionIds.includes(current) ? current : validMissionIds[0];\n    $(missionSelect).val(preSelect);\n    return missionSelect;\n};\nconst portalActionSelectFactory = (portal) => {\n    const actionSelect = $(\"<select>\", { id: \"umm-action-select\" });\n    _State_Portals__WEBPACK_IMPORTED_MODULE_1__.PortalActions.forEach(({ action, label }) => {\n        const option = $(\"<option>\", { value: action, text: label });\n        if (portal.objective.type === action)\n            option.prop(\"selected\", true);\n        actionSelect.append(option);\n    });\n    return actionSelect;\n};\nconst updatePassPhraseContent = () => {\n    const portal = currentPortal();\n    if (!portal)\n        return;\n    $(\"#umm-passphrase-container\").replaceWith(passCodeBoxFactory(portal));\n    $(\"#umm-passphrase-container textarea\").css({ \"overflow-y\": \"hidden\" });\n    if ($(\"#umm-action-select\").val() == \"PASSPHRASE\") {\n        $(\"#umm-passphrase-container\").css('display', 'flex');\n    }\n};\nconst passCodeBoxFactory = (portal) => {\n    var _a, _b;\n    const questionSpan = $(\"<span>\", { text: \"Question\" });\n    const ppQuestion = (_a = portal.objective.passphrase_params.question) !== null && _a !== void 0 ? _a : \"\";\n    const question = $(\"<textarea>\", { id: \"umm-passphrase-question\", type: \"text\", row: 1, value: ppQuestion });\n    question.on(\"blur\", () => savePassPhrase());\n    const passPhraseSpan = $(\"<span>\", { text: \"Passphrase\" });\n    // eslint-disable-next-line no-underscore-dangle\n    const spQuestion = (_b = portal.objective.passphrase_params._single_passphrase) !== null && _b !== void 0 ? _b : \"\";\n    const passPhrase = $(\"<input>\", { type: \"text\", id: \"umm-passphrase-passphrase\", value: spQuestion });\n    passPhrase.on(\"blur\", () => savePassPhrase());\n    const passPhraseHtml = $(\"<div>\", { id: \"umm-passphrase-container\" });\n    passPhraseHtml.append(questionSpan, question, passPhraseSpan, passPhrase);\n    return passPhraseHtml;\n};\nconst currentPortal = () => {\n    var _a;\n    const missionId = parseInt($(\"#umm-mission-select\").val());\n    const portals = (_a = _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.missions.get(missionId)) === null || _a === void 0 ? void 0 : _a.portals;\n    return portals === null || portals === void 0 ? void 0 : portals.find(window.selectedPortal);\n};\nconst savePassPhrase = () => {\n    const portal = currentPortal();\n    if (!portal)\n        return;\n    // eslint-disable-next-line unicorn/prevent-abbreviations\n    const passphrase_params = {\n        question: $(\"#umm-passphrase-question\").val(),\n        _single_passphrase: $(\"#umm-passphrase-passphrase\").val()\n    };\n    portal.objective.passphrase_params = passphrase_params;\n    _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.save();\n    (0,_Notification__WEBPACK_IMPORTED_MODULE_2__.notification)(\"Question and passphrase saved\");\n};\nconst updateActionSelect = () => {\n    const portal = currentPortal();\n    if (!portal)\n        return;\n    $(\"#umm-action-select\").replaceWith(portalActionSelectFactory(portal));\n    $(\"#umm-action-select\").on('change', () => {\n        if ($(\"#umm-action-select\").val() == \"PASSPHRASE\") {\n            updatePassPhraseContent();\n        }\n        else {\n            $(\"#umm-passphrase-container\").hide();\n        }\n        currentPortal().objective.type = $(\"#umm-action-select\").val();\n        _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.save();\n        (0,_Notification__WEBPACK_IMPORTED_MODULE_2__.notification)(\"Portal action saved\");\n    });\n};\n\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/UI/EditWaypoint.ts?\n}");
-
-/***/ },
-
-/***/ "./src/UI/Notification.ts"
-/*!********************************!*\
-  !*** ./src/UI/Notification.ts ***!
-  \********************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   bannerNotification: () => (/* binding */ bannerNotification),\n/* harmony export */   notification: () => (/* binding */ notification)\n/* harmony export */ });\n/* harmony import */ var _Main__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Main */ \"./src/Main.ts\");\n\nlet notificationTimer;\nconst bannerNotification = (message) => notification(`${_Main__WEBPACK_IMPORTED_MODULE_0__.main.state.getBannerName()}\\n${message}`);\nconst notification = (notificationText, isPersistent = false) => {\n    $('.umm-notification').hide();\n    const notification = $('.umm-notification').text(notificationText);\n    notification.html(notification.html().replace(/\\n/g, '<br/>'));\n    $('.umm-notification').show();\n    window.clearTimeout(notificationTimer);\n    if (!isPersistent) {\n        notificationTimer = window.setTimeout(() => {\n            $('.umm-notification').fadeOut(400);\n        }, 3000);\n    }\n};\n\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/UI/Notification.ts?\n}");
-
-/***/ },
-
-/***/ "./src/UI/RenderNumbers.ts"
-/*!*********************************!*\
-  !*** ./src/UI/RenderNumbers.ts ***!
-  \*********************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   RenderNumbers: () => (/* binding */ RenderNumbers)\n/* harmony export */ });\n/* harmony import */ var _Main__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Main */ \"./src/Main.ts\");\n/* harmony import */ var _State_Missions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../State/Missions */ \"./src/State/Missions.ts\");\n\n\nclass RenderNumbers {\n    constructor() {\n        this.missionNumbers = new window.L.FeatureGroup();\n        window.addLayerGroup('UMM: Mission Numbers', this.missionNumbers, true);\n    }\n    isVisible() {\n        return window.map.hasLayer(this.missionNumbers);\n    }\n    isLayer(layer) {\n        return layer === this.missionNumbers;\n    }\n    toggle(show) {\n        if (show) {\n            window.map.addLayer(this.missionNumbers);\n        }\n        else {\n            window.map.removeLayer(this.missionNumbers);\n        }\n    }\n    redraw() {\n        this.missionNumbers.clearLayers();\n        const state = _Main__WEBPACK_IMPORTED_MODULE_0__.main.state;\n        const starts = this.getMissionStarts(state);\n        starts.forEach(start => {\n            const id = start.missionIndex;\n            const icon = this.generateMarker(state.isCurrent(id) ? \"active\" : \"start\", id + 1);\n            const marker = L.marker(start.location, {\n                icon: L.divIcon({\n                    className: 'umm-mission-icon',\n                    iconSize: [34, 50],\n                    iconAnchor: [17, 50],\n                    html: icon,\n                }),\n                opacity: start.auto ? 0.4 : 1,\n                interactive: false\n            });\n            this.missionNumbers.addLayer(marker);\n        });\n    }\n    getMissionStarts(state) {\n        const missions = [];\n        let mid = 0;\n        while (mid < state.missions.count()) {\n            const mission = state.missions.get(mid);\n            if (mission === null || mission === void 0 ? void 0 : mission.hasPortals()) {\n                const start = mission.getLocations()[0]; // TODO optimize; this converts all portals to LatLng while only the first is needed\n                missions.push({\n                    missionIndex: mid,\n                    location: start,\n                    auto: false\n                });\n            }\n            // count empty mission + 1\n            let count = 1;\n            for (; mid + count <= state.missions.count(); count++) {\n                const nextMission = state.missions.get(mid + count);\n                if (nextMission === null || nextMission === void 0 ? void 0 : nextMission.hasPortals()) {\n                    break;\n                }\n            }\n            if (count > 1) {\n                // Fill in auto numbers for empty missions\n                const allLocations = [];\n                for (let i = 0; i < count - 1; i++) {\n                    const fillMission = state.missions.get(mid + i);\n                    if (fillMission === null || fillMission === void 0 ? void 0 : fillMission.hasPortals()) { // NOTE: only the first (i=0) should have portals\n                        allLocations.push(...fillMission.getLocations());\n                    }\n                }\n                const portalsPerMission = Math.max(allLocations.length / count, _State_Missions__WEBPACK_IMPORTED_MODULE_1__.MIN_PORTALS_PER_MISSION);\n                for (let fillIndex = 1; fillIndex < count; fillIndex++) {\n                    const locationIndex = Math.floor(portalsPerMission * fillIndex);\n                    if (locationIndex < allLocations.length - 1) {\n                        missions.push({\n                            missionIndex: mid + fillIndex,\n                            location: allLocations[locationIndex],\n                            auto: true\n                        });\n                    }\n                }\n            }\n            mid += count;\n        }\n        return missions;\n    }\n    generateMarker(kclass, index) {\n        return `<svg id=\"Layer_1\" data-name=\"Layer 1\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 33 49\" class=\"umm-mission-marker\"><defs><style>.cls-2{fill:#fff;}</style></defs><path class=\"${kclass}\" d=\"M33,18c0,8.84-12,31-16,31S1,26.84,1,18,8.16,1,17,1,33,9.16,33,18Z\" transform=\"translate(-0.5 -0.5)\"/><circle class=\"cls-2\" cx=\"16.5\" cy=\"16.5\" r=\"13\"/><foreignObject x=\"0\" y=\"0\" width=\"34px\" height=\"34px\"><span class=\"umm-mission-number\">${index}</span></foreignObject></svg>`;\n    }\n}\n\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/UI/RenderNumbers.ts?\n}");
-
-/***/ },
-
-/***/ "./src/UI/RenderPath.ts"
-/*!******************************!*\
-  !*** ./src/UI/RenderPath.ts ***!
-  \******************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   RenderPath: () => (/* binding */ RenderPath)\n/* harmony export */ });\n/* harmony import */ var _Main__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Main */ \"./src/Main.ts\");\n/* harmony import */ var _Dialog_Confirm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Dialog/Confirm */ \"./src/UI/Dialog/Confirm.ts\");\n/* harmony import */ var _Notification__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Notification */ \"./src/UI/Notification.ts\");\n\n\n\n// TODO: D&D should be handled elsewhere\nclass RenderPath {\n    constructor() {\n        this.missionPaths = new window.L.FeatureGroup();\n        window.addLayerGroup('UMM: Mission Paths', this.missionPaths, true);\n        this.touchIcon = L.Browser.touch ?\n            new L.DivIcon({\n                iconSize: new L.Point(20, 20),\n                className: \"leaflet-div-icon leaflet-editing-icon leaflet-touch-icon\"\n            }) :\n            new L.DivIcon({\n                iconSize: new L.Point(8, 8),\n                className: \"leaflet-div-icon leaflet-editing-icon\"\n            });\n    }\n    isVisible() {\n        return window.map.hasLayer(this.missionPaths);\n    }\n    isLayer(layer) {\n        return layer === this.missionPaths;\n    }\n    toggle(show) {\n        if (show) {\n            window.map.addLayer(this.missionPaths);\n        }\n        else {\n            window.map.removeLayer(this.missionPaths);\n        }\n    }\n    redraw() {\n        this.missionPaths.clearLayers();\n        const editMode = _Main__WEBPACK_IMPORTED_MODULE_0__.main.missionModeActive;\n        _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.missions.forEach((mission) => {\n            if (_Main__WEBPACK_IMPORTED_MODULE_0__.main.state.isCurrent(mission.id) && editMode) {\n                this.drawEditMission(mission);\n            }\n            else {\n                this.drawMission(mission);\n            }\n        });\n    }\n    drawMission(mission) {\n        const geodesicPolyline = new L.GeodesicPolyline(mission.getLocations(), {\n            color: _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.isCurrent(mission.id) ? \"#ff9a00\" : \"crimson\",\n            weight: 5,\n            smoothFactor: 1,\n            interactive: false\n        });\n        this.missionPaths.addLayer(geodesicPolyline);\n    }\n    // let _draggingLine = undefined;\n    drawEditMission(mission) {\n        const coordinatesList = mission.getLocations();\n        // Portal Markers\n        coordinatesList.forEach((ll, index) => this.createDragMarker(ll, index, mission.id));\n        // MidPoint Marker\n        coordinatesList.forEach((ll, index) => {\n            if (index > 0) {\n                const half = this.getCenter(coordinatesList[index - 1], ll);\n                this.createDragMarker(half, index, mission.id, true);\n            }\n        });\n        const geodesicPolyline = new L.GeodesicPolyline(coordinatesList, {\n            color: \"#ff9a00\",\n            weight: 5,\n            smoothFactor: 1\n        });\n        this.missionPaths.addLayer(geodesicPolyline);\n    }\n    createDragMarker(location, portalId, missionId, dummy = false) {\n        const marker = new L.Marker(location, {\n            icon: this.touchIcon,\n            draggable: true,\n            zIndexOffset: 7000,\n            opacity: dummy ? 0.4 : 1,\n            portal: portalId,\n            missionId: missionId,\n            isMidPoint: dummy\n        });\n        this.missionPaths.addLayer(marker);\n        marker\n            .on(\"drag\", event => { this.onMarkerDrag(event); })\n            .on(\"dragstart\", event => { this.onMarkerDragStart(event); })\n            .on(\"dragend\", event => { void this.onMarkerDragEnd(event); })\n            .on(\"dblclick\", event => { this.onMarkerDblClick(event); });\n    }\n    getCenter(l1, l2) {\n        const p1 = window.map.project(l1);\n        const p2 = window.map.project(l2);\n        return window.map.unproject(p1.add(p2).divideBy(2));\n    }\n    onMarkerDragStart(event) {\n        const marker = event.target;\n        const options = event.target.options;\n        const isMidPoint = options.isMidPoint;\n        const mission = _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.missions.get(options.missionId);\n        if (!mission) {\n            console.warn(\"onMarkerDragStart: mission not found\", options.missionId);\n            return;\n        }\n        if (this.editDragLine) {\n            this.missionPaths.removeLayer(this.editDragLine);\n        }\n        const portal = options.portal;\n        const portal_pre = portal > 0 ? mission.portals.get(portal - 1) : undefined;\n        const portal_post = mission.portals.get(portal + (isMidPoint ? 0 : 1));\n        let lls = [\n            portal_pre && new L.LatLng(portal_pre.location.latitude, portal_pre.location.longitude),\n            marker.getLatLng(),\n            portal_post && new L.LatLng(portal_post.location.latitude, portal_post.location.longitude)\n        ];\n        // special-case:\n        // single portal\n        if (!portal_pre && !portal_post)\n            lls = [marker.getLatLng(), marker.getLatLng()];\n        // is start portal\n        else if (!portal_pre)\n            lls.splice(0, 1);\n        // is end portal \n        else if (!portal_post)\n            lls = [lls[1], lls[0]];\n        this.editDragLine = new L.Polyline(lls, {\n            color: \"#ff9a00\",\n            weight: 3,\n            dashArray: '5,5',\n            pointerEvents: 'none'\n        });\n        this.missionPaths.addLayer(this.editDragLine);\n    }\n    onMarkerDrag(event) {\n        if (!this.editDragLine)\n            return;\n        const marker = event.target;\n        const options = event.target.options;\n        const mission = _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.missions.get(options.missionId);\n        if (!mission)\n            return;\n        const snappedPortal = this.getSnapPortal(marker.getLatLng(), mission.getLocations());\n        const newTarget = snappedPortal ? snappedPortal.getLatLng() : marker.getLatLng();\n        const latlngs = this.editDragLine.getLatLngs();\n        const index = latlngs.length === 3 ? 1 : 0;\n        latlngs[index] = newTarget;\n        this.editDragLine.setLatLngs(latlngs);\n    }\n    async onMarkerDragEnd(event) {\n        if (this.editDragLine) {\n            this.missionPaths.removeLayer(this.editDragLine);\n            this.editDragLine = undefined;\n        }\n        const marker = event.target;\n        const options = event.target.options;\n        const mission = _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.missions.get(options.missionId);\n        if (!mission) {\n            console.warn(\"onMarkerDragEnd: mission not found\", options.missionId);\n            this.redraw();\n            return;\n        }\n        const coordinatesList = mission.getLocations();\n        const snappedPortal = this.getSnapPortal(marker.getLatLng(), coordinatesList);\n        if (!snappedPortal) {\n            this.redraw();\n            return;\n        }\n        const portalToAdd = mission.portals.create(snappedPortal.options.guid);\n        if (options.isMidPoint) {\n            mission.portals.insert(options.portal, portalToAdd);\n        }\n        else {\n            await this.movePortal(mission, options.portal, portalToAdd);\n        }\n        this.saveStateAndRefresh();\n    }\n    async movePortal(mission, portalID, target) {\n        // drag portal to last mission -> merge?\n        if (portalID === 0) {\n            const missions = _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.missions;\n            const preMission = missions.previous(mission);\n            if (preMission === null || preMission === void 0 ? void 0 : preMission.portals.isEnd(target)) {\n                if (await (0,_Dialog_Confirm__WEBPACK_IMPORTED_MODULE_1__.confirmDialog)({ message: \"Merge mission ?\" })) {\n                    missions.merge(preMission, mission);\n                    _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.setCurrent(preMission.id);\n                    return;\n                }\n            }\n            else if (mission.portals.length === 1 && (preMission === null || preMission === void 0 ? void 0 : preMission.portals.includes(target.guid))) {\n                if (await (0,_Dialog_Confirm__WEBPACK_IMPORTED_MODULE_1__.confirmDialog)({ message: \"Split mission ?\" })) {\n                    const index = preMission.portals.indexOf(target);\n                    mission.portals.clear();\n                    missions.split(preMission, index, mission);\n                    return;\n                }\n            }\n        }\n        // drag portal to next mission -> merge?\n        if (portalID === mission.portals.length - 1) {\n            const missions = _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.missions;\n            const postMission = missions.next(mission);\n            if (postMission === null || postMission === void 0 ? void 0 : postMission.portals.isStart(target)) {\n                if (await (0,_Dialog_Confirm__WEBPACK_IMPORTED_MODULE_1__.confirmDialog)({ message: \"Merge mission ?\" })) {\n                    missions.merge(mission, postMission);\n                    return;\n                }\n            }\n        }\n        mission.portals.set(portalID, target);\n    }\n    getSnapPortal(unsnappedLatLng, ignore = []) {\n        const containerPoint = window.map.latLngToContainerPoint(unsnappedLatLng);\n        let best_portal = undefined;\n        let best_distance = Infinity;\n        for (const guid in window.portals) {\n            const portal = window.portals[guid];\n            const ll = portal.getLatLng();\n            if (ignore.some(x => x.equals(ll)))\n                continue;\n            const pp = window.map.latLngToContainerPoint(ll);\n            const options = portal.options; // type: missing Leaflet\n            const size = options.weight + options.radius * 5; // allow some extra space for easier snapping\n            const distance = pp.distanceTo(containerPoint);\n            if (distance > size)\n                continue;\n            if (distance < best_distance) {\n                best_distance = distance;\n                best_portal = portal;\n            }\n        }\n        return best_portal;\n    }\n    onMarkerDblClick(event) {\n        const options = event.target.options;\n        const portal = options.portal;\n        if (options.isMidPoint)\n            return;\n        const mission = _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.missions.get(options.missionId);\n        if (!mission)\n            return;\n        mission.portals.remove(portal);\n        this.saveStateAndRefresh();\n        (0,_Notification__WEBPACK_IMPORTED_MODULE_2__.notification)(`${mission.title}\\nRemoved #${portal + 1} from mission`);\n    }\n    saveStateAndRefresh() {\n        _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.save();\n        _Main__WEBPACK_IMPORTED_MODULE_0__.main.redrawAll();\n    }\n}\n\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/UI/RenderPath.ts?\n}");
-
-/***/ },
-
-/***/ "./src/assets/bookmarks.png"
-/*!**********************************!*\
-  !*** ./src/assets/bookmarks.png ***!
-  \**********************************/
-(module) {
-
-eval("{module.exports = \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAATLSURBVGhD7ZoHqH5jHMdfe++9CcnKLnsWsjLKLiHZo5AthQjJlvwzSkqyIjObEJGysorsvSPz8znv+9NzT+c97xnvvZy63/p0z/Pc5z7n+Z5znvV7bm9a/0M9Du/AITCrGWPS/HAWfAXPwV4wM4xLC8JF8C3Y9t7fCe9DW0Nh4BtI6xYf2OEwJzTVHHAifA1R7zXwb+KN5LqJoSIDD8OWcBC8NsiTz+EMWBiqyrd5IHwAUc8ng58TjFhwP6hrqMjAI7AZpJoJdoanIMr9BJfBClCmHeBliL97CbaGIwfpCUZCZYZmg9AwA5vDKG0Cd8Kf4N/9DrfAupBqPXgIov53wbb5UFSpkdAwQ4dC3sCjUMVAXqvBDPgVoq4HYQ/QWBj9Eo6H2SFVJSOhIkOBBraAtloKLoTvIa3/FzgfHKGKVMtIKAy9AtGJxy0/15PhdbgeloEyjTRio2Wy5BNevH/ZSiONvAB23MnQyuAk5j2PMAMtArfCdbC0GRU10shtcFX/ciw6APbsX2Zv4nl4C3Y1A20E0Q4nO+XEt2z/cqga9ZE6mgdm6V/2TgPrd+Qp+1w14zJm3izV650H/t2NWapYlY3sCHfBqCcTWg4eA4fNn8GRyGHzbdgF6mh7+AGcNOcyo0CVjVwK/s6FZRU9DVFf4NqqqRaC5fuXhapsZAFwBr44S5XLdVPUleIENw7Zb51TUjXuI864J4CjTCrHe/vFHxD1BbdDW7k0+g6sb2MzBmpsxInKss9kqf4NngTzrgCHz6hP7CtbwTi0N3j/lbJUX42NbAg3wFFZqr+vcP31BXgjV8mngEbvhW1hMtXYSJHSFfFUaMXBTzVWI1MpJ1bb6nyjOmvkaLCtTguqs0YcLW+GtbNUh43k1Wkja0Cs2Tpr5BiwrftnqQ4buRxs68FZqsNGjLIYXXQxqaY7+38pO7m7zIhpqc4ZMZ71IdjONGjRCSNzg9tfY14GJFxJvwhT9kacfdsuJN1iexxhu/4CRys7ej7oXduIDVsfVoeYjHzdbrIMQhtYU6eDdRloWMIM5NK+TgzL4EN6ZBDsA3nVMmJ89k2Ick+Aw58mIm8DUPvCe+AnMJ8Z6A6wzANZarSMIUe9KW7a8qplxIZHmeBKMCjgXt7PoEyHgU/4VYhP7hJwD57uHo28+3C2g/z95GzIq7IRb2zIP8oEHto0lXV60GM995uBfHux33ePbywrvZ8HOotBXrXeyMcQZQLPLNrI+JdzQoR67HengvsMQ6qmPY9xyX4uRH/Lq5YRK3TkiHKeZWwKVWXZUVH1pppgJF7p3ZA/MQptA9eCT2wtMypoJzAYbt2/wU2wJoxLu0EMQvbZLOphWNIMn3yZoSpKDchnECdS1n8ftAkRGdeKEJQYIloHMjnOO5K0MZQ38BEcC4aMloQLII4TxLJ1zt5XAQeC+MwdAAzHFh7UNjGUN+DgcBwUnaU7cZ4E6QAy6ux9Ubga/Dwt/yN4hhlR+1JVMTTMwLDIeSpXBW6OInIpDslnQixDDMF6Fm/D/b3TgIaGjWClKjJ0D6QGPgWPDqoYyMvPyk77LER93stoZvwzgPc0kL4qtFbeUFsDRfIfDHxI0QfE0GsatB6bNHQOVP2EmsgNlAdEu2epaXVSvd4/r54FA9f01AsAAAAASUVORK5CYII=\";\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/assets/bookmarks.png?\n}");
-
-/***/ },
-
-/***/ "./src/assets/next.png"
-/*!*****************************!*\
-  !*** ./src/assets/next.png ***!
-  \*****************************/
-(module) {
-
-eval("{module.exports = \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAMAAADDpiTIAAAAM1BMVEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACjBUbJAAAAEHRSTlMAwPAQgOBAIKBgMJBw0FCwfxz3hAAAC4VJREFUeNrswQEJACAMALArgiCK9k9rgsMDbAsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFJrtP4Kzt0z+Ozdba6CMBSE4baAlk9n/6u9P8CYa8REKIFzZp4dmLypYxPQm3bED8Y2iCfdiB+NXRA3BmxQB3EiY5McxIUMqABiLTYbgph3T9hOS9C+iB1iEONu2OUWxLYHoCOAWIWddCts24SddCdsW42F7gI4RUAjgFnETimIZRF7BbFMAZBTAOQUADkFQE4BkFMA5BQAOQVATgGQUwDkFAA5BUBOAZBTAOQUADkFQE4BkFMA5BQAOQVATgGQUwDkFAC5cgFUU51jX7t5XtzZxzk6gHvGoqmrYF6VE2bJw8c5PoAh4aUx/+KYNuEluT4FygSQfT0z3hO9C6tIAD3eRcuHwIB30e8hUCKAGz7IZr86O3yQvb4JpUQADT5JVg/OiH+cj8ECAUxY0Zg8ODusaKbgUIEAMlZFgwdnjydfy+a4ABp80Zs7OCMWvpbNgQHgq2TtJyGefC2b0wIARltTAAtfy+bMAICHpSmAha9lc24AgKHfUFj4WjZnB4DGzBTAzNmyOT0AO9epmDlbNhcIwMp1KmbOls0lAkCy8EdjmDlbNtcIwMR1KmbOls1VAjBwnYqZs2Xzx869WwEMgzAUXYH9p01BFccfXOVJB2a4hRBOOADwO1TkmCUbEgB4nRo5ZskGBYBdp0aOWbKBASDXqZFjlmxwALg7VOSYJRsgAGqdGjlmyYYIAFqnRo5ZsmECQNapkWOWbKgAgI9tI8cs2WAB8OrUyDFLNmAAtB0qcsySDRoA67Ft5JglGzgAUp0aOWbJhg4AVKdGjlmy4QPA7FCRY5ZsFABA6tTIMUs2GgAQdWrkmCUbEQCEOjVyzJKNDID/d6jIMUs2QgBu61Q4AEiykQJwV6fiASCSjRaAqzqVD4CQbNQAXDy2VQDwf7LRA1CuUzUABPVQzAVQ3aFUAEAPxWQAtTpVBgDzUMwGUKlThQAQPyOiAzjXqVIAeIdiPIDjDqUFANcOCwA41KlqAGCHYgkA2zpVDwDqUCwCYFOnKgIAHYpVAKx3KEkAnHZYB8CqThUFQDkUKwGY16myABiHYi0As8e2wgAIh2IxAJO/MikDALTDcgA+dao2gN8PxYIAhh1KHcBtsmkAQ52qD+DuUNwAhjrVAMBVsmkAQ51qAeAi2TSAYYcyAVBONg1gqFNdAFSTTQN416lGAGrJpgGMdaoRgEKyaQDfHcoJwDHZNIBZnWoE4JRsGsC8TjUCsE82DWD12NYIwC7ZNIDlodgJwDrZNIBNnWoEYJlsGsB2hzICsEg2DWAfBZwATJNNAzjVqUYAZsmmAZzrVCMA32TTACo7lBGAMdk0gFKd6gTgnWwaQLFONQLwSjYNoLxDGQF42LF33IiBGAiiGHI+Gmkl9f1P62ABw6GZklU3IPCCBv8sGwD8u+6JAPwuGwBE3qmZAOi7bAAQ6Z6JAHyXDQBiHSsRAKktAMTfqYkASN0BEGzsTABkGwDR2pkIgHRPAEQ7PBEA6VgACGY9EwBZdwAEG08iANLYAIjWViIAUjsBEO3yRACkwwEQzD6ZAMg6AKLdMxEAaTwAiPauRACktgAQrXsiANLlAAhmOxMA2QcA0dpMBEC6JwCiHSsRAOldAIi/UxMBkLoDINh4MgGQbQBEa2ciAFKbAIh2eCIA0rEAEMw+mQDIugMg2JiJAEjjAUC0thIBkNoJgGiXJwIgHQ6AYLYzAZB1AES7ZyIA0pgAiPauRACktgAQrXuqcy4HQLCxlSnbACjePQFQvHcBoHjdAVC7sQFQvDYBULxjAaB21gFQvPEAoHjtBEDxLgdA7ewDgOKNCYDitQWA4nUHQO1sA6B49wRA8d4FgNpZdwDUbgwAEAAIAAQAAgABgABAAKAf9u7kCkEACmDgBxREXPrv1jp8makh9wgAASAABIAAEAACQAAIAAEgAASAABBAngDiBBAngDgBxAkgTgBxAogTQJwA4gQQJ4A4AcQJIE4AcQKIE0CcAOIEECeAOAHECSBOAHECiBNAnADiBBAngDgBxAkgTgBxAvhnplFp68s3sOzajCPDlqd1bNj9Yx4dtt7GPj7scYwAupZ9RgBZ93NGAF23bQTQ9T1mBJD13mcEkLWeMwLourYRQNdyzAgg68eu3aVEDERBFG7sUQLjg/tfrVxEcTp/XY85Ob2DwAdF3cr7R2sCuO17+2xNAPd9S28CuO+r0VcASVp+kV6NvgKI0hL1OY/eBJBVZRKAGn0FkKUlCECNvgLI0hIEoO6+Ash+kSIBePQmgKwqkwDU6CuALC1BAGr0FUD2ixQIQDVZAWRpSQLw7E0AYVqCANToK4AsLUEAavQVQFaVQQCqyQogS0sSgKU3AYRpCQJQZ2wBZGkJAlBNVgBZVQYBqNFXAFlakgDU6CuALC1BAKrJCiAbfUEAqskKIEtLEoBHbwII0xIEoM7YAshGXxCAarICyNISBKCarACytCQBePYmgDAtQQCqyQogq8ogANVkBZClJQhAjb4CyNKSBGDpTQDh6AsCUE1WAFlVBgH4GX0FkKQlCMDvGVsA82lJAvDXZAUwXZVBAP41WQFMpiUIwMsZWwBTaUkC8Po5ApgZfUEAxiYrgPO0BAFYN1kBnKUlCMDWGVsAx2lJArDZZAVwWJVBAHaarAAO0hIEYHf0FcBuWoIAHJyxBbAz+pIAHDVZAWynJQjA8egrgK20BAE4O2MLYJ2WJACnTVYAY1UmAZhpsgIY0pIDYO6MLYAhLSkAZs/YAhhGXwiA6SYrgCEtEQCC0VcAQ1oCAERnbAEMaXl5AGGTFcAQ/lcHkDbZuwNYpeW1AeRn7HsD+GbXDHAThIIouPwi/gar3P+0jUlN2hQVmgozC+8GkCGT95YRW5oB+MuMvWUARo++XgCuTXb1mAAYt6UWgHoMQDwA3LOlFICmC0QsANy3pRKA8h6QOAB4VJWNABDkbwLgoS19AFwQ8vcA8MSWNgAOEPlbAHh69HUBUE7BCh2A57ZUAdBz5K8AYIotRQA0JPkLAJh29NUAANh9VQBMtaUEgNIGMlgAJtvSAUDFyZ8NwAxbGgBY/egrA2BWVeYDcMDsvg4AZtqSDgDi6GsCYK4t4QAwjr4eANa35TAM9ibrBYBQlVMefR0AMGw5iGdsNwAQWyZoskoAKL9IRYImKwQAZEvzjK0FgGRL84wtBQD1i1QkaLIuAGi2TNBkTQDwbGmesX0AAG1pnrFtACCrcoImKwEAasuUR18gAFhbmmdsEQBcWyZosnwAyFU55dGXBQDbluYZWwEA3ZYJmiwaAMjR934SNFkwAAJbmmdsOgAKW5pnbDgAcPl/JUGTZQJgsWWCJksEwGNL84yNBcBkS/OMTQVAVZUTNFkYADJbpjz6vhSAZLZM0GQXBqDksuWHv8kuDMAlV1WuGY++LwXgnMuWnXjGXgeAOAiPvg/S6Jvs0gB0uWzZ6Zvs0gBEn8uWJ+2MvRYAUXN1pTr8jPxxFgAgTuW7/V3Lz0jei/KMsSIAcazl9r581f93jrVI/mCjABDxdm77pm31X/8t18fp29Rf/z8BsMecHYCNZwdg49kB2Hg+2btzJAZhIIqCLF7ABjP3P60T5y4gQr/7Cnqlqgk0EkA4AYQTQDgBhBNAOAGEE0A4AYQTQDgBhBNAOAGEE0A4AYQTQDgBhBNAOAGEE0A4AYSbBJDtJoBsAggngHCfOqnvuLKxTnp3XNpa5zTzHDzVUqfcO65tHGqXoPU5IW4ugHBrHdf8BpUEr8EIkG2ug6aOJszOP9xjqP1a2AfIz7i19AE4Bzx2JdCb/9vzXLZ7/bf209zu8mwAAAAAAAAAAAAA4NseHBIAAAAACPr/2hsGAAAAAAAAAAAAAAAAAAAAAAAAuAjEpuTao34AdQAAAABJRU5ErkJggg==\";\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/assets/next.png?\n}");
-
-/***/ },
-
-/***/ "./src/assets/options.png"
-/*!********************************!*\
-  !*** ./src/assets/options.png ***!
-  \********************************/
-(module) {
-
-eval("{module.exports = \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAB3RJTUUH5QgWEyMyp0FY2wAAAAlwSFlzAAALEwAACxMBAJqcGAAAAARnQU1BAACxjwv8YQUAAAKoSURBVHja7Zo/SFxBEMb3GQvFIpoY6yjcgdgmRVKYwlJBSaugYKmNNsYEDAmIYmMEa4OgpYWo2AkKVlqr3IFa+zcWEpvk+Y1vrzm5Y+e4ZVZvfjDsO7hl5/vuvd3ZfWeMoiiKoiiKolQkEefLqVQqymQycTqdfoGPs4hexCthDVeIZcQIcvuH3KJsNht7MSCOY4MBXuNyEdEpLDyfDUQ/TLiMIndZ3DuAfvnVAMXnWEd04w7479qhijnAbMDiiS6bozNcA/qkFZY7R64B9dLqHGjwacCJtDoHjn0aMIm4k1ZYhL82Rz8GYIlZQDMjrbIIM8jxN6cDuw4gUAuMoPmCaJJWbDlDTEH8rwdRHusAugtyJjSieW/CqAT3kNeFzcugDnDuXM0djQYg7ICbwuIf5aUoPFhzAEHzAJGbC0Ih9whwnn+2AfniMWgdmhph7XfI57ZUE9iTIInHQK24HEe0I14KG3CDfHZMsgwecifDUs4DOnC5EoDwR0YgPsOELZ91QJtJ9txvpdUW4BTRiUfgwLUDdy8wH7B4Y3Ob53TgGvBRWmG5c+Qa8OzgGrArnXC5c+QaMGySiSZUTmyOfgzAEkOz66BJlpzQ+EO5US3A6cQqhKjIoHUW7QeTnAd8MvL1AP0Y2yYphI68FkLPsRSu+M2QUumUNAcQoT4ChPftsB3wDZp3JoxD0X3kdZ5vhAulHouPohkzYR2LT8OEhxej3rbD9jzgBy4npBUX4CdM+O7zPICqQNpuSq/9haBXY0OYA5zfDnH3Al8DFk/UIr5xOnANaJZW6ECLTwOupdU5cOXTgCVpdeXOkWsAvRVel1ZYhDXEqDcDsMTQv6/6AzWBxA/YHP0YQH9CxAD0jHUj5hCX0qptDpRLD+VGOUonpCiKoiiKoihPgHtXV96aolVzHAAAAABJRU5ErkJggg==\";\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/assets/options.png?\n}");
-
-/***/ },
-
-/***/ "./src/assets/previous.png"
-/*!*********************************!*\
-  !*** ./src/assets/previous.png ***!
-  \*********************************/
-(module) {
-
-eval("{module.exports = \"data:image/png;base64,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\";\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/assets/previous.png?\n}");
-
-/***/ },
-
-/***/ "./src/assets/undo.png"
-/*!*****************************!*\
-  !*** ./src/assets/undo.png ***!
-  \*****************************/
-(module) {
-
-eval("{module.exports = \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAOiSURBVHhe7Zo9SFtRFMeTvHwbjSHRIA52aJBICw1oSSCglQ66CIWOLoUOLh0cOnRLJwcHu3Xp0EJLV3HxIwSe1iGKGKFCAnaok9RUjUbQ6NP0HjiC1PeZvCTvxvsDufcc0eT837nnnnsTE4PBYDAYjHuLGceaEI/HnxQKhemrq6shQRCs6L4Dx3GF7u7uSCqV+o2uumHBUXf6+/vj+Xz+R6lUei4XPGA2m60OhwOt+lKTDIDgi8Xi/PX1tQddklit1tNgMDjK8/wquuqK7gLQFDygqwC0BQ/oJgCNwQO6CEBr8EDVAtAcPFCVALQHD1QsQDMED1QkQLMED2gWoJmCBzQJoCX4WkHaZpPdbi+Qcdtms/EdHR3fFhcXc/hrzagWwAjBi2GxWECQWZ/P93ZlZeUXulWjSoCBpwPRk+OTpNGCvw05UZ57vd43a2trn9ClCg5HWQL+wPfLy8uHaBqScrlsPTs7GyNL4vjg4CCNbkVUHYdh3dECydKZaDT6Gk1FVAkA6wsqOpqG5/DwcGZ4eFhVxqoSgGxj6c5g5ygtIpDl4CHLYBpNWTTl9uDQYHz/z/68IAiqiiEsHajSekJSHAJESxp43d7e3vDc3JzsFql5cWsRgbyJ09bW1tGNjQ3dGqFEIuFJpVIjR0dHU6VSSTbNyWu/39zcTKApSkXVrdEiAOFw2EP+d+bi4kJSBIfTwW//3H6GpigV5ecyv7yqtiZA7wANFDRS6NKFbDZ72tbW9g5NccqmRziTpOIFagQRIpHIAk5FIRkawKkkVW/wjV4OoVBItiLu7OzIxlh1iTZCJlSDLnsUzSLotknTKoJuAgA0iqCrAABtIuguAFCJCOTw8gBddaUmAgAgQldXV8zldi3Y7fZzjuPg0kL0x2azCW63G/+yvlTdBzSSiYkJOBcU0bwDiJvL5WrbBzSSTCYzglNRyBL8i1NJqBVgfHw8QGrHFJqiwM0xTiVRdSdoJCDtSWqP7e7uKt5TulyuL3t7ezyaohiuBsRisZfkyX6Eg8zNxcf/oxrgQqSnpye0tLQke1VuOAH6+vry5MkqnuKUaGlpmd3a2nqBpiSGqwF6BA+nTqfTOYmmLFTvAmLAPSR8QJJOp1V95a6pBIDgSYGcXF9f/4wuRZpGAEj79vb2V9ls9gO6VGE4AUhbrNi83AaqPRQ8n8/3WMuTv4G6bRDaW+jwoMkhYi37/f6vyWRS86fCDAaDwWAwGAwG4z5jMv0D9jMAtZVsLdkAAAAASUVORK5CYII=\";\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/assets/undo.png?\n}");
-
-/***/ },
-
-/***/ "./src/styles.pcss"
-/*!*************************!*\
-  !*** ./src/styles.pcss ***!
-  \*************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ \"./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js\");\n/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../node_modules/style-loader/dist/runtime/styleDomAPI.js */ \"./node_modules/style-loader/dist/runtime/styleDomAPI.js\");\n/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../node_modules/style-loader/dist/runtime/insertBySelector.js */ \"./node_modules/style-loader/dist/runtime/insertBySelector.js\");\n/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__);\n/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js */ \"./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js\");\n/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__);\n/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../node_modules/style-loader/dist/runtime/insertStyleElement.js */ \"./node_modules/style-loader/dist/runtime/insertStyleElement.js\");\n/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);\n/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../node_modules/style-loader/dist/runtime/styleTagTransform.js */ \"./node_modules/style-loader/dist/runtime/styleTagTransform.js\");\n/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);\n/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_1_use_2_styles_pcss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[1].use[2]!./styles.pcss */ \"./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[1].use[2]!./src/styles.pcss\");\n\n      \n      \n      \n      \n      \n      \n      \n      \n      \n\nvar options = {};\n\noptions.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default());\noptions.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());\noptions.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, \"head\");\noptions.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());\noptions.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());\n\nvar update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_1_use_2_styles_pcss__WEBPACK_IMPORTED_MODULE_6__[\"default\"], options);\n\n\n\n\n       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_1_use_2_styles_pcss__WEBPACK_IMPORTED_MODULE_6__[\"default\"] && _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_1_use_2_styles_pcss__WEBPACK_IMPORTED_MODULE_6__[\"default\"].locals ? _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_1_use_2_styles_pcss__WEBPACK_IMPORTED_MODULE_6__[\"default\"].locals : undefined);\n\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/styles.pcss?\n}");
-
-/***/ }
-
-/******/ 	});
-/************************************************************************/
-/******/ 	// The module cache
-/******/ 	var __webpack_module_cache__ = {};
-/******/ 	
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/ 		// Check if module is in cache
-/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
-/******/ 		if (cachedModule !== undefined) {
-/******/ 			return cachedModule.exports;
-/******/ 		}
-/******/ 		// Check if module exists (development only)
-/******/ 		if (__webpack_modules__[moduleId] === undefined) {
-/******/ 			var e = new Error("Cannot find module '" + moduleId + "'");
-/******/ 			e.code = 'MODULE_NOT_FOUND';
-/******/ 			throw e;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			id: moduleId,
-/******/ 			// no module.loaded needed
-/******/ 			exports: {}
-/******/ 		};
-/******/ 	
-/******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/ 	
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/ 	
-/************************************************************************/
-/******/ 	/* webpack/runtime/compat get default export */
-/******/ 	(() => {
-/******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = (module) => {
-/******/ 			var getter = module && module.__esModule ?
-/******/ 				() => (module['default']) :
-/******/ 				() => (module);
-/******/ 			__webpack_require__.d(getter, { a: getter });
-/******/ 			return getter;
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/define property getters */
-/******/ 	(() => {
-/******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = (exports, definition) => {
-/******/ 			for(var key in definition) {
-/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 				}
-/******/ 			}
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	(() => {
-/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/make namespace object */
-/******/ 	(() => {
-/******/ 		// define __esModule on exports
-/******/ 		__webpack_require__.r = (exports) => {
-/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 			}
-/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/nonce */
-/******/ 	(() => {
-/******/ 		__webpack_require__.nc = undefined;
-/******/ 	})();
-/******/ 	
-/************************************************************************/
-/******/ 	
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __webpack_exports__ = __webpack_require__("./src/Main.ts");
-/******/ 	
-/******/ })()
-;
+function wrapper_iitc(SCRIPT_INFO) {
+(() => {
+    "use strict";
+    var __webpack_modules__ = {
+        56(module, __unused_webpack_exports, __webpack_require__) {
+            module.exports = function setAttributesWithoutAttributes(styleElement) {
+                var nonce = __webpack_require__.nc;
+                nonce && styleElement.setAttribute("nonce", nonce);
+            };
+        },
+        72(module) {
+            var stylesInDOM = [];
+            function getIndexByIdentifier(identifier) {
+                for (var result = -1, i = 0; i < stylesInDOM.length; i++) if (stylesInDOM[i].identifier === identifier) {
+                    result = i;
+                    break;
+                }
+                return result;
+            }
+            function modulesToDom(list, options) {
+                for (var idCountMap = {}, identifiers = [], i = 0; i < list.length; i++) {
+                    var item = list[i], id = options.base ? item[0] + options.base : item[0], count = idCountMap[id] || 0, identifier = "".concat(id, " ").concat(count);
+                    idCountMap[id] = count + 1;
+                    var indexByIdentifier = getIndexByIdentifier(identifier), obj = {
+                        css: item[1],
+                        media: item[2],
+                        sourceMap: item[3],
+                        supports: item[4],
+                        layer: item[5]
+                    };
+                    if (-1 !== indexByIdentifier) stylesInDOM[indexByIdentifier].references++, stylesInDOM[indexByIdentifier].updater(obj); else {
+                        var updater = addElementStyle(obj, options);
+                        options.byIndex = i, stylesInDOM.splice(i, 0, {
+                            identifier,
+                            updater,
+                            references: 1
+                        });
+                    }
+                    identifiers.push(identifier);
+                }
+                return identifiers;
+            }
+            function addElementStyle(obj, options) {
+                var api = options.domAPI(options);
+                api.update(obj);
+                return function updater(newObj) {
+                    if (newObj) {
+                        if (newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap && newObj.supports === obj.supports && newObj.layer === obj.layer) return;
+                        api.update(obj = newObj);
+                    } else api.remove();
+                };
+            }
+            module.exports = function(list, options) {
+                var lastIdentifiers = modulesToDom(list = list || [], options = options || {});
+                return function update(newList) {
+                    newList = newList || [];
+                    for (var i = 0; i < lastIdentifiers.length; i++) {
+                        var index = getIndexByIdentifier(lastIdentifiers[i]);
+                        stylesInDOM[index].references--;
+                    }
+                    for (var newLastIdentifiers = modulesToDom(newList, options), _i = 0; _i < lastIdentifiers.length; _i++) {
+                        var _index = getIndexByIdentifier(lastIdentifiers[_i]);
+                        0 === stylesInDOM[_index].references && (stylesInDOM[_index].updater(), stylesInDOM.splice(_index, 1));
+                    }
+                    lastIdentifiers = newLastIdentifiers;
+                };
+            };
+        },
+        113(module) {
+            module.exports = function styleTagTransform(css, styleElement) {
+                if (styleElement.styleSheet) styleElement.styleSheet.cssText = css; else {
+                    for (;styleElement.firstChild; ) styleElement.removeChild(styleElement.firstChild);
+                    styleElement.appendChild(document.createTextNode(css));
+                }
+            };
+        },
+        314(module) {
+            module.exports = function(cssWithMappingToString) {
+                var list = [];
+                return list.toString = function toString() {
+                    return this.map(function(item) {
+                        var content = "", needLayer = void 0 !== item[5];
+                        return item[4] && (content += "@supports (".concat(item[4], ") {")), item[2] && (content += "@media ".concat(item[2], " {")), 
+                        needLayer && (content += "@layer".concat(item[5].length > 0 ? " ".concat(item[5]) : "", " {")), 
+                        content += cssWithMappingToString(item), needLayer && (content += "}"), item[2] && (content += "}"), 
+                        item[4] && (content += "}"), content;
+                    }).join("");
+                }, list.i = function i(modules, media, dedupe, supports, layer) {
+                    "string" == typeof modules && (modules = [ [ null, modules, void 0 ] ]);
+                    var alreadyImportedModules = {};
+                    if (dedupe) for (var k = 0; k < this.length; k++) {
+                        var id = this[k][0];
+                        null != id && (alreadyImportedModules[id] = !0);
+                    }
+                    for (var _k = 0; _k < modules.length; _k++) {
+                        var item = [].concat(modules[_k]);
+                        dedupe && alreadyImportedModules[item[0]] || (void 0 !== layer && (void 0 === item[5] || (item[1] = "@layer".concat(item[5].length > 0 ? " ".concat(item[5]) : "", " {").concat(item[1], "}")), 
+                        item[5] = layer), media && (item[2] ? (item[1] = "@media ".concat(item[2], " {").concat(item[1], "}"), 
+                        item[2] = media) : item[2] = media), supports && (item[4] ? (item[1] = "@supports (".concat(item[4], ") {").concat(item[1], "}"), 
+                        item[4] = supports) : item[4] = "".concat(supports)), list.push(item));
+                    }
+                }, list;
+            };
+        },
+        540(module) {
+            module.exports = function insertStyleElement(options) {
+                var element = document.createElement("style");
+                return options.setAttributes(element, options.attributes), options.insert(element, options.options), 
+                element;
+            };
+        },
+        601(module) {
+            module.exports = function(i) {
+                return i[1];
+            };
+        },
+        659(module) {
+            var memo = {};
+            module.exports = function insertBySelector(insert, style) {
+                var target = function getTarget(target) {
+                    if (void 0 === memo[target]) {
+                        var styleTarget = document.querySelector(target);
+                        if (window.HTMLIFrameElement && styleTarget instanceof window.HTMLIFrameElement) try {
+                            styleTarget = styleTarget.contentDocument.head;
+                        } catch (e) {
+                            styleTarget = null;
+                        }
+                        memo[target] = styleTarget;
+                    }
+                    return memo[target];
+                }(insert);
+                if (!target) throw new Error("Couldn't find a style target. This probably means that the value for the 'insert' parameter is invalid.");
+                target.appendChild(style);
+            };
+        },
+        707(module, __webpack_exports__, __webpack_require__) {
+            __webpack_require__.d(__webpack_exports__, {
+                A: () => __WEBPACK_DEFAULT_EXPORT__
+            });
+            var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(601), _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = __webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__), _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(314), ___CSS_LOADER_EXPORT___ = __webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__)()(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default());
+            ___CSS_LOADER_EXPORT___.push([ module.id, "#umm-mission-picker-info{border:1px solid #ff0;border-radius:2px;margin:1em 4px 4px}.umm-mission-btn{margin-bottom:2px;margin-right:1em;margin-top:2px}.umm-mission-btn.w-full{width:90%}.umm-notification{background-color:#383838;border-radius:2px;-webkit-box-shadow:0 0 24px -1px #383838;-moz-box-shadow:0 0 24px -1px #383838;box-shadow:0 0 24px -1px #383838;color:#f0f0f0;font-family:Calibri,sans-serif;font-size:20px;height:auto;left:50%;margin-left:-100px;padding:10px;position:absolute;text-align:center;top:20px;width:300px;z-index:10000}.umm-options-list{overflow:hidden}.umm-options-list .banner_info{border:1px solid grey;border-radius:2px;margin-top:0;padding:4px;position:relative}.umm-options-list .banner_info .title{font:700;font-size:large}.umm-options-list .banner_info .description{font-size:small;margin-bottom:.5em}.umm-options-list .banner_info .stat{font-weight:700;margin-left:.4em}.umm-options-list .banner_info #umm_opt_error{padding-top:.5em}.umm-options-list .banner_info #umm_opt_error .error{color:#ffa0a0;font-weight:700}.umm-options-list .banner_info .editButtom{bottom:0;position:absolute;right:0}.umm-options-list a{background:rgba(8,48,78,.9);border:1px solid #ffce00;color:#ffce00;display:block;margin:10px auto;padding:3px 0;text-align:center;width:80%}#dialog-umm-edit-mission-set-details{background-color:rgba(8,48,78,.9)}.umm-edit-mission-set-details p{display:block;margin:5px 0 8px}.umm-edit-mission-set-details label{display:block;margin-bottom:5px}.umm-edit-mission-set-details input,.umm-edit-mission-set-details textarea{margin-bottom:15px;width:100%}.umm-edit-mission-set-details textarea{background-color:#062844;color:#ffce00;font-family:inherit;resize:vertical;width:calc(100% - 6px)}.umm-edit-mission-set-details span.umm-error{color:#fff;display:block;display:none;margin-bottom:5px}.umm-edit-mission-set-details span.umm-error b{color:red}.umm-dialog-button{margin-left:5px}.umm-mission-marker .start{fill:#16d4b2;stroke:#005243;stroke-miterlimit:10}.umm-mission-marker .active{fill:#6832da;stroke:#16043f;stroke-miterlimit:10}.umm-mission-number{color:#000;font-family:monospace;font-size:14px;font-weight:700;left:0;position:absolute;text-align:center;top:6px;width:34px}#umm-waypoint-editor{border-bottom:1px solid #20a8b1;border-top:1px solid #20a8b1;box-sizing:border-box;color:#ffce00;display:flex;flex-direction:column;margin-bottom:10px;margin-top:10px;padding:8px 5px;width:100%}.umm-waypoint-editor-title{font-weight:700;margin-bottom:6px}.umm-waypoint-select-container{display:flex;flex-direction:row;width:100%}.umm-waypoint-select-container>select{background-color:#062844;border:none;color:#ffce00;height:24px}#umm-mission-select{width:60px}#umm-action-select{margin-left:4px;width:100%}#umm-passphrase-container{display:none;flex-direction:column;margin-top:5px}#umm-passphrase-container>span{margin-bottom:3px}#umm-passphrase-container>input,#umm-passphrase-container>textarea{background-color:#062844;border:none;color:#ffce00;font-family:Arial;margin-bottom:5px;min-height:24px;padding:3px;resize:vertical}.umm-confirm.no_title .ui-dialog-titlebar{display:none}.umm-confirm .header{font-size:1.4em;line-height:1.4em;margin:10px;overflow:hidden;text-align:center;text-overflow:ellipsis}.umm-confirm .details{color:#ccc;text-align:center}", "" ]);
+            const __WEBPACK_DEFAULT_EXPORT__ = ___CSS_LOADER_EXPORT___;
+        },
+        768(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+            __webpack_require__.r(__webpack_exports__), __webpack_require__.d(__webpack_exports__, {
+                default: () => __WEBPACK_DEFAULT_EXPORT__
+            });
+            var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(72), _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = __webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__), _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(825), _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = __webpack_require__.n(_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__), _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(659), _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default = __webpack_require__.n(_node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__), _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(56), _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default = __webpack_require__.n(_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__), _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(540), _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = __webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__), _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(113), _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = __webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__), _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_1_use_2_styles_pcss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(707), options = {};
+            options.styleTagTransform = _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default(), 
+            options.setAttributes = _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default(), 
+            options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head"), 
+            options.domAPI = _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default(), 
+            options.insertStyleElement = _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default();
+            _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_1_use_2_styles_pcss__WEBPACK_IMPORTED_MODULE_6__.A, options);
+            const __WEBPACK_DEFAULT_EXPORT__ = _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_1_use_2_styles_pcss__WEBPACK_IMPORTED_MODULE_6__.A && _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_1_use_2_styles_pcss__WEBPACK_IMPORTED_MODULE_6__.A.locals ? _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_1_use_2_styles_pcss__WEBPACK_IMPORTED_MODULE_6__.A.locals : void 0;
+        },
+        825(module) {
+            module.exports = function domAPI(options) {
+                if ("undefined" == typeof document) return {
+                    update: function update() {},
+                    remove: function remove() {}
+                };
+                var styleElement = options.insertStyleElement(options);
+                return {
+                    update: function update(obj) {
+                        !function apply(styleElement, options, obj) {
+                            var css = "";
+                            obj.supports && (css += "@supports (".concat(obj.supports, ") {")), obj.media && (css += "@media ".concat(obj.media, " {"));
+                            var needLayer = void 0 !== obj.layer;
+                            needLayer && (css += "@layer".concat(obj.layer.length > 0 ? " ".concat(obj.layer) : "", " {")), 
+                            css += obj.css, needLayer && (css += "}"), obj.media && (css += "}"), obj.supports && (css += "}");
+                            var sourceMap = obj.sourceMap;
+                            sourceMap && "undefined" != typeof btoa && (css += "\n/*# sourceMappingURL=data:application/json;base64,".concat(btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))), " */")), 
+                            options.styleTagTransform(css, styleElement, options.options);
+                        }(styleElement, options, obj);
+                    },
+                    remove: function remove() {
+                        !function removeStyleElement(styleElement) {
+                            if (null === styleElement.parentNode) return !1;
+                            styleElement.parentNode.removeChild(styleElement);
+                        }(styleElement);
+                    }
+                };
+            };
+        }
+    }, __webpack_module_cache__ = {};
+    function __webpack_require__(moduleId) {
+        var cachedModule = __webpack_module_cache__[moduleId];
+        if (void 0 !== cachedModule) return cachedModule.exports;
+        var module = __webpack_module_cache__[moduleId] = {
+            id: moduleId,
+            exports: {}
+        };
+        return __webpack_modules__[moduleId](module, module.exports, __webpack_require__), 
+        module.exports;
+    }
+    __webpack_require__.n = module => {
+        var getter = module && module.__esModule ? () => module.default : () => module;
+        return __webpack_require__.d(getter, {
+            a: getter
+        }), getter;
+    }, __webpack_require__.d = (exports, definition) => {
+        for (var key in definition) __webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key) && Object.defineProperty(exports, key, {
+            enumerable: !0,
+            get: definition[key]
+        });
+    }, __webpack_require__.o = (obj, prop) => Object.prototype.hasOwnProperty.call(obj, prop), 
+    __webpack_require__.r = exports => {
+        "undefined" != typeof Symbol && Symbol.toStringTag && Object.defineProperty(exports, Symbol.toStringTag, {
+            value: "Module"
+        }), Object.defineProperty(exports, "__esModule", {
+            value: !0
+        });
+    }, __webpack_require__.nc = void 0;
+    __webpack_require__.d({}, {
+        i: () => main
+    });
+    const debounce = (fct, timeout = 10) => {
+        let timer;
+        return (...data) => {
+            clearTimeout(timer), timer = window.setTimeout(() => {
+                fct.apply(void 0, data);
+            }, timeout);
+        };
+    }, confirmDialog = options => new Promise((resolve, _) => {
+        const message = $("<div>");
+        message.append($("<div>", {
+            class: "header"
+        }).append(options.message)), options.details && message.append($("<hr>"), $("<div>", {
+            class: "details"
+        }).append(options.details));
+        const buttons = [ {
+            text: "No",
+            click: () => {
+                newDialog.dialog("close"), resolve(!1);
+            }
+        }, {
+            text: "Yes",
+            click: () => {
+                newDialog.dialog("close"), resolve(!0);
+            }
+        } ], newDialog = window.dialog({
+            html: message,
+            title: options.title,
+            dialogClass: "umm-confirm " + (options.title ? "" : " no_title"),
+            resizable: !1,
+            modal: !0,
+            closeOnEscape: !1,
+            buttons
+        });
+        newDialog.parent().find("button:eq(1)").css({
+            float: "left"
+        }), newDialog.closest(".ui-dialog").trigger("focus"), newDialog.closest(".ui-dialog").on("keydown", event => "Enter" === event.key ? (event.preventDefault(), 
+        event.stopPropagation(), newDialog.parent().find("button:eq(2)").trigger("click"), 
+        !1) : "Escape" !== event.key || (event.preventDefault(), event.stopPropagation(), 
+        newDialog.parent().find("button:eq(1)").trigger("click"), !1)), newDialog.dialog("moveToTop");
+    }), bannerNotification = (state, message) => notification(`${state.getBannerName()}\n${message}`), notification = (notificationText, presistend = !1) => {
+        $(".umm-notification").remove(), notificationText = notificationText.replace(/\n/g, "<br/>");
+        const notification = $("<div>", {
+            class: "umm-notification",
+            html: notificationText
+        });
+        $("body").append(notification), presistend || window.setTimeout(() => {
+            $(".umm-notification").fadeOut(400, () => notification.remove());
+        }, 3e3);
+    };
+    let icon;
+    class DragMarker {
+        constructor(layer, location, portalId, mission, isDummy = !1) {
+            this.mission = mission, this.layer = layer, this.startLocation = location, this.marker = new L.Marker(location, {
+                icon: (icon || (icon = L.Browser.touch ? new L.DivIcon({
+                    iconSize: new L.Point(20, 20),
+                    className: "leaflet-div-icon leaflet-editing-icon leaflet-touch-icon"
+                }) : new L.DivIcon({
+                    iconSize: new L.Point(8, 8),
+                    className: "leaflet-div-icon leaflet-editing-icon"
+                })), icon),
+                draggable: !0,
+                zIndexOffset: 7e3,
+                opacity: isDummy ? .4 : 1,
+                portal: portalId,
+                isMidPoint: isDummy
+            }), layer.addLayer(this.marker), this.marker.on("drag", event => {
+                this.onMarkerDrag(event);
+            }).on("dragstart", event => {
+                this.onMarkerDragStart(event);
+            }).on("dragend", event => {
+                this.onMarkerDragEnd(event);
+            }).on("dblclick", event => {
+                this.onMarkerDblClick(event);
+            });
+        }
+        destroy() {
+            this.layer.removeLayer(this.marker);
+        }
+        onMarkerDragStart(event) {
+            const marker = event.target, options = event.target.options, isMidPoint = options.isMidPoint;
+            this.editDragLine && this.layer.removeLayer(this.editDragLine);
+            const portal = options.portal, portal_pre = portal > 0 ? this.mission.portals.get(portal - 1) : void 0, portal_post = this.mission.portals.get(portal + (isMidPoint ? 0 : 1));
+            let lls = [ portal_pre && new L.LatLng(portal_pre.location.latitude, portal_pre.location.longitude), marker.getLatLng(), portal_post && new L.LatLng(portal_post.location.latitude, portal_post.location.longitude) ];
+            portal_pre || portal_post ? portal_pre ? portal_post || (lls = [ lls[1], lls[0] ]) : lls.splice(0, 1) : lls = [ marker.getLatLng(), marker.getLatLng() ], 
+            this.editDragLine = new L.Polyline(lls, {
+                color: "#ff9a00",
+                weight: 3,
+                dashArray: "5,5",
+                pointerEvents: "none"
+            }), this.layer.addLayer(this.editDragLine);
+        }
+        onMarkerDrag(event) {
+            if (!this.editDragLine) return;
+            const marker = event.target, snappedPortal = this.getSnapPortal(marker.getLatLng(), this.mission.getLocations()), newTarget = snappedPortal ? snappedPortal.getLatLng() : marker.getLatLng(), latlngs = this.editDragLine.getLatLngs();
+            latlngs[3 === latlngs.length ? 1 : 0] = newTarget, this.editDragLine.setLatLngs(latlngs);
+        }
+        async onMarkerDragEnd(event) {
+            this.editDragLine && (this.layer.removeLayer(this.editDragLine), this.editDragLine = void 0);
+            const marker = event.target, options = event.target.options, coordinatesList = this.mission.getLocations(), snappedPortal = this.getSnapPortal(marker.getLatLng(), coordinatesList);
+            if (!snappedPortal) return void this.marker.setLatLng(this.startLocation);
+            const portalToAdd = this.mission.portals.create(snappedPortal.options.guid);
+            options.isMidPoint ? this.mission.portals.insert(options.portal, portalToAdd) : await this.movePortal(options.portal, portalToAdd), 
+            main.state.save();
+        }
+        async movePortal(portalID, target) {
+            if (0 === portalID) {
+                const missions = main.state.missions, preMission = missions.previous(this.mission);
+                if (null == preMission ? void 0 : preMission.portals.isEnd(target)) {
+                    if (await confirmDialog({
+                        message: "Merge mission ?"
+                    })) return missions.merge(preMission, this.mission), void main.state.setCurrent(preMission.id);
+                } else if (1 === this.mission.portals.length && (null == preMission ? void 0 : preMission.portals.includes(target.guid)) && await confirmDialog({
+                    message: "Split mission ?"
+                })) {
+                    const index = preMission.portals.indexOf(target);
+                    return this.mission.portals.clear(), void missions.split(preMission, index, this.mission);
+                }
+            }
+            if (portalID === this.mission.portals.length - 1) {
+                const missions = main.state.missions, postMission = missions.next(this.mission);
+                if ((null == postMission ? void 0 : postMission.portals.isStart(target)) && await confirmDialog({
+                    message: "Merge mission ?"
+                })) return void missions.merge(this.mission, postMission);
+            }
+            this.mission.portals.set(portalID, target);
+        }
+        getSnapPortal(unsnappedLatLng, ignore = []) {
+            const containerPoint = window.map.latLngToContainerPoint(unsnappedLatLng);
+            let best_portal, best_distance = 1 / 0;
+            for (const guid in window.portals) {
+                const portal = window.portals[guid], ll = portal.getLatLng();
+                if (ignore.some(x => x.equals(ll))) continue;
+                const pp = window.map.latLngToContainerPoint(ll), options = portal.options, size = options.weight + 5 * options.radius, distance = pp.distanceTo(containerPoint);
+                distance > size || distance < best_distance && (best_distance = distance, best_portal = portal);
+            }
+            return best_portal;
+        }
+        onMarkerDblClick(event) {
+            const options = event.target.options, portal = options.portal;
+            options.isMidPoint || (this.mission.portals.remove(portal), main.state.save(), notification(`${this.mission.title}\nRemoved #${portal + 1} from mission`));
+        }
+    }
+    class RenderBase {
+        constructor(name) {
+            this.layer = new window.L.FeatureGroup, window.addLayerGroup(name, this.layer, !0), 
+            this.toggle(!1);
+        }
+        isVisible() {
+            return window.map.hasLayer(this.layer);
+        }
+        isLayer(layer) {
+            return layer === this.layer;
+        }
+        toggle(show) {
+            show ? window.map.addLayer(this.layer) : window.map.removeLayer(this.layer);
+        }
+    }
+    class RenderPath extends RenderBase {
+        constructor() {
+            super("UMM: Mission Paths"), this.redrawNow = () => {
+                this.layer.clearLayers(), this.dragMarkers.forEach(m => m.destroy()), this.dragMarkers = [];
+                const editMode = main.missionModeActive;
+                main.state.missions.forEach(mission => {
+                    main.state.isCurrent(mission.id) && editMode ? this.drawEditMission(mission) : this.drawMission(mission);
+                });
+            }, this.redraw = debounce(this.redrawNow), this.dragMarkers = [], main.state.onMissionChange.do(this.redraw), 
+            main.state.onMissionPortal.do(this.redraw), main.state.onSelectedMissionChange.do(this.redraw);
+        }
+        drawMission(mission) {
+            const geodesicPolyline = new L.GeodesicPolyline(mission.getLocations(), {
+                color: main.state.isCurrent(mission.id) ? "#ff9a00" : "crimson",
+                weight: 5,
+                smoothFactor: 1,
+                interactive: !1
+            });
+            this.layer.addLayer(geodesicPolyline);
+        }
+        drawEditMission(mission) {
+            const coordinatesList = mission.getLocations();
+            coordinatesList.forEach((ll, index) => this.createDragMarker(ll, index, mission)), 
+            coordinatesList.forEach((ll, index) => {
+                if (index > 0) {
+                    const half = this.getCenter(coordinatesList[index - 1], ll);
+                    this.createDragMarker(half, index, mission, !0);
+                }
+            });
+            const geodesicPolyline = new L.GeodesicPolyline(coordinatesList, {
+                color: "#ff9a00",
+                weight: 5,
+                smoothFactor: 1
+            });
+            this.layer.addLayer(geodesicPolyline);
+        }
+        createDragMarker(location, portalId, mission, dummy = !1) {
+            this.dragMarkers.push(new DragMarker(this.layer, location, portalId, mission, dummy));
+        }
+        getCenter(l1, l2) {
+            const p1 = window.map.project(l1), p2 = window.map.project(l2);
+            return window.map.unproject(p1.add(p2).divideBy(2));
+        }
+    }
+    const PortalActions = [ {
+        action: "HACK_PORTAL",
+        label: "Hack portal"
+    }, {
+        action: "INSTALL_MOD",
+        label: "Install mod"
+    }, {
+        action: "CAPTURE_PORTAL",
+        label: "Capture portal"
+    }, {
+        action: "CREATE_LINK",
+        label: "Create link"
+    }, {
+        action: "CREATE_FIELD",
+        label: "Create field"
+    }, {
+        action: "PASSPHRASE",
+        label: "Enter passphrase"
+    } ];
+    class Portals {
+        constructor(state, data) {
+            this.state = state, this.data = data;
+        }
+        get length() {
+            return this.data.length;
+        }
+        get(index) {
+            return this.data.at(index);
+        }
+        getRange(start, end) {
+            return this.data.slice(start, end);
+        }
+        set(index, portal) {
+            this.data[index] = portal, this.state.onMissionPortal.trigger();
+        }
+        add(...portal) {
+            portal.some(p => this.includes(p.guid)), this.data.push(...portal), this.state.onMissionPortal.trigger();
+        }
+        insert(index, ...portal) {
+            portal.some(p => this.includes(p.guid)), this.data.splice(index, 0, ...portal), 
+            this.state.onMissionPortal.trigger();
+        }
+        remove(index, count = 1) {
+            this.data.splice(index, count), this.state.onMissionPortal.trigger();
+        }
+        clear() {
+            this.data.length = 0, this.state.onMissionPortal.trigger();
+        }
+        toLatLng() {
+            return this.data.map(portal => new L.LatLng(portal.location.latitude, portal.location.longitude));
+        }
+        getLatLngOf(index) {
+            const portal = this.get(index);
+            if (portal) return new L.LatLng(portal.location.latitude, portal.location.longitude);
+        }
+        includes(guid) {
+            return this.data.some(x => x.guid === guid);
+        }
+        find(guid) {
+            return this.data.find(x => x.guid === guid);
+        }
+        indexOf(portal) {
+            return this.data.findIndex(x => x.guid === portal.guid);
+        }
+        isStart(portal) {
+            var _a;
+            return (null === (_a = this.data[0]) || void 0 === _a ? void 0 : _a.guid) === portal.guid;
+        }
+        isEnd(portal) {
+            var _a;
+            return (null === (_a = this.data.at(-1)) || void 0 === _a ? void 0 : _a.guid) === portal.guid;
+        }
+        reverse() {
+            this.data.reverse(), this.state.onMissionPortal.trigger();
+        }
+        create(guid) {
+            const iitcPortal = window.portals[guid], options = iitcPortal.options.data, ll = iitcPortal.getLatLng();
+            return {
+                guid,
+                title: options.title || "[undefined]",
+                imageUrl: options.image,
+                description: "",
+                location: {
+                    latitude: ll.lat,
+                    longitude: ll.lng
+                },
+                isOrnamented: !1,
+                isStartPoint: !1,
+                type: "PORTAL",
+                objective: {
+                    type: "HACK_PORTAL",
+                    passphrase_params: {
+                        question: "",
+                        _single_passphrase: ""
+                    }
+                }
+            };
+        }
+    }
+    class Mission {
+        constructor(state, id, data) {
+            this.missionID = id, this.data = data, this.portal_data = new Portals(state, data.portals);
+        }
+        get title() {
+            return this.data.missionTitle;
+        }
+        get portals() {
+            return this.portal_data;
+        }
+        get id() {
+            return this.missionID;
+        }
+        get description() {
+            return this.data.missionDescription;
+        }
+        hasPortals() {
+            return this.portal_data.length > 0;
+        }
+        getLocations() {
+            return this.portal_data.toLatLng();
+        }
+        show() {
+            if (this.hasPortals()) {
+                const bounds = new L.LatLngBounds(this.getLocations()).pad(.2);
+                window.map.fitBounds(bounds, {
+                    maxZoom: 18
+                });
+            }
+        }
+        focusLastPortal() {
+            const last_ll = this.portal_data.getLatLngOf(-1), last = this.portal_data.get(-1);
+            return !(!last || !last_ll) && (window.map.setView(last_ll), window.renderPortalDetails(last.guid), 
+            !0);
+        }
+        getDistance() {
+            return this.portals.toLatLng().reduce((sum, ll, index, lls) => index > 0 ? sum + ll.distanceTo(lls[index - 1]) : 0, 0);
+        }
+        clear() {
+            this.portal_data.clear();
+        }
+        reverse() {
+            this.portal_data.reverse();
+        }
+    }
+    class Missions {
+        static generateMissionTitle(missNumber, plannedBannerLength, missSetName, missNameFormat) {
+            var _a;
+            const format = null != missNameFormat ? missNameFormat : "";
+            if (!format) return "";
+            let title = format;
+            const totalMissions = null != plannedBannerLength ? plannedBannerLength : 0;
+            if (totalMissions >= 1 && (title = title.replace(/M+/g, totalMissions.toString())), 
+            missNumber >= 0) {
+                const numberPattern = null === (_a = format.match(/N+/g)) || void 0 === _a ? void 0 : _a[0];
+                if (numberPattern) {
+                    const length = numberPattern.length > 1 ? totalMissions.toString().length : 0, paddedNumber = (missNumber + 1).toString().padStart(length, "0");
+                    title = title.replace(/N+/g, paddedNumber);
+                }
+            }
+            return (null == missSetName ? void 0 : missSetName.trim()) && (title = title.replace(/T/g, missSetName)), 
+            title;
+        }
+        constructor(state, data) {
+            this.state = state, this.data = data;
+        }
+        get(missionId) {
+            const mis = this.data[missionId];
+            return mis && new Mission(this.state, missionId, mis);
+        }
+        count() {
+            return this.data.length;
+        }
+        forEach(callback) {
+            this.data.forEach((missionData, index) => {
+                const mission = new Mission(this.state, index, missionData);
+                callback(mission);
+            });
+        }
+        filter(callback) {
+            const result = [];
+            return this.forEach(mission => {
+                callback(mission) && result.push(mission);
+            }), result;
+        }
+        previous(mission) {
+            var _a;
+            let preMission, preMissionID = mission.id - 1;
+            for (;!(null === (_a = preMission = this.get(preMissionID)) || void 0 === _a ? void 0 : _a.hasPortals()) && preMissionID > 0; ) preMissionID--;
+            return preMission;
+        }
+        next(mission) {
+            return this.get(mission.id + 1);
+        }
+        distanceToStart(id) {
+            const mission = this.get(id);
+            if (!mission) return;
+            const previous = this.previous(mission), first = null == previous ? void 0 : previous.portals.getLatLngOf(-1), last = mission.portals.getLatLngOf(0);
+            return first && last ? first.distanceTo(last) : void 0;
+        }
+        getTotalDistance() {
+            const waypoints = [];
+            return this.forEach(m => waypoints.push(...m.getLocations())), waypoints.reduce((sum, ll, index, lls) => index > 0 ? sum + ll.distanceTo(lls[index - 1]) : 0, 0);
+        }
+        getWaypointCount() {
+            return this.data.reduce((count, mis) => count + mis.portals.length, 0);
+        }
+        validate() {
+            const errors = {}, notEnoughWaypoint = this.filter(m => m.portals.length < 6).map(m => m.id);
+            return notEnoughWaypoint.length > 0 && (errors["not enough waypoints"] = notEnoughWaypoint), 
+            errors;
+        }
+        zoom() {
+            const location = this.data.flatMap(m => new Portals(this.state, m.portals).toLatLng());
+            if (location.length > 0) {
+                const bounds = new L.LatLngBounds(location).pad(.1);
+                window.map.fitBounds(bounds, {
+                    maxZoom: 18
+                });
+            }
+        }
+        merge(destination, missionB) {
+            destination.portals.add(...missionB.portals.getRange()), missionB.portals.clear();
+        }
+        mergeAll() {
+            const portals = [];
+            this.data.forEach(m => {
+                portals.push(...m.portals), portals.length = 0;
+            }), this.data[0].portals = portals;
+        }
+        split(source, at, destination) {
+            const toMove = source.portals.getRange(at);
+            destination.portals.insert(0, ...toMove), source.portals.remove(at, toMove.length);
+        }
+        splitIntoMultiple(source, count, restAtLast = !1) {
+            const allPortals = this.getAllPortalsOf(source.id, count);
+            let portalsPerMission = allPortals.length / count;
+            restAtLast && (portalsPerMission = Math.floor(portalsPerMission));
+            for (let i = 0; i < count; i++) {
+                const start = Math.floor(portalsPerMission * i);
+                let end = Math.floor(portalsPerMission * (i + 1));
+                i === count - 1 && (end = allPortals.length);
+                const mission = this.get(source.id + i);
+                null == mission || mission.portals.clear(), null == mission || mission.portals.add(...allPortals.slice(start, end));
+            }
+        }
+        getAllPortalsOf(from, count) {
+            const allPortals = [];
+            for (let i = 0; i < count; i++) {
+                const mission = this.get(from + i);
+                mission && allPortals.push(...mission.portals.getRange());
+            }
+            return allPortals;
+        }
+        getMissionsOfPortal(guid) {
+            return this.filter(mis => mis.portals.includes(guid)).map(m => m.id);
+        }
+    }
+    class RenderNumbers extends RenderBase {
+        constructor() {
+            super("UMM: Mission Numbers"), this.redrawNow = () => {
+                this.layer.clearLayers();
+                const state = main.state;
+                this.getMissionStarts(state).forEach(start => {
+                    const id = start.missionIndex, icon = this.generateMarker(state.isCurrent(id) ? "active" : "start", id + 1), marker = L.marker(start.location, {
+                        icon: L.divIcon({
+                            className: "umm-mission-icon",
+                            iconSize: [ 34, 50 ],
+                            iconAnchor: [ 17, 50 ],
+                            html: icon
+                        }),
+                        opacity: start.auto ? .4 : 1,
+                        interactive: !1
+                    });
+                    this.layer.addLayer(marker);
+                });
+            }, this.redraw = debounce(this.redrawNow), main.state.onMissionChange.do(this.redraw), 
+            main.state.onMissionPortal.do(this.redraw), main.state.onSelectedMissionChange.do(this.redraw);
+        }
+        getMissionStarts(state) {
+            const missions = [];
+            let mid = 0;
+            for (;mid < state.missions.count(); ) {
+                const mission = state.missions.get(mid);
+                if (null == mission ? void 0 : mission.hasPortals()) {
+                    const start = mission.getLocations()[0];
+                    missions.push({
+                        missionIndex: mid,
+                        location: start,
+                        auto: !1
+                    });
+                }
+                let count = 1;
+                for (;mid + count <= state.missions.count(); count++) {
+                    const nextMission = state.missions.get(mid + count);
+                    if (null == nextMission ? void 0 : nextMission.hasPortals()) break;
+                }
+                if (count > 1) {
+                    const allLocations = [];
+                    for (let i = 0; i < count - 1; i++) {
+                        const fillMission = state.missions.get(mid + i);
+                        (null == fillMission ? void 0 : fillMission.hasPortals()) && allLocations.push(...fillMission.getLocations());
+                    }
+                    const portalsPerMission = Math.max(allLocations.length / count, 6);
+                    for (let fillIndex = 1; fillIndex < count; fillIndex++) {
+                        const locationIndex = Math.floor(portalsPerMission * fillIndex);
+                        locationIndex < allLocations.length - 1 && missions.push({
+                            missionIndex: mid + fillIndex,
+                            location: allLocations[locationIndex],
+                            auto: !0
+                        });
+                    }
+                }
+                mid += count;
+            }
+            return missions;
+        }
+        generateMarker(kclass, index) {
+            return `<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 49" class="umm-mission-marker"><defs><style>.cls-2{fill:#fff;}</style></defs><path class="${kclass}" d="M33,18c0,8.84-12,31-16,31S1,26.84,1,18,8.16,1,17,1,33,9.16,33,18Z" transform="translate(-0.5 -0.5)"/><circle class="cls-2" cx="16.5" cy="16.5" r="13"/><foreignObject x="0" y="0" width="34px" height="34px"><span class="umm-mission-number">${index}</span></foreignObject></svg>`;
+        }
+    }
+    class Trigger {
+        constructor() {
+            this.handler = [];
+        }
+        do(fct) {
+            this.handler.includes(fct) || this.handler.push(fct);
+        }
+        dont(fct) {
+            const index = this.handler.indexOf(fct);
+            -1 === index ? console.error("handler was not registerd", fct) : this.handler.splice(index, 1);
+        }
+        trigger() {
+            this.handler.some(fct => !1 === fct());
+        }
+        clear() {
+            this.handler = [];
+        }
+    }
+    const fileFormatVersion = 2;
+    class State {
+        constructor() {
+            this.onSelectedMissionChange = new Trigger, this.onMissionChange = new Trigger, 
+            this.onMissionPortal = new Trigger, this.load();
+        }
+        load() {
+            this.reset();
+            const data = localStorage.getItem("ultimate-mission-maker");
+            data && this.import(data);
+        }
+        save() {
+            this.setPlannedLength(this.theState.plannedBannerLength), localStorage.setItem("ultimate-mission-maker", this.asString());
+        }
+        import(jsonString) {
+            const anyState = JSON.parse(jsonString);
+            this.theState = (ummState => {
+                var _a, _b, _c, _d, _e;
+                if (ummState.fileFormatVersion > fileFormatVersion) throw new Error("UMM: You've attempted to load data that's newer than what's supported by this version of UMM. Please update the plugin and try again. Data has not been loaded.");
+                if (void 0 === ummState.fileFormatVersion || "" === ummState.fileFormatVersion) {
+                    const undefinedOrEmptyString = value => null == value || "" == value;
+                    if (undefinedOrEmptyString(ummState.missionSetName) && (undefinedOrEmptyString(ummState.missionName) ? ummState.missionSetName = "" : (ummState.missionSetName = ummState.missionName, 
+                    delete ummState.missionName)), undefinedOrEmptyString(ummState.missionSetDescription) && (undefinedOrEmptyString(ummState.missionDescription) ? ummState.missionSetDescription = "" : (ummState.missionSetDescription = ummState.missionDescription, 
+                    delete ummState.missionDescription)), undefinedOrEmptyString(ummState.titleFormat) && (ummState.titleFormat = "T NN-M"), 
+                    void 0 === ummState.numberOfMissions ? ummState.plannedBannerLength = Object.keys(ummState.missions).length : (ummState.plannedBannerLength = ummState.numberOfMissions, 
+                    delete ummState.numberOfMissions), !Object.keys(ummState.missions[0]).includes("portals")) if (ummState.missions[0][0].guid) {
+                        const newMissions = [];
+                        for (const mission in ummState.missions) {
+                            const plannedLength = ummState.plannedBannerLength > 0 ? ummState.plannedBannerLength : ummState.missions.length, missionTitle = Missions.generateMissionTitle(parseInt(mission) + 1, plannedLength, ummState.missionSetName, ummState.titleFormat);
+                            newMissions.push({
+                                missionTitle,
+                                missionDescription: ummState.missionSetDescription,
+                                portals: ummState.missions[mission]
+                            });
+                        }
+                        ummState.missions = newMissions;
+                    } else ummState.missions = [ {
+                        missionTitle: "",
+                        missionDescription: "",
+                        portals: []
+                    } ];
+                    ummState.fileFormatVersion = 1;
+                }
+                if (1 === ummState.fileFormatVersion) {
+                    for (const mission in ummState.missions) for (const portal in ummState.missions[mission].portals) ummState.missions[mission].portals[portal].objective = {
+                        type: "HACK_PORTAL",
+                        passphrase_params: {
+                            question: "",
+                            _single_passphrase: ""
+                        }
+                    };
+                    ummState.fileFormatVersion = 2;
+                }
+                if (2 === ummState.fileFormatVersion) for (const mission in ummState.missions) for (const portal in ummState.missions[mission].portals) "HACK" === ummState.missions[mission].portals[portal].objective.type && (ummState.missions[mission].portals[portal].objective.type = "HACK_PORTAL");
+                return 2 === ummState.fileFormatVersion && (null !== (_a = ummState.missionSetName) && void 0 !== _a || (ummState.missionSetName = ""), 
+                null !== (_b = ummState.missionSetDescription) && void 0 !== _b || (ummState.missionSetDescription = ""), 
+                null !== (_c = ummState.currentMission) && void 0 !== _c || (ummState.currentMission = 0), 
+                null !== (_d = ummState.plannedBannerLength) && void 0 !== _d || (ummState.plannedBannerLength = 1), 
+                null !== (_e = ummState.titleFormat) && void 0 !== _e || (ummState.titleFormat = "T NN-M")), 
+                ummState;
+            })(anyState), this.setPlannedLength(this.getPlannedLength() || 1), this.onMissionChange.trigger(), 
+            this.onMissionPortal.trigger(), this.onSelectedMissionChange.trigger();
+        }
+        asString() {
+            return JSON.stringify(this.theState);
+        }
+        reset() {
+            this.theState = {
+                missionSetName: "",
+                missionSetDescription: "",
+                currentMission: 0,
+                plannedBannerLength: 1,
+                titleFormat: "T NN-M",
+                fileFormatVersion,
+                missions: [ {
+                    missionTitle: "",
+                    missionDescription: "",
+                    portals: []
+                } ],
+                layers: []
+            }, this.onMissionChange.trigger();
+        }
+        isEmpty() {
+            return "" === this.theState.missionSetName && "" === this.theState.missionSetDescription && this.theState.missions.every(m => 0 === m.portals.length);
+        }
+        isValid() {
+            return "" !== this.theState.missionSetName && "" !== this.theState.missionSetDescription && this.theState.plannedBannerLength > 0;
+        }
+        get missions() {
+            return new Missions(this, this.theState.missions);
+        }
+        getBannerName() {
+            return this.theState.missionSetName;
+        }
+        setBannerName(name) {
+            this.theState.missionSetName = name, this.theState.missions.forEach((mission, id) => mission.missionTitle = this.generateMissionTitle(id)), 
+            this.onMissionChange.trigger();
+        }
+        getBannerDesc() {
+            return this.theState.missionSetDescription;
+        }
+        setBannerDesc(desc) {
+            this.theState.missionSetDescription = desc, this.theState.missions.forEach(mission => mission.missionDescription = this.theState.missionSetDescription), 
+            this.onMissionChange.trigger();
+        }
+        getTitleFormat() {
+            return this.theState.titleFormat;
+        }
+        setTitleFormat(name) {
+            this.theState.titleFormat = name, this.theState.missions.forEach((mission, id) => mission.missionTitle = this.generateMissionTitle(id)), 
+            this.onMissionChange.trigger();
+        }
+        getPlannedLength() {
+            return this.theState.plannedBannerLength;
+        }
+        setPlannedLength(count) {
+            if (count = Math.max(count, 1), this.theState.plannedBannerLength = count, this.theState.missions.length > count) this.theState.missions = this.theState.missions.slice(0, count); else for (let id = this.theState.missions.length; id < count; id++) this.theState.missions.push({
+                missionTitle: this.generateMissionTitle(id),
+                missionDescription: this.theState.missionSetDescription,
+                portals: []
+            });
+            this.onMissionChange.trigger();
+        }
+        generateMissionTitle(missNumber) {
+            return Missions.generateMissionTitle(missNumber, this.getPlannedLength(), this.theState.missionSetName, this.theState.titleFormat);
+        }
+        getEditMission() {
+            return this.missions.get(this.theState.currentMission);
+        }
+        setCurrent(missionId) {
+            missionId >= 0 && this.getPlannedLength(), this.theState.currentMission = missionId, 
+            this.onSelectedMissionChange.trigger();
+        }
+        getCurrent() {
+            return this.theState.currentMission;
+        }
+        isCurrent(missionId) {
+            return this.theState.currentMission === missionId;
+        }
+        checkPortal(event) {
+            let updated = !1;
+            this.theState.missions.forEach(mission => {
+                const portal = mission.portals.find(x => x.guid === event.guid);
+                portal && (portal.imageUrl === event.portalData.image && portal.title === event.portalData.title || (portal.imageUrl = event.portalData.image, 
+                portal.title = event.portalData.title, updated = !0));
+            }), updated && this.save();
+        }
+        checkAllPortals() {
+            let updated = !1;
+            this.theState.missions.forEach(mission => {
+                mission.portals.forEach(portal => {
+                    var _a;
+                    const iitcPortal = null === (_a = window.portals[portal.guid]) || void 0 === _a ? void 0 : _a.options.data;
+                    iitcPortal && (portal.imageUrl === iitcPortal.image && portal.title === iitcPortal.title || (portal.imageUrl = iitcPortal.image, 
+                    portal.title = iitcPortal.title, updated = !0));
+                });
+            }), updated && this.save();
+        }
+        storeLayerState(layers) {
+            this.theState.layers = layers.map(l => l.isVisible()), this.save();
+        }
+        restoreLayerState(layers) {
+            this.theState.layers.forEach((vis, index) => layers[index].toggle(null == vis || vis));
+        }
+    }
+    const Button_button = (label, click, classes) => $("<button>", {
+        text: label,
+        click,
+        class: "umm-mission-btn " + (null != classes ? classes : "")
+    }), dialogButton = (label, callback) => ({
+        text: label,
+        click: callback,
+        class: "umm-dialog-button"
+    }), dialogButtonClose = () => dialogButton("Close", event => {
+        $(event.currentTarget).parents(".ui-dialog").children(".ui-dialog-content").dialog("close");
+    }), loadFile = async (state, inputFile) => {
+        const text = await inputFile.text();
+        try {
+            state.import(text);
+        } catch (error) {
+            return notification(`Loadgin error: \n${error}`), !1;
+        }
+        return state.save(), notification(`Banner data loaded:\n${state.getBannerName()}`), 
+        !0;
+    }, title = "Ultimate Mission Maker EX", changelog = '\n  Changelog:\n\n  Version 1.0 - Alpha\n  - Complete rewrite from the ground up, based on UMM v0.7.3\n  - Toolbar hidden by default; enable via the Toolbox "UMM" command\n  - Mission Portal drag-and-drop support\n  - Preview potential mission split points\n  - Select-Mission Dialog with integrated split and merge commands\n  TODO: test mobile\n  ', about = () => {
+        let html = '<div class="umm-options-list">';
+        html += "In short: Create missions in IITC, export as a json file:<br>", html += '<a href="https://intel.ingress.com/" target="_blank"' + (/^intel\.ingress\.com$/i.test(window.location.host) ? ' style="color: #bbb; pointer-events: none; cursor: default;"' : "") + ">https://intel.ingress.com/</a>", 
+        html += "Then open the mission creator and load the json file.<br>", html += "Start creating missions and import the UMM data for every mission:<br>", 
+        html += '<a href="https://missions.ingress.com/" target="_blank"' + (/^missions\.ingress\.com$/i.test(window.location.host) ? ' style="color: #bbb; pointer-events: none; cursor: default;"' : "") + ">https://missions.ingress.com/</a>", 
+        html += "Documentation for this plugin can be found at:<br>", html += '<a href="https://umm.8bitnoise.rocks/" target="_blank">https://umm.8bitnoise.rocks/</a>', 
+        html += "Questions, feature requests and tips:<br>", html += '<a href="https://t.me/joinchat/j9T9eLfa3VJlZWE0" target="_blank">Telegram: [XF] Ultimate Mission Maker</a>', 
+        html += "</div>";
+        const buttons = [ dialogButton("< Main Menu", showUmmOptions), dialogButton("Changelog", () => dialog({
+            title: "Changelog",
+            html: changelog.replace(/\n/gm, "<br/>")
+        })), dialogButtonClose() ];
+        window.dialog({
+            html,
+            title: `${title} v1.0.beta - About`,
+            id: "umm-options",
+            width: 350,
+            buttons
+        });
+    }, editActiveMission = () => {
+        const html = $("<div>", {
+            class: "umm-mission-picker-btn"
+        }).append("Select a mission number:<br>", Button_button("<", onPreviousMission).css({
+            "margin-right": 0
+        }), $("<select>", {
+            id: "umm-mission-picker",
+            class: "umm-mission-picker",
+            change: onMissionSelect
+        }), Button_button(">", onNextMission), $("<div>").append(Button_button("Edit", onStartEdit), Button_button("Zoom to mission", onZoomToMission).css({
+            "margin-left": "1em"
+        })), $("<div>", {
+            id: "umm-mission-picker-info"
+        }), Button_button("Split", onMissionSplit), Button_button("Clear", onMissionClear), Button_button("Reverse", onMissionReverse), $("<br>"), Button_button("Merge with previous", onMergePrevious), Button_button("Merge next into this", onMergePost));
+        let position;
+        "undefined" != typeof android && android && (position = {
+            my: "center top",
+            at: "center top"
+        }), window.dialog({
+            html,
+            title: `${title} v1.0.beta`,
+            id: "umm-options",
+            width: 350,
+            position,
+            buttons: [ dialogButton("< Main Menu", showUmmOptions), dialogButtonClose() ],
+            closeCallback: destroy
+        }), main.state.onSelectedMissionChange.do(updateSelection), main.state.onMissionPortal.do(updateMissionInfo), 
+        updateMissionList(), updateMissionInfo();
+    }, destroy = () => {
+        main.state.onSelectedMissionChange.dont(updateSelection);
+    }, getSelectedMission = () => {
+        const missionNumber = parseInt($("#umm-mission-picker").val());
+        return main.state.missions.get(missionNumber);
+    }, updateMissionList = () => {
+        const select = $("#umm-mission-picker").empty(), state = main.state;
+        state.missions.forEach(mission => {
+            select.append($("<option>", {
+                value: mission.id,
+                selected: state.isCurrent(mission.id),
+                text: `${mission.id + 1} - waypoints ${mission.portals.length}`
+            }));
+        });
+    }, updateSelection = () => {
+        const current = main.state.getCurrent();
+        $("#umm-mission-picker").val(current), updateMissionInfo();
+    }, updateMissionInfo = () => {
+        var _a, _b;
+        const info = $("#umm-mission-picker-info");
+        info.empty();
+        const mission = getSelectedMission();
+        if (!mission) return;
+        const missionLength = window.formatDistance(mission.getDistance()), distanceToStart = main.state.missions.distanceToStart(mission.id), distanceToNext = main.state.missions.distanceToStart(mission.id + 1), table = `\n    Wapoints:\t${mission.portals.length}\n\n    Length:\t${missionLength}\n\n    to Start:\t${null !== (_a = distanceToStart && window.formatDistance(distanceToStart)) && void 0 !== _a ? _a : "---"}\n\n    to Next:\t${null !== (_b = distanceToNext && window.formatDistance(distanceToNext)) && void 0 !== _b ? _b : "---"}\n`;
+        info.html(window.convertTextToTableMagic(table));
+    }, refreshMissionUI = () => {
+        updateMissionInfo(), updateMissionList();
+    }, onPreviousMission = () => {
+        const mission = main.state.getCurrent();
+        mission > 0 && setCurrentMission(mission - 1);
+    }, onNextMission = () => {
+        const mission = main.state.getCurrent();
+        mission < main.state.getPlannedLength() - 1 && setCurrentMission(mission + 1);
+    }, onMissionSelect = () => {
+        const mission = getSelectedMission();
+        mission && !main.state.isCurrent(mission.id) ? setCurrentMission(mission.id) : notification("Active mission not changed.");
+    }, onStartEdit = () => {
+        main.missionModeActive || toggleMissionMode(), renderPortalDetails(null), startEdit(), 
+        $("#dialog-umm-options").dialog("close");
+    }, onZoomToMission = () => {
+        const mission = getSelectedMission();
+        mission ? mission.show() : notification("Can't zoom in on this mission. No portals.");
+    }, onMissionSplit = async () => {
+        var _a, _b;
+        const missions = main.state.missions, mission = getSelectedMission();
+        if (!mission) return;
+        let next = missions.next(mission);
+        for (;0 === (null == next ? void 0 : next.portals.length); ) next = missions.next(next);
+        const endMissionId = null !== (_a = null == next ? void 0 : next.id) && void 0 !== _a ? _a : main.state.getPlannedLength();
+        let count = parseInt(null !== (_b = prompt("Split inhow many missions should be divided among?", (endMissionId - mission.id).toString())) && void 0 !== _b ? _b : "0");
+        if (count < 2) return;
+        count = Math.min(count, main.state.getPlannedLength() - mission.id);
+        let mustMerge = !1;
+        for (let i = 1; i < count; i++) {
+            const current = missions.get(mission.id + i);
+            (null == current ? void 0 : current.portals.length) > 0 && (mustMerge = !0);
+        }
+        mustMerge && !await confirmDialog({
+            message: "Merge missione before split?",
+            details: "Mission(s) already contain portals. These will be merged into one"
+        }) || (missions.splitIntoMultiple(mission, count), main.state.save(), refreshMissionUI());
+    }, onMergePrevious = () => {
+        const missions = main.state.missions, mission = getSelectedMission();
+        if (!mission) return;
+        let previous = missions.previous(mission);
+        if (!previous) {
+            if (0 === mission.id) return;
+            previous = missions.get(0);
+        }
+        main.state.missions.merge(previous, mission), main.state.save(), refreshMissionUI();
+    }, onMergePost = () => {
+        const missions = main.state.missions, mission = getSelectedMission();
+        if (!mission) return;
+        let next = missions.next(mission);
+        for (;0 === (null == next ? void 0 : next.portals.length); ) next = missions.next(next);
+        next && (main.state.missions.merge(mission, next), main.state.save(), refreshMissionUI());
+    }, onMissionReverse = () => {
+        const mission = getSelectedMission();
+        mission && (mission.reverse(), main.state.save(), refreshMissionUI());
+    }, onMissionClear = async () => {
+        const mission = getSelectedMission();
+        mission && await confirmDialog({
+            message: "This will remove all portals"
+        }) && (mission.clear(), main.state.save(), refreshMissionUI());
+    }, lable = lable => $("<td>", {
+        text: lable
+    }), stat = id => $("<td>").append($("<span>", {
+        class: "stat",
+        id
+    })), showUmmOptions = () => {
+        const state = main.state, html = $("<div>", {
+            class: "umm-options-list"
+        }).append($("<p>", {
+            class: "banner_info"
+        }).append($("<div>", {
+            class: "title",
+            id: "umm_opt_bannername"
+        }), $("<div>", {
+            class: "description",
+            id: "umm_opt_bannerdesc"
+        }), "<table><tr>", lable("Title format"), stat("umm_opt_bannerformat").append($("<span>", {
+            text: "(?)",
+            title: "Title format allows:&#10;N = Mission number without leading 0 (if required by banner length)&#10;NN = Mission number with leading 0&#10;M = Planned banner length&#10;T = (mission title)&#10; &#10;eg. T N-M or NN.M T"
+        })), $("<td>").css({
+            width: "2em"
+        }), lable("Missions"), stat("umm_opt_bannerlength"), "</tr><tr>", lable("Waypoints"), stat("umm_opt_waypoints"), $("<td>"), lable("Length"), stat("umm_opt_bannerdistance"), "</tr></table>", $("<div>", {
+            id: "umm_opt_error"
+        }), Button_button("Edit", () => editMissionSetDetails(), "editButtom")), $("<p>").append("Layers:", '<label style="user-select: none">Mission Paths</label>', $("<input>", {
+            type: "checkbox",
+            click: event => tooglePathsLayer(event.target.checked),
+            checked: main.renderPath.isVisible()
+        }), '<label style="user-select: none">Mission Numbers</label>', $("<input>", {
+            type: "checkbox",
+            click: event => toggleLayerNumbers(event.target.checked),
+            checked: main.renderNumbers.isVisible()
+        }), Button_button("Change active mission #", editActiveMission, "w-full"), Button_button("Zoom to view all missions", () => state.missions.zoom(), "w-full")), $("<hr>"), Button_button("Split mission", splitMissionOptions, "w-full"), Button_button("Merge missions", mergeMissions, "w-full"), Button_button("Reverse mission", reverseMission, "w-full"), Button_button("Clear ALL missions data", confirmClear, "w-full"), $("<hr>"), $("<b>", {
+            text: "Import/Export"
+        }), $("<br>"), Button_button("Export banner data to file", () => (state => {
+            const data = state.asString(), filename = state.getBannerName().replace(/[\W_]+/g, " ") + "-mission-data.json";
+            if ("function" == typeof window.saveFile) window.saveFile(data, filename, "application/json"); else if ("undefined" != typeof android && (null === android || void 0 === android ? void 0 : android.saveFile)) android.saveFile(filename, "application/json", data); else if (!window.isSmartphone()) {
+                const a = document.createElement("a");
+                a.href = "data:text/json;charset=utf-8," + encodeURIComponent(data), a.download = filename, 
+                a.click();
+            }
+        })(main.state), "w-full"), $("<div>").css({
+            width: 800,
+            margin: "auto"
+        }).append("<b>Import banner data from file:</b><br>", $("<input>", {
+            type: "file",
+            change: confirmLoad
+        })));
+        let position;
+        "undefined" != typeof android && android && (position = {
+            my: "center top",
+            at: "center top"
+        }), window.dialog({
+            html,
+            title: `${title} v1.0.beta`,
+            id: "umm-options",
+            width: 350,
+            position,
+            buttons: [ dialogButton("About this plugin", about), dialogButtonClose() ],
+            closeCallback: () => Options_destroy()
+        }), window.map.on("layeradd", onLayerAdd), window.map.on("layerremove", onLayerRemove), 
+        main.state.onMissionChange.do(updateDialog), updateDialog();
+    }, Options_destroy = () => {
+        window.map.off("layeradd", onLayerAdd), window.map.off("layerremove", onLayerRemove), 
+        main.state.onMissionChange.dont(updateDialog);
+    }, onLayerAdd = event => {
+        main.renderPath.isLayer(event.layer) && $("#umm-layercheckbox-paths").prop("checked", !0), 
+        main.renderNumbers.isLayer(event.layer) && $("#umm-layercheckbox-numbers").prop("checked", !0);
+    }, onLayerRemove = event => {
+        main.renderPath.isLayer(event.layer) && $("#umm-layercheckbox-paths").prop("checked", !1), 
+        main.renderNumbers.isLayer(event.layer) && $("#umm-layercheckbox-numbers").prop("checked", !1);
+    }, updateDialog = () => {
+        var _a, _b, _c;
+        const state = main.state;
+        $("#umm_opt_bannername").text(null !== (_a = state.getBannerName()) && void 0 !== _a ? _a : "N/A"), 
+        $("#umm_opt_bannerdesc").text(null !== (_b = state.getBannerDesc()) && void 0 !== _b ? _b : "N/A"), 
+        $("#umm_opt_bannerformat").text(null !== (_c = state.getTitleFormat()) && void 0 !== _c ? _c : "N/A"), 
+        $("#umm_opt_bannerlength").text(state.getPlannedLength().toString()), $("#umm_opt_waypoints").text(state.missions.getWaypointCount().toString()), 
+        $("#umm_opt_bannerdistance").text(window.formatDistance(state.missions.getTotalDistance())), 
+        $("#umm_opt_error").empty().append(validateMissions(state));
+    }, validateMissions = state => {
+        const invalidMissions = state.missions.validate(), result = [];
+        for (const error in invalidMissions) {
+            const numbers = invalidMissions[error].map(n => n + 1).join(", ");
+            result.push(`<span class="error">${error}:</span></br>Mission: ${numbers}`);
+        }
+        return result.join("<br>");
+    }, confirmClear = async () => {
+        await confirmDialog({
+            message: "Clear all Mission data?",
+            details: "Removes mission settings and waypoints. This action cannot be undone."
+        }) && clearMissionData();
+    }, confirmLoad = async event => {
+        (main.state.isEmpty() || await confirmDialog({
+            message: "Overwrite current data?",
+            details: "All current missions will be replaced by the imported data."
+        })) && (await (async (event, state) => {
+            const files = event.target.files;
+            return 1 !== (null == files ? void 0 : files.length) ? (alert("No file selected! Please select a mission file in JSON format and try again."), 
+            $("#umm-import-file").val(""), !1) : "application/json" != files[0].type ? ($("#umm-import-file").val(""), 
+            alert(files[0].name + " has not been recognized as JSON file. Make sure you've loaded the right file."), 
+            !1) : loadFile(state, files[0]);
+        })(event, main.state), main.state.checkAllPortals(), main.state.missions.zoom());
+    }, tooglePathsLayer = show => main.renderPath.toggle(show), toggleLayerNumbers = show => main.renderNumbers.toggle(show), editMissionSetDetails = (toggleMissionModeAfterSave = !1) => {
+        var _a;
+        const state = main.state;
+        let html = '<div class="umm-edit-mission-set-details">';
+        html += "<b>Banner details</b>", html += "<p>Please enter the details for your banner. All fields are required.</p><br>", 
+        html += `<label for="umm-mission-set-name"><b>Banner name</b> (max. 50 characters)</label>\n      <span class="umm-error" id="umm-mission-set-name-error"><b>Error: </b>Please enter a valid banner name</span>\n      <input id="umm-mission-set-name" name="umm-mission-set-name" type="text" placeholder="Enter name for the banner" maxlength="50" value="${state.getBannerName()}">`, 
+        html += `<label for="umm-mission-set-description"><b>Banner description</b> (max. 200 characters)</label>\n      <span class="umm-error" id="umm-mission-set-description-error"><b>Error: </b>Please enter a valid banner description</span>\n      <textarea id="umm-mission-set-description" name="umm-mission-set-description" placeholder="Enter description for the banner" maxlength="200" rows="5">${state.getBannerDesc()}</textarea>`, 
+        html += `<label for="umm-banner-length"><b>Planned banner length</b>, min. ${Math.max(state.missions.count(), 1)} mission(s)</label>\n      <span class="umm-error" id="umm-mission-planned-banner-length-error"><b>Error: </b>Please enter a valid banner length</span>\n      <input id="umm-banner-length" name="umm-banner-length" type="number" placeholder="Enter length of banner set" min="1" value="${Math.max(state.getPlannedLength(), 1)}">`, 
+        html += `<label for="umm-title-format"><b>Title format</b></label>\n      <span class="umm-error" id="umm-mission-title-format-error"><b>Error: </b>Please enter a valid title-format</span>\n      <p>Title format allows:<br>N = Mission number without leading 0<br>NN = Mission number with leading 0 (if required by banner length)<br>M = Planned banner length<br>T = (banner title)<br>Examples:T NN-M (default) or NN.M T</p>\n      <input id="umm-title-format" name="umm-title-format" type="text" placeholder="Enter a title format" value="${null !== (_a = state.getTitleFormat()) && void 0 !== _a ? _a : "T NN-M"}" style="margin-bottom: 5px;">\n      <b>Preview: </b><span id="umm-mission-title-preview"></span>`, 
+        html += "</div>", window.dialog({
+            html,
+            title: "Edit banner details - UMM v1.0.beta",
+            id: "umm-options",
+            width: 400,
+            buttons: [ dialogButton("< Main Menu", showUmmOptions), dialogButton("Save", () => successfulSave(toggleMissionModeAfterSave)), dialogButtonClose() ]
+        }), updateMissionTitlePreview(), $("#umm-mission-set-name, #umm-mission-set-description, #umm-banner-length, #umm-title-format").on("input", updateMissionTitlePreview);
+    }, getFormValues = () => ({
+        name: $("#umm-mission-set-name").val(),
+        description: $("#umm-mission-set-description").val(),
+        length: $("#umm-banner-length").val(),
+        format: $("#umm-title-format").val()
+    }), successfulSave = toggleMissionModeAfterSave => {
+        const values = getFormValues();
+        saveMissionSetDetails(values.name, values.description, values.length, values.format) && (bannerNotification(main.state, "Mission details saved"), 
+        toggleMissionModeAfterSave && toggleMissionMode(), $("#dialog-umm-options").dialog("close"));
+    }, updateMissionTitlePreview = () => {
+        const values = getFormValues(), plannedLength = parseInt(values.length);
+        if (values.name.length > 0 && values.format.length > 0 && !isNaN(plannedLength)) {
+            const missionTitle = Missions.generateMissionTitle(1, plannedLength, values.name, values.format);
+            $("#umm-mission-title-preview").text(missionTitle);
+        } else $("#umm-mission-title-preview").text("Fill in all required fields");
+    }, setFieldError = (elementId, hasError) => {
+        $(elementId).css("display", hasError ? "block" : "none");
+    }, saveMissionSetDetails = (missionSetName, missionSetDescription, plannedBannerLength, titleFormat) => {
+        let isValid = !0;
+        const hasName = missionSetName && missionSetName.length > 0;
+        hasName && main.state.setBannerName(missionSetName), setFieldError("#umm-mission-set-name-error", !hasName), 
+        isValid = isValid && !!hasName;
+        const hasDescription = missionSetDescription && missionSetDescription.length > 0;
+        hasDescription && main.state.setBannerDesc(missionSetDescription), setFieldError("#umm-mission-set-description-error", !hasDescription), 
+        isValid = isValid && !!hasDescription;
+        const plannedLength = parseInt(null != plannedBannerLength ? plannedBannerLength : ""), hasValidLength = plannedLength && !isNaN(plannedLength);
+        hasValidLength && main.state.setPlannedLength(plannedLength), setFieldError("#umm-mission-planned-banner-length-error", !hasValidLength), 
+        isValid = isValid && !!hasValidLength;
+        const hasFormat = titleFormat && titleFormat.length > 0;
+        return hasFormat && main.state.setTitleFormat(titleFormat), setFieldError("#umm-mission-title-format-error", !hasFormat), 
+        isValid = isValid && !!hasFormat, isValid && main.state.save(), isValid;
+    };
+    let lastPortal;
+    const clearMissionData = () => {
+        main.state.reset(), main.state.save(), main.missionModeActive && toggleMissionMode();
+    }, removeLastPortal = () => {
+        var _a;
+        if (!main.missionModeActive) return void notification("Only valid in edit mode");
+        const mission = main.state.getEditMission();
+        mission && mission.portals.length > 0 ? (lastPortal = void 0, mission.portals.remove(mission.portals.length - 1), 
+        main.state.save(), mission.focusLastPortal() || (renderPortalDetails(null), notification(`${main.state.getBannerName()}\nNo portals left in mission.\nSelect start portal`))) : mission && mission.id > 0 ? (setCurrentMission(mission.id - 1), 
+        main.state.save(), null === (_a = main.state.getEditMission()) || void 0 === _a || _a.focusLastPortal(), 
+        notification(`${main.state.getBannerName()}\nLast mission removed\nSwitched to previous mission ${mission.id + 2}\n`)) : notification(`${main.state.getBannerName()}\nCan't undo\nAlready on last mission\n`);
+    }, toggleMissionMode = () => {
+        if (main.missionModeActive) main.missionModeActive = !1, $("#umm-toggle-bookmarks").css("background-color", ""); else {
+            if (!main.state.isValid()) return editMissionSetDetails(!0), void notification("Mission mode inactive\nPlease enter mission data\nAnd try again.");
+            main.missionModeActive = !0, startEdit(), $("#umm-toggle-bookmarks").css("background-color", "crimson");
+        }
+        main.renderPath.redraw();
+    }, startEdit = () => {
+        const editMission = main.state.getEditMission(), missionNumber = main.state.getCurrent() + 1;
+        (null == editMission ? void 0 : editMission.hasPortals()) ? (editMission.show(), 
+        lastPortal = editMission.portals.get(-1).guid, window.renderPortalDetails(lastPortal), 
+        bannerNotification(main.state, `Mission mode active.\nResuming mission #${missionNumber}\nSelect next portal`)) : bannerNotification(main.state, `Mission mode active.\nSelect start portal for mission #${missionNumber}`);
+    }, splitMissionOptions = () => {
+        let html = '<div class="umm-split-mission-options">';
+        html = "<b>How do you want to split your mission?</b><br><br>\n      <b>Remainder at the end:</b> All missions will contain the same amount of portals, any portals left over after splitting are added to the last mission.<br><br>\n      <b>Balanced:</b> Split the banner into missions of the same length, if any portals are left over after splitting, earlier missions will get 1 portal extra to balance it out.\n      ";
+        const buttons = [ dialogButton("< Main Menu", showUmmOptions), dialogButton("Remainder at end", () => splitMissionStart(!0)), dialogButton("Balanced", () => splitMissionStart(!1)) ];
+        window.dialog({
+            html: "<b>How do you want to split your mission?</b><br><br>\n      <b>Remainder at the end:</b> All missions will contain the same amount of portals, any portals left over after splitting are added to the last mission.<br><br>\n      <b>Balanced:</b> Split the banner into missions of the same length, if any portals are left over after splitting, earlier missions will get 1 portal extra to balance it out.\n      ",
+            title: `${title} - Split mission options`,
+            id: "umm-options",
+            width: 350,
+            buttons
+        });
+    }, splitMissionStart = remainderAtEnd => {
+        var _a, _b;
+        const portalsCount = null !== (_b = null === (_a = main.state.missions.get(0)) || void 0 === _a ? void 0 : _a.portals.length) && void 0 !== _b ? _b : 0, preset = Math.min(main.state.getPlannedLength(), portalsCount), numMissionString = prompt(`In how many missions do you want to split your banner (1-${portalsCount})?\r\rRecommended number is a multiple of 6.`, preset.toString());
+        if (null === numMissionString) return;
+        const numMissions = parseInt(numMissionString);
+        numMissions > portalsCount ? alert(`Can't split into more missions than there are portals in your current path. Please try again with a number between 1 and ${portalsCount}`) : numMissions < 1 || !Number.isInteger(numMissions) ? alert(`Invalid input. Please try again with a number between 1 and ${portalsCount}`) : splitMission(numMissions, remainderAtEnd);
+    }, splitMission = async (numMissions, remainderAtEnd) => {
+        var _a;
+        const mission = main.state.missions.get(0);
+        if (!mission) return;
+        let hasPortals = !1;
+        for (let i = 0; i < numMissions; i++) hasPortals || (hasPortals = !0 === (null === (_a = main.state.missions.get(i)) || void 0 === _a ? void 0 : _a.hasPortals()));
+        if (hasPortals && !await confirmDialog({
+            message: "Merge missione before split?",
+            details: "Mission(s) already contain portals. These will be merged into one"
+        })) return;
+        const numPortals = null == mission ? void 0 : mission.portals.length, numRestPortals = numPortals % numMissions, message = `Your path of ${numPortals} will be divided into ${numMissions} missions of ${Math.floor(numPortals / numMissions)} portals each.`;
+        let details = "";
+        numRestPortals > 0 && (details += remainderAtEnd ? ` The remaining ${numRestPortals} portal(s) will be added to the last mission.` : ` The remaining ${numRestPortals} portal(s) will be equaly divided between the first missions.`), 
+        details += "\r\n\r\nThis process can be reversed using the merge missions feature. Do you want to continue?", 
+        await confirmDialog({
+            message,
+            details
+        }) && (main.state.missions.splitIntoMultiple(mission, numMissions, remainderAtEnd), 
+        main.state.save());
+    }, mergeMissions = async () => {
+        await confirmDialog({
+            message: "Merge mission?",
+            details: "Are you sure you want to merge all your missions into 1?\r\n\r\nThis can't be undone."
+        }) && (main.state.missions.mergeAll(), main.state.setCurrent(0));
+    }, reverseMission = () => {
+        const state = main.state, missionToReverse = prompt(`Which mission do you want to reverse (1-${state.getPlannedLength()})?`, (state.getCurrent() + 1).toString());
+        if (null === missionToReverse) return;
+        const mission = state.missions.get(parseInt(missionToReverse));
+        mission ? (mission.reverse(), state.save()) : alert(`This mission doesn't exist, enter a value between 1-${state.getPlannedLength()}.`);
+    }, setCurrentMission = missionId => {
+        main.state.setCurrent(missionId), main.state.save();
+    }, toolBarButton = (id, image, tooltip, click) => $("<a>", {
+        id,
+        class: "umm-control",
+        title: window.isSmartphone() ? "" : tooltip
+    }).on("click dblclick", event => {
+        event.stopPropagation(), click && click();
+    }).append($("<img>", {
+        src: image
+    }).css({
+        width: 16,
+        height: 16,
+        "margin-top": "7px"
+    })), onMissionNumberChanged = () => {
+        const state = main.state;
+        $("#umm-edit-active-mission").text(state.getCurrent() + 1), $("#umm-edit-active-mission").css("background-color", "white"), 
+        $("#umm-next-mission img").css("opacity", "100%"), $("#umm-previous-mission img").css("opacity", "100%");
+        const current = state.getCurrent();
+        current >= state.getPlannedLength() - 1 && ($("#umm-next-mission").children("img").css("opacity", "30%"), 
+        $("#umm-edit-active-mission").css("background-color", "orange")), 0 === current && $("#umm-previous-mission").children("img").css("opacity", "30%"), 
+        onMissionPortalsChanged();
+    }, onMissionPortalsChanged = () => {
+        var _a, _b;
+        const count = null !== (_b = null === (_a = main.state.getEditMission()) || void 0 === _a ? void 0 : _a.portals.length) && void 0 !== _b ? _b : 0;
+        count < 1e3 ? $("#umm-number-of-portals").text(`P${count}`) : $("#umm-number-of-portals").text(`${count}`);
+    }, nextMission = () => {
+        const state = main.state;
+        if (state.getCurrent() >= state.getPlannedLength() - 1) return;
+        setCurrentMission(state.getCurrent() + 1);
+        const mission = state.getEditMission();
+        mission.hasPortals() ? showMission(mission) : main.missionModeActive && bannerNotification(state, `Start of mission #${state.getCurrent() + 1}\nSelect start portal.`);
+    }, previousMission = () => {
+        const state = main.state;
+        if (state.getCurrent() <= 0) return;
+        setCurrentMission(state.getCurrent() - 1);
+        const mission = state.getEditMission();
+        showMission(mission);
+    }, showMission = mission => {
+        mission.hasPortals() && (mission.show(), onMissionPortalsChanged(), main.missionModeActive ? bannerNotification(main.state, `Mission mode active.\nCurrent mission #${main.state.getCurrent() + 1}\nSelect next portal`) : bannerNotification(main.state, `Current active mission set to #${main.state.getCurrent() + 1}`));
+    }, addWaypointEditorToPortal = () => {
+        var _a;
+        const missions = main.state.missions.getMissionsOfPortal(null !== (_a = window.selectedPortal) && void 0 !== _a ? _a : "");
+        if (0 === missions.length) return;
+        const wayPointHtml = $("<div>", {
+            id: "umm-waypoint-editor"
+        }), ummTitle = $("<span>", {
+            text: "UMM Waypoint Editor",
+            class: "umm-waypoint-editor-title"
+        });
+        wayPointHtml.append(ummTitle);
+        const waypointSelectContainer = $("<div>", {
+            class: "umm-waypoint-select-container"
+        });
+        waypointSelectContainer.append(portalMissionSelectFactory(missions));
+        const actionSelect = $("<select>", {
+            id: "umm-action-select"
+        });
+        waypointSelectContainer.append(actionSelect), wayPointHtml.append(waypointSelectContainer);
+        const passPhraseHtml = $("<div>", {
+            id: "umm-passphrase-container"
+        });
+        wayPointHtml.append(passPhraseHtml), $("#portaldetails #randdetails").before(wayPointHtml), 
+        $("#umm-mission-select").on("change", () => {
+            "#" === $("#umm-mission-select").val() ? ($("#umm-action-select").prop("disabled", !0), 
+            $("#umm-passphrase-container").hide()) : (updateActionSelect(), updatePassPhraseContent());
+        }), updateActionSelect(), updatePassPhraseContent();
+    }, portalMissionSelectFactory = validMissionIds => {
+        const missionSelect = $("<select>", {
+            id: "umm-mission-select"
+        }), missionOption = $("<option>", {
+            value: "#",
+            text: "Select mission"
+        });
+        missionSelect.append(missionOption), validMissionIds.forEach(id => {
+            const missionOption = $("<option>", {
+                value: id,
+                text: id + 1
+            });
+            missionSelect.append(missionOption);
+        });
+        const current = main.state.getCurrent(), preSelect = validMissionIds.includes(current) ? current : validMissionIds[0];
+        return $(missionSelect).val(preSelect), missionSelect;
+    }, updatePassPhraseContent = () => {
+        const portal = currentPortal();
+        portal && ($("#umm-passphrase-container").replaceWith(passCodeBoxFactory(portal)), 
+        $("#umm-passphrase-container textarea").css({
+            "overflow-y": "hidden"
+        }), "PASSPHRASE" == $("#umm-action-select").val() && $("#umm-passphrase-container").css("display", "flex"));
+    }, passCodeBoxFactory = portal => {
+        var _a, _b;
+        const questionSpan = $("<span>", {
+            text: "Question"
+        }), ppQuestion = null !== (_a = portal.objective.passphrase_params.question) && void 0 !== _a ? _a : "", question = $("<textarea>", {
+            id: "umm-passphrase-question",
+            type: "text",
+            row: 1
+        }).val(ppQuestion);
+        question.on("blur", () => savePassPhrase());
+        const passPhraseSpan = $("<span>", {
+            text: "Passphrase"
+        }), spQuestion = null !== (_b = portal.objective.passphrase_params._single_passphrase) && void 0 !== _b ? _b : "", passPhrase = $("<input>", {
+            type: "text",
+            id: "umm-passphrase-passphrase",
+            value: spQuestion
+        });
+        passPhrase.on("blur", () => savePassPhrase());
+        const passPhraseHtml = $("<div>", {
+            id: "umm-passphrase-container"
+        });
+        return passPhraseHtml.append(questionSpan, question, passPhraseSpan, passPhrase), 
+        passPhraseHtml;
+    }, currentPortal = () => {
+        var _a;
+        const missionId = parseInt($("#umm-mission-select").val()), portals = null === (_a = main.state.missions.get(missionId)) || void 0 === _a ? void 0 : _a.portals;
+        return null == portals ? void 0 : portals.find(window.selectedPortal);
+    }, savePassPhrase = () => {
+        const portal = currentPortal();
+        if (!portal) return;
+        const passphrase_params = {
+            question: $("#umm-passphrase-question").val(),
+            _single_passphrase: $("#umm-passphrase-passphrase").val()
+        };
+        portal.objective.passphrase_params = passphrase_params, main.state.save();
+    }, updateActionSelect = () => {
+        const portal = currentPortal();
+        portal && ($("#umm-action-select").replaceWith((portal => {
+            const actionSelect = $("<select>", {
+                id: "umm-action-select"
+            });
+            return PortalActions.forEach(({action, label}) => {
+                const option = $("<option>", {
+                    value: action,
+                    text: label
+                });
+                portal.objective.type === action && option.prop("selected", !0), actionSelect.append(option);
+            }), actionSelect;
+        })(portal)), $("#umm-action-select").on("change", () => {
+            "PASSPHRASE" == $("#umm-action-select").val() ? updatePassPhraseContent() : $("#umm-passphrase-container").hide(), 
+            currentPortal().objective.type = $("#umm-action-select").val(), main.state.save();
+        }));
+    };
+    const main = new class UMM_Ext {
+        constructor() {
+            const index = window.bootPlugins.findIndex(x => "IITC Plugin: Ultimate Mission Maker" === x.info.script.name);
+            -1 !== index && window.bootPlugins.splice(index, 1);
+        }
+        init() {
+            __webpack_require__(768), this.state = new State, (() => {
+                const UMMToolbar = L.Control.extend({
+                    options: {
+                        position: "topleft"
+                    },
+                    onAdd: () => $("<div>", {
+                        class: "leaflet-umm leaflet-bar"
+                    }).append(toolBarButton("umm-toggle-bookmarks", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAATLSURBVGhD7ZoHqH5jHMdfe++9CcnKLnsWsjLKLiHZo5AthQjJlvwzSkqyIjObEJGysorsvSPz8znv+9NzT+c97xnvvZy63/p0z/Pc5z7n+Z5znvV7bm9a/0M9Du/AITCrGWPS/HAWfAXPwV4wM4xLC8JF8C3Y9t7fCe9DW0Nh4BtI6xYf2OEwJzTVHHAifA1R7zXwb+KN5LqJoSIDD8OWcBC8NsiTz+EMWBiqyrd5IHwAUc8ng58TjFhwP6hrqMjAI7AZpJoJdoanIMr9BJfBClCmHeBliL97CbaGIwfpCUZCZYZmg9AwA5vDKG0Cd8Kf4N/9DrfAupBqPXgIov53wbb5UFSpkdAwQ4dC3sCjUMVAXqvBDPgVoq4HYQ/QWBj9Eo6H2SFVJSOhIkOBBraAtloKLoTvIa3/FzgfHKGKVMtIKAy9AtGJxy0/15PhdbgeloEyjTRio2Wy5BNevH/ZSiONvAB23MnQyuAk5j2PMAMtArfCdbC0GRU10shtcFX/ciw6APbsX2Zv4nl4C3Y1A20E0Q4nO+XEt2z/cqga9ZE6mgdm6V/2TgPrd+Qp+1w14zJm3izV650H/t2NWapYlY3sCHfBqCcTWg4eA4fNn8GRyGHzbdgF6mh7+AGcNOcyo0CVjVwK/s6FZRU9DVFf4NqqqRaC5fuXhapsZAFwBr44S5XLdVPUleIENw7Zb51TUjXuI864J4CjTCrHe/vFHxD1BbdDW7k0+g6sb2MzBmpsxInKss9kqf4NngTzrgCHz6hP7CtbwTi0N3j/lbJUX42NbAg3wFFZqr+vcP31BXgjV8mngEbvhW1hMtXYSJHSFfFUaMXBTzVWI1MpJ1bb6nyjOmvkaLCtTguqs0YcLW+GtbNUh43k1Wkja0Cs2Tpr5BiwrftnqQ4buRxs68FZqsNGjLIYXXQxqaY7+38pO7m7zIhpqc4ZMZ71IdjONGjRCSNzg9tfY14GJFxJvwhT9kacfdsuJN1iexxhu/4CRys7ej7oXduIDVsfVoeYjHzdbrIMQhtYU6eDdRloWMIM5NK+TgzL4EN6ZBDsA3nVMmJ89k2Ick+Aw58mIm8DUPvCe+AnMJ8Z6A6wzANZarSMIUe9KW7a8qplxIZHmeBKMCjgXt7PoEyHgU/4VYhP7hJwD57uHo28+3C2g/z95GzIq7IRb2zIP8oEHto0lXV60GM995uBfHux33ePbywrvZ8HOotBXrXeyMcQZQLPLNrI+JdzQoR67HengvsMQ6qmPY9xyX4uRH/Lq5YRK3TkiHKeZWwKVWXZUVH1pppgJF7p3ZA/MQptA9eCT2wtMypoJzAYbt2/wU2wJoxLu0EMQvbZLOphWNIMn3yZoSpKDchnECdS1n8ftAkRGdeKEJQYIloHMjnOO5K0MZQ38BEcC4aMloQLII4TxLJ1zt5XAQeC+MwdAAzHFh7UNjGUN+DgcBwUnaU7cZ4E6QAy6ux9Ubga/Dwt/yN4hhlR+1JVMTTMwLDIeSpXBW6OInIpDslnQixDDMF6Fm/D/b3TgIaGjWClKjJ0D6QGPgWPDqoYyMvPyk77LER93stoZvwzgPc0kL4qtFbeUFsDRfIfDHxI0QfE0GsatB6bNHQOVP2EmsgNlAdEu2epaXVSvd4/r54FA9f01AsAAAAASUVORK5CYII=", "UMM: Toggle Mission Mode", toggleMissionMode), toolBarButton("umm-next-mission", "data:image/png;base64,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", "UMM: Next Mission", nextMission), toolBarButton("umm-edit-active-mission", void 0, "UMM: Select mission number", editActiveMission), toolBarButton("umm-previous-mission", "data:image/png;base64,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", "UMM: Previous Mission", previousMission), toolBarButton("umm-number-of-portals", void 0, "UMM: Number of portals in current mission"), toolBarButton("umm-undo", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAOiSURBVHhe7Zo9SFtRFMeTvHwbjSHRIA52aJBICw1oSSCglQ66CIWOLoUOLh0cOnRLJwcHu3Xp0EJLV3HxIwSe1iGKGKFCAnaok9RUjUbQ6NP0HjiC1PeZvCTvxvsDufcc0eT837nnnnsTE4PBYDAYjHuLGceaEI/HnxQKhemrq6shQRCs6L4Dx3GF7u7uSCqV+o2uumHBUXf6+/vj+Xz+R6lUei4XPGA2m60OhwOt+lKTDIDgi8Xi/PX1tQddklit1tNgMDjK8/wquuqK7gLQFDygqwC0BQ/oJgCNwQO6CEBr8EDVAtAcPFCVALQHD1QsQDMED1QkQLMED2gWoJmCBzQJoCX4WkHaZpPdbi+Qcdtms/EdHR3fFhcXc/hrzagWwAjBi2GxWECQWZ/P93ZlZeUXulWjSoCBpwPRk+OTpNGCvw05UZ57vd43a2trn9ClCg5HWQL+wPfLy8uHaBqScrlsPTs7GyNL4vjg4CCNbkVUHYdh3dECydKZaDT6Gk1FVAkA6wsqOpqG5/DwcGZ4eFhVxqoSgGxj6c5g5ygtIpDl4CHLYBpNWTTl9uDQYHz/z/68IAiqiiEsHajSekJSHAJESxp43d7e3vDc3JzsFql5cWsRgbyJ09bW1tGNjQ3dGqFEIuFJpVIjR0dHU6VSSTbNyWu/39zcTKApSkXVrdEiAOFw2EP+d+bi4kJSBIfTwW//3H6GpigV5ecyv7yqtiZA7wANFDRS6NKFbDZ72tbW9g5NccqmRziTpOIFagQRIpHIAk5FIRkawKkkVW/wjV4OoVBItiLu7OzIxlh1iTZCJlSDLnsUzSLotknTKoJuAgA0iqCrAABtIuguAFCJCOTw8gBddaUmAgAgQldXV8zldi3Y7fZzjuPg0kL0x2azCW63G/+yvlTdBzSSiYkJOBcU0bwDiJvL5WrbBzSSTCYzglNRyBL8i1NJqBVgfHw8QGrHFJqiwM0xTiVRdSdoJCDtSWqP7e7uKt5TulyuL3t7ezyaohiuBsRisZfkyX6Eg8zNxcf/oxrgQqSnpye0tLQke1VuOAH6+vry5MkqnuKUaGlpmd3a2nqBpiSGqwF6BA+nTqfTOYmmLFTvAmLAPSR8QJJOp1V95a6pBIDgSYGcXF9f/4wuRZpGAEj79vb2V9ls9gO6VGE4AUhbrNi83AaqPRQ8n8/3WMuTv4G6bRDaW+jwoMkhYi37/f6vyWRS86fCDAaDwWAwGAwG4z5jMv0D9jMAtZVsLdkAAAAASUVORK5CYII=", "UMM: Remove Last", removeLastPortal), toolBarButton("umm-opt", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAB3RJTUUH5QgWEyMyp0FY2wAAAAlwSFlzAAALEwAACxMBAJqcGAAAAARnQU1BAACxjwv8YQUAAAKoSURBVHja7Zo/SFxBEMb3GQvFIpoY6yjcgdgmRVKYwlJBSaugYKmNNsYEDAmIYmMEa4OgpYWo2AkKVlqr3IFa+zcWEpvk+Y1vrzm5Y+e4ZVZvfjDsO7hl5/vuvd3ZfWeMoiiKoiiKolQkEefLqVQqymQycTqdfoGPs4hexCthDVeIZcQIcvuH3KJsNht7MSCOY4MBXuNyEdEpLDyfDUQ/TLiMIndZ3DuAfvnVAMXnWEd04w7479qhijnAbMDiiS6bozNcA/qkFZY7R64B9dLqHGjwacCJtDoHjn0aMIm4k1ZYhL82Rz8GYIlZQDMjrbIIM8jxN6cDuw4gUAuMoPmCaJJWbDlDTEH8rwdRHusAugtyJjSieW/CqAT3kNeFzcugDnDuXM0djQYg7ICbwuIf5aUoPFhzAEHzAJGbC0Ih9whwnn+2AfniMWgdmhph7XfI57ZUE9iTIInHQK24HEe0I14KG3CDfHZMsgwecifDUs4DOnC5EoDwR0YgPsOELZ91QJtJ9txvpdUW4BTRiUfgwLUDdy8wH7B4Y3Ob53TgGvBRWmG5c+Qa8OzgGrArnXC5c+QaMGySiSZUTmyOfgzAEkOz66BJlpzQ+EO5US3A6cQqhKjIoHUW7QeTnAd8MvL1AP0Y2yYphI68FkLPsRSu+M2QUumUNAcQoT4ChPftsB3wDZp3JoxD0X3kdZ5vhAulHouPohkzYR2LT8OEhxej3rbD9jzgBy4npBUX4CdM+O7zPICqQNpuSq/9haBXY0OYA5zfDnH3Al8DFk/UIr5xOnANaJZW6ECLTwOupdU5cOXTgCVpdeXOkWsAvRVel1ZYhDXEqDcDsMTQv6/6AzWBxA/YHP0YQH9CxAD0jHUj5hCX0qptDpRLD+VGOUonpCiKoiiKoihPgHtXV96aolVzHAAAAABJRU5ErkJggg==", "UMM: Opt", showUmmOptions))[0]
+                });
+                window.map.addControl(new UMMToolbar), main.state.onSelectedMissionChange.do(onMissionNumberChanged), 
+                main.state.onMissionPortal.do(onMissionPortalsChanged), onMissionNumberChanged(), 
+                onMissionPortalsChanged();
+            })(), $("#toolbox").append($("<a>", {
+                text: "UMM",
+                title: "Ultimate Mission Maker",
+                click: () => this.toggleUMMBar()
+            })), $(".leaflet-umm.leaflet-bar").hide(), this.renderPath = new RenderPath, this.renderNumbers = new RenderNumbers, 
+            window.addHook("portalSelected", event => (async data => {
+                if (lastPortal === data.selectedPortalGuid) return;
+                if (lastPortal = data.selectedPortalGuid, !data.selectedPortalGuid) return;
+                const state = main.state;
+                if (!main.missionModeActive) return;
+                const mission = state.getEditMission();
+                if (!mission) return;
+                const portalToAdd = mission.portals.create(data.selectedPortalGuid);
+                if (mission.portals.includes(portalToAdd.guid)) mission.portals.isEnd(portalToAdd) && bannerNotification(state, `Portal already in mission #${main.state.getCurrent() + 1}`); else {
+                    const preMission = state.missions.previous(mission);
+                    if (0 === mission.portals.length && preMission && preMission.portals.includes(portalToAdd.guid) && !preMission.portals.isStart(portalToAdd) && !preMission.portals.isEnd(portalToAdd) && await confirmDialog({
+                        message: "Split mission?",
+                        details: "Your start portal overlaps another mission's portal. Reuse it or split the previous mission?"
+                    })) {
+                        const index = preMission.portals.indexOf(portalToAdd);
+                        return mission.portals.clear(), state.missions.split(preMission, index, mission), 
+                        void state.save();
+                    }
+                    mission.portals.add(portalToAdd), state.save(), notification(`${main.state.getBannerName()}\nAdded to mission #${main.state.getCurrent() + 1}`);
+                }
+            })(event)), window.addHook("portalDetailsUpdated", addWaypointEditorToPortal), window.addHook("mapDataRefreshEnd", () => this.state.checkAllPortals()), 
+            window.addHook("portalDetailsUpdated", event => this.state.checkPortal(event)), 
+            this.missionModeActive = !1, this.renderPath.redraw(), this.renderNumbers.redraw();
+        }
+        toggleUMMBar() {
+            if ($(".leaflet-umm.leaflet-bar").toggle(), $(".leaflet-umm.leaflet-bar").is(":visible")) this.state.isEmpty() ? editMissionSetDetails() : this.state.missions.zoom(), 
+            this.state.restoreLayerState([ this.renderPath, this.renderNumbers ]); else {
+                const layer = [ this.renderPath, this.renderNumbers ];
+                this.state.storeLayerState(layer), layer.forEach(l => l.toggle(!1));
+            }
+        }
+    };
+    !function Register(plugin, name) {
+        const setup = () => {
+            window.plugin[name] = plugin, window.plugin[name].init();
+        };
+        setup.info = SCRIPT_INFO, window.bootPlugins || (window.bootPlugins = []), window.bootPlugins.push(setup), 
+        window.iitcLoaded && setup();
+    }(main, "UMM_Ext");
+})();
 };
 
-function wrapper_editor(SCRIPT_INFO) {
-/*
- * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
- * This devtool is neither made for production nor for readable output files.
- * It uses "eval()" calls to create a separate source file in the browser devtools.
- * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
- * or disable the default devtool with "devtool: false".
- * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+/**
+ * v1.0
+ * 
+ * - init
+ * 
+ * This is a code conversation of the Ultimate Mission Maker.
+ * 
  */
-/******/ (() => { // webpackBootstrap
-/******/ 	"use strict";
-/******/ 	var __webpack_modules__ = ({
-
-/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[1].use[2]!./src/styles.pcss"
-/*!*****************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[1].use[2]!./src/styles.pcss ***!
-  \*****************************************************************************************************************************************************************/
-(module, __webpack_exports__, __webpack_require__) {
-
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/noSourceMaps.js */ \"./node_modules/css-loader/dist/runtime/noSourceMaps.js\");\n/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/api.js */ \"./node_modules/css-loader/dist/runtime/api.js\");\n/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);\n// Imports\n\n\nvar ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));\n// Module\n___CSS_LOADER_EXPORT___.push([module.id, `#um-mission-pikcer-info{border:1px solid #ff0;border-radius:2px;margin:1em 4px 4px}.umm-mission-btn{margin-bottom:2px;margin-right:1em;margin-top:2px}.umm-mission-btn.w-full{width:90%}.umm-options-list{overflow:hidden}.umm-notification{background-color:#383838;border-radius:2px;-webkit-box-shadow:0 0 24px -1px #383838;-moz-box-shadow:0 0 24px -1px #383838;box-shadow:0 0 24px -1px #383838;color:#f0f0f0;font-family:Calibri,sans-serif;font-size:20px;height:auto;left:50%;margin-left:-100px;padding:10px;position:absolute;text-align:center;top:20px;width:300px;z-index:10000}.umm-options-list a{background:rgba(8,48,78,.9);border:1px solid #ffce00;color:#ffce00;display:block;margin:10px auto;padding:3px 0;text-align:center;width:80%}#dialog-umm-edit-mission-set-details{background-color:rgba(8,48,78,.9)}.umm-edit-mission-set-details p{display:block;margin:5px 0 8px}.umm-edit-mission-set-details label{display:block;margin-bottom:5px}.umm-edit-mission-set-details input,.umm-edit-mission-set-details textarea{margin-bottom:15px;width:100%}.umm-edit-mission-set-details textarea{background-color:#062844;color:#ffce00;font-family:inherit;resize:vertical;width:calc(100% - 6px)}.umm-edit-mission-set-details span.umm-error{color:#fff;display:block;display:none;margin-bottom:5px}.umm-edit-mission-set-details span.umm-error b{color:red}.umm-dialog-button{margin-left:5px}.umm-mission-marker .start{fill:#16d4b2;stroke:#005243;stroke-miterlimit:10}.umm-mission-marker .active{fill:#6832da;stroke:#16043f;stroke-miterlimit:10}.umm-mission-number{color:#000;font-family:monospace;font-size:14px;font-weight:700;left:0;position:absolute;text-align:center;top:6px;width:34px}#umm-waypoint-editor{border-bottom:1px solid #20a8b1;border-top:1px solid #20a8b1;box-sizing:border-box;color:#ffce00;display:flex;flex-direction:column;margin-bottom:10px;margin-top:10px;padding:8px 5px;width:100%}.umm-waypoint-editor-title{font-weight:700;margin-bottom:6px}.umm-waypoint-select-container{display:flex;flex-direction:row;width:100%}.umm-waypoint-select-container>select{background-color:#062844;border:none;color:#ffce00;height:24px}#umm-mission-select{width:60px}#umm-action-select{margin-left:4px;width:100%}#umm-passphrase-container{display:none;flex-direction:column;margin-top:5px}#umm-passphrase-container>span{margin-bottom:3px}#umm-passphrase-container>input,#umm-passphrase-container>textarea{background-color:#062844;border:none;color:#ffce00;font-family:Arial;margin-bottom:5px;min-height:24px;padding:3px;resize:vertical}.umm-confirm.no_title .ui-dialog-titlebar{display:none}.umm-confirm .header{font-size:1.4em;line-height:1.4em;margin:10px;overflow:hidden;text-align:center;text-overflow:ellipsis}.umm-confirm .details{color:#ccc;text-align:center}`, \"\"]);\n// Exports\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);\n\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/styles.pcss?./node_modules/css-loader/dist/cjs.js??ruleSet%5B1%5D.rules%5B1%5D.use%5B1%5D!./node_modules/postcss-loader/dist/cjs.js??ruleSet%5B1%5D.rules%5B1%5D.use%5B2%5D\n}");
-
-/***/ },
-
-/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[1].use[2]!./src_MissionEditor/styles.pcss"
-/*!*******************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[1].use[2]!./src_MissionEditor/styles.pcss ***!
-  \*******************************************************************************************************************************************************************************/
-(module, __webpack_exports__, __webpack_require__) {
-
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/noSourceMaps.js */ \"./node_modules/css-loader/dist/runtime/noSourceMaps.js\");\n/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/api.js */ \"./node_modules/css-loader/dist/runtime/api.js\");\n/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/getUrl.js */ \"./node_modules/css-loader/dist/runtime/getUrl.js\");\n/* harmony import */ var _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2__);\n// Imports\n\n\n\nvar ___CSS_LOADER_URL_IMPORT_0___ = new URL(/* asset import */ __webpack_require__(/*! data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAFHGlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDIgNzkuMTYwOTI0LCAyMDE3LzA3LzEzLTAxOjA2OjM5ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgeG1sbnM6cGhvdG9zaG9wPSJodHRwOi8vbnMuYWRvYmUuY29tL3Bob3Rvc2hvcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgMjAxOCAoV2luZG93cykiIHhtcDpDcmVhdGVEYXRlPSIyMDE4LTA5LTE3VDAyOjU3OjM3KzAyOjAwIiB4bXA6TW9kaWZ5RGF0ZT0iMjAxOC0wOS0xN1QwMjo1ODoyMCswMjowMCIgeG1wOk1ldGFkYXRhRGF0ZT0iMjAxOC0wOS0xN1QwMjo1ODoyMCswMjowMCIgZGM6Zm9ybWF0PSJpbWFnZS9wbmciIHBob3Rvc2hvcDpDb2xvck1vZGU9IjMiIHBob3Rvc2hvcDpJQ0NQcm9maWxlPSJzUkdCIElFQzYxOTY2LTIuMSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo0NWYwMDRiMS05NzRjLWRlNDctYTEzMi02NWZlYzIyOWM1NWYiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NDVmMDA0YjEtOTc0Yy1kZTQ3LWExMzItNjVmZWMyMjljNTVmIiB4bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ9InhtcC5kaWQ6NDVmMDA0YjEtOTc0Yy1kZTQ3LWExMzItNjVmZWMyMjljNTVmIj4gPHhtcE1NOkhpc3Rvcnk+IDxyZGY6U2VxPiA8cmRmOmxpIHN0RXZ0OmFjdGlvbj0iY3JlYXRlZCIgc3RFdnQ6aW5zdGFuY2VJRD0ieG1wLmlpZDo0NWYwMDRiMS05NzRjLWRlNDctYTEzMi02NWZlYzIyOWM1NWYiIHN0RXZ0OndoZW49IjIwMTgtMDktMTdUMDI6NTc6MzcrMDI6MDAiIHN0RXZ0OnNvZnR3YXJlQWdlbnQ9IkFkb2JlIFBob3Rvc2hvcCBDQyAyMDE4IChXaW5kb3dzKSIvPiA8L3JkZjpTZXE+IDwveG1wTU06SGlzdG9yeT4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz5w/iV0AAACPklEQVRoge2ZsWvVQACHv1yVoiIiggWhkygu0giC4KSzrg4ujp27uTnq6KDgoOjoKPgvCA5OeQ8LWqHa6lAdWnWprdWfw7009/Kitbl4eRf84JG7eyT8PnJ3uVwSSXQB03aApvgvMm4YYB9wB1gDtIvfInAxfORqEkm3gbma538GUmCpoTy1SSStAFMe13gGXAB+NpKoJomamX9vAHcbuM5O/AC+Vv3RlEhI3gPXgcduY4wiYO/MeeBF3hDr9DsBXHEb9uxwgrAz0zhyyK1UiQh4BNwDXgLfAoTypmqMzAL3B+VJ4CiwN2iqv2MT+LBd0zBPJSFpUtJDSRsabz5JuiZpROSyrMit4JHqsyXpXLlrHQFWgWVgOmxP8eKmO/0uYSWmiEsCYN0V6Q2OaQtBfOm7ItngmIbP4U3WBZE1YLkLIj0o1lpfgHfAAeBES4HqMiSSYZcmp7ELspgYEYH4uhV0RGQLmIdCJNZnyCtgA6zId6zVBHaMxESWFwxWYhM4CexvKVBd+nnBUFjNtBLFjywvGIrxcaaVKH5U3pG0jSQerAAf80rMIplbMdhdkmPYd/OY6LuV/DkS9UCHQiTGgd5zK7lIGj6HF+vAgtsQq8g8dp21jQEOAsdbiVOfXrnBYNdXsW1mV4rEOND75QZDfOMDSlMvxCnyFrvHMIQBToXP4sVItwIrshg4iC/PqxoTSZeAJ4znN5Ayb4CzVHzZTQab8TPAVeBw2Fy74jXwgD98ng4b5x8R24Pwt3RG5BfpNRC+G94MKgAAAABJRU5ErkJggg== */ \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAFHGlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDIgNzkuMTYwOTI0LCAyMDE3LzA3LzEzLTAxOjA2OjM5ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgeG1sbnM6cGhvdG9zaG9wPSJodHRwOi8vbnMuYWRvYmUuY29tL3Bob3Rvc2hvcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgMjAxOCAoV2luZG93cykiIHhtcDpDcmVhdGVEYXRlPSIyMDE4LTA5LTE3VDAyOjU3OjM3KzAyOjAwIiB4bXA6TW9kaWZ5RGF0ZT0iMjAxOC0wOS0xN1QwMjo1ODoyMCswMjowMCIgeG1wOk1ldGFkYXRhRGF0ZT0iMjAxOC0wOS0xN1QwMjo1ODoyMCswMjowMCIgZGM6Zm9ybWF0PSJpbWFnZS9wbmciIHBob3Rvc2hvcDpDb2xvck1vZGU9IjMiIHBob3Rvc2hvcDpJQ0NQcm9maWxlPSJzUkdCIElFQzYxOTY2LTIuMSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo0NWYwMDRiMS05NzRjLWRlNDctYTEzMi02NWZlYzIyOWM1NWYiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NDVmMDA0YjEtOTc0Yy1kZTQ3LWExMzItNjVmZWMyMjljNTVmIiB4bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ9InhtcC5kaWQ6NDVmMDA0YjEtOTc0Yy1kZTQ3LWExMzItNjVmZWMyMjljNTVmIj4gPHhtcE1NOkhpc3Rvcnk+IDxyZGY6U2VxPiA8cmRmOmxpIHN0RXZ0OmFjdGlvbj0iY3JlYXRlZCIgc3RFdnQ6aW5zdGFuY2VJRD0ieG1wLmlpZDo0NWYwMDRiMS05NzRjLWRlNDctYTEzMi02NWZlYzIyOWM1NWYiIHN0RXZ0OndoZW49IjIwMTgtMDktMTdUMDI6NTc6MzcrMDI6MDAiIHN0RXZ0OnNvZnR3YXJlQWdlbnQ9IkFkb2JlIFBob3Rvc2hvcCBDQyAyMDE4IChXaW5kb3dzKSIvPiA8L3JkZjpTZXE+IDwveG1wTU06SGlzdG9yeT4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz5w/iV0AAACPklEQVRoge2ZsWvVQACHv1yVoiIiggWhkygu0giC4KSzrg4ujp27uTnq6KDgoOjoKPgvCA5OeQ8LWqHa6lAdWnWprdWfw7009/Kitbl4eRf84JG7eyT8PnJ3uVwSSXQB03aApvgvMm4YYB9wB1gDtIvfInAxfORqEkm3gbma538GUmCpoTy1SSStAFMe13gGXAB+NpKoJomamX9vAHcbuM5O/AC+Vv3RlEhI3gPXgcduY4wiYO/MeeBF3hDr9DsBXHEb9uxwgrAz0zhyyK1UiQh4BNwDXgLfAoTypmqMzAL3B+VJ4CiwN2iqv2MT+LBd0zBPJSFpUtJDSRsabz5JuiZpROSyrMit4JHqsyXpXLlrHQFWgWVgOmxP8eKmO/0uYSWmiEsCYN0V6Q2OaQtBfOm7ItngmIbP4U3WBZE1YLkLIj0o1lpfgHfAAeBES4HqMiSSYZcmp7ELspgYEYH4uhV0RGQLmIdCJNZnyCtgA6zId6zVBHaMxESWFwxWYhM4CexvKVBd+nnBUFjNtBLFjywvGIrxcaaVKH5U3pG0jSQerAAf80rMIplbMdhdkmPYd/OY6LuV/DkS9UCHQiTGgd5zK7lIGj6HF+vAgtsQq8g8dp21jQEOAsdbiVOfXrnBYNdXsW1mV4rEOND75QZDfOMDSlMvxCnyFrvHMIQBToXP4sVItwIrshg4iC/PqxoTSZeAJ4znN5Ayb4CzVHzZTQab8TPAVeBw2Fy74jXwgD98ng4b5x8R24Pwt3RG5BfpNRC+G94MKgAAAABJRU5ErkJggg==\"), __webpack_require__.b);\nvar ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));\nvar ___CSS_LOADER_URL_REPLACEMENT_0___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_0___);\n// Module\n___CSS_LOADER_EXPORT___.push([module.id, `#umm-badge{background-color:crimson;margin:15px 0 0 10px;padding:0 5px}#umm-badge,#umm-mission-editor-bar{color:#fff;float:left;height:26px;line-height:28px;vertical-align:middle}#umm-mission-editor-bar{background-color:#08304e;margin-top:15px;padding-left:5px}#umm-mission-title{display:inline-block;max-width:200px;min-width:4em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}#umm-mission-picker-wrapper{display:inline-block;margin-left:10px}.umm-upload-label{background-image:url(${___CSS_LOADER_URL_REPLACEMENT_0___});background-size:cover;box-sizing:border-box;cursor:pointer;display:inline-block;height:16px;margin:0 0 0 5px;padding:3px 0 7px;width:16px}#umm-import-file{border:none;border-radius:0;height:.1px;opacity:0;overflow:hidden;position:absolute;width:.1px;z-index:-1}.umm-mission-picker{margin-left:15px}.umm-mission-picker,.umm-mission-picker-btn{background-color:#08304e;height:26px;padding:0 10px}.umm-mission-picker-btn{margin-left:3px}.umm-notification{background-color:#383838;border-radius:2px;-webkit-box-shadow:0 0 24px -1px #383838;-moz-box-shadow:0 0 24px -1px #383838;box-shadow:0 0 24px -1px #383838;color:#f0f0f0;font-family:Calibri,sans-serif;font-size:20px;height:20px;height:auto;left:50%;margin-left:-100px;padding:10px;position:fixed;text-align:center;top:55px;width:300px;z-index:10000}.umm-options-list a{background:rgba(8,48,78,.9);border:1px solid #ffce00;color:#ffce00;display:block;margin:10px auto;padding:3px 0;text-align:center;width:80%}`, \"\"]);\n// Exports\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);\n\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src_MissionEditor/styles.pcss?./node_modules/css-loader/dist/cjs.js??ruleSet%5B1%5D.rules%5B1%5D.use%5B1%5D!./node_modules/postcss-loader/dist/cjs.js??ruleSet%5B1%5D.rules%5B1%5D.use%5B2%5D\n}");
-
-/***/ },
-
-/***/ "./node_modules/css-loader/dist/runtime/api.js"
-/*!*****************************************************!*\
-  !*** ./node_modules/css-loader/dist/runtime/api.js ***!
-  \*****************************************************/
-(module) {
-
-eval("{\n\n/*\n  MIT License http://www.opensource.org/licenses/mit-license.php\n  Author Tobias Koppers @sokra\n*/\nmodule.exports = function (cssWithMappingToString) {\n  var list = [];\n\n  // return the list of modules as css string\n  list.toString = function toString() {\n    return this.map(function (item) {\n      var content = \"\";\n      var needLayer = typeof item[5] !== \"undefined\";\n      if (item[4]) {\n        content += \"@supports (\".concat(item[4], \") {\");\n      }\n      if (item[2]) {\n        content += \"@media \".concat(item[2], \" {\");\n      }\n      if (needLayer) {\n        content += \"@layer\".concat(item[5].length > 0 ? \" \".concat(item[5]) : \"\", \" {\");\n      }\n      content += cssWithMappingToString(item);\n      if (needLayer) {\n        content += \"}\";\n      }\n      if (item[2]) {\n        content += \"}\";\n      }\n      if (item[4]) {\n        content += \"}\";\n      }\n      return content;\n    }).join(\"\");\n  };\n\n  // import a list of modules into the list\n  list.i = function i(modules, media, dedupe, supports, layer) {\n    if (typeof modules === \"string\") {\n      modules = [[null, modules, undefined]];\n    }\n    var alreadyImportedModules = {};\n    if (dedupe) {\n      for (var k = 0; k < this.length; k++) {\n        var id = this[k][0];\n        if (id != null) {\n          alreadyImportedModules[id] = true;\n        }\n      }\n    }\n    for (var _k = 0; _k < modules.length; _k++) {\n      var item = [].concat(modules[_k]);\n      if (dedupe && alreadyImportedModules[item[0]]) {\n        continue;\n      }\n      if (typeof layer !== \"undefined\") {\n        if (typeof item[5] === \"undefined\") {\n          item[5] = layer;\n        } else {\n          item[1] = \"@layer\".concat(item[5].length > 0 ? \" \".concat(item[5]) : \"\", \" {\").concat(item[1], \"}\");\n          item[5] = layer;\n        }\n      }\n      if (media) {\n        if (!item[2]) {\n          item[2] = media;\n        } else {\n          item[1] = \"@media \".concat(item[2], \" {\").concat(item[1], \"}\");\n          item[2] = media;\n        }\n      }\n      if (supports) {\n        if (!item[4]) {\n          item[4] = \"\".concat(supports);\n        } else {\n          item[1] = \"@supports (\".concat(item[4], \") {\").concat(item[1], \"}\");\n          item[4] = supports;\n        }\n      }\n      list.push(item);\n    }\n  };\n  return list;\n};\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./node_modules/css-loader/dist/runtime/api.js?\n}");
-
-/***/ },
-
-/***/ "./node_modules/css-loader/dist/runtime/getUrl.js"
-/*!********************************************************!*\
-  !*** ./node_modules/css-loader/dist/runtime/getUrl.js ***!
-  \********************************************************/
-(module) {
-
-eval("{\n\nmodule.exports = function (url, options) {\n  if (!options) {\n    options = {};\n  }\n  if (!url) {\n    return url;\n  }\n  url = String(url.__esModule ? url.default : url);\n\n  // If url is already wrapped in quotes, remove them\n  if (/^['\"].*['\"]$/.test(url)) {\n    url = url.slice(1, -1);\n  }\n  if (options.hash) {\n    url += options.hash;\n  }\n\n  // Should url be wrapped?\n  // See https://drafts.csswg.org/css-values-3/#urls\n  if (/[\"'() \\t\\n]|(%20)/.test(url) || options.needQuotes) {\n    return \"\\\"\".concat(url.replace(/\"/g, '\\\\\"').replace(/\\n/g, \"\\\\n\"), \"\\\"\");\n  }\n  return url;\n};\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./node_modules/css-loader/dist/runtime/getUrl.js?\n}");
-
-/***/ },
-
-/***/ "./node_modules/css-loader/dist/runtime/noSourceMaps.js"
-/*!**************************************************************!*\
-  !*** ./node_modules/css-loader/dist/runtime/noSourceMaps.js ***!
-  \**************************************************************/
-(module) {
-
-eval("{\n\nmodule.exports = function (i) {\n  return i[1];\n};\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./node_modules/css-loader/dist/runtime/noSourceMaps.js?\n}");
-
-/***/ },
-
-/***/ "./node_modules/iitcpluginkit/dist/Plugin.js"
-/*!***************************************************!*\
-  !*** ./node_modules/iitcpluginkit/dist/Plugin.js ***!
-  \***************************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   Register: () => (/* binding */ Register)\n/* harmony export */ });\n/*\n*   Usage example:\n\n    import * as Plugin from \"../plugin\";\n\n    class myPlugin implements Plugin.Class {\n        init() {\n            console.log(\"Hello World!\");\n        }\n    }\n\n    Plugin.Register(new myPlugin(), \"myPlugin\");\n*/\n/// <reference path=\"../types/index.d.ts\" />\nfunction Register(plugin, name) {\n    const setup = () => {\n        window.plugin[name] = plugin;\n        window.plugin[name].init();\n    };\n    setup.info = SCRIPT_INFO;\n    if (!window.bootPlugins) {\n        window.bootPlugins = [];\n    }\n    window.bootPlugins.push(setup);\n    if (window.iitcLoaded) {\n        setup();\n    }\n}\n\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./node_modules/iitcpluginkit/dist/Plugin.js?\n}");
-
-/***/ },
-
-/***/ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js"
-/*!****************************************************************************!*\
-  !*** ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js ***!
-  \****************************************************************************/
-(module) {
-
-eval("{\n\nvar stylesInDOM = [];\nfunction getIndexByIdentifier(identifier) {\n  var result = -1;\n  for (var i = 0; i < stylesInDOM.length; i++) {\n    if (stylesInDOM[i].identifier === identifier) {\n      result = i;\n      break;\n    }\n  }\n  return result;\n}\nfunction modulesToDom(list, options) {\n  var idCountMap = {};\n  var identifiers = [];\n  for (var i = 0; i < list.length; i++) {\n    var item = list[i];\n    var id = options.base ? item[0] + options.base : item[0];\n    var count = idCountMap[id] || 0;\n    var identifier = \"\".concat(id, \" \").concat(count);\n    idCountMap[id] = count + 1;\n    var indexByIdentifier = getIndexByIdentifier(identifier);\n    var obj = {\n      css: item[1],\n      media: item[2],\n      sourceMap: item[3],\n      supports: item[4],\n      layer: item[5]\n    };\n    if (indexByIdentifier !== -1) {\n      stylesInDOM[indexByIdentifier].references++;\n      stylesInDOM[indexByIdentifier].updater(obj);\n    } else {\n      var updater = addElementStyle(obj, options);\n      options.byIndex = i;\n      stylesInDOM.splice(i, 0, {\n        identifier: identifier,\n        updater: updater,\n        references: 1\n      });\n    }\n    identifiers.push(identifier);\n  }\n  return identifiers;\n}\nfunction addElementStyle(obj, options) {\n  var api = options.domAPI(options);\n  api.update(obj);\n  var updater = function updater(newObj) {\n    if (newObj) {\n      if (newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap && newObj.supports === obj.supports && newObj.layer === obj.layer) {\n        return;\n      }\n      api.update(obj = newObj);\n    } else {\n      api.remove();\n    }\n  };\n  return updater;\n}\nmodule.exports = function (list, options) {\n  options = options || {};\n  list = list || [];\n  var lastIdentifiers = modulesToDom(list, options);\n  return function update(newList) {\n    newList = newList || [];\n    for (var i = 0; i < lastIdentifiers.length; i++) {\n      var identifier = lastIdentifiers[i];\n      var index = getIndexByIdentifier(identifier);\n      stylesInDOM[index].references--;\n    }\n    var newLastIdentifiers = modulesToDom(newList, options);\n    for (var _i = 0; _i < lastIdentifiers.length; _i++) {\n      var _identifier = lastIdentifiers[_i];\n      var _index = getIndexByIdentifier(_identifier);\n      if (stylesInDOM[_index].references === 0) {\n        stylesInDOM[_index].updater();\n        stylesInDOM.splice(_index, 1);\n      }\n    }\n    lastIdentifiers = newLastIdentifiers;\n  };\n};\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js?\n}");
-
-/***/ },
-
-/***/ "./node_modules/style-loader/dist/runtime/insertBySelector.js"
-/*!********************************************************************!*\
-  !*** ./node_modules/style-loader/dist/runtime/insertBySelector.js ***!
-  \********************************************************************/
-(module) {
-
-eval("{\n\nvar memo = {};\n\n/* istanbul ignore next  */\nfunction getTarget(target) {\n  if (typeof memo[target] === \"undefined\") {\n    var styleTarget = document.querySelector(target);\n\n    // Special case to return head of iframe instead of iframe itself\n    if (window.HTMLIFrameElement && styleTarget instanceof window.HTMLIFrameElement) {\n      try {\n        // This will throw an exception if access to iframe is blocked\n        // due to cross-origin restrictions\n        styleTarget = styleTarget.contentDocument.head;\n      } catch (e) {\n        // istanbul ignore next\n        styleTarget = null;\n      }\n    }\n    memo[target] = styleTarget;\n  }\n  return memo[target];\n}\n\n/* istanbul ignore next  */\nfunction insertBySelector(insert, style) {\n  var target = getTarget(insert);\n  if (!target) {\n    throw new Error(\"Couldn't find a style target. This probably means that the value for the 'insert' parameter is invalid.\");\n  }\n  target.appendChild(style);\n}\nmodule.exports = insertBySelector;\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./node_modules/style-loader/dist/runtime/insertBySelector.js?\n}");
-
-/***/ },
-
-/***/ "./node_modules/style-loader/dist/runtime/insertStyleElement.js"
-/*!**********************************************************************!*\
-  !*** ./node_modules/style-loader/dist/runtime/insertStyleElement.js ***!
-  \**********************************************************************/
-(module) {
-
-eval("{\n\n/* istanbul ignore next  */\nfunction insertStyleElement(options) {\n  var element = document.createElement(\"style\");\n  options.setAttributes(element, options.attributes);\n  options.insert(element, options.options);\n  return element;\n}\nmodule.exports = insertStyleElement;\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./node_modules/style-loader/dist/runtime/insertStyleElement.js?\n}");
-
-/***/ },
-
-/***/ "./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js"
-/*!**********************************************************************************!*\
-  !*** ./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js ***!
-  \**********************************************************************************/
-(module, __unused_webpack_exports, __webpack_require__) {
-
-eval("{\n\n/* istanbul ignore next  */\nfunction setAttributesWithoutAttributes(styleElement) {\n  var nonce =  true ? __webpack_require__.nc : 0;\n  if (nonce) {\n    styleElement.setAttribute(\"nonce\", nonce);\n  }\n}\nmodule.exports = setAttributesWithoutAttributes;\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js?\n}");
-
-/***/ },
-
-/***/ "./node_modules/style-loader/dist/runtime/styleDomAPI.js"
-/*!***************************************************************!*\
-  !*** ./node_modules/style-loader/dist/runtime/styleDomAPI.js ***!
-  \***************************************************************/
-(module) {
-
-eval("{\n\n/* istanbul ignore next  */\nfunction apply(styleElement, options, obj) {\n  var css = \"\";\n  if (obj.supports) {\n    css += \"@supports (\".concat(obj.supports, \") {\");\n  }\n  if (obj.media) {\n    css += \"@media \".concat(obj.media, \" {\");\n  }\n  var needLayer = typeof obj.layer !== \"undefined\";\n  if (needLayer) {\n    css += \"@layer\".concat(obj.layer.length > 0 ? \" \".concat(obj.layer) : \"\", \" {\");\n  }\n  css += obj.css;\n  if (needLayer) {\n    css += \"}\";\n  }\n  if (obj.media) {\n    css += \"}\";\n  }\n  if (obj.supports) {\n    css += \"}\";\n  }\n  var sourceMap = obj.sourceMap;\n  if (sourceMap && typeof btoa !== \"undefined\") {\n    css += \"\\n/*# sourceMappingURL=data:application/json;base64,\".concat(btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))), \" */\");\n  }\n\n  // For old IE\n  /* istanbul ignore if  */\n  options.styleTagTransform(css, styleElement, options.options);\n}\nfunction removeStyleElement(styleElement) {\n  // istanbul ignore if\n  if (styleElement.parentNode === null) {\n    return false;\n  }\n  styleElement.parentNode.removeChild(styleElement);\n}\n\n/* istanbul ignore next  */\nfunction domAPI(options) {\n  if (typeof document === \"undefined\") {\n    return {\n      update: function update() {},\n      remove: function remove() {}\n    };\n  }\n  var styleElement = options.insertStyleElement(options);\n  return {\n    update: function update(obj) {\n      apply(styleElement, options, obj);\n    },\n    remove: function remove() {\n      removeStyleElement(styleElement);\n    }\n  };\n}\nmodule.exports = domAPI;\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./node_modules/style-loader/dist/runtime/styleDomAPI.js?\n}");
-
-/***/ },
-
-/***/ "./node_modules/style-loader/dist/runtime/styleTagTransform.js"
-/*!*********************************************************************!*\
-  !*** ./node_modules/style-loader/dist/runtime/styleTagTransform.js ***!
-  \*********************************************************************/
-(module) {
-
-eval("{\n\n/* istanbul ignore next  */\nfunction styleTagTransform(css, styleElement) {\n  if (styleElement.styleSheet) {\n    styleElement.styleSheet.cssText = css;\n  } else {\n    while (styleElement.firstChild) {\n      styleElement.removeChild(styleElement.firstChild);\n    }\n    styleElement.appendChild(document.createTextNode(css));\n  }\n}\nmodule.exports = styleTagTransform;\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./node_modules/style-loader/dist/runtime/styleTagTransform.js?\n}");
-
-/***/ },
-
-/***/ "./src/Edits.ts"
-/*!**********************!*\
-  !*** ./src/Edits.ts ***!
-  \**********************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   addPortalToCurrentMission: () => (/* binding */ addPortalToCurrentMission),\n/* harmony export */   clearMissionData: () => (/* binding */ clearMissionData),\n/* harmony export */   mergeMissions: () => (/* binding */ mergeMissions),\n/* harmony export */   removeLastPortal: () => (/* binding */ removeLastPortal),\n/* harmony export */   reverseMission: () => (/* binding */ reverseMission),\n/* harmony export */   setCurrentMission: () => (/* binding */ setCurrentMission),\n/* harmony export */   splitMissionOptions: () => (/* binding */ splitMissionOptions),\n/* harmony export */   startEdit: () => (/* binding */ startEdit),\n/* harmony export */   toggleMissionMode: () => (/* binding */ toggleMissionMode)\n/* harmony export */ });\n/* harmony import */ var _Main__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Main */ \"./src/Main.ts\");\n/* harmony import */ var _UI_ButtonBar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./UI/ButtonBar */ \"./src/UI/ButtonBar.ts\");\n/* harmony import */ var _UI_Dialog_Button__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./UI/Dialog/Button */ \"./src/UI/Dialog/Button.ts\");\n/* harmony import */ var _UI_Dialog_MissionDetails__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./UI/Dialog/MissionDetails */ \"./src/UI/Dialog/MissionDetails.ts\");\n/* harmony import */ var _UI_Dialog_Options__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./UI/Dialog/Options */ \"./src/UI/Dialog/Options.ts\");\n/* harmony import */ var _UI_Notification__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./UI/Notification */ \"./src/UI/Notification.ts\");\n/* harmony import */ var _Text_Text__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Text/Text */ \"./src/Text/Text.ts\");\n/* harmony import */ var _UI_Dialog_Confirm__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./UI/Dialog/Confirm */ \"./src/UI/Dialog/Confirm.ts\");\n\n\n\n\n\n\n\n\nlet lastPortal;\nlet missionModeResuming = false;\nconst addPortalToCurrentMission = async (data) => {\n    // same or nothing selected\n    if (lastPortal === data.selectedPortalGuid) {\n        return;\n    }\n    lastPortal = data.selectedPortalGuid;\n    if (!data.selectedPortalGuid)\n        return;\n    // we are not in edit mode or it is the first selection\n    const state = _Main__WEBPACK_IMPORTED_MODULE_0__.main.state;\n    if (!_Main__WEBPACK_IMPORTED_MODULE_0__.main.missionModeActive || missionModeResuming) {\n        missionModeResuming = false;\n        return;\n    }\n    const mission = state.getEditMission();\n    if (!mission)\n        return;\n    const portalToAdd = mission.portals.create(data.selectedPortalGuid);\n    if (mission.portals.includes(portalToAdd.guid)) {\n        if (mission.portals.isEnd(portalToAdd)) {\n            (0,_UI_Notification__WEBPACK_IMPORTED_MODULE_5__.bannerNotification)(`Portal already in mission #${_Main__WEBPACK_IMPORTED_MODULE_0__.main.state.getCurrent() + 1}`);\n        }\n    }\n    else {\n        const preMission = state.missions.previous(mission);\n        if (mission.portals.length === 0 && preMission && preMission.portals.includes(portalToAdd.guid) &&\n            (!preMission.portals.isStart(portalToAdd) && !preMission.portals.isEnd(portalToAdd))) {\n            if (await (0,_UI_Dialog_Confirm__WEBPACK_IMPORTED_MODULE_7__.confirmDialog)({\n                message: \"Split mission?\",\n                details: \"Your start portal overlaps another mission's portal. Reuse it or split the previous mission?\"\n            })) {\n                const index = preMission.portals.indexOf(portalToAdd);\n                mission.portals.clear();\n                state.missions.split(preMission, index, mission);\n                state.save();\n                _Main__WEBPACK_IMPORTED_MODULE_0__.main.redrawAll();\n                return;\n            }\n        }\n        mission.portals.add(portalToAdd);\n        state.save();\n        _Main__WEBPACK_IMPORTED_MODULE_0__.main.redrawAll();\n        (0,_UI_Notification__WEBPACK_IMPORTED_MODULE_5__.notification)(`${_Main__WEBPACK_IMPORTED_MODULE_0__.main.state.getBannerName()}\\nAdded to mission #${_Main__WEBPACK_IMPORTED_MODULE_0__.main.state.getCurrent() + 1}`);\n    }\n};\nconst clearMissionData = () => {\n    _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.reset();\n    _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.save();\n    (0,_UI_ButtonBar__WEBPACK_IMPORTED_MODULE_1__.updateCurrentActiveMissionSidebar)(_Main__WEBPACK_IMPORTED_MODULE_0__.main.state);\n    if (_Main__WEBPACK_IMPORTED_MODULE_0__.main.missionModeActive) {\n        toggleMissionMode();\n    }\n    _Main__WEBPACK_IMPORTED_MODULE_0__.main.redrawAll();\n};\nconst removeLastPortal = () => {\n    var _a;\n    if (!_Main__WEBPACK_IMPORTED_MODULE_0__.main.missionModeActive) {\n        (0,_UI_Notification__WEBPACK_IMPORTED_MODULE_5__.notification)(`Only valid in edit mode`);\n        return;\n    }\n    const mission = _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.getEditMission();\n    // If currentMission has 0 portals, refuse\n    if (mission && mission.portals.length > 0) {\n        lastPortal = undefined;\n        mission.portals.remove(mission.portals.length - 1);\n        _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.save();\n        _Main__WEBPACK_IMPORTED_MODULE_0__.main.redrawAll();\n        // Check if current mission still has portals, if so reset view to this portal\n        if (!mission.focusLastPortal()) {\n            // Clear out the portal view to allow for any portal to be selected as start portal\n            // eslint-disable-next-line unicorn/no-null\n            renderPortalDetails(null);\n            (0,_UI_Notification__WEBPACK_IMPORTED_MODULE_5__.notification)(`${_Main__WEBPACK_IMPORTED_MODULE_0__.main.state.getBannerName()}\\nNo portals left in mission.\\nSelect start portal`);\n        }\n    }\n    else {\n        // If no more portals are left in the current mission\n        // Go back to the last portal of the previous mission (but don't delete it)\n        if (mission && mission.id > 0) {\n            setCurrentMission(mission.id - 1);\n            _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.save();\n            (_a = _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.getEditMission()) === null || _a === void 0 ? void 0 : _a.focusLastPortal();\n            (0,_UI_Notification__WEBPACK_IMPORTED_MODULE_5__.notification)(`${_Main__WEBPACK_IMPORTED_MODULE_0__.main.state.getBannerName()}\\nLast mission removed\\nSwitched to previous mission ${mission.id + 2}\\n`);\n        }\n        else {\n            (0,_UI_Notification__WEBPACK_IMPORTED_MODULE_5__.notification)(`${_Main__WEBPACK_IMPORTED_MODULE_0__.main.state.getBannerName()}\\nCan't undo\\nAlready on last mission\\n`);\n        }\n    }\n};\nconst toggleMissionMode = () => {\n    if (_Main__WEBPACK_IMPORTED_MODULE_0__.main.missionModeActive) {\n        _Main__WEBPACK_IMPORTED_MODULE_0__.main.missionModeActive = false;\n        $('#umm-toggle-bookmarks').css(\"background-color\", \"\");\n    }\n    else {\n        if (!_Main__WEBPACK_IMPORTED_MODULE_0__.main.state.isValid()) {\n            // Mission data not set, ask for details, then attempt to enable mission mode again on Save\n            (0,_UI_Dialog_MissionDetails__WEBPACK_IMPORTED_MODULE_3__.editMissionSetDetails)(true);\n            (0,_UI_Notification__WEBPACK_IMPORTED_MODULE_5__.notification)(\"Mission mode inactive\\nPlease enter mission data\\nAnd try again.\");\n            return;\n        }\n        _Main__WEBPACK_IMPORTED_MODULE_0__.main.missionModeActive = true;\n        startEdit();\n        $('#umm-toggle-bookmarks').css(\"background-color\", \"crimson\");\n    }\n    _Main__WEBPACK_IMPORTED_MODULE_0__.main.renderPath.redraw();\n};\nconst startEdit = () => {\n    // If the currentMission already has portals, resume mission creation at last portal\n    const editMission = _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.getEditMission();\n    const missionNumber = _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.getCurrent() + 1;\n    if (editMission === null || editMission === void 0 ? void 0 : editMission.hasPortals()) {\n        missionModeResuming = true;\n        editMission.show();\n        window.renderPortalDetails(editMission.portals.get(-1).guid);\n        (0,_UI_Notification__WEBPACK_IMPORTED_MODULE_5__.bannerNotification)(`Mission mode active.\\nResuming mission #${missionNumber}\\nSelect next portal`);\n    }\n    else {\n        (0,_UI_Notification__WEBPACK_IMPORTED_MODULE_5__.bannerNotification)(`Mission mode active.\\nSelect start portal for mission #${missionNumber}`);\n    }\n};\nconst splitMissionOptions = () => {\n    let html = '<div class=\"umm-split-mission-options\">';\n    html = `<b>How do you want to split your mission?</b><br><br>\n      <b>Remainder at the end:</b> All missions will contain the same amount of portals, any portals left over after splitting are added to the last mission.<br><br>\n      <b>Balanced:</b> Split the banner into missions of the same length, if any portals are left over after splitting, earlier missions will get 1 portal extra to balance it out.\n      `;\n    const buttons = [\n        (0,_UI_Dialog_Button__WEBPACK_IMPORTED_MODULE_2__.dialogButton)(\"< Main Menu\", _UI_Dialog_Options__WEBPACK_IMPORTED_MODULE_4__.showUmmOptions),\n        (0,_UI_Dialog_Button__WEBPACK_IMPORTED_MODULE_2__.dialogButton)(\"Remainder at end\", () => splitMissionStart(true)),\n        (0,_UI_Dialog_Button__WEBPACK_IMPORTED_MODULE_2__.dialogButton)(\"Balanced\", () => splitMissionStart(false)),\n    ];\n    window.dialog({\n        html,\n        title: `${_Text_Text__WEBPACK_IMPORTED_MODULE_6__.title} - Split mission options`,\n        id: 'umm-options',\n        width: 350,\n        buttons,\n    });\n};\nconst splitMissionStart = (remainderAtEnd) => {\n    var _a, _b;\n    const portalsCount = (_b = (_a = _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.missions.get(0)) === null || _a === void 0 ? void 0 : _a.portals.length) !== null && _b !== void 0 ? _b : 0;\n    const preset = Math.min(_Main__WEBPACK_IMPORTED_MODULE_0__.main.state.getPlannedLength(), portalsCount);\n    const numMissionString = prompt(`In how many missions do you want to split your banner (1-${portalsCount})?\\r\\rRecommended number is a multiple of 6.`, preset.toString());\n    if (numMissionString === null)\n        return;\n    const numMissions = parseInt(numMissionString);\n    if (numMissions > portalsCount) {\n        alert(`Can't split into more missions than there are portals in your current path. Please try again with a number between 1 and ${portalsCount}`);\n        return;\n    }\n    else if (numMissions < 1 || !Number.isInteger(numMissions)) {\n        alert(`Invalid input. Please try again with a number between 1 and ${portalsCount}`);\n        return;\n    }\n    void splitMission(numMissions, remainderAtEnd);\n};\nconst splitMission = async (numMissions, remainderAtEnd) => {\n    var _a;\n    const mission = _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.missions.get(0);\n    if (!mission)\n        return;\n    let hasPortals = false;\n    for (let i = 0; i < numMissions; i++)\n        hasPortals || (hasPortals = ((_a = _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.missions.get(i)) === null || _a === void 0 ? void 0 : _a.hasPortals()) === true);\n    if (hasPortals) {\n        if (!await (0,_UI_Dialog_Confirm__WEBPACK_IMPORTED_MODULE_7__.confirmDialog)({ message: \"Merge missione before split?\", details: \"Mission(s) already contain portals. These will be merged into one\" })) {\n            return;\n        }\n    }\n    const numPortals = mission === null || mission === void 0 ? void 0 : mission.portals.length;\n    const numPortalsPerMission = Math.floor(numPortals / numMissions);\n    const numRestPortals = numPortals % numMissions;\n    const message = `Your path of ${numPortals} will be divided into ${numMissions} missions of ${numPortalsPerMission} portals each.`;\n    let details = \"\";\n    if (numRestPortals > 0) {\n        details += remainderAtEnd ?\n            ` The remaining ${numRestPortals} portal(s) will be added to the last mission.` :\n            ` The remaining ${numRestPortals} portal(s) will be equaly divided between the first missions.`;\n    }\n    details += `\\r\\n\\r\\nThis process can be reversed using the merge missions feature. Do you want to continue?`;\n    if (await (0,_UI_Dialog_Confirm__WEBPACK_IMPORTED_MODULE_7__.confirmDialog)({ message, details })) {\n        _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.missions.splitIntoMultiple(mission, numMissions, remainderAtEnd);\n        _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.save();\n        _Main__WEBPACK_IMPORTED_MODULE_0__.main.redrawAll();\n        (0,_UI_ButtonBar__WEBPACK_IMPORTED_MODULE_1__.updatePortalCountSidebar)();\n    }\n};\nconst mergeMissions = async () => {\n    if (!await (0,_UI_Dialog_Confirm__WEBPACK_IMPORTED_MODULE_7__.confirmDialog)({\n        message: \"Merge mission?\",\n        details: \"Are you sure you want to merge all your missions into 1?\\r\\n\\r\\nThis can't be undone.\"\n    })) {\n        return;\n    }\n    _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.missions.mergeAll();\n    _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.setCurrent(0);\n    _Main__WEBPACK_IMPORTED_MODULE_0__.main.redrawAll();\n};\nconst reverseMission = () => {\n    const state = _Main__WEBPACK_IMPORTED_MODULE_0__.main.state;\n    const missionToReverse = prompt(`Which mission do you want to reverse (1-${state.getPlannedLength()})?`, (state.getCurrent() + 1).toString());\n    if (missionToReverse === null)\n        return;\n    const mission = state.missions.get(parseInt(missionToReverse));\n    if (!mission) {\n        alert(`This mission doesn't exist, enter a value between 1-${state.getPlannedLength()}.`);\n        return;\n    }\n    mission.reverse();\n    state.save();\n    _Main__WEBPACK_IMPORTED_MODULE_0__.main.redrawAll();\n};\nconst setCurrentMission = (missionId) => {\n    _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.setCurrent(missionId);\n    _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.save();\n    (0,_UI_ButtonBar__WEBPACK_IMPORTED_MODULE_1__.updateCurrentActiveMissionSidebar)(_Main__WEBPACK_IMPORTED_MODULE_0__.main.state);\n    _Main__WEBPACK_IMPORTED_MODULE_0__.main.redrawAll();\n};\n\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/Edits.ts?\n}");
-
-/***/ },
-
-/***/ "./src/ImportExport.ts"
-/*!*****************************!*\
-  !*** ./src/ImportExport.ts ***!
-  \*****************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   exportData: () => (/* binding */ exportData),\n/* harmony export */   loadFile: () => (/* binding */ loadFile),\n/* harmony export */   loadFileInput: () => (/* binding */ loadFileInput)\n/* harmony export */ });\n/* harmony import */ var _UI_Notification__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UI/Notification */ \"./src/UI/Notification.ts\");\n\nconst exportData = (state) => {\n    const data = state.asString();\n    const sanitizedName = state.getBannerName().replace(/[\\W_]+/g, \" \");\n    const filename = sanitizedName + \"-mission-data.json\";\n    if (typeof window.saveFile == 'function') {\n        window.saveFile(data, filename, \"application/json\");\n    }\n    else if (typeof android !== 'undefined' && (android === null || android === void 0 ? void 0 : android.saveFile)) {\n        android.saveFile(filename, \"application/json\", data);\n    }\n    else if (!window.isSmartphone()) { // pc method\n        // fall back\n        const a = document.createElement('a');\n        a.href = \"data:text/json;charset=utf-8,\" + encodeURIComponent(data);\n        a.download = filename;\n        a.click();\n    }\n};\nconst loadFileInput = async (event, state) => {\n    const files = event.target.files;\n    if ((files === null || files === void 0 ? void 0 : files.length) !== 1) {\n        alert(\"No file selected! Please select a mission file in JSON format and try again.\");\n        $(\"#umm-import-file\").val('');\n        return false;\n    }\n    if (files[0].type != 'application/json') {\n        $(\"#umm-import-file\").val('');\n        alert((files[0].name) + \" has not been recognized as JSON file. Make sure you've loaded the right file.\");\n        return false;\n    }\n    return loadFile(state, files[0]);\n};\nconst loadFile = async (state, inputFile) => {\n    const text = await inputFile.text();\n    try {\n        state.import(text);\n    }\n    catch (error) {\n        (0,_UI_Notification__WEBPACK_IMPORTED_MODULE_0__.notification)(`Loadgin error: \\n${error}`);\n        return false;\n    }\n    state.save();\n    (0,_UI_Notification__WEBPACK_IMPORTED_MODULE_0__.notification)(`Banner data loaded:\\n${state.getBannerName()}`);\n    return true;\n};\n\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/ImportExport.ts?\n}");
-
-/***/ },
-
-/***/ "./src/Main.ts"
-/*!*********************!*\
-  !*** ./src/Main.ts ***!
-  \*********************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   main: () => (/* binding */ main)\n/* harmony export */ });\n/* harmony import */ var iitcpluginkit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! iitcpluginkit */ \"./node_modules/iitcpluginkit/dist/Plugin.js\");\n/* harmony import */ var _UI_RenderPath__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./UI/RenderPath */ \"./src/UI/RenderPath.ts\");\n/* harmony import */ var _UI_RenderNumbers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./UI/RenderNumbers */ \"./src/UI/RenderNumbers.ts\");\n/* harmony import */ var _State_State__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./State/State */ \"./src/State/State.ts\");\n/* harmony import */ var _Edits__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Edits */ \"./src/Edits.ts\");\n/* harmony import */ var _UI_ButtonBar__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./UI/ButtonBar */ \"./src/UI/ButtonBar.ts\");\n/* harmony import */ var _UI_EditWaypoint__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./UI/EditWaypoint */ \"./src/UI/EditWaypoint.ts\");\n/* harmony import */ var _UI_Dialog_MissionDetails__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./UI/Dialog/MissionDetails */ \"./src/UI/Dialog/MissionDetails.ts\");\n\n\n\n\n\n\n\n\n// eslint-disable-next-line unicorn/prevent-abbreviations\nclass UMM_Ext {\n    constructor() {\n        console.log(\"UMM-VERSION\", \"v1.2\");\n        // prevent UMM boot\n        const index = window.bootPlugins.findIndex((x) => {\n            return x.info.script.name === \"IITC Plugin: Ultimate Mission Maker\";\n        });\n        if (index !== -1) {\n            console.info(\"Ultimate Mission Editor found - this is no longer required for UMM-Ext\");\n            window.bootPlugins.splice(index, 1);\n        }\n    }\n    init() {\n        // eslint-disable-next-line @typescript-eslint/no-require-imports\n        __webpack_require__(/*! ./styles.pcss */ \"./src/styles.pcss\");\n        this.state = new _State_State__WEBPACK_IMPORTED_MODULE_3__.State();\n        $('body').append(\"<div class='umm-notification' style='display:none'></div>\");\n        (0,_UI_ButtonBar__WEBPACK_IMPORTED_MODULE_5__.createToolbar)();\n        $('#toolbox').append($('<a>', { text: \"UMM\", title: \"Ultimate Mission Maker\", click: () => this.toggleUMMBar() }));\n        // hide toolbar by default\n        $('.leaflet-umm.leaflet-bar').hide();\n        this.renderPath = new _UI_RenderPath__WEBPACK_IMPORTED_MODULE_1__.RenderPath();\n        this.renderNumbers = new _UI_RenderNumbers__WEBPACK_IMPORTED_MODULE_2__.RenderNumbers();\n        window.addHook('portalSelected', (event) => (0,_Edits__WEBPACK_IMPORTED_MODULE_4__.addPortalToCurrentMission)(event));\n        window.addHook('portalDetailsUpdated', _UI_EditWaypoint__WEBPACK_IMPORTED_MODULE_6__.addWaypointEditorToPortal);\n        window.addHook('mapDataRefreshEnd', () => this.state.checkAllPortals()); // TODO: only do it if required\n        window.addHook(\"portalDetailsUpdated\", event => this.state.checkPortal(event));\n        this.missionModeActive = false;\n        this.redrawAll();\n        (0,_UI_ButtonBar__WEBPACK_IMPORTED_MODULE_5__.updateCurrentActiveMissionSidebar)(this.state);\n    }\n    redrawAll() {\n        this.renderPath.redraw();\n        this.renderNumbers.redraw();\n        (0,_UI_ButtonBar__WEBPACK_IMPORTED_MODULE_5__.updatePortalCountSidebar)();\n    }\n    toggleUMMBar() {\n        $('.leaflet-umm.leaflet-bar').toggle();\n        if ($('.leaflet-umm.leaflet-bar').is(\":visible\")) {\n            if (this.state.isEmpty()) {\n                (0,_UI_Dialog_MissionDetails__WEBPACK_IMPORTED_MODULE_7__.editMissionSetDetails)();\n            }\n            else {\n                this.state.missions.zoom();\n            }\n        }\n    }\n}\n/**\n * use \"main\" to access you main class from everywhere\n * (same as window.plugin.UMM_Ext)\n */\nconst main = new UMM_Ext();\niitcpluginkit__WEBPACK_IMPORTED_MODULE_0__.Register(main, \"UMM_Ext\");\n\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/Main.ts?\n}");
-
-/***/ },
-
-/***/ "./src/State/Mission.ts"
-/*!******************************!*\
-  !*** ./src/State/Mission.ts ***!
-  \******************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   Mission: () => (/* binding */ Mission)\n/* harmony export */ });\n/* harmony import */ var _Portals__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Portals */ \"./src/State/Portals.ts\");\n\nclass Mission {\n    constructor(id, data) {\n        this.missionID = id;\n        this.data = data;\n        this.portal_data = new _Portals__WEBPACK_IMPORTED_MODULE_0__.Portals(data.portals);\n    }\n    get title() {\n        return this.data.missionTitle;\n    }\n    get portals() {\n        return this.portal_data;\n    }\n    get id() {\n        return this.missionID;\n    }\n    get description() {\n        return this.data.missionDescription;\n    }\n    hasPortals() {\n        return this.portal_data.length > 0;\n    }\n    getLocations() {\n        return this.portal_data.toLatLng();\n    }\n    show() {\n        if (this.hasPortals()) {\n            const bounds = new L.LatLngBounds(this.getLocations()).pad(0.2);\n            window.map.fitBounds(bounds, { maxZoom: 18 });\n        }\n    }\n    focusLastPortal() {\n        const last_ll = this.portal_data.getLatLngOf(-1);\n        const last = this.portal_data.get(-1);\n        if (last && last_ll) {\n            window.map.setView(last_ll);\n            window.renderPortalDetails(last.guid);\n            return true;\n        }\n        return false;\n    }\n    getDistance() {\n        const locations = this.portals.toLatLng();\n        return locations.reduce((sum, ll, index, lls) => index > 0 ? sum + ll.distanceTo(lls[index - 1]) : 0, 0);\n    }\n    clear() {\n        this.portal_data.clear();\n    }\n    reverse() {\n        this.portal_data.reverse();\n    }\n}\n\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/State/Mission.ts?\n}");
-
-/***/ },
-
-/***/ "./src/State/Missions.ts"
-/*!*******************************!*\
-  !*** ./src/State/Missions.ts ***!
-  \*******************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   MIN_PORTALS_PER_MISSION: () => (/* binding */ MIN_PORTALS_PER_MISSION),\n/* harmony export */   Missions: () => (/* binding */ Missions)\n/* harmony export */ });\n/* harmony import */ var _Mission__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Mission */ \"./src/State/Mission.ts\");\n/* harmony import */ var _Portals__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Portals */ \"./src/State/Portals.ts\");\n\n\nconst MIN_PORTALS_PER_MISSION = 6;\nclass Missions {\n    static generateMissionTitle(missNumber, plannedBannerLength, missSetName, missNameFormat) {\n        var _a;\n        // eslint-disable-next-line unicorn/prefer-default-parameters\n        const format = missNameFormat !== null && missNameFormat !== void 0 ? missNameFormat : \"\";\n        if (!format) {\n            return \"\";\n        }\n        let title = format;\n        const totalMissions = plannedBannerLength !== null && plannedBannerLength !== void 0 ? plannedBannerLength : 0;\n        // Replace total mission count (M+)\n        if (totalMissions >= 1) {\n            title = title.replace(/M+/g, totalMissions.toString());\n        }\n        // Replace mission number (N or N+)\n        if (missNumber >= 0) {\n            const numberPattern = (_a = format.match(/N+/g)) === null || _a === void 0 ? void 0 : _a[0];\n            if (numberPattern) {\n                const length = numberPattern.length > 1 ? totalMissions.toString().length : 0;\n                const paddedNumber = (missNumber + 1).toString().padStart(length, '0');\n                title = title.replace(/N+/g, paddedNumber);\n            }\n        }\n        // Replace mission set name (T)\n        if (missSetName === null || missSetName === void 0 ? void 0 : missSetName.trim()) {\n            title = title.replace(/T/g, missSetName);\n        }\n        return title;\n    }\n    constructor(data) {\n        this.data = data;\n    }\n    get(missionId) {\n        const mis = this.data[missionId];\n        return mis && new _Mission__WEBPACK_IMPORTED_MODULE_0__.Mission(missionId, mis);\n    }\n    count() {\n        return this.data.length;\n    }\n    forEach(callback) {\n        this.data.forEach((missionData, index) => {\n            const mission = new _Mission__WEBPACK_IMPORTED_MODULE_0__.Mission(index, missionData);\n            callback(mission);\n        });\n    }\n    filter(callback) {\n        const result = [];\n        this.forEach(mission => {\n            if (callback(mission))\n                result.push(mission);\n        });\n        return result;\n    }\n    previous(mission) {\n        var _a;\n        let preMissionID = mission.id - 1;\n        let preMission;\n        while (!((_a = (preMission = this.get(preMissionID))) === null || _a === void 0 ? void 0 : _a.hasPortals()) && preMissionID > 0)\n            preMissionID--;\n        return preMission;\n    }\n    next(mission) {\n        return this.get(mission.id + 1);\n    }\n    distanceToStart(id) {\n        const mission = this.get(id);\n        if (!mission)\n            return;\n        const previous = this.previous(mission);\n        const first = previous === null || previous === void 0 ? void 0 : previous.portals.getLatLngOf(-1);\n        const last = mission.portals.getLatLngOf(0);\n        if (!first || !last)\n            return;\n        return first.distanceTo(last);\n    }\n    getTotalDistance() {\n        const waypoints = [];\n        this.forEach(m => waypoints.push(...m.getLocations()));\n        return waypoints.reduce((sum, ll, index, lls) => index > 0 ? sum + ll.distanceTo(lls[index - 1]) : 0, 0);\n    }\n    validate() {\n        const errors = {};\n        const notEnoughWaypoint = this.filter(m => m.portals.length < MIN_PORTALS_PER_MISSION)\n            .map(m => m.id);\n        if (notEnoughWaypoint.length > 0) {\n            errors[\"not enough waypoints\"] = notEnoughWaypoint;\n        }\n        return errors;\n    }\n    zoom() {\n        const location = this.data.flatMap(m => new _Portals__WEBPACK_IMPORTED_MODULE_1__.Portals(m.portals).toLatLng());\n        if (location.length > 0) {\n            const bounds = new L.LatLngBounds(location).pad(0.1);\n            window.map.fitBounds(bounds, { maxZoom: 18 });\n        }\n    }\n    merge(destination, missionB) {\n        destination.portals.add(...missionB.portals.getRange());\n        missionB.portals.clear();\n    }\n    mergeAll() {\n        const portals = [];\n        this.data.forEach(m => {\n            portals.push(...m.portals);\n            portals.length = 0;\n        });\n        this.data[0].portals = portals;\n    }\n    split(source, at, destination) {\n        const toMove = source.portals.getRange(at);\n        destination.portals.insert(0, ...toMove);\n        source.portals.remove(at, toMove.length);\n    }\n    splitIntoMultiple(source, count, restAtLast = false) {\n        console.assert(count > 1, \"nothing to split\");\n        const allPortals = this.getAllPortalsOf(source.id, count);\n        const total = allPortals.length;\n        let portalsPerMission = total / count;\n        if (restAtLast)\n            portalsPerMission = Math.floor(portalsPerMission);\n        for (let i = 0; i < count; i++) {\n            const start = Math.floor(portalsPerMission * i);\n            let end = Math.floor(portalsPerMission * (i + 1));\n            if (i === count - 1)\n                end = allPortals.length;\n            const mission = this.get(source.id + i);\n            mission === null || mission === void 0 ? void 0 : mission.portals.clear();\n            mission === null || mission === void 0 ? void 0 : mission.portals.add(...allPortals.slice(start, end));\n        }\n    }\n    getAllPortalsOf(from, count) {\n        const allPortals = [];\n        for (let i = 0; i < count; i++) {\n            const mission = this.get(from + i);\n            if (mission)\n                allPortals.push(...mission.portals.getRange());\n        }\n        return allPortals;\n    }\n    getMissionsOfPortal(guid) {\n        return this.filter(mis => mis.portals.includes(guid)).map(m => m.id);\n    }\n}\n\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/State/Missions.ts?\n}");
-
-/***/ },
-
-/***/ "./src/State/Portals.ts"
-/*!******************************!*\
-  !*** ./src/State/Portals.ts ***!
-  \******************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   PortalActions: () => (/* binding */ PortalActions),\n/* harmony export */   Portals: () => (/* binding */ Portals)\n/* harmony export */ });\nconst PortalActions = [\n    { action: \"HACK_PORTAL\", label: \"Hack portal\" },\n    { action: \"INSTALL_MOD\", label: \"Install mod\" },\n    { action: \"CAPTURE_PORTAL\", label: \"Capture portal\" },\n    { action: \"CREATE_LINK\", label: \"Create link\" },\n    { action: \"CREATE_FIELD\", label: \"Create field\" },\n    { action: \"PASSPHRASE\", label: \"Enter passphrase\" },\n];\nclass Portals {\n    constructor(data) {\n        this.data = data;\n    }\n    get length() {\n        return this.data.length;\n    }\n    /**\n     * @param index negative values count from the end\n     */\n    get(index) {\n        return this.data.at(index);\n    }\n    getRange(start, end) {\n        return this.data.slice(start, end);\n    }\n    set(index, portal) {\n        this.data[index] = portal;\n    }\n    add(...portal) {\n        console.assert(!portal.some(p => this.includes(p.guid)), \"portal is already in\");\n        this.data.push(...portal);\n    }\n    insert(index, ...portal) {\n        console.assert(!portal.some(p => this.includes(p.guid)), \"portal is already in\");\n        this.data.splice(index, 0, ...portal);\n    }\n    remove(index, count = 1) {\n        this.data.splice(index, count);\n    }\n    clear() {\n        this.data.length = 0;\n    }\n    toLatLng() {\n        return this.data.map(portal => new L.LatLng(portal.location.latitude, portal.location.longitude));\n    }\n    /**\n     * @param index negative values count from the end\n     */\n    getLatLngOf(index) {\n        const portal = this.get(index);\n        if (!portal)\n            return;\n        return new L.LatLng(portal.location.latitude, portal.location.longitude);\n    }\n    includes(guid) {\n        return this.data.some(x => x.guid === guid);\n    }\n    find(guid) {\n        return this.data.find(x => x.guid === guid);\n    }\n    indexOf(portal) {\n        return this.data.findIndex(x => x.guid === portal.guid);\n    }\n    isStart(portal) {\n        var _a;\n        return ((_a = this.data[0]) === null || _a === void 0 ? void 0 : _a.guid) === portal.guid;\n    }\n    isEnd(portal) {\n        var _a;\n        return ((_a = this.data.at(-1)) === null || _a === void 0 ? void 0 : _a.guid) === portal.guid;\n    }\n    reverse() {\n        this.data.reverse();\n    }\n    create(guid) {\n        const iitcPortal = window.portals[guid];\n        console.assert(iitcPortal, \"portal not defined\");\n        // TODO try to get full details of iitc-cache\n        const options = iitcPortal.options.data;\n        const ll = iitcPortal.getLatLng();\n        return {\n            guid,\n            title: options.title || '[undefined]',\n            imageUrl: options.image,\n            description: \"\",\n            location: { latitude: ll.lat, longitude: ll.lng },\n            isOrnamented: false,\n            isStartPoint: false,\n            type: \"PORTAL\",\n            objective: { type: \"HACK_PORTAL\", passphrase_params: { question: \"\", _single_passphrase: \"\" } }\n        };\n    }\n}\n\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/State/Portals.ts?\n}");
-
-/***/ },
-
-/***/ "./src/State/State.ts"
-/*!****************************!*\
-  !*** ./src/State/State.ts ***!
-  \****************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   State: () => (/* binding */ State),\n/* harmony export */   fileFormatVersion: () => (/* binding */ fileFormatVersion)\n/* harmony export */ });\n/* harmony import */ var _StateMigration__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./StateMigration */ \"./src/State/StateMigration.ts\");\n/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Missions */ \"./src/State/Missions.ts\");\n\n\nconst STORAGE_KEY = \"ultimate-mission-maker\";\nconst fileFormatVersion = 2;\nclass State {\n    constructor() {\n        this.load();\n    }\n    load() {\n        this.reset();\n        const data = localStorage.getItem(STORAGE_KEY);\n        if (data) {\n            this.import(data);\n        }\n    }\n    save() {\n        this.setPlannedLength(this.theState.plannedBannerLength); // TODO: remove when \"get\" is private/removed\n        localStorage.setItem(STORAGE_KEY, this.asString());\n    }\n    import(jsonString) {\n        const anyState = JSON.parse(jsonString);\n        this.theState = (0,_StateMigration__WEBPACK_IMPORTED_MODULE_0__.migrateUmmVersion)(anyState);\n        // make sure Missions are initialized\n        this.setPlannedLength(this.getPlannedLength() || 1);\n    }\n    asString() {\n        return JSON.stringify(this.theState);\n    }\n    reset() {\n        this.theState = {\n            missionSetName: '',\n            missionSetDescription: '',\n            currentMission: 0,\n            plannedBannerLength: 1,\n            titleFormat: \"T NN-M\",\n            fileFormatVersion: fileFormatVersion,\n            missions: [\n                {\n                    missionTitle: '',\n                    missionDescription: '',\n                    portals: []\n                }\n            ],\n        };\n    }\n    isEmpty() {\n        return this.theState.missionSetName === \"\" &&\n            this.theState.missionSetDescription === \"\" &&\n            this.theState.missions.every(m => m.portals.length === 0);\n    }\n    isValid() {\n        return this.theState.missionSetName !== \"\" &&\n            this.theState.missionSetDescription !== \"\" &&\n            this.theState.plannedBannerLength > 0;\n    }\n    get missions() {\n        return new _Missions__WEBPACK_IMPORTED_MODULE_1__.Missions(this.theState.missions);\n    }\n    getBannerName() {\n        return this.theState.missionSetName;\n    }\n    setBannerName(name) {\n        this.theState.missionSetName = name;\n        this.theState.missions.forEach((mission, id) => mission.missionTitle = this.generateMissionTitle(id));\n    }\n    getBannerDesc() {\n        return this.theState.missionSetDescription;\n    }\n    setBannerDesc(desc) {\n        this.theState.missionSetDescription = desc;\n        this.theState.missions.forEach(mission => mission.missionDescription = this.theState.missionSetDescription);\n    }\n    getTitleFormat() {\n        return this.theState.titleFormat;\n    }\n    setTitleFormat(name) {\n        this.theState.titleFormat = name;\n        this.theState.missions.forEach((mission, id) => mission.missionTitle = this.generateMissionTitle(id));\n    }\n    getPlannedLength() {\n        return this.theState.plannedBannerLength;\n    }\n    setPlannedLength(count) {\n        count = Math.max(count, 1);\n        this.theState.plannedBannerLength = count;\n        if (this.theState.missions.length > count) {\n            this.theState.missions = this.theState.missions.slice(0, count);\n        }\n        else {\n            for (let id = this.theState.missions.length; id < count; id++) {\n                this.theState.missions.push({\n                    missionTitle: this.generateMissionTitle(id),\n                    missionDescription: this.theState.missionSetDescription,\n                    portals: []\n                });\n            }\n        }\n    }\n    generateMissionTitle(missNumber) {\n        return _Missions__WEBPACK_IMPORTED_MODULE_1__.Missions.generateMissionTitle(missNumber, this.getPlannedLength(), this.theState.missionSetName, this.theState.titleFormat);\n    }\n    getEditMission() {\n        return this.missions.get(this.theState.currentMission);\n    }\n    setCurrent(missionId) {\n        console.assert(missionId >= 0 && missionId < this.getPlannedLength(), \"mission id out of bounds\");\n        this.theState.currentMission = missionId;\n    }\n    getCurrent() {\n        return this.theState.currentMission;\n    }\n    isCurrent(missionId) {\n        return this.theState.currentMission === missionId;\n    }\n    checkPortal(event) {\n        let updated = false;\n        this.theState.missions.forEach(mission => {\n            const portal = mission.portals.find(x => x.guid === event.guid);\n            if (portal) {\n                if (portal.imageUrl !== event.portalData.image ||\n                    portal.title !== event.portalData.title) {\n                    portal.imageUrl = event.portalData.image;\n                    portal.title = event.portalData.title;\n                    updated = true;\n                }\n            }\n        });\n        if (updated)\n            this.save();\n    }\n    checkAllPortals() {\n        let updated = false;\n        this.theState.missions.forEach(mission => {\n            mission.portals.forEach(portal => {\n                var _a;\n                const iitcPortal = (_a = window.portals[portal.guid]) === null || _a === void 0 ? void 0 : _a.options.data;\n                if (iitcPortal) {\n                    if (portal.imageUrl !== iitcPortal.image ||\n                        portal.title !== iitcPortal.title) {\n                        portal.imageUrl = iitcPortal.image;\n                        portal.title = iitcPortal.title;\n                        updated = true;\n                    }\n                }\n            });\n        });\n        if (updated)\n            this.save();\n    }\n}\n\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/State/State.ts?\n}");
-
-/***/ },
-
-/***/ "./src/State/StateMigration.ts"
-/*!*************************************!*\
-  !*** ./src/State/StateMigration.ts ***!
-  \*************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   migrateUmmVersion: () => (/* binding */ migrateUmmVersion)\n/* harmony export */ });\n/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Missions */ \"./src/State/Missions.ts\");\n/* harmony import */ var _State__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./State */ \"./src/State/State.ts\");\n\n\nconst migrateUmmVersion = (ummState) => {\n    var _a, _b, _c, _d, _e;\n    if (ummState.fileFormatVersion > _State__WEBPACK_IMPORTED_MODULE_1__.fileFormatVersion) {\n        throw new Error(\"UMM: You've attempted to load data that's newer than what's supported by this version of UMM. Please update the plugin and try again. Data has not been loaded.\");\n    }\n    // Original beta didn't have a fileFormatVersion yet\n    if (ummState.fileFormatVersion === undefined || ummState.fileFormatVersion === \"\") {\n        // Because of slight variations on BETA's we do some checks to avoid overwriting any data\n        const undefinedOrEmptyString = (value) => {\n            if (value == undefined || value == \"\") {\n                return true;\n            }\n            return false;\n        };\n        if (undefinedOrEmptyString(ummState.missionSetName)) {\n            // Check if old name was set, if so, use that for missionSetName, otherwise set blank\n            if (undefinedOrEmptyString(ummState.missionName)) {\n                ummState.missionSetName = '';\n            }\n            else {\n                ummState.missionSetName = ummState.missionName;\n                delete ummState.missionName; // Remove old field from state\n            }\n        }\n        if (undefinedOrEmptyString(ummState.missionSetDescription)) {\n            if (undefinedOrEmptyString(ummState.missionDescription)) {\n                ummState.missionSetDescription = '';\n            }\n            else {\n                ummState.missionSetDescription = ummState.missionDescription;\n                delete ummState.missionDescription; // Remove old field from state\n            }\n        }\n        if (undefinedOrEmptyString(ummState.titleFormat)) {\n            ummState.titleFormat = 'T NN-M';\n        }\n        // Rename numberofMissions to plannedBannerLength if present, otherwise set to current banner length\n        if (ummState.numberOfMissions === undefined) {\n            ummState.plannedBannerLength = Object.keys(ummState.missions).length;\n        }\n        else {\n            ummState.plannedBannerLength = ummState.numberOfMissions;\n            delete ummState.numberOfMissions;\n        }\n        // Check if the data is using the oldest beta format or a newer version, newer versions don't need converting for V1.\n        if (!Object.keys(ummState.missions[0]).includes(\"portals\")) {\n            // Old format detected, check if data is present\n            if (ummState.missions[0][0].guid) {\n                // Data present, convert necessary\n                const newMissions = [];\n                for (const mission in ummState.missions) {\n                    const plannedLength = (ummState.plannedBannerLength > 0 ? ummState.plannedBannerLength : ummState.missions.length);\n                    const missionTitle = _Missions__WEBPACK_IMPORTED_MODULE_0__.Missions.generateMissionTitle(parseInt(mission) + 1, plannedLength, ummState.missionSetName, ummState.titleFormat);\n                    newMissions.push({ missionTitle: missionTitle, missionDescription: ummState.missionSetDescription, portals: ummState.missions[mission] });\n                }\n                ummState.missions = newMissions;\n            }\n            else {\n                // No data detected, just set it to an empty state.\n                ummState.missions = [{ missionTitle: '', missionDescription: '', portals: [] }];\n            }\n        }\n        ummState.fileFormatVersion = 1;\n    }\n    if (ummState.fileFormatVersion === 1) {\n        // FileFormatVersion 2 supports custom objectives for portals\n        // Valid type values are: HACK_PORTAL, INSTALL_MOD, CAPTURE_PORTAL, CREATE_LINK, CREATE_FIELD, PASSPHRASE\n        // NIA will ignore passphrase_params if type is not passphrase\n        for (const mission in ummState.missions) {\n            for (const portal in ummState.missions[mission].portals) {\n                ummState.missions[mission].portals[portal].objective = { type: \"HACK_PORTAL\", passphrase_params: { question: \"\", _single_passphrase: \"\" } };\n            }\n        }\n        ummState.fileFormatVersion = 2;\n    }\n    if (ummState.fileFormatVersion === 2) {\n        // Bugfix for 0.4.0, unintentionally it had objective type HACK rather than HACK_PORTAL, not a full new fileFormatVersion\n        for (const mission in ummState.missions) {\n            for (const portal in ummState.missions[mission].portals) {\n                if (ummState.missions[mission].portals[portal].objective.type === \"HACK\") {\n                    ummState.missions[mission].portals[portal].objective.type = \"HACK_PORTAL\";\n                }\n            }\n        }\n    }\n    // UMM_ext\n    if (ummState.fileFormatVersion === 2) {\n        // we dont want undefined values\n        (_a = ummState.missionSetName) !== null && _a !== void 0 ? _a : (ummState.missionSetName = \"\");\n        (_b = ummState.missionSetDescription) !== null && _b !== void 0 ? _b : (ummState.missionSetDescription = '');\n        (_c = ummState.currentMission) !== null && _c !== void 0 ? _c : (ummState.currentMission = 0);\n        (_d = ummState.plannedBannerLength) !== null && _d !== void 0 ? _d : (ummState.plannedBannerLength = 1);\n        (_e = ummState.titleFormat) !== null && _e !== void 0 ? _e : (ummState.titleFormat = \"T NN-M\");\n    }\n    return ummState;\n};\n\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/State/StateMigration.ts?\n}");
-
-/***/ },
-
-/***/ "./src/Text/Text.ts"
-/*!**************************!*\
-  !*** ./src/Text/Text.ts ***!
-  \**************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   MissionNumberQuestions: () => (/* binding */ MissionNumberQuestions),\n/* harmony export */   author: () => (/* binding */ author),\n/* harmony export */   changelog: () => (/* binding */ changelog),\n/* harmony export */   title: () => (/* binding */ title)\n/* harmony export */ });\nconst title = 'Ultimate Mission Maker EX';\nconst author = 'Vashiru, j00rtje, DanielOnDiordna, McBen';\nconst changelog = `\n  Changelog:\n\n  Version 1.0 - Alpha\n  - Complete rewrite from the ground up, based on UMM v0.7.3\n  - Toolbar hidden by default; enable via the Toolbox \"UMM\" command\n  - Mission Portal drag-and-drop support\n  - Preview potential mission split points\n  - Select-Mission Dialog with integrated split and merge commands\n  TODO: test mobile\n  `;\nconst MissionNumberQuestions = [\n    \"What number is this mission ?\",\n    \"Which mission number is this ?\",\n    \"What is the mission number ?\",\n    \"Which number does this mission have ?\",\n    \"What is this mission’s number ?\",\n    \"Which mission index is this ?\",\n    \"What is the index of this mission ?\",\n    \"Which position does this mission have ?\",\n    \"What is the position of this mission ?\",\n    \"Which mission slot is this ?\",\n    \"What number does this mission have in the banner ?\",\n    \"Which banner number is this mission ?\",\n    \"What is this mission’s banner position ?\",\n    \"Which mission number is shown in the banner ?\",\n    \"What number identifies this mission in the series ?\",\n    \"Which number does this mission have in the sequence ?\",\n    \"What is the mission’s number in the series ?\",\n    \"Which mission position is this in the banner ?\",\n    \"What number is assigned to this banner mission ?\",\n    \"Which number marks this mission in the banner ?\",\n    \"What mission number are you playing right now ?\",\n    \"Which mission number are you currently on ?\",\n    \"What number are you on in this banner ?\",\n    \"Which mission number are you completing now ?\",\n    \"What is the current mission number ?\",\n    \"Which number is this step of the banner ?\",\n    \"What number is this step in the mission series ?\",\n    \"Which mission step number is this ?\",\n    \"What is the step number of this mission ?\",\n    \"Which number corresponds to this mission step ?\",\n    \"Identify the mission number of this mission.\",\n    \"Select the mission number for this mission.\",\n    \"Determine this mission’s number.\",\n    \"State the number of this mission.\",\n    \"Indicate the index of this mission.\",\n    \"Specify the position number of this mission.\",\n    \"What ordinal number does this mission have ?\",\n    \"Which ordinal position is this mission ?\",\n    \"What numeric identifier does this mission have ?\",\n    \"Which numeric index applies to this mission ?\",\n    \"What is the mission number you are answering ?\",\n    \"Which number corresponds to this exact mission ?\",\n    \"What number is displayed for this mission ?\",\n    \"Which mission number is written here ?\",\n    \"What is the official number of this mission ?\",\n    \"Which mission number was assigned here ?\",\n    \"What number labels this mission ?\",\n    \"Which number tags this mission ?\",\n    \"What is the mission’s assigned number ?\",\n    \"Which number marks this mission ?\",\n    \"What is this mission’s index number ?\",\n    \"Which index number is this mission ?\",\n    \"What is the banner index of this mission ?\",\n    \"Which banner index applies here ?\",\n    \"What position number does this mission have ?\",\n    \"Which position number is this mission ?\",\n    \"What is the mission’s position number ?\",\n    \"Which slot number is this mission ?\",\n    \"What is this mission’s slot number ?\",\n    \"Which slot position is this mission ?\",\n    \"What number identifies this mission in the banner ?\",\n    \"Which number identifies this mission in the banner ?\",\n    \"What is the number assigned to this mission ?\",\n    \"Which number is assigned to this mission ?\",\n    \"What is this mission’s series number ?\",\n    \"Which series number is this mission ?\",\n    \"What is the banner series number of this mission ?\",\n    \"Which banner series number is this mission ?\",\n    \"What number corresponds to this banner entry ?\",\n    \"Which number corresponds to this banner entry ?\"\n];\n\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/Text/Text.ts?\n}");
-
-/***/ },
-
-/***/ "./src/UI/ButtonBar.ts"
-/*!*****************************!*\
-  !*** ./src/UI/ButtonBar.ts ***!
-  \*****************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   createToolbar: () => (/* binding */ createToolbar),\n/* harmony export */   updateCurrentActiveMissionSidebar: () => (/* binding */ updateCurrentActiveMissionSidebar),\n/* harmony export */   updatePortalCountSidebar: () => (/* binding */ updatePortalCountSidebar)\n/* harmony export */ });\n/* harmony import */ var _Edits__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Edits */ \"./src/Edits.ts\");\n/* harmony import */ var _Main__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Main */ \"./src/Main.ts\");\n/* harmony import */ var _Dialog_Options__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Dialog/Options */ \"./src/UI/Dialog/Options.ts\");\n/* harmony import */ var _Dialog_SelectMission__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Dialog/SelectMission */ \"./src/UI/Dialog/SelectMission.ts\");\n/* harmony import */ var _Notification__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Notification */ \"./src/UI/Notification.ts\");\n/* harmony import */ var _assets_bookmarks_png__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../assets/bookmarks.png */ \"./src/assets/bookmarks.png\");\n/* harmony import */ var _assets_next_png__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../assets/next.png */ \"./src/assets/next.png\");\n/* harmony import */ var _assets_previous_png__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../assets/previous.png */ \"./src/assets/previous.png\");\n/* harmony import */ var _assets_undo_png__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../assets/undo.png */ \"./src/assets/undo.png\");\n/* harmony import */ var _assets_options_png__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../assets/options.png */ \"./src/assets/options.png\");\n\n\n\n\n\n\n\n\n\n\nconst createToolbar = () => {\n    const UMMToolbar = L.Control.extend({\n        options: {\n            position: 'topleft'\n        },\n        onAdd: () => {\n            const container = $(\"<div>\", { class: \"leaflet-umm leaflet-bar\" }).append(toolBarButton(\"umm-toggle-bookmarks\", _assets_bookmarks_png__WEBPACK_IMPORTED_MODULE_5__, \"UMM: Toggle Mission Mode\", _Edits__WEBPACK_IMPORTED_MODULE_0__.toggleMissionMode), toolBarButton(\"umm-next-mission\", _assets_next_png__WEBPACK_IMPORTED_MODULE_6__, \"UMM: Next Mission\", nextMission), toolBarButton(\"umm-edit-active-mission\", undefined, \"UMM: Select mission number\", _Dialog_SelectMission__WEBPACK_IMPORTED_MODULE_3__.editActiveMission), toolBarButton(\"umm-previous-mission\", _assets_previous_png__WEBPACK_IMPORTED_MODULE_7__, \"UMM: Previous Mission\", previousMission), toolBarButton(\"umm-number-of-portals\", undefined, \"UMM: Number of portals in current mission\"), toolBarButton(\"umm-undo\", _assets_undo_png__WEBPACK_IMPORTED_MODULE_8__, \"UMM: Remove Last\", _Edits__WEBPACK_IMPORTED_MODULE_0__.removeLastPortal), toolBarButton(\"umm-opt\", _assets_options_png__WEBPACK_IMPORTED_MODULE_9__, \"UMM: Opt\", _Dialog_Options__WEBPACK_IMPORTED_MODULE_2__.showUmmOptions));\n            return container[0];\n        }\n    });\n    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-call\n    window.map.addControl(new UMMToolbar());\n};\nconst toolBarButton = (id, image, tooltip, click) => {\n    // width = \"16\" height = 16\" style=\"margin - top: 7px; \"></a>').on('click dblclick', '#umm-toggle-bookmarks', function (event) {\n    return $(\"<a>\", {\n        id,\n        class: \"umm-control\",\n        title: window.isSmartphone() ? \"\" : tooltip\n    })\n        .on(\"click dblclick\", ((event) => { event.stopPropagation(); if (click)\n        click(); }))\n        .append($(\"<img>\", { src: image }).css({ width: 16, height: 16, \"margin-top\": \"7px\" }));\n};\nconst updateCurrentActiveMissionSidebar = (state) => {\n    $('#umm-edit-active-mission').text(state.getCurrent() + 1);\n    $('#umm-edit-active-mission').css(\"background-color\", \"white\");\n    $('#umm-next-mission img').css(\"opacity\", \"100%\");\n    $('#umm-previous-mission img').css(\"opacity\", \"100%\");\n    const current = state.getCurrent();\n    if (current >= state.getPlannedLength() - 1) {\n        $('#umm-next-mission').children('img').css(\"opacity\", \"30%\");\n        $('#umm-edit-active-mission').css(\"background-color\", \"orange\");\n    }\n    if (current === 0) {\n        $('#umm-previous-mission').children('img').css(\"opacity\", \"30%\");\n    }\n};\nconst updatePortalCountSidebar = () => {\n    var _a, _b;\n    const count = (_b = (_a = _Main__WEBPACK_IMPORTED_MODULE_1__.main.state.getEditMission()) === null || _a === void 0 ? void 0 : _a.portals.length) !== null && _b !== void 0 ? _b : 0;\n    if (count < 1000) {\n        $('#umm-number-of-portals').text(`P${count}`);\n    }\n    else {\n        $('#umm-number-of-portals').text(`${count}`);\n    }\n};\nconst nextMission = () => {\n    const state = _Main__WEBPACK_IMPORTED_MODULE_1__.main.state;\n    if (state.getCurrent() >= state.getPlannedLength() - 1)\n        return;\n    // Activate the new mission\n    (0,_Edits__WEBPACK_IMPORTED_MODULE_0__.setCurrentMission)(state.getCurrent() + 1);\n    const mission = state.getEditMission();\n    console.assert(mission, \"no mission found\");\n    if (mission.hasPortals()) {\n        showMission(mission);\n    }\n    else {\n        if (_Main__WEBPACK_IMPORTED_MODULE_1__.main.missionModeActive) {\n            (0,_Notification__WEBPACK_IMPORTED_MODULE_4__.bannerNotification)(`Start of mission #${state.getCurrent() + 1}\\nSelect start portal.`);\n        }\n    }\n};\nconst previousMission = () => {\n    const state = _Main__WEBPACK_IMPORTED_MODULE_1__.main.state;\n    if (state.getCurrent() <= 0)\n        return;\n    // Activate the new mission\n    (0,_Edits__WEBPACK_IMPORTED_MODULE_0__.setCurrentMission)(state.getCurrent() - 1);\n    const mission = state.getEditMission();\n    console.assert(mission, \"no mission found\");\n    showMission(mission);\n};\nconst showMission = (mission) => {\n    if (mission.hasPortals()) {\n        mission.show();\n        updatePortalCountSidebar();\n        if (_Main__WEBPACK_IMPORTED_MODULE_1__.main.missionModeActive) {\n            (0,_Notification__WEBPACK_IMPORTED_MODULE_4__.bannerNotification)(`Mission mode active.\\nCurrent mission #${_Main__WEBPACK_IMPORTED_MODULE_1__.main.state.getCurrent() + 1}\\nSelect next portal`);\n        }\n        else {\n            (0,_Notification__WEBPACK_IMPORTED_MODULE_4__.bannerNotification)(`Current active mission set to #${_Main__WEBPACK_IMPORTED_MODULE_1__.main.state.getCurrent() + 1}`);\n        }\n    }\n};\n\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/UI/ButtonBar.ts?\n}");
-
-/***/ },
-
-/***/ "./src/UI/Dialog/About.ts"
-/*!********************************!*\
-  !*** ./src/UI/Dialog/About.ts ***!
-  \********************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   about: () => (/* binding */ about)\n/* harmony export */ });\n/* harmony import */ var _Text_Text__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Text/Text */ \"./src/Text/Text.ts\");\n/* harmony import */ var _Button__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Button */ \"./src/UI/Dialog/Button.ts\");\n/* harmony import */ var _Options__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Options */ \"./src/UI/Dialog/Options.ts\");\n\n\n\nconst about = () => {\n    let html = '<div class=\"umm-options-list\">';\n    html += 'In short: Create missions in IITC, export as a json file:<br>';\n    html += '<a href=\"https://intel.ingress.com/\" target=\"_blank\"' + (/^intel\\.ingress\\.com$/i.test(window.location.host) ? ' style=\"color: #bbb; pointer-events: none; cursor: default;\"' : '') + '>https://intel.ingress.com/</a>';\n    html += 'Then open the mission creator and load the json file.<br>';\n    html += 'Start creating missions and import the UMM data for every mission:<br>';\n    html += '<a href=\"https://missions.ingress.com/\" target=\"_blank\"' + (/^missions\\.ingress\\.com$/i.test(window.location.host) ? ' style=\"color: #bbb; pointer-events: none; cursor: default;\"' : '') + '>https://missions.ingress.com/</a>';\n    html += 'Documentation for this plugin can be found at:<br>';\n    html += '<a href=\"https://umm.8bitnoise.rocks/\" target=\"_blank\">https://umm.8bitnoise.rocks/</a>';\n    html += 'Questions, feature requests and tips:<br>';\n    html += '<a href=\"https://t.me/joinchat/j9T9eLfa3VJlZWE0\" target=\"_blank\">Telegram: [XF] Ultimate Mission Maker</a>';\n    html += '</div>';\n    const buttons = [\n        (0,_Button__WEBPACK_IMPORTED_MODULE_1__.dialogButton)(\"< Main Menu\", _Options__WEBPACK_IMPORTED_MODULE_2__.showUmmOptions),\n        (0,_Button__WEBPACK_IMPORTED_MODULE_1__.dialogButton)(\"Changelog\", () => dialog({ title: \"Changelog\", html: _Text_Text__WEBPACK_IMPORTED_MODULE_0__.changelog })),\n        (0,_Button__WEBPACK_IMPORTED_MODULE_1__.dialogButtonClose)()\n    ];\n    window.dialog({\n        html: html,\n        title: `${_Text_Text__WEBPACK_IMPORTED_MODULE_0__.title} v${\"v1.2\"} - About`,\n        id: 'umm-options',\n        width: 350,\n        buttons: buttons\n    });\n};\n\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/UI/Dialog/About.ts?\n}");
-
-/***/ },
-
-/***/ "./src/UI/Dialog/Button.ts"
-/*!*********************************!*\
-  !*** ./src/UI/Dialog/Button.ts ***!
-  \*********************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   button: () => (/* binding */ button),\n/* harmony export */   dialogButton: () => (/* binding */ dialogButton),\n/* harmony export */   dialogButtonClose: () => (/* binding */ dialogButtonClose)\n/* harmony export */ });\nconst button = (label, click, classes) => {\n    return $(\"<button>\", { text: label, click, class: \"umm-mission-btn \" + (classes !== null && classes !== void 0 ? classes : \"\") });\n};\nconst dialogButton = (label, callback) => {\n    return {\n        text: label,\n        click: callback,\n        class: \"umm-dialog-button\"\n    };\n};\nconst dialogButtonClose = () => {\n    // return dialogButton(\"Close\", function () { $(this).dialog(\"close\") });\n    return dialogButton(\"Close\", event => {\n        // jquery-ui and arrow functions won't work well\n        const dialog = $(event.currentTarget).parents(\".ui-dialog\").children(\".ui-dialog-content\");\n        dialog.dialog(\"close\");\n    });\n};\n\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/UI/Dialog/Button.ts?\n}");
-
-/***/ },
-
-/***/ "./src/UI/Dialog/Confirm.ts"
-/*!**********************************!*\
-  !*** ./src/UI/Dialog/Confirm.ts ***!
-  \**********************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   confirmDialog: () => (/* binding */ confirmDialog)\n/* harmony export */ });\nconst confirmDialog = (options) => {\n    return new Promise((resolve, _) => {\n        const message = $(\"<div>\");\n        message.append($(\"<div>\", { class: \"header\" }).append(options.message));\n        if (options.details) {\n            message.append($(\"<hr>\"), $(\"<div>\", { class: \"details\" }).append(options.details));\n        }\n        const buttons = [\n            {\n                text: \"No\",\n                click: () => {\n                    newDialog.dialog(\"close\");\n                    resolve(false);\n                }\n            },\n            {\n                text: \"Yes\",\n                click: () => {\n                    newDialog.dialog(\"close\");\n                    resolve(true);\n                }\n            }\n        ];\n        const newDialog = window.dialog({\n            html: message,\n            title: options.title,\n            dialogClass: \"umm-confirm \" + (options.title ? \"\" : \" no_title\"),\n            resizable: false,\n            modal: true,\n            closeOnEscape: false,\n            buttons\n        });\n        newDialog.parent().find(\"button:eq(1)\").css({ float: \"left\" });\n        newDialog.closest(\".ui-dialog\").trigger(\"focus\");\n        newDialog.closest(\".ui-dialog\").on(\"keydown\", event => {\n            if (event.key === \"Enter\") {\n                event.preventDefault();\n                event.stopPropagation();\n                newDialog.parent().find(\"button:eq(2)\").trigger(\"click\");\n                return false;\n            }\n            if (event.key === \"Escape\") {\n                event.preventDefault();\n                event.stopPropagation();\n                newDialog.parent().find(\"button:eq(1)\").trigger(\"click\");\n                return false;\n            }\n            return true;\n        });\n        newDialog.dialog(\"moveToTop\");\n    });\n};\n\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/UI/Dialog/Confirm.ts?\n}");
-
-/***/ },
-
-/***/ "./src/UI/Dialog/MissionDetails.ts"
-/*!*****************************************!*\
-  !*** ./src/UI/Dialog/MissionDetails.ts ***!
-  \*****************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   editMissionSetDetails: () => (/* binding */ editMissionSetDetails)\n/* harmony export */ });\n/* harmony import */ var _Edits__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Edits */ \"./src/Edits.ts\");\n/* harmony import */ var _Main__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Main */ \"./src/Main.ts\");\n/* harmony import */ var _State_Missions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../State/Missions */ \"./src/State/Missions.ts\");\n/* harmony import */ var _ButtonBar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../ButtonBar */ \"./src/UI/ButtonBar.ts\");\n/* harmony import */ var _Notification__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Notification */ \"./src/UI/Notification.ts\");\n/* harmony import */ var _Button__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Button */ \"./src/UI/Dialog/Button.ts\");\n/* harmony import */ var _Options__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Options */ \"./src/UI/Dialog/Options.ts\");\n\n\n\n\n\n\n\nconst editMissionSetDetails = (toggleMissionModeAfterSave = false) => {\n    var _a;\n    const state = _Main__WEBPACK_IMPORTED_MODULE_1__.main.state;\n    let html = '<div class=\"umm-edit-mission-set-details\">';\n    html += '<b>Banner details</b>';\n    html += '<p>Please enter the details for your banner. All fields are required.</p><br>';\n    html += `<label for=\"umm-mission-set-name\"><b>Banner name</b> (max. 50 characters)</label>\n      <span class=\"umm-error\" id=\"umm-mission-set-name-error\"><b>Error: </b>Please enter a valid banner name</span>\n      <input id=\"umm-mission-set-name\" name=\"umm-mission-set-name\" type=\"text\" placeholder=\"Enter name for the banner\" maxlength=\"50\" value=\"${state.getBannerName()}\">`;\n    html += `<label for=\"umm-mission-set-description\"><b>Banner description</b> (max. 200 characters)</label>\n      <span class=\"umm-error\" id=\"umm-mission-set-description-error\"><b>Error: </b>Please enter a valid banner description</span>\n      <textarea id=\"umm-mission-set-description\" name=\"umm-mission-set-description\" placeholder=\"Enter description for the banner\" maxlength=\"200\" rows=\"5\">${state.getBannerDesc()}</textarea>`;\n    html += `<label for=\"umm-banner-length\"><b>Planned banner length</b>, min. ${Math.max(state.missions.count(), 1)} mission(s)</label>\n      <span class=\"umm-error\" id=\"umm-mission-planned-banner-length-error\"><b>Error: </b>Please enter a valid banner length</span>\n      <input id=\"umm-banner-length\" name=\"umm-banner-length\" type=\"number\" placeholder=\"Enter length of banner set\" min=\"1\" value=\"${Math.max(state.getPlannedLength(), 1)}\">`;\n    html += `<label for=\"umm-title-format\"><b>Title format</b></label>\n      <span class=\"umm-error\" id=\"umm-mission-title-format-error\"><b>Error: </b>Please enter a valid title-format</span>\n      <p>Title format allows:<br>N = Mission number without leading 0<br>NN = Mission number with leading 0 (if required by banner length)<br>M = Planned banner length<br>T = (banner title)<br>Examples:T NN-M (default) or NN.M T</p>\n      <input id=\"umm-title-format\" name=\"umm-title-format\" type=\"text\" placeholder=\"Enter a title format\" value=\"${(_a = state.getTitleFormat()) !== null && _a !== void 0 ? _a : \"T NN-M\"}\" style=\"margin-bottom: 5px;\">\n      <b>Preview: </b><span id=\"umm-mission-title-preview\"></span>`;\n    html += '</div>';\n    window.dialog({\n        html: html,\n        title: `Edit banner details - UMM v${\"v1.2\"}`,\n        id: 'umm-options',\n        width: 400,\n        buttons: [\n            (0,_Button__WEBPACK_IMPORTED_MODULE_5__.dialogButton)(\"< Main Menu\", _Options__WEBPACK_IMPORTED_MODULE_6__.showUmmOptions),\n            (0,_Button__WEBPACK_IMPORTED_MODULE_5__.dialogButton)(\"Save\", () => successfulSave(toggleMissionModeAfterSave)),\n            (0,_Button__WEBPACK_IMPORTED_MODULE_5__.dialogButtonClose)()\n        ]\n    });\n    updateMissionTitlePreview();\n    $('#umm-mission-set-name, #umm-mission-set-description, #umm-banner-length, #umm-title-format').on('input', updateMissionTitlePreview);\n};\nconst getFormValues = () => ({\n    name: $('#umm-mission-set-name').val(),\n    description: $('#umm-mission-set-description').val(),\n    length: $('#umm-banner-length').val(),\n    format: $('#umm-title-format').val()\n});\nconst successfulSave = (toggleMissionModeAfterSave) => {\n    const values = getFormValues();\n    const isSavedSuccessful = saveMissionSetDetails(values.name, values.description, values.length, values.format);\n    if (isSavedSuccessful) {\n        (0,_ButtonBar__WEBPACK_IMPORTED_MODULE_3__.updateCurrentActiveMissionSidebar)(_Main__WEBPACK_IMPORTED_MODULE_1__.main.state);\n        (0,_Notification__WEBPACK_IMPORTED_MODULE_4__.bannerNotification)(`Mission details saved`);\n        if (toggleMissionModeAfterSave) {\n            (0,_Edits__WEBPACK_IMPORTED_MODULE_0__.toggleMissionMode)();\n        }\n        $(\"#umm-options\").dialog(\"close\");\n    }\n};\nconst updateMissionTitlePreview = () => {\n    const values = getFormValues();\n    const plannedLength = parseInt(values.length);\n    if (values.name.length > 0 && values.format.length > 0 && !isNaN(plannedLength)) {\n        const missionTitle = _State_Missions__WEBPACK_IMPORTED_MODULE_2__.Missions.generateMissionTitle(1, plannedLength, values.name, values.format);\n        $('#umm-mission-title-preview').text(missionTitle);\n    }\n    else {\n        $('#umm-mission-title-preview').text(\"Fill in all required fields\");\n    }\n};\nconst setFieldError = (elementId, hasError) => {\n    $(elementId).css('display', hasError ? 'block' : 'none');\n};\nconst saveMissionSetDetails = (missionSetName, missionSetDescription, plannedBannerLength, titleFormat) => {\n    let isValid = true;\n    const hasName = missionSetName && missionSetName.length > 0;\n    if (hasName) {\n        _Main__WEBPACK_IMPORTED_MODULE_1__.main.state.setBannerName(missionSetName);\n    }\n    setFieldError('#umm-mission-set-name-error', !hasName);\n    isValid = isValid && !!hasName;\n    const hasDescription = missionSetDescription && missionSetDescription.length > 0;\n    if (hasDescription) {\n        _Main__WEBPACK_IMPORTED_MODULE_1__.main.state.setBannerDesc(missionSetDescription);\n    }\n    setFieldError('#umm-mission-set-description-error', !hasDescription);\n    isValid = isValid && !!hasDescription;\n    const plannedLength = parseInt(plannedBannerLength !== null && plannedBannerLength !== void 0 ? plannedBannerLength : \"\");\n    const hasValidLength = plannedLength && !isNaN(plannedLength);\n    if (hasValidLength) {\n        _Main__WEBPACK_IMPORTED_MODULE_1__.main.state.setPlannedLength(plannedLength);\n    }\n    setFieldError('#umm-mission-planned-banner-length-error', !hasValidLength);\n    isValid = isValid && !!hasValidLength;\n    const hasFormat = titleFormat && titleFormat.length > 0;\n    if (hasFormat) {\n        _Main__WEBPACK_IMPORTED_MODULE_1__.main.state.setTitleFormat(titleFormat);\n    }\n    setFieldError('#umm-mission-title-format-error', !hasFormat);\n    isValid = isValid && !!hasFormat;\n    if (isValid) {\n        _Main__WEBPACK_IMPORTED_MODULE_1__.main.state.save();\n    }\n    return isValid;\n};\n\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/UI/Dialog/MissionDetails.ts?\n}");
-
-/***/ },
-
-/***/ "./src/UI/Dialog/Options.ts"
-/*!**********************************!*\
-  !*** ./src/UI/Dialog/Options.ts ***!
-  \**********************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   showUmmOptions: () => (/* binding */ showUmmOptions)\n/* harmony export */ });\n/* harmony import */ var _Edits__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Edits */ \"./src/Edits.ts\");\n/* harmony import */ var _ImportExport__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../ImportExport */ \"./src/ImportExport.ts\");\n/* harmony import */ var _Main__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../Main */ \"./src/Main.ts\");\n/* harmony import */ var _ButtonBar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../ButtonBar */ \"./src/UI/ButtonBar.ts\");\n/* harmony import */ var _Text_Text__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../Text/Text */ \"./src/Text/Text.ts\");\n/* harmony import */ var _About__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./About */ \"./src/UI/Dialog/About.ts\");\n/* harmony import */ var _Button__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Button */ \"./src/UI/Dialog/Button.ts\");\n/* harmony import */ var _Confirm__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Confirm */ \"./src/UI/Dialog/Confirm.ts\");\n/* harmony import */ var _MissionDetails__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./MissionDetails */ \"./src/UI/Dialog/MissionDetails.ts\");\n/* harmony import */ var _SelectMission__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./SelectMission */ \"./src/UI/Dialog/SelectMission.ts\");\n\n\n\n\n\n\n\n\n\n\nconst showUmmOptions = () => {\n    var _a, _b, _c;\n    const state = _Main__WEBPACK_IMPORTED_MODULE_2__.main.state;\n    const html = $(\"<div>\", { class: \"umm-options-list\" }).append($(\"<p>\").append($(\"<b>\", { text: \"Banner data\" }), $(\"<br>\"), 'Banner name: <b><span>' + ((_a = state.getBannerName()) !== null && _a !== void 0 ? _a : \"N/A\") + '</span></b><br>', 'Banner description: <b><span>' + ((_b = state.getBannerDesc()) !== null && _b !== void 0 ? _b : \"N/A\") + '</span></b><br>', 'Mission title format: <b><span>' + ((_c = state.getTitleFormat()) !== null && _c !== void 0 ? _c : \"N/A\") + '</span></b> <span title=\"Title format allows:&#10;N = Mission number without leading 0 (if required by banner length)&#10;NN = Mission number with leading 0&#10;M = Planned banner length&#10;T = (mission title)&#10; &#10;eg. T N-M or NN.M T\">(?)</span><br>', 'Planned banner length: <b><span>' + state.getPlannedLength().toString() + '</span></b><br>', 'Length: <b><span>' + window.formatDistance(state.missions.getTotalDistance()) + '</span></b><br>', validateMissions(state)), $(\"<p>\").append($(\"<b>\", { text: \"Mission options\" }), $(\"<br>\"), 'Layers: ', '<label style=\"user-select: none\">Mission Paths</label>', $(\"<input>\", {\n        type: \"checkbox\",\n        click: (event) => tooglePathsLayer(event.target.checked),\n        checked: _Main__WEBPACK_IMPORTED_MODULE_2__.main.renderPath.isVisible()\n    }), '<label style=\"user-select: none\">Mission Numbers</label>', $(\"<input>\", {\n        type: \"checkbox\",\n        click: (event) => toggleLayerNumbers(event.target.checked),\n        checked: _Main__WEBPACK_IMPORTED_MODULE_2__.main.renderNumbers.isVisible()\n    }), (0,_Button__WEBPACK_IMPORTED_MODULE_6__.button)(\"Edit banner details\", () => (0,_MissionDetails__WEBPACK_IMPORTED_MODULE_8__.editMissionSetDetails)(), \"w-full\"), (0,_Button__WEBPACK_IMPORTED_MODULE_6__.button)(\"Change active mission #\", _SelectMission__WEBPACK_IMPORTED_MODULE_9__.editActiveMission, \"w-full\"), (0,_Button__WEBPACK_IMPORTED_MODULE_6__.button)(\"Zoom to view all missions\", () => state.missions.zoom(), \"w-full\")), $(\"<hr>\"), (0,_Button__WEBPACK_IMPORTED_MODULE_6__.button)(\"Split mission\", _Edits__WEBPACK_IMPORTED_MODULE_0__.splitMissionOptions, \"w-full\"), (0,_Button__WEBPACK_IMPORTED_MODULE_6__.button)(\"Merge missions\", _Edits__WEBPACK_IMPORTED_MODULE_0__.mergeMissions, \"w-full\"), (0,_Button__WEBPACK_IMPORTED_MODULE_6__.button)(\"Reverse mission\", _Edits__WEBPACK_IMPORTED_MODULE_0__.reverseMission, \"w-full\"), $(\"<hr>\"), (0,_Button__WEBPACK_IMPORTED_MODULE_6__.button)(\"Clear ALL missions data\", confirmClear, \"w-full\"), $(\"<b>\", { text: \"Import/Export\" }), $(\"<br>\"), (0,_Button__WEBPACK_IMPORTED_MODULE_6__.button)(\"Export banner data to file\", () => (0,_ImportExport__WEBPACK_IMPORTED_MODULE_1__.exportData)(_Main__WEBPACK_IMPORTED_MODULE_2__.main.state), \"w-full\"), $(\"<div>\").css({ width: 800, margin: \"auto\" }).append('<b>Import banner data from file:</b><br>', $(\"<input>\", { type: \"file\", change: confirmLoad })));\n    // move this to option dialog\n    window.map.on('layeradd', onLayerAdd);\n    window.map.on('layerremove', onLayerRemove);\n    window.dialog({\n        html: html,\n        title: `${_Text_Text__WEBPACK_IMPORTED_MODULE_4__.title} v${\"v1.2\"}`,\n        id: 'umm-options',\n        width: 350,\n        buttons: [\n            (0,_Button__WEBPACK_IMPORTED_MODULE_6__.dialogButton)(\"About this plugin\", _About__WEBPACK_IMPORTED_MODULE_5__.about),\n            (0,_Button__WEBPACK_IMPORTED_MODULE_6__.dialogButtonClose)()\n        ],\n        closeCallback: () => destroy()\n    });\n};\nconst destroy = () => {\n    window.map.off('layeradd', onLayerAdd);\n    window.map.off('layerremove', onLayerRemove);\n};\nconst onLayerAdd = (event) => {\n    if (_Main__WEBPACK_IMPORTED_MODULE_2__.main.renderPath.isLayer(event.layer)) {\n        $('#umm-layercheckbox-paths').prop(\"checked\", true);\n    }\n    if (_Main__WEBPACK_IMPORTED_MODULE_2__.main.renderNumbers.isLayer(event.layer)) {\n        $('#umm-layercheckbox-numbers').prop(\"checked\", true);\n    }\n};\nconst onLayerRemove = (event) => {\n    if (_Main__WEBPACK_IMPORTED_MODULE_2__.main.renderPath.isLayer(event.layer)) {\n        $('#umm-layercheckbox-paths').prop(\"checked\", false);\n    }\n    if (_Main__WEBPACK_IMPORTED_MODULE_2__.main.renderNumbers.isLayer(event.layer)) {\n        $('#umm-layercheckbox-numbers').prop(\"checked\", false);\n    }\n};\nconst validateMissions = (state) => {\n    const invalidMissions = state.missions.validate();\n    const result = [];\n    for (const error in invalidMissions) {\n        const numbers = invalidMissions[error].map(n => n + 1).join(\", \");\n        result.push(`<span style=\"color: red;\"><b>${error}:</b></span> Mission: ${numbers}`);\n    }\n    ;\n    return result.join(\"<br>\");\n};\nconst confirmClear = async () => {\n    if (await (0,_Confirm__WEBPACK_IMPORTED_MODULE_7__.confirmDialog)({ message: \"Clear all Mission data?\", details: \"Removes mission settings and waypoints. This action cannot be undone.\" })) {\n        (0,_Edits__WEBPACK_IMPORTED_MODULE_0__.clearMissionData)();\n    }\n};\nconst confirmLoad = async (event) => {\n    if (_Main__WEBPACK_IMPORTED_MODULE_2__.main.state.isEmpty() ||\n        await (0,_Confirm__WEBPACK_IMPORTED_MODULE_7__.confirmDialog)({ message: \"Overwrite current data?\", details: \"All current missions will be replaced by the imported data.\" })) {\n        await (0,_ImportExport__WEBPACK_IMPORTED_MODULE_1__.loadFileInput)(event, _Main__WEBPACK_IMPORTED_MODULE_2__.main.state);\n        _Main__WEBPACK_IMPORTED_MODULE_2__.main.state.checkAllPortals();\n        _Main__WEBPACK_IMPORTED_MODULE_2__.main.redrawAll();\n        (0,_ButtonBar__WEBPACK_IMPORTED_MODULE_3__.updateCurrentActiveMissionSidebar)(_Main__WEBPACK_IMPORTED_MODULE_2__.main.state);\n        (0,_ButtonBar__WEBPACK_IMPORTED_MODULE_3__.updatePortalCountSidebar)();\n        _Main__WEBPACK_IMPORTED_MODULE_2__.main.state.missions.zoom();\n    }\n};\nconst tooglePathsLayer = (show) => _Main__WEBPACK_IMPORTED_MODULE_2__.main.renderPath.toggle(show);\nconst toggleLayerNumbers = (show) => _Main__WEBPACK_IMPORTED_MODULE_2__.main.renderNumbers.toggle(show);\n\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/UI/Dialog/Options.ts?\n}");
-
-/***/ },
-
-/***/ "./src/UI/Dialog/SelectMission.ts"
-/*!****************************************!*\
-  !*** ./src/UI/Dialog/SelectMission.ts ***!
-  \****************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   editActiveMission: () => (/* binding */ editActiveMission)\n/* harmony export */ });\n/* harmony import */ var _Edits__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Edits */ \"./src/Edits.ts\");\n/* harmony import */ var _Main__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Main */ \"./src/Main.ts\");\n/* harmony import */ var _Notification__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Notification */ \"./src/UI/Notification.ts\");\n/* harmony import */ var _Text_Text__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../Text/Text */ \"./src/Text/Text.ts\");\n/* harmony import */ var _Button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Button */ \"./src/UI/Dialog/Button.ts\");\n/* harmony import */ var _Options__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Options */ \"./src/UI/Dialog/Options.ts\");\n/* harmony import */ var _Confirm__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Confirm */ \"./src/UI/Dialog/Confirm.ts\");\n\n\n\n\n\n\n\nconst editActiveMission = () => {\n    const html = $(\"<div>\", { class: \"umm-mission-picker-btn\" }).append('Select a mission number:<br>', $(\"<select>\", { id: \"umm-mission-picker\", class: \"umm-mission-picker\", change: updateMissionInfo }).css({ \"margin-right\": \"1em\" }), (0,_Button__WEBPACK_IMPORTED_MODULE_4__.button)(\"Select\", onMissionSelect), (0,_Button__WEBPACK_IMPORTED_MODULE_4__.button)(\"Zoom to mission\", onZoomToMission), $(\"<div>\", { id: \"umm-mission-picker-info\" }), (0,_Button__WEBPACK_IMPORTED_MODULE_4__.button)(\"Split\", onMissionSplit), (0,_Button__WEBPACK_IMPORTED_MODULE_4__.button)(\"Clear\", onMissionClear), (0,_Button__WEBPACK_IMPORTED_MODULE_4__.button)(\"Reverse\", onMissionReverse), $(\"<br>\"), (0,_Button__WEBPACK_IMPORTED_MODULE_4__.button)(\"Merge with previous\", onMergePrevious), (0,_Button__WEBPACK_IMPORTED_MODULE_4__.button)(\"Merge next into this\", onMergePost));\n    window.dialog({\n        html: html,\n        title: `${_Text_Text__WEBPACK_IMPORTED_MODULE_3__.title} v${\"v1.2\"}`,\n        id: 'umm-options',\n        width: 350,\n        buttons: [\n            (0,_Button__WEBPACK_IMPORTED_MODULE_4__.dialogButton)(\"< Main Menu\", _Options__WEBPACK_IMPORTED_MODULE_5__.showUmmOptions),\n            (0,_Button__WEBPACK_IMPORTED_MODULE_4__.dialogButtonClose)()\n        ]\n    });\n    updateMissionList();\n    updateMissionInfo();\n};\nconst getSelectedMission = () => {\n    const missionNumber = parseInt($('#umm-mission-picker').val());\n    return _Main__WEBPACK_IMPORTED_MODULE_1__.main.state.missions.get(missionNumber);\n};\nconst updateMissionList = () => {\n    const select = $(\"#umm-mission-picker\").empty();\n    const state = _Main__WEBPACK_IMPORTED_MODULE_1__.main.state;\n    state.missions.forEach(mission => {\n        select.append($(\"<option>\", {\n            value: mission.id,\n            selected: state.isCurrent(mission.id),\n            text: `${mission.id + 1} - waypoints ${mission.portals.length}`\n        }));\n    });\n};\nconst updateMissionInfo = () => {\n    var _a, _b;\n    const info = $(\"#umm-mission-picker-info\");\n    info.empty();\n    const mission = getSelectedMission();\n    if (!mission)\n        return;\n    const missionLength = window.formatDistance(mission.getDistance());\n    const distanceToStart = _Main__WEBPACK_IMPORTED_MODULE_1__.main.state.missions.distanceToStart(mission.id);\n    const distanceToNext = _Main__WEBPACK_IMPORTED_MODULE_1__.main.state.missions.distanceToStart(mission.id + 1);\n    const table = `\n    Wapoints:\\t${mission.portals.length}\\n\n    Length:\\t${missionLength}\\n\n    to Start:\\t${(_a = (distanceToStart && window.formatDistance(distanceToStart))) !== null && _a !== void 0 ? _a : \"---\"}\\n\n    to Next:\\t${(_b = (distanceToNext && window.formatDistance(distanceToNext))) !== null && _b !== void 0 ? _b : \"---\"}\\n`;\n    info.html(window.convertTextToTableMagic(table));\n};\nconst refreshMissionUI = () => {\n    updateMissionInfo();\n    updateMissionList();\n    _Main__WEBPACK_IMPORTED_MODULE_1__.main.redrawAll();\n};\nconst onMissionSelect = () => {\n    const mission = getSelectedMission();\n    if (!mission || _Main__WEBPACK_IMPORTED_MODULE_1__.main.state.isCurrent(mission.id)) {\n        (0,_Notification__WEBPACK_IMPORTED_MODULE_2__.notification)(\"Active mission not changed.\");\n        return;\n    }\n    (0,_Edits__WEBPACK_IMPORTED_MODULE_0__.setCurrentMission)(mission.id);\n    if (_Main__WEBPACK_IMPORTED_MODULE_1__.main.missionModeActive) {\n        // eslint-disable-next-line unicorn/no-null\n        renderPortalDetails(null); // Avoid adding current portal to a mission\n        (0,_Edits__WEBPACK_IMPORTED_MODULE_0__.startEdit)();\n    }\n    else {\n        mission.show();\n        (0,_Notification__WEBPACK_IMPORTED_MODULE_2__.notification)(`Current working mission set to #${mission.id + 1}`);\n    }\n    $(\"#dialog-umm-options\").dialog(\"close\");\n};\nconst onZoomToMission = () => {\n    const mission = getSelectedMission();\n    if (mission) {\n        mission.show();\n    }\n    else {\n        (0,_Notification__WEBPACK_IMPORTED_MODULE_2__.notification)(\"Can't zoom in on this mission. No portals.\");\n    }\n};\nconst onMissionSplit = async () => {\n    var _a, _b;\n    const missions = _Main__WEBPACK_IMPORTED_MODULE_1__.main.state.missions;\n    const mission = getSelectedMission();\n    if (!mission)\n        return;\n    let next = missions.next(mission);\n    while ((next === null || next === void 0 ? void 0 : next.portals.length) === 0)\n        next = missions.next(next);\n    const endMissionId = (_a = next === null || next === void 0 ? void 0 : next.id) !== null && _a !== void 0 ? _a : _Main__WEBPACK_IMPORTED_MODULE_1__.main.state.getPlannedLength();\n    let count = parseInt((_b = prompt(\"Split inhow many missions should be divided among?\", (endMissionId - mission.id).toString())) !== null && _b !== void 0 ? _b : \"0\");\n    if (count < 2)\n        return;\n    count = Math.min(count, _Main__WEBPACK_IMPORTED_MODULE_1__.main.state.getPlannedLength() - mission.id);\n    let mustMerge = false;\n    for (let i = 1; i < count; i++) {\n        const current = missions.get(mission.id + i);\n        if ((current === null || current === void 0 ? void 0 : current.portals.length) > 0)\n            mustMerge = true;\n    }\n    if (mustMerge) {\n        if (!await (0,_Confirm__WEBPACK_IMPORTED_MODULE_6__.confirmDialog)({ message: \"Merge missione before split?\", details: \"Mission(s) already contain portals. These will be merged into one\" })) {\n            return;\n        }\n    }\n    missions.splitIntoMultiple(mission, count);\n    _Main__WEBPACK_IMPORTED_MODULE_1__.main.state.save();\n    refreshMissionUI();\n};\nconst onMergePrevious = () => {\n    const missions = _Main__WEBPACK_IMPORTED_MODULE_1__.main.state.missions;\n    const mission = getSelectedMission();\n    if (!mission)\n        return;\n    let previous = missions.previous(mission);\n    if (!previous) {\n        if (mission.id === 0)\n            return;\n        previous = missions.get(0);\n        console.assert(previous);\n    }\n    _Main__WEBPACK_IMPORTED_MODULE_1__.main.state.missions.merge(previous, mission);\n    _Main__WEBPACK_IMPORTED_MODULE_1__.main.state.save();\n    refreshMissionUI();\n};\nconst onMergePost = () => {\n    const missions = _Main__WEBPACK_IMPORTED_MODULE_1__.main.state.missions;\n    const mission = getSelectedMission();\n    if (!mission)\n        return;\n    let next = missions.next(mission);\n    while ((next === null || next === void 0 ? void 0 : next.portals.length) === 0)\n        next = missions.next(next);\n    if (!next)\n        return;\n    _Main__WEBPACK_IMPORTED_MODULE_1__.main.state.missions.merge(mission, next);\n    _Main__WEBPACK_IMPORTED_MODULE_1__.main.state.save();\n    refreshMissionUI();\n};\nconst onMissionReverse = () => {\n    const mission = getSelectedMission();\n    if (!mission)\n        return;\n    mission.reverse();\n    _Main__WEBPACK_IMPORTED_MODULE_1__.main.state.save();\n    refreshMissionUI();\n};\nconst onMissionClear = () => {\n    const mission = getSelectedMission();\n    if (!mission)\n        return;\n    if (!confirm(\"This will remove all portals\"))\n        return;\n    mission.clear();\n    _Main__WEBPACK_IMPORTED_MODULE_1__.main.state.save();\n    refreshMissionUI();\n};\n\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/UI/Dialog/SelectMission.ts?\n}");
-
-/***/ },
-
-/***/ "./src/UI/EditWaypoint.ts"
-/*!********************************!*\
-  !*** ./src/UI/EditWaypoint.ts ***!
-  \********************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   addWaypointEditorToPortal: () => (/* binding */ addWaypointEditorToPortal)\n/* harmony export */ });\n/* harmony import */ var _Main__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Main */ \"./src/Main.ts\");\n/* harmony import */ var _State_Portals__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../State/Portals */ \"./src/State/Portals.ts\");\n/* harmony import */ var _Notification__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Notification */ \"./src/UI/Notification.ts\");\n\n\n\nconst addWaypointEditorToPortal = () => {\n    var _a;\n    const state = _Main__WEBPACK_IMPORTED_MODULE_0__.main.state;\n    const missions = state.missions.getMissionsOfPortal((_a = window.selectedPortal) !== null && _a !== void 0 ? _a : \"\");\n    if (missions.length === 0)\n        return;\n    const wayPointHtml = $(\"<div>\", { id: \"umm-waypoint-editor\" });\n    // Construct waypoint editor HTML\n    const ummTitle = $(\"<span>\", { text: \"UMM Waypoint Editor\", class: \"umm-waypoint-editor-title\" });\n    wayPointHtml.append(ummTitle);\n    const waypointSelectContainer = $(\"<div>\", { class: \"umm-waypoint-select-container\" });\n    waypointSelectContainer.append(portalMissionSelectFactory(missions));\n    const actionSelect = $(\"<select>\", { id: \"umm-action-select\" });\n    waypointSelectContainer.append(actionSelect);\n    wayPointHtml.append(waypointSelectContainer);\n    const passPhraseHtml = $(\"<div>\", { id: \"umm-passphrase-container\" }); // Placeholder to be replaced with updatePassPhraseContent\n    wayPointHtml.append(passPhraseHtml);\n    $(\"#portaldetails #randdetails\").before(wayPointHtml);\n    // Make mission dropdown functional\n    $(\"#umm-mission-select\").on('change', () => {\n        if ($(\"#umm-mission-select\").val() === \"#\") {\n            // If no mission is selected, disable other dropdowns\n            $(\"#umm-action-select\").prop(\"disabled\", true);\n            $(\"#umm-passphrase-container\").hide();\n        }\n        else {\n            // If a different mission is selected, update the waypoint selector and action selector to reflect the new portal(s)\n            updateActionSelect();\n            updatePassPhraseContent();\n        }\n    });\n    updateActionSelect(); // Replace action placeholder\n    updatePassPhraseContent(); // Replace passphrase placeholder\n};\nconst portalMissionSelectFactory = (validMissionIds) => {\n    const missionSelect = $(\"<select>\", { id: \"umm-mission-select\" });\n    const missionOption = $(\"<option>\", { value: \"#\", text: \"Select mission\" });\n    missionSelect.append(missionOption);\n    validMissionIds.forEach(id => {\n        const missionOption = $(\"<option>\", { value: id, text: id + 1 });\n        missionSelect.append(missionOption);\n    });\n    const current = _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.getCurrent();\n    const preSelect = validMissionIds.includes(current) ? current : validMissionIds[0];\n    $(missionSelect).val(preSelect);\n    return missionSelect;\n};\nconst portalActionSelectFactory = (portal) => {\n    const actionSelect = $(\"<select>\", { id: \"umm-action-select\" });\n    _State_Portals__WEBPACK_IMPORTED_MODULE_1__.PortalActions.forEach(({ action, label }) => {\n        const option = $(\"<option>\", { value: action, text: label });\n        if (portal.objective.type === action)\n            option.prop(\"selected\", true);\n        actionSelect.append(option);\n    });\n    return actionSelect;\n};\nconst updatePassPhraseContent = () => {\n    const portal = currentPortal();\n    if (!portal)\n        return;\n    $(\"#umm-passphrase-container\").replaceWith(passCodeBoxFactory(portal));\n    $(\"#umm-passphrase-container textarea\").css({ \"overflow-y\": \"hidden\" });\n    if ($(\"#umm-action-select\").val() == \"PASSPHRASE\") {\n        $(\"#umm-passphrase-container\").css('display', 'flex');\n    }\n};\nconst passCodeBoxFactory = (portal) => {\n    var _a, _b;\n    const questionSpan = $(\"<span>\", { text: \"Question\" });\n    const ppQuestion = (_a = portal.objective.passphrase_params.question) !== null && _a !== void 0 ? _a : \"\";\n    const question = $(\"<textarea>\", { id: \"umm-passphrase-question\", type: \"text\", row: 1, value: ppQuestion });\n    question.on(\"blur\", () => savePassPhrase());\n    const passPhraseSpan = $(\"<span>\", { text: \"Passphrase\" });\n    // eslint-disable-next-line no-underscore-dangle\n    const spQuestion = (_b = portal.objective.passphrase_params._single_passphrase) !== null && _b !== void 0 ? _b : \"\";\n    const passPhrase = $(\"<input>\", { type: \"text\", id: \"umm-passphrase-passphrase\", value: spQuestion });\n    passPhrase.on(\"blur\", () => savePassPhrase());\n    const passPhraseHtml = $(\"<div>\", { id: \"umm-passphrase-container\" });\n    passPhraseHtml.append(questionSpan, question, passPhraseSpan, passPhrase);\n    return passPhraseHtml;\n};\nconst currentPortal = () => {\n    var _a;\n    const missionId = parseInt($(\"#umm-mission-select\").val());\n    const portals = (_a = _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.missions.get(missionId)) === null || _a === void 0 ? void 0 : _a.portals;\n    return portals === null || portals === void 0 ? void 0 : portals.find(window.selectedPortal);\n};\nconst savePassPhrase = () => {\n    const portal = currentPortal();\n    if (!portal)\n        return;\n    // eslint-disable-next-line unicorn/prevent-abbreviations\n    const passphrase_params = {\n        question: $(\"#umm-passphrase-question\").val(),\n        _single_passphrase: $(\"#umm-passphrase-passphrase\").val()\n    };\n    portal.objective.passphrase_params = passphrase_params;\n    _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.save();\n    (0,_Notification__WEBPACK_IMPORTED_MODULE_2__.notification)(\"Question and passphrase saved\");\n};\nconst updateActionSelect = () => {\n    const portal = currentPortal();\n    if (!portal)\n        return;\n    $(\"#umm-action-select\").replaceWith(portalActionSelectFactory(portal));\n    $(\"#umm-action-select\").on('change', () => {\n        if ($(\"#umm-action-select\").val() == \"PASSPHRASE\") {\n            updatePassPhraseContent();\n        }\n        else {\n            $(\"#umm-passphrase-container\").hide();\n        }\n        currentPortal().objective.type = $(\"#umm-action-select\").val();\n        _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.save();\n        (0,_Notification__WEBPACK_IMPORTED_MODULE_2__.notification)(\"Portal action saved\");\n    });\n};\n\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/UI/EditWaypoint.ts?\n}");
-
-/***/ },
-
-/***/ "./src/UI/Notification.ts"
-/*!********************************!*\
-  !*** ./src/UI/Notification.ts ***!
-  \********************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   bannerNotification: () => (/* binding */ bannerNotification),\n/* harmony export */   notification: () => (/* binding */ notification)\n/* harmony export */ });\n/* harmony import */ var _Main__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Main */ \"./src/Main.ts\");\n\nlet notificationTimer;\nconst bannerNotification = (message) => notification(`${_Main__WEBPACK_IMPORTED_MODULE_0__.main.state.getBannerName()}\\n${message}`);\nconst notification = (notificationText, isPersistent = false) => {\n    $('.umm-notification').hide();\n    const notification = $('.umm-notification').text(notificationText);\n    notification.html(notification.html().replace(/\\n/g, '<br/>'));\n    $('.umm-notification').show();\n    window.clearTimeout(notificationTimer);\n    if (!isPersistent) {\n        notificationTimer = window.setTimeout(() => {\n            $('.umm-notification').fadeOut(400);\n        }, 3000);\n    }\n};\n\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/UI/Notification.ts?\n}");
-
-/***/ },
-
-/***/ "./src/UI/RenderNumbers.ts"
-/*!*********************************!*\
-  !*** ./src/UI/RenderNumbers.ts ***!
-  \*********************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   RenderNumbers: () => (/* binding */ RenderNumbers)\n/* harmony export */ });\n/* harmony import */ var _Main__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Main */ \"./src/Main.ts\");\n/* harmony import */ var _State_Missions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../State/Missions */ \"./src/State/Missions.ts\");\n\n\nclass RenderNumbers {\n    constructor() {\n        this.missionNumbers = new window.L.FeatureGroup();\n        window.addLayerGroup('UMM: Mission Numbers', this.missionNumbers, true);\n    }\n    isVisible() {\n        return window.map.hasLayer(this.missionNumbers);\n    }\n    isLayer(layer) {\n        return layer === this.missionNumbers;\n    }\n    toggle(show) {\n        if (show) {\n            window.map.addLayer(this.missionNumbers);\n        }\n        else {\n            window.map.removeLayer(this.missionNumbers);\n        }\n    }\n    redraw() {\n        this.missionNumbers.clearLayers();\n        const state = _Main__WEBPACK_IMPORTED_MODULE_0__.main.state;\n        const starts = this.getMissionStarts(state);\n        starts.forEach(start => {\n            const id = start.missionIndex;\n            const icon = this.generateMarker(state.isCurrent(id) ? \"active\" : \"start\", id + 1);\n            const marker = L.marker(start.location, {\n                icon: L.divIcon({\n                    className: 'umm-mission-icon',\n                    iconSize: [34, 50],\n                    iconAnchor: [17, 50],\n                    html: icon,\n                }),\n                opacity: start.auto ? 0.4 : 1,\n                interactive: false\n            });\n            this.missionNumbers.addLayer(marker);\n        });\n    }\n    getMissionStarts(state) {\n        const missions = [];\n        let mid = 0;\n        while (mid < state.missions.count()) {\n            const mission = state.missions.get(mid);\n            if (mission === null || mission === void 0 ? void 0 : mission.hasPortals()) {\n                const start = mission.getLocations()[0]; // TODO optimize; this converts all portals to LatLng while only the first is needed\n                missions.push({\n                    missionIndex: mid,\n                    location: start,\n                    auto: false\n                });\n            }\n            // count empty mission + 1\n            let count = 1;\n            for (; mid + count <= state.missions.count(); count++) {\n                const nextMission = state.missions.get(mid + count);\n                if (nextMission === null || nextMission === void 0 ? void 0 : nextMission.hasPortals()) {\n                    break;\n                }\n            }\n            if (count > 1) {\n                // Fill in auto numbers for empty missions\n                const allLocations = [];\n                for (let i = 0; i < count - 1; i++) {\n                    const fillMission = state.missions.get(mid + i);\n                    if (fillMission === null || fillMission === void 0 ? void 0 : fillMission.hasPortals()) { // NOTE: only the first (i=0) should have portals\n                        allLocations.push(...fillMission.getLocations());\n                    }\n                }\n                const portalsPerMission = Math.max(allLocations.length / count, _State_Missions__WEBPACK_IMPORTED_MODULE_1__.MIN_PORTALS_PER_MISSION);\n                for (let fillIndex = 1; fillIndex < count; fillIndex++) {\n                    const locationIndex = Math.floor(portalsPerMission * fillIndex);\n                    if (locationIndex < allLocations.length - 1) {\n                        missions.push({\n                            missionIndex: mid + fillIndex,\n                            location: allLocations[locationIndex],\n                            auto: true\n                        });\n                    }\n                }\n            }\n            mid += count;\n        }\n        return missions;\n    }\n    generateMarker(kclass, index) {\n        return `<svg id=\"Layer_1\" data-name=\"Layer 1\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 33 49\" class=\"umm-mission-marker\"><defs><style>.cls-2{fill:#fff;}</style></defs><path class=\"${kclass}\" d=\"M33,18c0,8.84-12,31-16,31S1,26.84,1,18,8.16,1,17,1,33,9.16,33,18Z\" transform=\"translate(-0.5 -0.5)\"/><circle class=\"cls-2\" cx=\"16.5\" cy=\"16.5\" r=\"13\"/><foreignObject x=\"0\" y=\"0\" width=\"34px\" height=\"34px\"><span class=\"umm-mission-number\">${index}</span></foreignObject></svg>`;\n    }\n}\n\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/UI/RenderNumbers.ts?\n}");
-
-/***/ },
-
-/***/ "./src/UI/RenderPath.ts"
-/*!******************************!*\
-  !*** ./src/UI/RenderPath.ts ***!
-  \******************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   RenderPath: () => (/* binding */ RenderPath)\n/* harmony export */ });\n/* harmony import */ var _Main__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Main */ \"./src/Main.ts\");\n/* harmony import */ var _Dialog_Confirm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Dialog/Confirm */ \"./src/UI/Dialog/Confirm.ts\");\n/* harmony import */ var _Notification__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Notification */ \"./src/UI/Notification.ts\");\n\n\n\n// TODO: D&D should be handled elsewhere\nclass RenderPath {\n    constructor() {\n        this.missionPaths = new window.L.FeatureGroup();\n        window.addLayerGroup('UMM: Mission Paths', this.missionPaths, true);\n        this.touchIcon = L.Browser.touch ?\n            new L.DivIcon({\n                iconSize: new L.Point(20, 20),\n                className: \"leaflet-div-icon leaflet-editing-icon leaflet-touch-icon\"\n            }) :\n            new L.DivIcon({\n                iconSize: new L.Point(8, 8),\n                className: \"leaflet-div-icon leaflet-editing-icon\"\n            });\n    }\n    isVisible() {\n        return window.map.hasLayer(this.missionPaths);\n    }\n    isLayer(layer) {\n        return layer === this.missionPaths;\n    }\n    toggle(show) {\n        if (show) {\n            window.map.addLayer(this.missionPaths);\n        }\n        else {\n            window.map.removeLayer(this.missionPaths);\n        }\n    }\n    redraw() {\n        this.missionPaths.clearLayers();\n        const editMode = _Main__WEBPACK_IMPORTED_MODULE_0__.main.missionModeActive;\n        _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.missions.forEach((mission) => {\n            if (_Main__WEBPACK_IMPORTED_MODULE_0__.main.state.isCurrent(mission.id) && editMode) {\n                this.drawEditMission(mission);\n            }\n            else {\n                this.drawMission(mission);\n            }\n        });\n    }\n    drawMission(mission) {\n        const geodesicPolyline = new L.GeodesicPolyline(mission.getLocations(), {\n            color: _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.isCurrent(mission.id) ? \"#ff9a00\" : \"crimson\",\n            weight: 5,\n            smoothFactor: 1,\n            interactive: false\n        });\n        this.missionPaths.addLayer(geodesicPolyline);\n    }\n    // let _draggingLine = undefined;\n    drawEditMission(mission) {\n        const coordinatesList = mission.getLocations();\n        // Portal Markers\n        coordinatesList.forEach((ll, index) => this.createDragMarker(ll, index, mission.id));\n        // MidPoint Marker\n        coordinatesList.forEach((ll, index) => {\n            if (index > 0) {\n                const half = this.getCenter(coordinatesList[index - 1], ll);\n                this.createDragMarker(half, index, mission.id, true);\n            }\n        });\n        const geodesicPolyline = new L.GeodesicPolyline(coordinatesList, {\n            color: \"#ff9a00\",\n            weight: 5,\n            smoothFactor: 1\n        });\n        this.missionPaths.addLayer(geodesicPolyline);\n    }\n    createDragMarker(location, portalId, missionId, dummy = false) {\n        const marker = new L.Marker(location, {\n            icon: this.touchIcon,\n            draggable: true,\n            zIndexOffset: 7000,\n            opacity: dummy ? 0.4 : 1,\n            portal: portalId,\n            missionId: missionId,\n            isMidPoint: dummy\n        });\n        this.missionPaths.addLayer(marker);\n        marker\n            .on(\"drag\", event => { this.onMarkerDrag(event); })\n            .on(\"dragstart\", event => { this.onMarkerDragStart(event); })\n            .on(\"dragend\", event => { void this.onMarkerDragEnd(event); })\n            .on(\"dblclick\", event => { this.onMarkerDblClick(event); });\n    }\n    getCenter(l1, l2) {\n        const p1 = window.map.project(l1);\n        const p2 = window.map.project(l2);\n        return window.map.unproject(p1.add(p2).divideBy(2));\n    }\n    onMarkerDragStart(event) {\n        const marker = event.target;\n        const options = event.target.options;\n        const isMidPoint = options.isMidPoint;\n        const mission = _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.missions.get(options.missionId);\n        if (!mission) {\n            console.warn(\"onMarkerDragStart: mission not found\", options.missionId);\n            return;\n        }\n        if (this.editDragLine) {\n            this.missionPaths.removeLayer(this.editDragLine);\n        }\n        const portal = options.portal;\n        const portal_pre = portal > 0 ? mission.portals.get(portal - 1) : undefined;\n        const portal_post = mission.portals.get(portal + (isMidPoint ? 0 : 1));\n        let lls = [\n            portal_pre && new L.LatLng(portal_pre.location.latitude, portal_pre.location.longitude),\n            marker.getLatLng(),\n            portal_post && new L.LatLng(portal_post.location.latitude, portal_post.location.longitude)\n        ];\n        // special-case:\n        // single portal\n        if (!portal_pre && !portal_post)\n            lls = [marker.getLatLng(), marker.getLatLng()];\n        // is start portal\n        else if (!portal_pre)\n            lls.splice(0, 1);\n        // is end portal \n        else if (!portal_post)\n            lls = [lls[1], lls[0]];\n        this.editDragLine = new L.Polyline(lls, {\n            color: \"#ff9a00\",\n            weight: 3,\n            dashArray: '5,5',\n            pointerEvents: 'none'\n        });\n        this.missionPaths.addLayer(this.editDragLine);\n    }\n    onMarkerDrag(event) {\n        if (!this.editDragLine)\n            return;\n        const marker = event.target;\n        const options = event.target.options;\n        const mission = _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.missions.get(options.missionId);\n        if (!mission)\n            return;\n        const snappedPortal = this.getSnapPortal(marker.getLatLng(), mission.getLocations());\n        const newTarget = snappedPortal ? snappedPortal.getLatLng() : marker.getLatLng();\n        const latlngs = this.editDragLine.getLatLngs();\n        const index = latlngs.length === 3 ? 1 : 0;\n        latlngs[index] = newTarget;\n        this.editDragLine.setLatLngs(latlngs);\n    }\n    async onMarkerDragEnd(event) {\n        if (this.editDragLine) {\n            this.missionPaths.removeLayer(this.editDragLine);\n            this.editDragLine = undefined;\n        }\n        const marker = event.target;\n        const options = event.target.options;\n        const mission = _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.missions.get(options.missionId);\n        if (!mission) {\n            console.warn(\"onMarkerDragEnd: mission not found\", options.missionId);\n            this.redraw();\n            return;\n        }\n        const coordinatesList = mission.getLocations();\n        const snappedPortal = this.getSnapPortal(marker.getLatLng(), coordinatesList);\n        if (!snappedPortal) {\n            this.redraw();\n            return;\n        }\n        const portalToAdd = mission.portals.create(snappedPortal.options.guid);\n        if (options.isMidPoint) {\n            mission.portals.insert(options.portal, portalToAdd);\n        }\n        else {\n            await this.movePortal(mission, options.portal, portalToAdd);\n        }\n        this.saveStateAndRefresh();\n    }\n    async movePortal(mission, portalID, target) {\n        // drag portal to last mission -> merge?\n        if (portalID === 0) {\n            const missions = _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.missions;\n            const preMission = missions.previous(mission);\n            if (preMission === null || preMission === void 0 ? void 0 : preMission.portals.isEnd(target)) {\n                if (await (0,_Dialog_Confirm__WEBPACK_IMPORTED_MODULE_1__.confirmDialog)({ message: \"Merge mission ?\" })) {\n                    missions.merge(preMission, mission);\n                    _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.setCurrent(preMission.id);\n                    return;\n                }\n            }\n            else if (mission.portals.length === 1 && (preMission === null || preMission === void 0 ? void 0 : preMission.portals.includes(target.guid))) {\n                if (await (0,_Dialog_Confirm__WEBPACK_IMPORTED_MODULE_1__.confirmDialog)({ message: \"Split mission ?\" })) {\n                    const index = preMission.portals.indexOf(target);\n                    mission.portals.clear();\n                    missions.split(preMission, index, mission);\n                    return;\n                }\n            }\n        }\n        // drag portal to next mission -> merge?\n        if (portalID === mission.portals.length - 1) {\n            const missions = _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.missions;\n            const postMission = missions.next(mission);\n            if (postMission === null || postMission === void 0 ? void 0 : postMission.portals.isStart(target)) {\n                if (await (0,_Dialog_Confirm__WEBPACK_IMPORTED_MODULE_1__.confirmDialog)({ message: \"Merge mission ?\" })) {\n                    missions.merge(mission, postMission);\n                    return;\n                }\n            }\n        }\n        mission.portals.set(portalID, target);\n    }\n    getSnapPortal(unsnappedLatLng, ignore = []) {\n        const containerPoint = window.map.latLngToContainerPoint(unsnappedLatLng);\n        let best_portal = undefined;\n        let best_distance = Infinity;\n        for (const guid in window.portals) {\n            const portal = window.portals[guid];\n            const ll = portal.getLatLng();\n            if (ignore.some(x => x.equals(ll)))\n                continue;\n            const pp = window.map.latLngToContainerPoint(ll);\n            const options = portal.options; // type: missing Leaflet\n            const size = options.weight + options.radius * 5; // allow some extra space for easier snapping\n            const distance = pp.distanceTo(containerPoint);\n            if (distance > size)\n                continue;\n            if (distance < best_distance) {\n                best_distance = distance;\n                best_portal = portal;\n            }\n        }\n        return best_portal;\n    }\n    onMarkerDblClick(event) {\n        const options = event.target.options;\n        const portal = options.portal;\n        if (options.isMidPoint)\n            return;\n        const mission = _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.missions.get(options.missionId);\n        if (!mission)\n            return;\n        mission.portals.remove(portal);\n        this.saveStateAndRefresh();\n        (0,_Notification__WEBPACK_IMPORTED_MODULE_2__.notification)(`${mission.title}\\nRemoved #${portal + 1} from mission`);\n    }\n    saveStateAndRefresh() {\n        _Main__WEBPACK_IMPORTED_MODULE_0__.main.state.save();\n        _Main__WEBPACK_IMPORTED_MODULE_0__.main.redrawAll();\n    }\n}\n\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/UI/RenderPath.ts?\n}");
-
-/***/ },
-
-/***/ "./src/assets/bookmarks.png"
-/*!**********************************!*\
-  !*** ./src/assets/bookmarks.png ***!
-  \**********************************/
-(module) {
-
-eval("{module.exports = \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAATLSURBVGhD7ZoHqH5jHMdfe++9CcnKLnsWsjLKLiHZo5AthQjJlvwzSkqyIjObEJGysorsvSPz8znv+9NzT+c97xnvvZy63/p0z/Pc5z7n+Z5znvV7bm9a/0M9Du/AITCrGWPS/HAWfAXPwV4wM4xLC8JF8C3Y9t7fCe9DW0Nh4BtI6xYf2OEwJzTVHHAifA1R7zXwb+KN5LqJoSIDD8OWcBC8NsiTz+EMWBiqyrd5IHwAUc8ng58TjFhwP6hrqMjAI7AZpJoJdoanIMr9BJfBClCmHeBliL97CbaGIwfpCUZCZYZmg9AwA5vDKG0Cd8Kf4N/9DrfAupBqPXgIov53wbb5UFSpkdAwQ4dC3sCjUMVAXqvBDPgVoq4HYQ/QWBj9Eo6H2SFVJSOhIkOBBraAtloKLoTvIa3/FzgfHKGKVMtIKAy9AtGJxy0/15PhdbgeloEyjTRio2Wy5BNevH/ZSiONvAB23MnQyuAk5j2PMAMtArfCdbC0GRU10shtcFX/ciw6APbsX2Zv4nl4C3Y1A20E0Q4nO+XEt2z/cqga9ZE6mgdm6V/2TgPrd+Qp+1w14zJm3izV650H/t2NWapYlY3sCHfBqCcTWg4eA4fNn8GRyGHzbdgF6mh7+AGcNOcyo0CVjVwK/s6FZRU9DVFf4NqqqRaC5fuXhapsZAFwBr44S5XLdVPUleIENw7Zb51TUjXuI864J4CjTCrHe/vFHxD1BbdDW7k0+g6sb2MzBmpsxInKss9kqf4NngTzrgCHz6hP7CtbwTi0N3j/lbJUX42NbAg3wFFZqr+vcP31BXgjV8mngEbvhW1hMtXYSJHSFfFUaMXBTzVWI1MpJ1bb6nyjOmvkaLCtTguqs0YcLW+GtbNUh43k1Wkja0Cs2Tpr5BiwrftnqQ4buRxs68FZqsNGjLIYXXQxqaY7+38pO7m7zIhpqc4ZMZ71IdjONGjRCSNzg9tfY14GJFxJvwhT9kacfdsuJN1iexxhu/4CRys7ej7oXduIDVsfVoeYjHzdbrIMQhtYU6eDdRloWMIM5NK+TgzL4EN6ZBDsA3nVMmJ89k2Ick+Aw58mIm8DUPvCe+AnMJ8Z6A6wzANZarSMIUe9KW7a8qplxIZHmeBKMCjgXt7PoEyHgU/4VYhP7hJwD57uHo28+3C2g/z95GzIq7IRb2zIP8oEHto0lXV60GM995uBfHux33ePbywrvZ8HOotBXrXeyMcQZQLPLNrI+JdzQoR67HengvsMQ6qmPY9xyX4uRH/Lq5YRK3TkiHKeZWwKVWXZUVH1pppgJF7p3ZA/MQptA9eCT2wtMypoJzAYbt2/wU2wJoxLu0EMQvbZLOphWNIMn3yZoSpKDchnECdS1n8ftAkRGdeKEJQYIloHMjnOO5K0MZQ38BEcC4aMloQLII4TxLJ1zt5XAQeC+MwdAAzHFh7UNjGUN+DgcBwUnaU7cZ4E6QAy6ux9Ubga/Dwt/yN4hhlR+1JVMTTMwLDIeSpXBW6OInIpDslnQixDDMF6Fm/D/b3TgIaGjWClKjJ0D6QGPgWPDqoYyMvPyk77LER93stoZvwzgPc0kL4qtFbeUFsDRfIfDHxI0QfE0GsatB6bNHQOVP2EmsgNlAdEu2epaXVSvd4/r54FA9f01AsAAAAASUVORK5CYII=\";\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/assets/bookmarks.png?\n}");
-
-/***/ },
-
-/***/ "./src/assets/next.png"
-/*!*****************************!*\
-  !*** ./src/assets/next.png ***!
-  \*****************************/
-(module) {
-
-eval("{module.exports = \"data:image/png;base64,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\";\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/assets/next.png?\n}");
-
-/***/ },
-
-/***/ "./src/assets/options.png"
-/*!********************************!*\
-  !*** ./src/assets/options.png ***!
-  \********************************/
-(module) {
-
-eval("{module.exports = \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAB3RJTUUH5QgWEyMyp0FY2wAAAAlwSFlzAAALEwAACxMBAJqcGAAAAARnQU1BAACxjwv8YQUAAAKoSURBVHja7Zo/SFxBEMb3GQvFIpoY6yjcgdgmRVKYwlJBSaugYKmNNsYEDAmIYmMEa4OgpYWo2AkKVlqr3IFa+zcWEpvk+Y1vrzm5Y+e4ZVZvfjDsO7hl5/vuvd3ZfWeMoiiKoiiKolQkEefLqVQqymQycTqdfoGPs4hexCthDVeIZcQIcvuH3KJsNht7MSCOY4MBXuNyEdEpLDyfDUQ/TLiMIndZ3DuAfvnVAMXnWEd04w7479qhijnAbMDiiS6bozNcA/qkFZY7R64B9dLqHGjwacCJtDoHjn0aMIm4k1ZYhL82Rz8GYIlZQDMjrbIIM8jxN6cDuw4gUAuMoPmCaJJWbDlDTEH8rwdRHusAugtyJjSieW/CqAT3kNeFzcugDnDuXM0djQYg7ICbwuIf5aUoPFhzAEHzAJGbC0Ih9whwnn+2AfniMWgdmhph7XfI57ZUE9iTIInHQK24HEe0I14KG3CDfHZMsgwecifDUs4DOnC5EoDwR0YgPsOELZ91QJtJ9txvpdUW4BTRiUfgwLUDdy8wH7B4Y3Ob53TgGvBRWmG5c+Qa8OzgGrArnXC5c+QaMGySiSZUTmyOfgzAEkOz66BJlpzQ+EO5US3A6cQqhKjIoHUW7QeTnAd8MvL1AP0Y2yYphI68FkLPsRSu+M2QUumUNAcQoT4ChPftsB3wDZp3JoxD0X3kdZ5vhAulHouPohkzYR2LT8OEhxej3rbD9jzgBy4npBUX4CdM+O7zPICqQNpuSq/9haBXY0OYA5zfDnH3Al8DFk/UIr5xOnANaJZW6ECLTwOupdU5cOXTgCVpdeXOkWsAvRVel1ZYhDXEqDcDsMTQv6/6AzWBxA/YHP0YQH9CxAD0jHUj5hCX0qptDpRLD+VGOUonpCiKoiiKoihPgHtXV96aolVzHAAAAABJRU5ErkJggg==\";\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/assets/options.png?\n}");
-
-/***/ },
-
-/***/ "./src/assets/previous.png"
-/*!*********************************!*\
-  !*** ./src/assets/previous.png ***!
-  \*********************************/
-(module) {
-
-eval("{module.exports = \"data:image/png;base64,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\";\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/assets/previous.png?\n}");
-
-/***/ },
-
-/***/ "./src/assets/undo.png"
-/*!*****************************!*\
-  !*** ./src/assets/undo.png ***!
-  \*****************************/
-(module) {
-
-eval("{module.exports = \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAOiSURBVHhe7Zo9SFtRFMeTvHwbjSHRIA52aJBICw1oSSCglQ66CIWOLoUOLh0cOnRLJwcHu3Xp0EJLV3HxIwSe1iGKGKFCAnaok9RUjUbQ6NP0HjiC1PeZvCTvxvsDufcc0eT837nnnnsTE4PBYDAYjHuLGceaEI/HnxQKhemrq6shQRCs6L4Dx3GF7u7uSCqV+o2uumHBUXf6+/vj+Xz+R6lUei4XPGA2m60OhwOt+lKTDIDgi8Xi/PX1tQddklit1tNgMDjK8/wquuqK7gLQFDygqwC0BQ/oJgCNwQO6CEBr8EDVAtAcPFCVALQHD1QsQDMED1QkQLMED2gWoJmCBzQJoCX4WkHaZpPdbi+Qcdtms/EdHR3fFhcXc/hrzagWwAjBi2GxWECQWZ/P93ZlZeUXulWjSoCBpwPRk+OTpNGCvw05UZ57vd43a2trn9ClCg5HWQL+wPfLy8uHaBqScrlsPTs7GyNL4vjg4CCNbkVUHYdh3dECydKZaDT6Gk1FVAkA6wsqOpqG5/DwcGZ4eFhVxqoSgGxj6c5g5ygtIpDl4CHLYBpNWTTl9uDQYHz/z/68IAiqiiEsHajSekJSHAJESxp43d7e3vDc3JzsFql5cWsRgbyJ09bW1tGNjQ3dGqFEIuFJpVIjR0dHU6VSSTbNyWu/39zcTKApSkXVrdEiAOFw2EP+d+bi4kJSBIfTwW//3H6GpigV5ecyv7yqtiZA7wANFDRS6NKFbDZ72tbW9g5NccqmRziTpOIFagQRIpHIAk5FIRkawKkkVW/wjV4OoVBItiLu7OzIxlh1iTZCJlSDLnsUzSLotknTKoJuAgA0iqCrAABtIuguAFCJCOTw8gBddaUmAgAgQldXV8zldi3Y7fZzjuPg0kL0x2azCW63G/+yvlTdBzSSiYkJOBcU0bwDiJvL5WrbBzSSTCYzglNRyBL8i1NJqBVgfHw8QGrHFJqiwM0xTiVRdSdoJCDtSWqP7e7uKt5TulyuL3t7ezyaohiuBsRisZfkyX6Eg8zNxcf/oxrgQqSnpye0tLQke1VuOAH6+vry5MkqnuKUaGlpmd3a2nqBpiSGqwF6BA+nTqfTOYmmLFTvAmLAPSR8QJJOp1V95a6pBIDgSYGcXF9f/4wuRZpGAEj79vb2V9ls9gO6VGE4AUhbrNi83AaqPRQ8n8/3WMuTv4G6bRDaW+jwoMkhYi37/f6vyWRS86fCDAaDwWAwGAwG4z5jMv0D9jMAtZVsLdkAAAAASUVORK5CYII=\";\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/assets/undo.png?\n}");
-
-/***/ },
-
-/***/ "./src/styles.pcss"
-/*!*************************!*\
-  !*** ./src/styles.pcss ***!
-  \*************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ \"./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js\");\n/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../node_modules/style-loader/dist/runtime/styleDomAPI.js */ \"./node_modules/style-loader/dist/runtime/styleDomAPI.js\");\n/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../node_modules/style-loader/dist/runtime/insertBySelector.js */ \"./node_modules/style-loader/dist/runtime/insertBySelector.js\");\n/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__);\n/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js */ \"./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js\");\n/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__);\n/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../node_modules/style-loader/dist/runtime/insertStyleElement.js */ \"./node_modules/style-loader/dist/runtime/insertStyleElement.js\");\n/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);\n/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../node_modules/style-loader/dist/runtime/styleTagTransform.js */ \"./node_modules/style-loader/dist/runtime/styleTagTransform.js\");\n/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);\n/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_1_use_2_styles_pcss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[1].use[2]!./styles.pcss */ \"./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[1].use[2]!./src/styles.pcss\");\n\n      \n      \n      \n      \n      \n      \n      \n      \n      \n\nvar options = {};\n\noptions.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default());\noptions.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());\noptions.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, \"head\");\noptions.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());\noptions.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());\n\nvar update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_1_use_2_styles_pcss__WEBPACK_IMPORTED_MODULE_6__[\"default\"], options);\n\n\n\n\n       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_1_use_2_styles_pcss__WEBPACK_IMPORTED_MODULE_6__[\"default\"] && _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_1_use_2_styles_pcss__WEBPACK_IMPORTED_MODULE_6__[\"default\"].locals ? _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_1_use_2_styles_pcss__WEBPACK_IMPORTED_MODULE_6__[\"default\"].locals : undefined);\n\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src/styles.pcss?\n}");
-
-/***/ },
-
-/***/ "./src_MissionEditor/Main.ts"
-/*!***********************************!*\
-  !*** ./src_MissionEditor/Main.ts ***!
-  \***********************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   main: () => (/* binding */ main)\n/* harmony export */ });\n/* harmony import */ var _src_ImportExport__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../src/ImportExport */ \"./src/ImportExport.ts\");\n/* harmony import */ var _src_State_State__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../src/State/State */ \"./src/State/State.ts\");\n/* harmony import */ var _src_UI_Notification__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../src/UI/Notification */ \"./src/UI/Notification.ts\");\n/* eslint-disable no-underscore-dangle */\n/* eslint-disable @typescript-eslint/no-unsafe-call */\n\n\n\n// By creating a new Mission in MC and adding an image for the mission, it uploads the image to googleusercontent. The mission image URL is visible in the console source code.\n// After canceling and removing the new mission, the image stays online and can be used as a portal image:\nconst ummLogo = \"https://lh3.googleusercontent.com/s0kCRS7KE-i0gQhbH_gx-qxvC2kHBJ9TDITirnpzSJnEDV-QVDio5OFl8bJ8OC8EhPGGFOFje5HeO9M6RDklZ971e8aSPeLs\";\n;\n;\nclass UMM_Editor {\n    init() {\n        // eslint-disable-next-line @typescript-eslint/no-require-imports\n        __webpack_require__(/*! ./styles.pcss */ \"./src_MissionEditor/styles.pcss\");\n        $('body').append(\"<div class='umm-notification' style='display:none'></div>\");\n        $('.navbar-header').append($(\"<div>\", { id: \"umm-badge\", text: \"UMM:\" }), $(\"<div>\", { id: \"umm-mission-editor-bar\" }).append($(\"<div>\", { id: \"umm-mission-title\" }), $(\"<div>\", { style: \"display: inline-block\" }).append($(\"<input>\", { id: \"umm-import-file\", type: \"file\" }), $(\"<label>\", { for: \"umm-import-file\", class: \"umm-upload-label\", html: \"&nbsp;\" })), $(\"<div>\", { id: \"umm-mission-picker-wrapper\" }).append($(\"<select>\", { id: \"umm-mission-picker\", class: \"umm-mission-picker\" }), $(\"<button>\", { id: \"umm-mission-picker-btn\", class: \"umm-mission-picker-btn\", text: \"Import\", click: () => this.importMission() /*, disabled: true*/ }))));\n        this.state = new _src_State_State__WEBPACK_IMPORTED_MODULE_1__.State();\n        this.setActiveBannerTitle();\n        this.bindFileImport();\n        this.generateMissionSelect();\n    }\n    setActiveBannerTitle() {\n        if (this.state.getBannerName() === \"\") {\n            $(\"#umm-mission-title\").text('Please load a mission file...');\n        }\n        else {\n            $(\"#umm-mission-title\").text(this.state.getBannerName());\n        }\n    }\n    bindFileImport() {\n        $(\"#umm-import-file\")[0].addEventListener('change', async (event) => {\n            if (this.state.getBannerName() !== \"\") {\n                if (!confirm(\"Are you sure you want to load this file? Doing so will overwrite any previously imported UMM data. Your existing missions will not be affected.\")) {\n                    return;\n                }\n            }\n            $(\"#umm-mission-title\").text(\"Loading banner... \");\n            await (0,_src_ImportExport__WEBPACK_IMPORTED_MODULE_0__.loadFileInput)(event, this.state);\n            this.setActiveBannerTitle();\n            this.generateMissionSelect();\n        });\n    }\n    generateMissionSelect() {\n        const selectedMission = this.state.getCurrent();\n        const container = $(\"#umm-mission-picker\");\n        container.empty();\n        this.state.missions.forEach(mission => {\n            container.append($(\"<option>\", { value: mission.id, text: `${mission.id + 1}: ${mission.title}` }));\n        });\n        $(\"#umm-mission-picker\").val(selectedMission);\n        if (this.state.missions.count() > 0) {\n            $(\"#umm-mission-picker-btn\").prop(\"disabled\", false);\n        }\n    }\n    importMission() {\n        const selectedMission = parseInt($(\"#umm-mission-picker\").val());\n        main.state.setCurrent(selectedMission);\n        main.state.save();\n        const mission = main.state.getEditMission();\n        const angularApp = this.getAngularApp();\n        if (!mission || mission.title === \"\" || mission.description === '' && mission.portals.length === 0) {\n            (0,_src_UI_Notification__WEBPACK_IMPORTED_MODULE_2__.notification)('There is no mission data loaded');\n            return;\n        }\n        if (!($('.loading').hasClass('ng-hide'))) {\n            (0,_src_UI_Notification__WEBPACK_IMPORTED_MODULE_2__.notification)('Please wait for the spinner in the top right to finish loading before importing a (new) mission');\n            return;\n        }\n        if (!angularApp.mission) {\n            (0,_src_UI_Notification__WEBPACK_IMPORTED_MODULE_2__.notification)('You can not import a mission on the preview page\\nStart with Create New Mission');\n            return;\n        }\n        if (($('.title.title-4').length > 0 && !$('.title.title-4').hasClass(\"ng-hide\")) || $('.pagination li:nth-child(4)').hasClass('active')) { // stop import if (IMATTC) preview bullet is displayed\n            (0,_src_UI_Notification__WEBPACK_IMPORTED_MODULE_2__.notification)('You can not import a mission on this page\\nGo back to a previous page');\n            return;\n        }\n        if (angularApp.mission.definition.waypoints.length > 0) {\n            if (!confirm(\"Your current mission already contains portals/waypoints. Are you sure you want to overwrite these?\")) {\n                return;\n            }\n        }\n        this.resetWaypoints(angularApp);\n        angularApp.mission.definition.name = mission.title;\n        angularApp.mission.definition.description = mission.description;\n        let missingImagesCount = 0;\n        mission.portals.getRange().forEach(portal => {\n            const { mePortal, hasError } = this.createPortal(portal);\n            if (hasError)\n                missingImagesCount++;\n            angularApp.addWaypoint(mePortal);\n        });\n        // for (let portal in scope.mission.definition.waypoints) {\n        angularApp.mission.definition.waypoints.forEach((aportal, index) => {\n            // We can't overwrite objective at once, because we need to retain the constructor inside passphrase_params\n            const portal = mission.portals.get(index);\n            aportal.objective.type = portal.objective.type;\n            aportal.objective.passphrase_params.question = portal.objective.passphrase_params.question;\n            // eslint-disable-next-line no-underscore-dangle\n            aportal.objective.passphrase_params._single_passphrase = portal.objective.passphrase_params._single_passphrase;\n        });\n        angularApp.$apply();\n        // @ts-ignore\n        // eslint-disable-next-line @typescript-eslint/no-unsafe-call\n        const angularTimeout = angularApp.injector().get('$timeout');\n        // eslint-disable-next-line @typescript-eslint/no-unsafe-call\n        angularTimeout(() => {\n            if (missingImagesCount > 0) {\n                // If there are missing images, refresh as soon as the new import has been saved, otherwise it'll load the old mission data\n                (0,_src_UI_Notification__WEBPACK_IMPORTED_MODULE_2__.notification)('Missing data detected\\nRefreshing data to correct the issue. Standby...', true);\n                const triggerRefresh = () => {\n                    setTimeout(validateRefresh, 200);\n                };\n                const validateRefresh = () => {\n                    // eslint-disable-next-line @typescript-eslint/no-unsafe-call\n                    const angularHttp = angularApp.injector().get('$http');\n                    let isMissionSaving = false;\n                    for (const request of angularHttp.pendingRequests) {\n                        if (request.url === '/api/author/saveMission') {\n                            isMissionSaving = true;\n                        }\n                    }\n                    if (angularApp.pendingSave || isMissionSaving) {\n                        triggerRefresh();\n                    }\n                    else {\n                        // When the mission has been saved, refresh it\n                        (0,_src_UI_Notification__WEBPACK_IMPORTED_MODULE_2__.notification)('Refreshing mission...', true);\n                        const app = this.getAngularApp();\n                        void this.reloadMAT(app.mission.mission_id);\n                    }\n                };\n                // Wait for a little bit before trigging the first refresh to increase reliability of pending save detection\n                setTimeout(triggerRefresh, 200);\n            }\n            else {\n                (0,_src_UI_Notification__WEBPACK_IMPORTED_MODULE_2__.notification)('UMM Mission import succesful:\\n' + angularApp.mission.definition.name);\n            }\n        });\n    }\n    getAngularApp() {\n        // Get angular container\n        const container = document.getElementsByClassName('container')[0];\n        // Get angular element\n        // @ts-ignore\n        const ngElement = angular.element(container);\n        // Get angular scope\n        // eslint-disable-next-line @typescript-eslint/no-unsafe-call\n        const scope = ngElement.scope();\n        return scope;\n    }\n    resetWaypoints(scope) {\n        // Waypoints are the actual portals that get submitted\n        scope.mission.definition.waypoints = [];\n        // Waypointmarkers are the markers displayed on the map\n        scope.waypointMarkers = [];\n        scope.$apply();\n    }\n    createPortal(portal) {\n        let hasError = false;\n        let imageUrl = portal.imageUrl;\n        if (!imageUrl) {\n            hasError = true;\n            imageUrl = ummLogo; // if undefined, use the ummLogo by default until page reloads; if null, the portal has no image, keep it that way\n        }\n        if (imageUrl.startsWith('http:')) {\n            imageUrl = imageUrl.replace('http:', 'https:'); // fix warnings: Mixed Content: The page at '<URL>' was loaded over HTTPS, but requested an insecure element '<URL>'\n        }\n        return {\n            mePortal: {\n                // eslint-disable-next-line unicorn/no-null\n                \"$$hashKey\": null,\n                guid: portal.guid,\n                description: portal.description,\n                location: {\n                    latitude: portal.location.latitude,\n                    longitude: portal.location.longitude\n                },\n                imageUrl,\n                isOrnamented: false, // Unknown what it does, seems false everwhere\n                isStartPoint: false, // Unknown what NIA uses it for, seems false everywhere\n                title: portal.title,\n                type: \"PORTAL\"\n            }, hasError\n        };\n    }\n    reloadMAT(missionId) {\n        const angularApp = this.getAngularApp();\n        const angularHttp = angularApp.injector().get('$http');\n        const angularApi = angularApp.injector().get('Api');\n        const angularTimeout = angularApp.injector().get('$timeout');\n        const wireUtil = angularApp.injector().get('WireUtil');\n        const styles = angularApp.injector().get('Styles');\n        // By using the build in http we don't have to mess with botGuard and it just gets handled by MAT\n        angularHttp.post(angularApi.GET_MISSION, { mission_id: missionId }).success((data) => {\n            data = wireUtil.convertMissionWireToLocal(data.mission, data.pois);\n            const angularApp = this.getAngularApp();\n            // Replace mission data with the mission data retrieved from the server\n            angularApp.mission = data;\n            // AngularTimeout to fix double $digest issue\n            angularTimeout(() => {\n                // Replace the markers with the ones retrieved from the server\n                // Without this, they become non-interactive\n                // waypointMarkerProcessing, copied from MAT r1227\n                angularApp.waypointMarkers = ((waypoints) => {\n                    const d = [];\n                    // Processing of individual waypoints, copied from MAT r595\n                    const u = (b, d) => {\n                        if (b._poi) {\n                            const c = (d + 1).toString();\n                            return {\n                                id: Math.floor(1e10 * Math.random()),\n                                location: b._poi.location,\n                                icon: angularApp.isWaypointSelected(b) ? styles.SELECTED_WAYPOINT_ICON : styles.WAYPOINT_ICON,\n                                onClicked: function () {\n                                    angularApp.$apply(() => {\n                                        angularApp.setSelectedWaypoint(b, !0);\n                                    });\n                                },\n                                options: {\n                                    labelAnchor: styles.WAYPOINT_LABEL_ANCHOR,\n                                    labelClass: \"waypoint-label\",\n                                    labelContent: c,\n                                    zIndex: styles.WAYPOINT_MARKER_Z_INDEX\n                                },\n                                latitude: b._poi.location.latitude,\n                                longitude: b._poi.location.longitude\n                            };\n                        }\n                    };\n                    // @ts-ignore\n                    angular.forEach(waypoints, (a, b) => {\n                        const c = u(a, b);\n                        d.push(c);\n                    });\n                    return d;\n                })(angularApp.mission.definition.waypoints);\n                angularApp.$apply();\n                (0,_src_UI_Notification__WEBPACK_IMPORTED_MODULE_2__.notification)('UMM Mission import succesful:\\n' + angularApp.mission.definition.name);\n            });\n        }).catch(() => {\n            // If it fails, we'll just do a hard refresh\n            window.alert('Failed to refresh mission, refreshing full page to fix this.');\n            // eslint-disable-next-line no-self-assign\n            window.location.href = window.location.href;\n        });\n    }\n}\nconst main = new UMM_Editor();\n// this is not IITC. just run it\n(() => {\n    main.init();\n})();\n\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src_MissionEditor/Main.ts?\n}");
-
-/***/ },
-
-/***/ "./src_MissionEditor/styles.pcss"
-/*!***************************************!*\
-  !*** ./src_MissionEditor/styles.pcss ***!
-  \***************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ \"./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js\");\n/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../node_modules/style-loader/dist/runtime/styleDomAPI.js */ \"./node_modules/style-loader/dist/runtime/styleDomAPI.js\");\n/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../node_modules/style-loader/dist/runtime/insertBySelector.js */ \"./node_modules/style-loader/dist/runtime/insertBySelector.js\");\n/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__);\n/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js */ \"./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js\");\n/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__);\n/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../node_modules/style-loader/dist/runtime/insertStyleElement.js */ \"./node_modules/style-loader/dist/runtime/insertStyleElement.js\");\n/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);\n/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../node_modules/style-loader/dist/runtime/styleTagTransform.js */ \"./node_modules/style-loader/dist/runtime/styleTagTransform.js\");\n/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);\n/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_1_use_2_styles_pcss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[1].use[2]!./styles.pcss */ \"./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[1].use[2]!./src_MissionEditor/styles.pcss\");\n\n      \n      \n      \n      \n      \n      \n      \n      \n      \n\nvar options = {};\n\noptions.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default());\noptions.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());\noptions.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, \"head\");\noptions.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());\noptions.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());\n\nvar update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_1_use_2_styles_pcss__WEBPACK_IMPORTED_MODULE_6__[\"default\"], options);\n\n\n\n\n       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_1_use_2_styles_pcss__WEBPACK_IMPORTED_MODULE_6__[\"default\"] && _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_1_use_2_styles_pcss__WEBPACK_IMPORTED_MODULE_6__[\"default\"].locals ? _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_1_use_2_styles_pcss__WEBPACK_IMPORTED_MODULE_6__[\"default\"].locals : undefined);\n\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/./src_MissionEditor/styles.pcss?\n}");
-
-/***/ },
-
-/***/ "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAFHGlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDIgNzkuMTYwOTI0LCAyMDE3LzA3LzEzLTAxOjA2OjM5ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgeG1sbnM6cGhvdG9zaG9wPSJodHRwOi8vbnMuYWRvYmUuY29tL3Bob3Rvc2hvcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgMjAxOCAoV2luZG93cykiIHhtcDpDcmVhdGVEYXRlPSIyMDE4LTA5LTE3VDAyOjU3OjM3KzAyOjAwIiB4bXA6TW9kaWZ5RGF0ZT0iMjAxOC0wOS0xN1QwMjo1ODoyMCswMjowMCIgeG1wOk1ldGFkYXRhRGF0ZT0iMjAxOC0wOS0xN1QwMjo1ODoyMCswMjowMCIgZGM6Zm9ybWF0PSJpbWFnZS9wbmciIHBob3Rvc2hvcDpDb2xvck1vZGU9IjMiIHBob3Rvc2hvcDpJQ0NQcm9maWxlPSJzUkdCIElFQzYxOTY2LTIuMSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo0NWYwMDRiMS05NzRjLWRlNDctYTEzMi02NWZlYzIyOWM1NWYiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NDVmMDA0YjEtOTc0Yy1kZTQ3LWExMzItNjVmZWMyMjljNTVmIiB4bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ9InhtcC5kaWQ6NDVmMDA0YjEtOTc0Yy1kZTQ3LWExMzItNjVmZWMyMjljNTVmIj4gPHhtcE1NOkhpc3Rvcnk+IDxyZGY6U2VxPiA8cmRmOmxpIHN0RXZ0OmFjdGlvbj0iY3JlYXRlZCIgc3RFdnQ6aW5zdGFuY2VJRD0ieG1wLmlpZDo0NWYwMDRiMS05NzRjLWRlNDctYTEzMi02NWZlYzIyOWM1NWYiIHN0RXZ0OndoZW49IjIwMTgtMDktMTdUMDI6NTc6MzcrMDI6MDAiIHN0RXZ0OnNvZnR3YXJlQWdlbnQ9IkFkb2JlIFBob3Rvc2hvcCBDQyAyMDE4IChXaW5kb3dzKSIvPiA8L3JkZjpTZXE+IDwveG1wTU06SGlzdG9yeT4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz5w/iV0AAACPklEQVRoge2ZsWvVQACHv1yVoiIiggWhkygu0giC4KSzrg4ujp27uTnq6KDgoOjoKPgvCA5OeQ8LWqHa6lAdWnWprdWfw7009/Kitbl4eRf84JG7eyT8PnJ3uVwSSXQB03aApvgvMm4YYB9wB1gDtIvfInAxfORqEkm3gbma538GUmCpoTy1SSStAFMe13gGXAB+NpKoJomamX9vAHcbuM5O/AC+Vv3RlEhI3gPXgcduY4wiYO/MeeBF3hDr9DsBXHEb9uxwgrAz0zhyyK1UiQh4BNwDXgLfAoTypmqMzAL3B+VJ4CiwN2iqv2MT+LBd0zBPJSFpUtJDSRsabz5JuiZpROSyrMit4JHqsyXpXLlrHQFWgWVgOmxP8eKmO/0uYSWmiEsCYN0V6Q2OaQtBfOm7ItngmIbP4U3WBZE1YLkLIj0o1lpfgHfAAeBES4HqMiSSYZcmp7ELspgYEYH4uhV0RGQLmIdCJNZnyCtgA6zId6zVBHaMxESWFwxWYhM4CexvKVBd+nnBUFjNtBLFjywvGIrxcaaVKH5U3pG0jSQerAAf80rMIplbMdhdkmPYd/OY6LuV/DkS9UCHQiTGgd5zK7lIGj6HF+vAgtsQq8g8dp21jQEOAsdbiVOfXrnBYNdXsW1mV4rEOND75QZDfOMDSlMvxCnyFrvHMIQBToXP4sVItwIrshg4iC/PqxoTSZeAJ4znN5Ayb4CzVHzZTQab8TPAVeBw2Fy74jXwgD98ng4b5x8R24Pwt3RG5BfpNRC+G94MKgAAAABJRU5ErkJggg=="
-/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAFHGlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDIgNzkuMTYwOTI0LCAyMDE3LzA3LzEzLTAxOjA2OjM5ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgeG1sbnM6cGhvdG9zaG9wPSJodHRwOi8vbnMuYWRvYmUuY29tL3Bob3Rvc2hvcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgMjAxOCAoV2luZG93cykiIHhtcDpDcmVhdGVEYXRlPSIyMDE4LTA5LTE3VDAyOjU3OjM3KzAyOjAwIiB4bXA6TW9kaWZ5RGF0ZT0iMjAxOC0wOS0xN1QwMjo1ODoyMCswMjowMCIgeG1wOk1ldGFkYXRhRGF0ZT0iMjAxOC0wOS0xN1QwMjo1ODoyMCswMjowMCIgZGM6Zm9ybWF0PSJpbWFnZS9wbmciIHBob3Rvc2hvcDpDb2xvck1vZGU9IjMiIHBob3Rvc2hvcDpJQ0NQcm9maWxlPSJzUkdCIElFQzYxOTY2LTIuMSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo0NWYwMDRiMS05NzRjLWRlNDctYTEzMi02NWZlYzIyOWM1NWYiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NDVmMDA0YjEtOTc0Yy1kZTQ3LWExMzItNjVmZWMyMjljNTVmIiB4bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ9InhtcC5kaWQ6NDVmMDA0YjEtOTc0Yy1kZTQ3LWExMzItNjVmZWMyMjljNTVmIj4gPHhtcE1NOkhpc3Rvcnk+IDxyZGY6U2VxPiA8cmRmOmxpIHN0RXZ0OmFjdGlvbj0iY3JlYXRlZCIgc3RFdnQ6aW5zdGFuY2VJRD0ieG1wLmlpZDo0NWYwMDRiMS05NzRjLWRlNDctYTEzMi02NWZlYzIyOWM1NWYiIHN0RXZ0OndoZW49IjIwMTgtMDktMTdUMDI6NTc6MzcrMDI6MDAiIHN0RXZ0OnNvZnR3YXJlQWdlbnQ9IkFkb2JlIFBob3Rvc2hvcCBDQyAyMDE4IChXaW5kb3dzKSIvPiA8L3JkZjpTZXE+IDwveG1wTU06SGlzdG9yeT4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz5w/iV0AAACPklEQVRoge2ZsWvVQACHv1yVoiIiggWhkygu0giC4KSzrg4ujp27uTnq6KDgoOjoKPgvCA5OeQ8LWqHa6lAdWnWprdWfw7009/Kitbl4eRf84JG7eyT8PnJ3uVwSSXQB03aApvgvMm4YYB9wB1gDtIvfInAxfORqEkm3gbma538GUmCpoTy1SSStAFMe13gGXAB+NpKoJomamX9vAHcbuM5O/AC+Vv3RlEhI3gPXgcduY4wiYO/MeeBF3hDr9DsBXHEb9uxwgrAz0zhyyK1UiQh4BNwDXgLfAoTypmqMzAL3B+VJ4CiwN2iqv2MT+LBd0zBPJSFpUtJDSRsabz5JuiZpROSyrMit4JHqsyXpXLlrHQFWgWVgOmxP8eKmO/0uYSWmiEsCYN0V6Q2OaQtBfOm7ItngmIbP4U3WBZE1YLkLIj0o1lpfgHfAAeBES4HqMiSSYZcmp7ELspgYEYH4uhV0RGQLmIdCJNZnyCtgA6zId6zVBHaMxESWFwxWYhM4CexvKVBd+nnBUFjNtBLFjywvGIrxcaaVKH5U3pG0jSQerAAf80rMIplbMdhdkmPYd/OY6LuV/DkS9UCHQiTGgd5zK7lIGj6HF+vAgtsQq8g8dp21jQEOAsdbiVOfXrnBYNdXsW1mV4rEOND75QZDfOMDSlMvxCnyFrvHMIQBToXP4sVItwIrshg4iC/PqxoTSZeAJ4znN5Ayb4CzVHzZTQab8TPAVeBw2Fy74jXwgD98ng4b5x8R24Pwt3RG5BfpNRC+G94MKgAAAABJRU5ErkJggg== ***!
-  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-(module) {
-
-eval("{module.exports = \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAFHGlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDIgNzkuMTYwOTI0LCAyMDE3LzA3LzEzLTAxOjA2OjM5ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgeG1sbnM6cGhvdG9zaG9wPSJodHRwOi8vbnMuYWRvYmUuY29tL3Bob3Rvc2hvcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgMjAxOCAoV2luZG93cykiIHhtcDpDcmVhdGVEYXRlPSIyMDE4LTA5LTE3VDAyOjU3OjM3KzAyOjAwIiB4bXA6TW9kaWZ5RGF0ZT0iMjAxOC0wOS0xN1QwMjo1ODoyMCswMjowMCIgeG1wOk1ldGFkYXRhRGF0ZT0iMjAxOC0wOS0xN1QwMjo1ODoyMCswMjowMCIgZGM6Zm9ybWF0PSJpbWFnZS9wbmciIHBob3Rvc2hvcDpDb2xvck1vZGU9IjMiIHBob3Rvc2hvcDpJQ0NQcm9maWxlPSJzUkdCIElFQzYxOTY2LTIuMSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo0NWYwMDRiMS05NzRjLWRlNDctYTEzMi02NWZlYzIyOWM1NWYiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NDVmMDA0YjEtOTc0Yy1kZTQ3LWExMzItNjVmZWMyMjljNTVmIiB4bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ9InhtcC5kaWQ6NDVmMDA0YjEtOTc0Yy1kZTQ3LWExMzItNjVmZWMyMjljNTVmIj4gPHhtcE1NOkhpc3Rvcnk+IDxyZGY6U2VxPiA8cmRmOmxpIHN0RXZ0OmFjdGlvbj0iY3JlYXRlZCIgc3RFdnQ6aW5zdGFuY2VJRD0ieG1wLmlpZDo0NWYwMDRiMS05NzRjLWRlNDctYTEzMi02NWZlYzIyOWM1NWYiIHN0RXZ0OndoZW49IjIwMTgtMDktMTdUMDI6NTc6MzcrMDI6MDAiIHN0RXZ0OnNvZnR3YXJlQWdlbnQ9IkFkb2JlIFBob3Rvc2hvcCBDQyAyMDE4IChXaW5kb3dzKSIvPiA8L3JkZjpTZXE+IDwveG1wTU06SGlzdG9yeT4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz5w/iV0AAACPklEQVRoge2ZsWvVQACHv1yVoiIiggWhkygu0giC4KSzrg4ujp27uTnq6KDgoOjoKPgvCA5OeQ8LWqHa6lAdWnWprdWfw7009/Kitbl4eRf84JG7eyT8PnJ3uVwSSXQB03aApvgvMm4YYB9wB1gDtIvfInAxfORqEkm3gbma538GUmCpoTy1SSStAFMe13gGXAB+NpKoJomamX9vAHcbuM5O/AC+Vv3RlEhI3gPXgcduY4wiYO/MeeBF3hDr9DsBXHEb9uxwgrAz0zhyyK1UiQh4BNwDXgLfAoTypmqMzAL3B+VJ4CiwN2iqv2MT+LBd0zBPJSFpUtJDSRsabz5JuiZpROSyrMit4JHqsyXpXLlrHQFWgWVgOmxP8eKmO/0uYSWmiEsCYN0V6Q2OaQtBfOm7ItngmIbP4U3WBZE1YLkLIj0o1lpfgHfAAeBES4HqMiSSYZcmp7ELspgYEYH4uhV0RGQLmIdCJNZnyCtgA6zId6zVBHaMxESWFwxWYhM4CexvKVBd+nnBUFjNtBLFjywvGIrxcaaVKH5U3pG0jSQerAAf80rMIplbMdhdkmPYd/OY6LuV/DkS9UCHQiTGgd5zK7lIGj6HF+vAgtsQq8g8dp21jQEOAsdbiVOfXrnBYNdXsW1mV4rEOND75QZDfOMDSlMvxCnyFrvHMIQBToXP4sVItwIrshg4iC/PqxoTSZeAJ4znN5Ayb4CzVHzZTQab8TPAVeBw2Fy74jXwgD98ng4b5x8R24Pwt3RG5BfpNRC+G94MKgAAAABJRU5ErkJggg==\";\n\n//# sourceURL=webpack:///iitc_plugin_UMM_Ext/data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAFHGlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDIgNzkuMTYwOTI0LCAyMDE3LzA3LzEzLTAxOjA2OjM5ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgeG1sbnM6cGhvdG9zaG9wPSJodHRwOi8vbnMuYWRvYmUuY29tL3Bob3Rvc2hvcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgMjAxOCAoV2luZG93cykiIHhtcDpDcmVhdGVEYXRlPSIyMDE4LTA5LTE3VDAyOjU3OjM3KzAyOjAwIiB4bXA6TW9kaWZ5RGF0ZT0iMjAxOC0wOS0xN1QwMjo1ODoyMCswMjowMCIgeG1wOk1ldGFkYXRhRGF0ZT0iMjAxOC0wOS0xN1QwMjo1ODoyMCswMjowMCIgZGM6Zm9ybWF0PSJpbWFnZS9wbmciIHBob3Rvc2hvcDpDb2xvck1vZGU9IjMiIHBob3Rvc2hvcDpJQ0NQcm9maWxlPSJzUkdCIElFQzYxOTY2LTIuMSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo0NWYwMDRiMS05NzRjLWRlNDctYTEzMi02NWZlYzIyOWM1NWYiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NDVmMDA0YjEtOTc0Yy1kZTQ3LWExMzItNjVmZWMyMjljNTVmIiB4bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ9InhtcC5kaWQ6NDVmMDA0YjEtOTc0Yy1kZTQ3LWExMzItNjVmZWMyMjljNTVmIj4gPHhtcE1NOkhpc3Rvcnk+IDxyZGY6U2VxPiA8cmRmOmxpIHN0RXZ0OmFjdGlvbj0iY3JlYXRlZCIgc3RFdnQ6aW5zdGFuY2VJRD0ieG1wLmlpZDo0NWYwMDRiMS05NzRjLWRlNDctYTEzMi02NWZlYzIyOWM1NWYiIHN0RXZ0OndoZW49IjIwMTgtMDktMTdUMDI6NTc6MzcrMDI6MDAiIHN0RXZ0OnNvZnR3YXJlQWdlbnQ9IkFkb2JlIFBob3Rvc2hvcCBDQyAyMDE4IChXaW5kb3dzKSIvPiA8L3JkZjpTZXE+IDwveG1wTU06SGlzdG9yeT4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz5w/iV0AAACPklEQVRoge2ZsWvVQACHv1yVoiIiggWhkygu0giC4KSzrg4ujp27uTnq6KDgoOjoKPgvCA5OeQ8LWqHa6lAdWnWprdWfw7009/Kitbl4eRf84JG7eyT8PnJ3uVwSSXQB03aApvgvMm4YYB9wB1gDtIvfInAxfORqEkm3gbma538GUmCpoTy1SSStAFMe13gGXAB+NpKoJomamX9vAHcbuM5O/AC+Vv3RlEhI3gPXgcduY4wiYO/MeeBF3hDr9DsBXHEb9uxwgrAz0zhyyK1UiQh4BNwDXgLfAoTypmqMzAL3B+VJ4CiwN2iqv2MT+LBd0zBPJSFpUtJDSRsabz5JuiZpROSyrMit4JHqsyXpXLlrHQFWgWVgOmxP8eKmO/0uYSWmiEsCYN0V6Q2OaQtBfOm7ItngmIbP4U3WBZE1YLkLIj0o1lpfgHfAAeBES4HqMiSSYZcmp7ELspgYEYH4uhV0RGQLmIdCJNZnyCtgA6zId6zVBHaMxESWFwxWYhM4CexvKVBd+nnBUFjNtBLFjywvGIrxcaaVKH5U3pG0jSQerAAf80rMIplbMdhdkmPYd/OY6LuV/DkS9UCHQiTGgd5zK7lIGj6HF+vAgtsQq8g8dp21jQEOAsdbiVOfXrnBYNdXsW1mV4rEOND75QZDfOMDSlMvxCnyFrvHMIQBToXP4sVItwIrshg4iC/PqxoTSZeAJ4znN5Ayb4CzVHzZTQab8TPAVeBw2Fy74jXwgD98ng4b5x8R24Pwt3RG5BfpNRC+G94MKgAAAABJRU5ErkJggg==?\n}");
-
-/***/ }
-
-/******/ 	});
-/************************************************************************/
-/******/ 	// The module cache
-/******/ 	var __webpack_module_cache__ = {};
-/******/ 	
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/ 		// Check if module is in cache
-/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
-/******/ 		if (cachedModule !== undefined) {
-/******/ 			return cachedModule.exports;
-/******/ 		}
-/******/ 		// Check if module exists (development only)
-/******/ 		if (__webpack_modules__[moduleId] === undefined) {
-/******/ 			var e = new Error("Cannot find module '" + moduleId + "'");
-/******/ 			e.code = 'MODULE_NOT_FOUND';
-/******/ 			throw e;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			id: moduleId,
-/******/ 			// no module.loaded needed
-/******/ 			exports: {}
-/******/ 		};
-/******/ 	
-/******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/ 	
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/ 	
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = __webpack_modules__;
-/******/ 	
-/************************************************************************/
-/******/ 	/* webpack/runtime/compat get default export */
-/******/ 	(() => {
-/******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = (module) => {
-/******/ 			var getter = module && module.__esModule ?
-/******/ 				() => (module['default']) :
-/******/ 				() => (module);
-/******/ 			__webpack_require__.d(getter, { a: getter });
-/******/ 			return getter;
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/define property getters */
-/******/ 	(() => {
-/******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = (exports, definition) => {
-/******/ 			for(var key in definition) {
-/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 				}
-/******/ 			}
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	(() => {
-/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/make namespace object */
-/******/ 	(() => {
-/******/ 		// define __esModule on exports
-/******/ 		__webpack_require__.r = (exports) => {
-/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 			}
-/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/jsonp chunk loading */
-/******/ 	(() => {
-/******/ 		__webpack_require__.b = (typeof document !== 'undefined' && document.baseURI) || self.location.href;
-/******/ 		
-/******/ 		// object to store loaded and loading chunks
-/******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
-/******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
-/******/ 		var installedChunks = {
-/******/ 			"editor": 0
-/******/ 		};
-/******/ 		
-/******/ 		// no chunk on demand loading
-/******/ 		
-/******/ 		// no prefetching
-/******/ 		
-/******/ 		// no preloaded
-/******/ 		
-/******/ 		// no HMR
-/******/ 		
-/******/ 		// no HMR manifest
-/******/ 		
-/******/ 		// no on chunks loaded
-/******/ 		
-/******/ 		// no jsonp function
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/nonce */
-/******/ 	(() => {
-/******/ 		__webpack_require__.nc = undefined;
-/******/ 	})();
-/******/ 	
-/************************************************************************/
-/******/ 	
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	// This entry module can't be inlined because the eval devtool is used.
-/******/ 	var __webpack_exports__ = __webpack_require__("./src_MissionEditor/Main.ts");
-/******/ 	
-/******/ })()
-;
+function wrapper_editor(SCRIPT_INFO) {
+(() => {
+    "use strict";
+    var __webpack_modules__ = {
+        56(module, __unused_webpack_exports, __webpack_require__) {
+            module.exports = function setAttributesWithoutAttributes(styleElement) {
+                var nonce = __webpack_require__.nc;
+                nonce && styleElement.setAttribute("nonce", nonce);
+            };
+        },
+        72(module) {
+            var stylesInDOM = [];
+            function getIndexByIdentifier(identifier) {
+                for (var result = -1, i = 0; i < stylesInDOM.length; i++) if (stylesInDOM[i].identifier === identifier) {
+                    result = i;
+                    break;
+                }
+                return result;
+            }
+            function modulesToDom(list, options) {
+                for (var idCountMap = {}, identifiers = [], i = 0; i < list.length; i++) {
+                    var item = list[i], id = options.base ? item[0] + options.base : item[0], count = idCountMap[id] || 0, identifier = "".concat(id, " ").concat(count);
+                    idCountMap[id] = count + 1;
+                    var indexByIdentifier = getIndexByIdentifier(identifier), obj = {
+                        css: item[1],
+                        media: item[2],
+                        sourceMap: item[3],
+                        supports: item[4],
+                        layer: item[5]
+                    };
+                    if (-1 !== indexByIdentifier) stylesInDOM[indexByIdentifier].references++, stylesInDOM[indexByIdentifier].updater(obj); else {
+                        var updater = addElementStyle(obj, options);
+                        options.byIndex = i, stylesInDOM.splice(i, 0, {
+                            identifier,
+                            updater,
+                            references: 1
+                        });
+                    }
+                    identifiers.push(identifier);
+                }
+                return identifiers;
+            }
+            function addElementStyle(obj, options) {
+                var api = options.domAPI(options);
+                api.update(obj);
+                return function updater(newObj) {
+                    if (newObj) {
+                        if (newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap && newObj.supports === obj.supports && newObj.layer === obj.layer) return;
+                        api.update(obj = newObj);
+                    } else api.remove();
+                };
+            }
+            module.exports = function(list, options) {
+                var lastIdentifiers = modulesToDom(list = list || [], options = options || {});
+                return function update(newList) {
+                    newList = newList || [];
+                    for (var i = 0; i < lastIdentifiers.length; i++) {
+                        var index = getIndexByIdentifier(lastIdentifiers[i]);
+                        stylesInDOM[index].references--;
+                    }
+                    for (var newLastIdentifiers = modulesToDom(newList, options), _i = 0; _i < lastIdentifiers.length; _i++) {
+                        var _index = getIndexByIdentifier(lastIdentifiers[_i]);
+                        0 === stylesInDOM[_index].references && (stylesInDOM[_index].updater(), stylesInDOM.splice(_index, 1));
+                    }
+                    lastIdentifiers = newLastIdentifiers;
+                };
+            };
+        },
+        113(module) {
+            module.exports = function styleTagTransform(css, styleElement) {
+                if (styleElement.styleSheet) styleElement.styleSheet.cssText = css; else {
+                    for (;styleElement.firstChild; ) styleElement.removeChild(styleElement.firstChild);
+                    styleElement.appendChild(document.createTextNode(css));
+                }
+            };
+        },
+        314(module) {
+            module.exports = function(cssWithMappingToString) {
+                var list = [];
+                return list.toString = function toString() {
+                    return this.map(function(item) {
+                        var content = "", needLayer = void 0 !== item[5];
+                        return item[4] && (content += "@supports (".concat(item[4], ") {")), item[2] && (content += "@media ".concat(item[2], " {")), 
+                        needLayer && (content += "@layer".concat(item[5].length > 0 ? " ".concat(item[5]) : "", " {")), 
+                        content += cssWithMappingToString(item), needLayer && (content += "}"), item[2] && (content += "}"), 
+                        item[4] && (content += "}"), content;
+                    }).join("");
+                }, list.i = function i(modules, media, dedupe, supports, layer) {
+                    "string" == typeof modules && (modules = [ [ null, modules, void 0 ] ]);
+                    var alreadyImportedModules = {};
+                    if (dedupe) for (var k = 0; k < this.length; k++) {
+                        var id = this[k][0];
+                        null != id && (alreadyImportedModules[id] = !0);
+                    }
+                    for (var _k = 0; _k < modules.length; _k++) {
+                        var item = [].concat(modules[_k]);
+                        dedupe && alreadyImportedModules[item[0]] || (void 0 !== layer && (void 0 === item[5] || (item[1] = "@layer".concat(item[5].length > 0 ? " ".concat(item[5]) : "", " {").concat(item[1], "}")), 
+                        item[5] = layer), media && (item[2] ? (item[1] = "@media ".concat(item[2], " {").concat(item[1], "}"), 
+                        item[2] = media) : item[2] = media), supports && (item[4] ? (item[1] = "@supports (".concat(item[4], ") {").concat(item[1], "}"), 
+                        item[4] = supports) : item[4] = "".concat(supports)), list.push(item));
+                    }
+                }, list;
+            };
+        },
+        404(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+            __webpack_require__.r(__webpack_exports__), __webpack_require__.d(__webpack_exports__, {
+                default: () => __WEBPACK_DEFAULT_EXPORT__
+            });
+            var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(72), _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = __webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__), _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(825), _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = __webpack_require__.n(_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__), _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(659), _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default = __webpack_require__.n(_node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__), _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(56), _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default = __webpack_require__.n(_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__), _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(540), _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = __webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__), _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(113), _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = __webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__), _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_1_use_2_styles_pcss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(879), options = {};
+            options.styleTagTransform = _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default(), 
+            options.setAttributes = _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default(), 
+            options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head"), 
+            options.domAPI = _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default(), 
+            options.insertStyleElement = _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default();
+            _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_1_use_2_styles_pcss__WEBPACK_IMPORTED_MODULE_6__.A, options);
+            const __WEBPACK_DEFAULT_EXPORT__ = _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_1_use_2_styles_pcss__WEBPACK_IMPORTED_MODULE_6__.A && _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_1_use_2_styles_pcss__WEBPACK_IMPORTED_MODULE_6__.A.locals ? _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_1_use_2_styles_pcss__WEBPACK_IMPORTED_MODULE_6__.A.locals : void 0;
+        },
+        417(module) {
+            module.exports = function(url, options) {
+                return options || (options = {}), url ? (url = String(url.__esModule ? url.default : url), 
+                /^['"].*['"]$/.test(url) && (url = url.slice(1, -1)), options.hash && (url += options.hash), 
+                /["'() \t\n]|(%20)/.test(url) || options.needQuotes ? '"'.concat(url.replace(/"/g, '\\"').replace(/\n/g, "\\n"), '"') : url) : url;
+            };
+        },
+        540(module) {
+            module.exports = function insertStyleElement(options) {
+                var element = document.createElement("style");
+                return options.setAttributes(element, options.attributes), options.insert(element, options.options), 
+                element;
+            };
+        },
+        601(module) {
+            module.exports = function(i) {
+                return i[1];
+            };
+        },
+        659(module) {
+            var memo = {};
+            module.exports = function insertBySelector(insert, style) {
+                var target = function getTarget(target) {
+                    if (void 0 === memo[target]) {
+                        var styleTarget = document.querySelector(target);
+                        if (window.HTMLIFrameElement && styleTarget instanceof window.HTMLIFrameElement) try {
+                            styleTarget = styleTarget.contentDocument.head;
+                        } catch (e) {
+                            styleTarget = null;
+                        }
+                        memo[target] = styleTarget;
+                    }
+                    return memo[target];
+                }(insert);
+                if (!target) throw new Error("Couldn't find a style target. This probably means that the value for the 'insert' parameter is invalid.");
+                target.appendChild(style);
+            };
+        },
+        825(module) {
+            module.exports = function domAPI(options) {
+                if ("undefined" == typeof document) return {
+                    update: function update() {},
+                    remove: function remove() {}
+                };
+                var styleElement = options.insertStyleElement(options);
+                return {
+                    update: function update(obj) {
+                        !function apply(styleElement, options, obj) {
+                            var css = "";
+                            obj.supports && (css += "@supports (".concat(obj.supports, ") {")), obj.media && (css += "@media ".concat(obj.media, " {"));
+                            var needLayer = void 0 !== obj.layer;
+                            needLayer && (css += "@layer".concat(obj.layer.length > 0 ? " ".concat(obj.layer) : "", " {")), 
+                            css += obj.css, needLayer && (css += "}"), obj.media && (css += "}"), obj.supports && (css += "}");
+                            var sourceMap = obj.sourceMap;
+                            sourceMap && "undefined" != typeof btoa && (css += "\n/*# sourceMappingURL=data:application/json;base64,".concat(btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))), " */")), 
+                            options.styleTagTransform(css, styleElement, options.options);
+                        }(styleElement, options, obj);
+                    },
+                    remove: function remove() {
+                        !function removeStyleElement(styleElement) {
+                            if (null === styleElement.parentNode) return !1;
+                            styleElement.parentNode.removeChild(styleElement);
+                        }(styleElement);
+                    }
+                };
+            };
+        },
+        879(module, __webpack_exports__, __webpack_require__) {
+            __webpack_require__.d(__webpack_exports__, {
+                A: () => __WEBPACK_DEFAULT_EXPORT__
+            });
+            var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(601), _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = __webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__), _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(314), _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = __webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__), _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(417), _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default = __webpack_require__.n(_node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2__), ___CSS_LOADER_URL_IMPORT_0___ = new URL(__webpack_require__(977), __webpack_require__.b), ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()), ___CSS_LOADER_URL_REPLACEMENT_0___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_0___);
+            ___CSS_LOADER_EXPORT___.push([ module.id, `#umm-badge{background-color:crimson;margin:15px 0 0 10px;padding:0 5px}#umm-badge,#umm-mission-editor-bar{color:#fff;float:left;height:26px;line-height:28px;vertical-align:middle}#umm-mission-editor-bar{align-items:center;background-color:#08304e;display:flex;flex-wrap:nowrap;margin-top:15px;padding-left:5px}#umm-mission-title{display:inline-block;max-width:200px;min-width:4em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}#umm-mission-picker-wrapper{display:inline-block;margin-left:10px}.umm-upload-label{background-image:url(${___CSS_LOADER_URL_REPLACEMENT_0___});background-size:cover;box-sizing:border-box;cursor:pointer;display:inline-block;height:16px;margin:0 0 0 5px;padding:3px 0 7px;width:16px}#umm-import-file{border:none;border-radius:0;height:.1px;opacity:0;overflow:hidden;position:absolute;width:.1px;z-index:-1}.umm-mission-picker{margin-left:15px}.umm-mission-picker,.umm-mission-picker-btn{background-color:#08304e;height:26px;padding:0 10px}.umm-mission-picker-btn{margin-left:3px}.umm-notification{background-color:#383838;border-radius:2px;-webkit-box-shadow:0 0 24px -1px #383838;-moz-box-shadow:0 0 24px -1px #383838;box-shadow:0 0 24px -1px #383838;color:#f0f0f0;font-family:Calibri,sans-serif;font-size:20px;height:20px;height:auto;left:50%;margin-left:-100px;padding:10px;position:fixed;text-align:center;top:55px;width:300px;z-index:10000}.umm-options-list a{background:rgba(8,48,78,.9);border:1px solid #ffce00;color:#ffce00;display:block;margin:10px auto;padding:3px 0;text-align:center;width:80%}`, "" ]);
+            const __WEBPACK_DEFAULT_EXPORT__ = ___CSS_LOADER_EXPORT___;
+        },
+        977(module) {
+            module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAFHGlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDIgNzkuMTYwOTI0LCAyMDE3LzA3LzEzLTAxOjA2OjM5ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgeG1sbnM6cGhvdG9zaG9wPSJodHRwOi8vbnMuYWRvYmUuY29tL3Bob3Rvc2hvcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgMjAxOCAoV2luZG93cykiIHhtcDpDcmVhdGVEYXRlPSIyMDE4LTA5LTE3VDAyOjU3OjM3KzAyOjAwIiB4bXA6TW9kaWZ5RGF0ZT0iMjAxOC0wOS0xN1QwMjo1ODoyMCswMjowMCIgeG1wOk1ldGFkYXRhRGF0ZT0iMjAxOC0wOS0xN1QwMjo1ODoyMCswMjowMCIgZGM6Zm9ybWF0PSJpbWFnZS9wbmciIHBob3Rvc2hvcDpDb2xvck1vZGU9IjMiIHBob3Rvc2hvcDpJQ0NQcm9maWxlPSJzUkdCIElFQzYxOTY2LTIuMSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo0NWYwMDRiMS05NzRjLWRlNDctYTEzMi02NWZlYzIyOWM1NWYiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NDVmMDA0YjEtOTc0Yy1kZTQ3LWExMzItNjVmZWMyMjljNTVmIiB4bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ9InhtcC5kaWQ6NDVmMDA0YjEtOTc0Yy1kZTQ3LWExMzItNjVmZWMyMjljNTVmIj4gPHhtcE1NOkhpc3Rvcnk+IDxyZGY6U2VxPiA8cmRmOmxpIHN0RXZ0OmFjdGlvbj0iY3JlYXRlZCIgc3RFdnQ6aW5zdGFuY2VJRD0ieG1wLmlpZDo0NWYwMDRiMS05NzRjLWRlNDctYTEzMi02NWZlYzIyOWM1NWYiIHN0RXZ0OndoZW49IjIwMTgtMDktMTdUMDI6NTc6MzcrMDI6MDAiIHN0RXZ0OnNvZnR3YXJlQWdlbnQ9IkFkb2JlIFBob3Rvc2hvcCBDQyAyMDE4IChXaW5kb3dzKSIvPiA8L3JkZjpTZXE+IDwveG1wTU06SGlzdG9yeT4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz5w/iV0AAACPklEQVRoge2ZsWvVQACHv1yVoiIiggWhkygu0giC4KSzrg4ujp27uTnq6KDgoOjoKPgvCA5OeQ8LWqHa6lAdWnWprdWfw7009/Kitbl4eRf84JG7eyT8PnJ3uVwSSXQB03aApvgvMm4YYB9wB1gDtIvfInAxfORqEkm3gbma538GUmCpoTy1SSStAFMe13gGXAB+NpKoJomamX9vAHcbuM5O/AC+Vv3RlEhI3gPXgcduY4wiYO/MeeBF3hDr9DsBXHEb9uxwgrAz0zhyyK1UiQh4BNwDXgLfAoTypmqMzAL3B+VJ4CiwN2iqv2MT+LBd0zBPJSFpUtJDSRsabz5JuiZpROSyrMit4JHqsyXpXLlrHQFWgWVgOmxP8eKmO/0uYSWmiEsCYN0V6Q2OaQtBfOm7ItngmIbP4U3WBZE1YLkLIj0o1lpfgHfAAeBES4HqMiSSYZcmp7ELspgYEYH4uhV0RGQLmIdCJNZnyCtgA6zId6zVBHaMxESWFwxWYhM4CexvKVBd+nnBUFjNtBLFjywvGIrxcaaVKH5U3pG0jSQerAAf80rMIplbMdhdkmPYd/OY6LuV/DkS9UCHQiTGgd5zK7lIGj6HF+vAgtsQq8g8dp21jQEOAsdbiVOfXrnBYNdXsW1mV4rEOND75QZDfOMDSlMvxCnyFrvHMIQBToXP4sVItwIrshg4iC/PqxoTSZeAJ4znN5Ayb4CzVHzZTQab8TPAVeBw2Fy74jXwgD98ng4b5x8R24Pwt3RG5BfpNRC+G94MKgAAAABJRU5ErkJggg==";
+        }
+    }, __webpack_module_cache__ = {};
+    function __webpack_require__(moduleId) {
+        var cachedModule = __webpack_module_cache__[moduleId];
+        if (void 0 !== cachedModule) return cachedModule.exports;
+        var module = __webpack_module_cache__[moduleId] = {
+            id: moduleId,
+            exports: {}
+        };
+        return __webpack_modules__[moduleId](module, module.exports, __webpack_require__), 
+        module.exports;
+    }
+    __webpack_require__.m = __webpack_modules__, __webpack_require__.n = module => {
+        var getter = module && module.__esModule ? () => module.default : () => module;
+        return __webpack_require__.d(getter, {
+            a: getter
+        }), getter;
+    }, __webpack_require__.d = (exports, definition) => {
+        for (var key in definition) __webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key) && Object.defineProperty(exports, key, {
+            enumerable: !0,
+            get: definition[key]
+        });
+    }, __webpack_require__.o = (obj, prop) => Object.prototype.hasOwnProperty.call(obj, prop), 
+    __webpack_require__.r = exports => {
+        "undefined" != typeof Symbol && Symbol.toStringTag && Object.defineProperty(exports, Symbol.toStringTag, {
+            value: "Module"
+        }), Object.defineProperty(exports, "__esModule", {
+            value: !0
+        });
+    }, __webpack_require__.b = "undefined" != typeof document && document.baseURI || self.location.href, 
+    __webpack_require__.nc = void 0;
+    const notification = (notificationText, presistend = !1) => {
+        $(".umm-notification").remove(), notificationText = notificationText.replace(/\n/g, "<br/>");
+        const notification = $("<div>", {
+            class: "umm-notification",
+            html: notificationText
+        });
+        $("body").append(notification), presistend || window.setTimeout(() => {
+            $(".umm-notification").fadeOut(400, () => notification.remove());
+        }, 3e3);
+    }, loadFile = async (state, inputFile) => {
+        const text = await inputFile.text();
+        try {
+            state.import(text);
+        } catch (error) {
+            return notification(`Loadgin error: \n${error}`), !1;
+        }
+        return state.save(), notification(`Banner data loaded:\n${state.getBannerName()}`), 
+        !0;
+    };
+    class Portals {
+        constructor(state, data) {
+            this.state = state, this.data = data;
+        }
+        get length() {
+            return this.data.length;
+        }
+        get(index) {
+            return this.data.at(index);
+        }
+        getRange(start, end) {
+            return this.data.slice(start, end);
+        }
+        set(index, portal) {
+            this.data[index] = portal, this.state.onMissionPortal.trigger();
+        }
+        add(...portal) {
+            portal.some(p => this.includes(p.guid)), this.data.push(...portal), this.state.onMissionPortal.trigger();
+        }
+        insert(index, ...portal) {
+            portal.some(p => this.includes(p.guid)), this.data.splice(index, 0, ...portal), 
+            this.state.onMissionPortal.trigger();
+        }
+        remove(index, count = 1) {
+            this.data.splice(index, count), this.state.onMissionPortal.trigger();
+        }
+        clear() {
+            this.data.length = 0, this.state.onMissionPortal.trigger();
+        }
+        toLatLng() {
+            return this.data.map(portal => new L.LatLng(portal.location.latitude, portal.location.longitude));
+        }
+        getLatLngOf(index) {
+            const portal = this.get(index);
+            if (portal) return new L.LatLng(portal.location.latitude, portal.location.longitude);
+        }
+        includes(guid) {
+            return this.data.some(x => x.guid === guid);
+        }
+        find(guid) {
+            return this.data.find(x => x.guid === guid);
+        }
+        indexOf(portal) {
+            return this.data.findIndex(x => x.guid === portal.guid);
+        }
+        isStart(portal) {
+            var _a;
+            return (null === (_a = this.data[0]) || void 0 === _a ? void 0 : _a.guid) === portal.guid;
+        }
+        isEnd(portal) {
+            var _a;
+            return (null === (_a = this.data.at(-1)) || void 0 === _a ? void 0 : _a.guid) === portal.guid;
+        }
+        reverse() {
+            this.data.reverse(), this.state.onMissionPortal.trigger();
+        }
+        create(guid) {
+            const iitcPortal = window.portals[guid], options = iitcPortal.options.data, ll = iitcPortal.getLatLng();
+            return {
+                guid,
+                title: options.title || "[undefined]",
+                imageUrl: options.image,
+                description: "",
+                location: {
+                    latitude: ll.lat,
+                    longitude: ll.lng
+                },
+                isOrnamented: !1,
+                isStartPoint: !1,
+                type: "PORTAL",
+                objective: {
+                    type: "HACK_PORTAL",
+                    passphrase_params: {
+                        question: "",
+                        _single_passphrase: ""
+                    }
+                }
+            };
+        }
+    }
+    class Mission {
+        constructor(state, id, data) {
+            this.missionID = id, this.data = data, this.portal_data = new Portals(state, data.portals);
+        }
+        get title() {
+            return this.data.missionTitle;
+        }
+        get portals() {
+            return this.portal_data;
+        }
+        get id() {
+            return this.missionID;
+        }
+        get description() {
+            return this.data.missionDescription;
+        }
+        hasPortals() {
+            return this.portal_data.length > 0;
+        }
+        getLocations() {
+            return this.portal_data.toLatLng();
+        }
+        show() {
+            if (this.hasPortals()) {
+                const bounds = new L.LatLngBounds(this.getLocations()).pad(.2);
+                window.map.fitBounds(bounds, {
+                    maxZoom: 18
+                });
+            }
+        }
+        focusLastPortal() {
+            const last_ll = this.portal_data.getLatLngOf(-1), last = this.portal_data.get(-1);
+            return !(!last || !last_ll) && (window.map.setView(last_ll), window.renderPortalDetails(last.guid), 
+            !0);
+        }
+        getDistance() {
+            return this.portals.toLatLng().reduce((sum, ll, index, lls) => index > 0 ? sum + ll.distanceTo(lls[index - 1]) : 0, 0);
+        }
+        clear() {
+            this.portal_data.clear();
+        }
+        reverse() {
+            this.portal_data.reverse();
+        }
+    }
+    class Missions {
+        static generateMissionTitle(missNumber, plannedBannerLength, missSetName, missNameFormat) {
+            var _a;
+            const format = null != missNameFormat ? missNameFormat : "";
+            if (!format) return "";
+            let title = format;
+            const totalMissions = null != plannedBannerLength ? plannedBannerLength : 0;
+            if (totalMissions >= 1 && (title = title.replace(/M+/g, totalMissions.toString())), 
+            missNumber >= 0) {
+                const numberPattern = null === (_a = format.match(/N+/g)) || void 0 === _a ? void 0 : _a[0];
+                if (numberPattern) {
+                    const length = numberPattern.length > 1 ? totalMissions.toString().length : 0, paddedNumber = (missNumber + 1).toString().padStart(length, "0");
+                    title = title.replace(/N+/g, paddedNumber);
+                }
+            }
+            return (null == missSetName ? void 0 : missSetName.trim()) && (title = title.replace(/T/g, missSetName)), 
+            title;
+        }
+        constructor(state, data) {
+            this.state = state, this.data = data;
+        }
+        get(missionId) {
+            const mis = this.data[missionId];
+            return mis && new Mission(this.state, missionId, mis);
+        }
+        count() {
+            return this.data.length;
+        }
+        forEach(callback) {
+            this.data.forEach((missionData, index) => {
+                const mission = new Mission(this.state, index, missionData);
+                callback(mission);
+            });
+        }
+        filter(callback) {
+            const result = [];
+            return this.forEach(mission => {
+                callback(mission) && result.push(mission);
+            }), result;
+        }
+        previous(mission) {
+            var _a;
+            let preMission, preMissionID = mission.id - 1;
+            for (;!(null === (_a = preMission = this.get(preMissionID)) || void 0 === _a ? void 0 : _a.hasPortals()) && preMissionID > 0; ) preMissionID--;
+            return preMission;
+        }
+        next(mission) {
+            return this.get(mission.id + 1);
+        }
+        distanceToStart(id) {
+            const mission = this.get(id);
+            if (!mission) return;
+            const previous = this.previous(mission), first = null == previous ? void 0 : previous.portals.getLatLngOf(-1), last = mission.portals.getLatLngOf(0);
+            return first && last ? first.distanceTo(last) : void 0;
+        }
+        getTotalDistance() {
+            const waypoints = [];
+            return this.forEach(m => waypoints.push(...m.getLocations())), waypoints.reduce((sum, ll, index, lls) => index > 0 ? sum + ll.distanceTo(lls[index - 1]) : 0, 0);
+        }
+        getWaypointCount() {
+            return this.data.reduce((count, mis) => count + mis.portals.length, 0);
+        }
+        validate() {
+            const errors = {}, notEnoughWaypoint = this.filter(m => m.portals.length < 6).map(m => m.id);
+            return notEnoughWaypoint.length > 0 && (errors["not enough waypoints"] = notEnoughWaypoint), 
+            errors;
+        }
+        zoom() {
+            const location = this.data.flatMap(m => new Portals(this.state, m.portals).toLatLng());
+            if (location.length > 0) {
+                const bounds = new L.LatLngBounds(location).pad(.1);
+                window.map.fitBounds(bounds, {
+                    maxZoom: 18
+                });
+            }
+        }
+        merge(destination, missionB) {
+            destination.portals.add(...missionB.portals.getRange()), missionB.portals.clear();
+        }
+        mergeAll() {
+            const portals = [];
+            this.data.forEach(m => {
+                portals.push(...m.portals), portals.length = 0;
+            }), this.data[0].portals = portals;
+        }
+        split(source, at, destination) {
+            const toMove = source.portals.getRange(at);
+            destination.portals.insert(0, ...toMove), source.portals.remove(at, toMove.length);
+        }
+        splitIntoMultiple(source, count, restAtLast = !1) {
+            const allPortals = this.getAllPortalsOf(source.id, count);
+            let portalsPerMission = allPortals.length / count;
+            restAtLast && (portalsPerMission = Math.floor(portalsPerMission));
+            for (let i = 0; i < count; i++) {
+                const start = Math.floor(portalsPerMission * i);
+                let end = Math.floor(portalsPerMission * (i + 1));
+                i === count - 1 && (end = allPortals.length);
+                const mission = this.get(source.id + i);
+                null == mission || mission.portals.clear(), null == mission || mission.portals.add(...allPortals.slice(start, end));
+            }
+        }
+        getAllPortalsOf(from, count) {
+            const allPortals = [];
+            for (let i = 0; i < count; i++) {
+                const mission = this.get(from + i);
+                mission && allPortals.push(...mission.portals.getRange());
+            }
+            return allPortals;
+        }
+        getMissionsOfPortal(guid) {
+            return this.filter(mis => mis.portals.includes(guid)).map(m => m.id);
+        }
+    }
+    class Trigger {
+        constructor() {
+            this.handler = [];
+        }
+        do(fct) {
+            this.handler.includes(fct) || this.handler.push(fct);
+        }
+        dont(fct) {
+            const index = this.handler.indexOf(fct);
+            -1 === index ? console.error("handler was not registerd", fct) : this.handler.splice(index, 1);
+        }
+        trigger() {
+            this.handler.some(fct => !1 === fct());
+        }
+        clear() {
+            this.handler = [];
+        }
+    }
+    const fileFormatVersion = 2;
+    class State {
+        constructor() {
+            this.onSelectedMissionChange = new Trigger, this.onMissionChange = new Trigger, 
+            this.onMissionPortal = new Trigger, this.load();
+        }
+        load() {
+            this.reset();
+            const data = localStorage.getItem("ultimate-mission-maker");
+            data && this.import(data);
+        }
+        save() {
+            this.setPlannedLength(this.theState.plannedBannerLength), localStorage.setItem("ultimate-mission-maker", this.asString());
+        }
+        import(jsonString) {
+            const anyState = JSON.parse(jsonString);
+            this.theState = (ummState => {
+                var _a, _b, _c, _d, _e;
+                if (ummState.fileFormatVersion > fileFormatVersion) throw new Error("UMM: You've attempted to load data that's newer than what's supported by this version of UMM. Please update the plugin and try again. Data has not been loaded.");
+                if (void 0 === ummState.fileFormatVersion || "" === ummState.fileFormatVersion) {
+                    const undefinedOrEmptyString = value => null == value || "" == value;
+                    if (undefinedOrEmptyString(ummState.missionSetName) && (undefinedOrEmptyString(ummState.missionName) ? ummState.missionSetName = "" : (ummState.missionSetName = ummState.missionName, 
+                    delete ummState.missionName)), undefinedOrEmptyString(ummState.missionSetDescription) && (undefinedOrEmptyString(ummState.missionDescription) ? ummState.missionSetDescription = "" : (ummState.missionSetDescription = ummState.missionDescription, 
+                    delete ummState.missionDescription)), undefinedOrEmptyString(ummState.titleFormat) && (ummState.titleFormat = "T NN-M"), 
+                    void 0 === ummState.numberOfMissions ? ummState.plannedBannerLength = Object.keys(ummState.missions).length : (ummState.plannedBannerLength = ummState.numberOfMissions, 
+                    delete ummState.numberOfMissions), !Object.keys(ummState.missions[0]).includes("portals")) if (ummState.missions[0][0].guid) {
+                        const newMissions = [];
+                        for (const mission in ummState.missions) {
+                            const plannedLength = ummState.plannedBannerLength > 0 ? ummState.plannedBannerLength : ummState.missions.length, missionTitle = Missions.generateMissionTitle(parseInt(mission) + 1, plannedLength, ummState.missionSetName, ummState.titleFormat);
+                            newMissions.push({
+                                missionTitle,
+                                missionDescription: ummState.missionSetDescription,
+                                portals: ummState.missions[mission]
+                            });
+                        }
+                        ummState.missions = newMissions;
+                    } else ummState.missions = [ {
+                        missionTitle: "",
+                        missionDescription: "",
+                        portals: []
+                    } ];
+                    ummState.fileFormatVersion = 1;
+                }
+                if (1 === ummState.fileFormatVersion) {
+                    for (const mission in ummState.missions) for (const portal in ummState.missions[mission].portals) ummState.missions[mission].portals[portal].objective = {
+                        type: "HACK_PORTAL",
+                        passphrase_params: {
+                            question: "",
+                            _single_passphrase: ""
+                        }
+                    };
+                    ummState.fileFormatVersion = 2;
+                }
+                if (2 === ummState.fileFormatVersion) for (const mission in ummState.missions) for (const portal in ummState.missions[mission].portals) "HACK" === ummState.missions[mission].portals[portal].objective.type && (ummState.missions[mission].portals[portal].objective.type = "HACK_PORTAL");
+                return 2 === ummState.fileFormatVersion && (null !== (_a = ummState.missionSetName) && void 0 !== _a || (ummState.missionSetName = ""), 
+                null !== (_b = ummState.missionSetDescription) && void 0 !== _b || (ummState.missionSetDescription = ""), 
+                null !== (_c = ummState.currentMission) && void 0 !== _c || (ummState.currentMission = 0), 
+                null !== (_d = ummState.plannedBannerLength) && void 0 !== _d || (ummState.plannedBannerLength = 1), 
+                null !== (_e = ummState.titleFormat) && void 0 !== _e || (ummState.titleFormat = "T NN-M")), 
+                ummState;
+            })(anyState), this.setPlannedLength(this.getPlannedLength() || 1), this.onMissionChange.trigger(), 
+            this.onMissionPortal.trigger(), this.onSelectedMissionChange.trigger();
+        }
+        asString() {
+            return JSON.stringify(this.theState);
+        }
+        reset() {
+            this.theState = {
+                missionSetName: "",
+                missionSetDescription: "",
+                currentMission: 0,
+                plannedBannerLength: 1,
+                titleFormat: "T NN-M",
+                fileFormatVersion,
+                missions: [ {
+                    missionTitle: "",
+                    missionDescription: "",
+                    portals: []
+                } ],
+                layers: []
+            }, this.onMissionChange.trigger();
+        }
+        isEmpty() {
+            return "" === this.theState.missionSetName && "" === this.theState.missionSetDescription && this.theState.missions.every(m => 0 === m.portals.length);
+        }
+        isValid() {
+            return "" !== this.theState.missionSetName && "" !== this.theState.missionSetDescription && this.theState.plannedBannerLength > 0;
+        }
+        get missions() {
+            return new Missions(this, this.theState.missions);
+        }
+        getBannerName() {
+            return this.theState.missionSetName;
+        }
+        setBannerName(name) {
+            this.theState.missionSetName = name, this.theState.missions.forEach((mission, id) => mission.missionTitle = this.generateMissionTitle(id)), 
+            this.onMissionChange.trigger();
+        }
+        getBannerDesc() {
+            return this.theState.missionSetDescription;
+        }
+        setBannerDesc(desc) {
+            this.theState.missionSetDescription = desc, this.theState.missions.forEach(mission => mission.missionDescription = this.theState.missionSetDescription), 
+            this.onMissionChange.trigger();
+        }
+        getTitleFormat() {
+            return this.theState.titleFormat;
+        }
+        setTitleFormat(name) {
+            this.theState.titleFormat = name, this.theState.missions.forEach((mission, id) => mission.missionTitle = this.generateMissionTitle(id)), 
+            this.onMissionChange.trigger();
+        }
+        getPlannedLength() {
+            return this.theState.plannedBannerLength;
+        }
+        setPlannedLength(count) {
+            if (count = Math.max(count, 1), this.theState.plannedBannerLength = count, this.theState.missions.length > count) this.theState.missions = this.theState.missions.slice(0, count); else for (let id = this.theState.missions.length; id < count; id++) this.theState.missions.push({
+                missionTitle: this.generateMissionTitle(id),
+                missionDescription: this.theState.missionSetDescription,
+                portals: []
+            });
+            this.onMissionChange.trigger();
+        }
+        generateMissionTitle(missNumber) {
+            return Missions.generateMissionTitle(missNumber, this.getPlannedLength(), this.theState.missionSetName, this.theState.titleFormat);
+        }
+        getEditMission() {
+            return this.missions.get(this.theState.currentMission);
+        }
+        setCurrent(missionId) {
+            missionId >= 0 && this.getPlannedLength(), this.theState.currentMission = missionId, 
+            this.onSelectedMissionChange.trigger();
+        }
+        getCurrent() {
+            return this.theState.currentMission;
+        }
+        isCurrent(missionId) {
+            return this.theState.currentMission === missionId;
+        }
+        checkPortal(event) {
+            let updated = !1;
+            this.theState.missions.forEach(mission => {
+                const portal = mission.portals.find(x => x.guid === event.guid);
+                portal && (portal.imageUrl === event.portalData.image && portal.title === event.portalData.title || (portal.imageUrl = event.portalData.image, 
+                portal.title = event.portalData.title, updated = !0));
+            }), updated && this.save();
+        }
+        checkAllPortals() {
+            let updated = !1;
+            this.theState.missions.forEach(mission => {
+                mission.portals.forEach(portal => {
+                    var _a;
+                    const iitcPortal = null === (_a = window.portals[portal.guid]) || void 0 === _a ? void 0 : _a.options.data;
+                    iitcPortal && (portal.imageUrl === iitcPortal.image && portal.title === iitcPortal.title || (portal.imageUrl = iitcPortal.image, 
+                    portal.title = iitcPortal.title, updated = !0));
+                });
+            }), updated && this.save();
+        }
+        storeLayerState(layers) {
+            this.theState.layers = layers.map(l => l.isVisible()), this.save();
+        }
+        restoreLayerState(layers) {
+            this.theState.layers.forEach((vis, index) => layers[index].toggle(null == vis || vis));
+        }
+    }
+    const main = new class UMM_Editor {
+        init() {
+            __webpack_require__(404), $(".navbar-header").append($("<div>", {
+                id: "umm-badge",
+                text: "UMM:"
+            }), $("<div>", {
+                id: "umm-mission-editor-bar"
+            }).append($("<div>", {
+                id: "umm-mission-title",
+                click: () => $("#umm-import-file").trigger("click")
+            }), $("<div>", {
+                style: "margin-top: 0.3em;"
+            }).append($("<input>", {
+                id: "umm-import-file",
+                type: "file"
+            }), $("<label>", {
+                for: "umm-import-file",
+                class: "umm-upload-label"
+            })), $("<div>", {
+                id: "umm-mission-picker-wrapper"
+            }).append($("<select>", {
+                id: "umm-mission-picker",
+                class: "umm-mission-picker"
+            }), $("<button>", {
+                id: "umm-mission-picker-btn",
+                class: "umm-mission-picker-btn",
+                text: "Import",
+                click: () => this.importMission()
+            })))), this.state = new State, this.setActiveBannerTitle(), this.bindFileImport(), 
+            this.generateMissionSelect();
+        }
+        setActiveBannerTitle() {
+            "" === this.state.getBannerName() ? $("#umm-mission-title").text("Please load a mission file...") : $("#umm-mission-title").text(this.state.getBannerName());
+        }
+        bindFileImport() {
+            $("#umm-import-file")[0].addEventListener("change", async event => {
+                ("" === this.state.getBannerName() || confirm("Are you sure you want to load this file? Doing so will overwrite any previously imported UMM data. Your existing missions will not be affected.")) && ($("#umm-mission-title").text("Loading banner... "), 
+                await (async (event, state) => {
+                    const files = event.target.files;
+                    return 1 !== (null == files ? void 0 : files.length) ? (alert("No file selected! Please select a mission file in JSON format and try again."), 
+                    $("#umm-import-file").val(""), !1) : "application/json" != files[0].type ? ($("#umm-import-file").val(""), 
+                    alert(files[0].name + " has not been recognized as JSON file. Make sure you've loaded the right file."), 
+                    !1) : loadFile(state, files[0]);
+                })(event, this.state), this.setActiveBannerTitle(), this.generateMissionSelect());
+            });
+        }
+        generateMissionSelect() {
+            const selectedMission = this.state.getCurrent(), container = $("#umm-mission-picker");
+            container.empty(), this.state.missions.forEach(mission => {
+                container.append($("<option>", {
+                    value: mission.id,
+                    text: `${mission.id + 1}: ${mission.title}`
+                }));
+            }), $("#umm-mission-picker").val(selectedMission), this.state.missions.count() > 0 && $("#umm-mission-picker-btn").prop("disabled", !1);
+        }
+        importMission() {
+            const selectedMission = parseInt($("#umm-mission-picker").val());
+            main.state.setCurrent(selectedMission), main.state.save();
+            const mission = main.state.getEditMission(), angularScope = this.getAngularAppScope();
+            if (!mission || "" === mission.title || "" === mission.description && 0 === mission.portals.length) return void notification("There is no mission data loaded");
+            if (!$(".loading").hasClass("ng-hide")) return void notification("Please wait for the spinner in the top right to finish loading before importing a (new) mission");
+            if (!angularScope.mission) return void notification("You can not import a mission on the preview page\nStart with Create New Mission");
+            if ($(".title.title-4").length > 0 && !$(".title.title-4").hasClass("ng-hide") || $(".pagination li:nth-child(4)").hasClass("active")) return void notification("You can not import a mission on this page\nGo back to a previous page");
+            if (angularScope.mission.definition.waypoints.length > 0 && !confirm("Your current mission already contains portals/waypoints. Are you sure you want to overwrite these?")) return;
+            this.resetWaypoints(angularScope), angularScope.mission.definition.name = mission.title, 
+            angularScope.mission.definition.description = mission.description;
+            const mock = angularScope.setSelectedWaypoint;
+            angularScope.setSelectedWaypoint = () => 0;
+            let missingImagesCount = 0;
+            mission.portals.getRange().forEach(portal => {
+                const {mePortal, hasError} = this.createPortal(portal);
+                hasError && missingImagesCount++, angularScope.addWaypoint(mePortal);
+            }), angularScope.setSelectedWaypoint = mock, angularScope.mission.definition.waypoints.forEach((aportal, index) => {
+                const portal = mission.portals.get(index);
+                aportal.objective.type = portal.objective.type, aportal.objective.passphrase_params.question = portal.objective.passphrase_params.question, 
+                aportal.objective.passphrase_params._single_passphrase = portal.objective.passphrase_params._single_passphrase;
+            }), angularScope.$apply();
+            const angularApp = this.getAngularApp();
+            angularApp.injector().get("$timeout")(() => {
+                if (missingImagesCount > 0) {
+                    notification("Missing data detected\nRefreshing data to correct the issue. Standby...", !0);
+                    const triggerRefresh = () => {
+                        setTimeout(validateRefresh, 200);
+                    }, validateRefresh = () => {
+                        const angularHttp = angularApp.injector().get("$http");
+                        let isMissionSaving = !1;
+                        for (const request of angularHttp.pendingRequests) "/api/author/saveMission" === request.url && (isMissionSaving = !0);
+                        if (angularScope.pendingSave || isMissionSaving) triggerRefresh(); else {
+                            notification("Refreshing mission...", !0);
+                            const scope = this.getAngularAppScope();
+                            this.reloadMAT(scope.mission.mission_id);
+                        }
+                    };
+                    setTimeout(triggerRefresh, 200);
+                } else notification("UMM Mission import succesful:\n" + angularScope.mission.definition.name);
+            });
+        }
+        getAngularApp() {
+            const container = document.getElementsByClassName("container")[0];
+            return angular.element(container);
+        }
+        getAngularAppScope() {
+            return this.getAngularApp().scope();
+        }
+        resetWaypoints(scope) {
+            scope.mission.definition.waypoints = [], scope.waypointMarkers = [], scope.$apply();
+        }
+        createPortal(portal) {
+            let hasError = !1, imageUrl = portal.imageUrl;
+            return imageUrl || (hasError = !0, imageUrl = "https://lh3.googleusercontent.com/s0kCRS7KE-i0gQhbH_gx-qxvC2kHBJ9TDITirnpzSJnEDV-QVDio5OFl8bJ8OC8EhPGGFOFje5HeO9M6RDklZ971e8aSPeLs"), 
+            imageUrl.startsWith("http:") && (imageUrl = imageUrl.replace("http:", "https:")), 
+            {
+                mePortal: {
+                    $$hashKey: null,
+                    guid: portal.guid,
+                    description: portal.description,
+                    location: {
+                        latitude: portal.location.latitude,
+                        longitude: portal.location.longitude
+                    },
+                    imageUrl,
+                    isOrnamented: !1,
+                    isStartPoint: !1,
+                    title: portal.title,
+                    type: "PORTAL"
+                },
+                hasError
+            };
+        }
+        reloadMAT(missionId) {
+            const angularApp = this.getAngularApp(), angularHttp = angularApp.injector().get("$http"), angularApi = angularApp.injector().get("Api"), angularTimeout = angularApp.injector().get("$timeout"), wireUtil = angularApp.injector().get("WireUtil"), styles = angularApp.injector().get("Styles");
+            angularHttp.post(angularApi.GET_MISSION, {
+                mission_id: missionId
+            }).success(data => {
+                data = wireUtil.convertMissionWireToLocal(data.mission, data.pois);
+                const angularscope = this.getAngularAppScope();
+                angularscope.mission = data, angularTimeout(() => {
+                    angularscope.waypointMarkers = (waypoints => {
+                        const d = [];
+                        return angular.forEach(waypoints, (a, b) => {
+                            const c = ((b, d) => {
+                                if (b._poi) {
+                                    const c = (d + 1).toString();
+                                    return {
+                                        id: Math.floor(1e10 * Math.random()),
+                                        location: b._poi.location,
+                                        icon: angularscope.isWaypointSelected(b) ? styles.SELECTED_WAYPOINT_ICON : styles.WAYPOINT_ICON,
+                                        onClicked: function() {
+                                            angularscope.$apply(() => {
+                                                angularscope.setSelectedWaypoint(b, !0);
+                                            });
+                                        },
+                                        options: {
+                                            labelAnchor: styles.WAYPOINT_LABEL_ANCHOR,
+                                            labelClass: "waypoint-label",
+                                            labelContent: c,
+                                            zIndex: styles.WAYPOINT_MARKER_Z_INDEX
+                                        },
+                                        latitude: b._poi.location.latitude,
+                                        longitude: b._poi.location.longitude
+                                    };
+                                }
+                            })(a, b);
+                            d.push(c);
+                        }), d;
+                    })(angularscope.mission.definition.waypoints), angularscope.$apply(), notification("UMM Mission import succesful:\n" + angularscope.mission.definition.name);
+                });
+            }).catch(() => {
+                window.alert("Failed to refresh mission, refreshing full page to fix this."), window.location.href = window.location.href;
+            });
+        }
+    };
+    main.init();
+})();
 };
 
 
