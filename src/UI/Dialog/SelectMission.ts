@@ -33,11 +33,17 @@ export const editActiveMission = () => {
         button("Merge next into this", onMergePost),
     );
 
+    let position;
+    if (typeof android !== "undefined" && !!android) {
+        position = { my: "center top", at: "center top" };
+    }
+
     window.dialog({
         html,
         title: `${title} ${VERSION}`,
         id: 'umm-options',
         width: 350,
+        position,
         buttons: [
             dialogButton("< Main Menu", showUmmOptions),
             dialogButtonClose()

@@ -72,11 +72,17 @@ export const showUmmOptions = () => {
         )
     );
 
+    let position;
+    if (typeof android !== "undefined" && !!android) {
+        position = { my: "center top", at: "center top" };
+    }
+
     window.dialog({
         html: html,
         title: `${title} ${VERSION}`,
         id: 'umm-options',
         width: 350,
+        position,
         buttons: [
             dialogButton("About this plugin", about),
             dialogButtonClose()
