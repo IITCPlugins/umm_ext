@@ -69,6 +69,22 @@ if (!a || !b) {
 
 let header = extractHeader(a) || extractHeader(b) || "";
 header = addMatchToHeader(header);
+
+// Ensure @updateURL and @downloadURL point to the final hosted meta.js and user.js
+// Use the canonical GitHub raw location for the dist artifacts (adjust if your repo/branch differs)
+const githubRawBase = "https://github.com/IITCPlugins/umm_ext/raw/refs/heads/main/dist";
+const finalMeta = `${githubRawBase}/iitc_plugin_UMM_Ext.meta.js`;
+const finalUser = `${githubRawBase}/iitc_plugin_UMM_Ext.user.js`;
+
+// Remove any existing update/download URL lines and insert the correct ones after @namespace
+header = header.replace(/\/\/\s+@updateURL.*\n/g, "");
+header = header.replace(/\/\/\s+@downloadURL.*\n/g, "");
+if (/\/\/\s+@namespace/.test(header)) {
+  header = header.replace(/(\/\/\s+@namespace[^\n]*\n)/, `$1// @updateURL       ${finalMeta}\n// @downloadURL     ${finalUser}\n`);
+} else {
+  // Fallback: append to the header if @namespace isn't present
+  header = header.replace(/\/\/ ==UserScript==\n/, `// ==UserScript==\n// @updateURL       ${finalMeta}\n// @downloadURL     ${finalUser}\n`);
+}
 const partA = prepare(fileIITC, "wrapper_iitc");
 const partB = prepare(fileEditor, "wrapper_editor");
 
