@@ -4,6 +4,7 @@ import { Mission } from "../State/Mission";
 import { UMM_Portal } from "../UMM_types";
 import { confirmDialog } from "./Dialog/Confirm";
 import { notification } from "./Notification";
+import { RenderBase } from "./RenderBase";
 
 type MarkerOptions = L.MarkerOptions & {
     portal: number;
@@ -12,16 +13,15 @@ type MarkerOptions = L.MarkerOptions & {
 }
 
 // TODO: D&D should be handled elsewhere
-export class RenderPath {
+export class RenderPath extends RenderBase {
 
-    private missionPaths: L.LayerGroup<any>;
     private touchIcon: L.DivIcon;
     private editDragLine: L.Polyline | undefined;
 
 
     constructor() {
-        this.missionPaths = new window.L.FeatureGroup();
-        window.addLayerGroup('UMM: Mission Paths', this.missionPaths, true);
+        super();
+        window.addLayerGroup('UMM: Mission Paths', this.layer, true);
 
         this.touchIcon = L.Browser.touch ?
             new L.DivIcon({
@@ -39,25 +39,9 @@ export class RenderPath {
     }
 
 
-    isVisible(): boolean {
-        return window.map.hasLayer(this.missionPaths);
-    }
-
-    isLayer(layer: L.ILayer): boolean {
-        return layer === this.missionPaths;
-    }
-
-    toggle(show: boolean) {
-        if (show) {
-            window.map.addLayer(this.missionPaths);
-        } else {
-            window.map.removeLayer(this.missionPaths);
-        }
-    }
-
 
     redrawNow = () => {
-        this.missionPaths.clearLayers();
+        this.layer.clearLayers();
 
         const editMode = main.missionModeActive;
 
@@ -79,7 +63,7 @@ export class RenderPath {
             smoothFactor: 1,
             interactive: false
         });
-        this.missionPaths.addLayer(geodesicPolyline);
+        this.layer.addLayer(geodesicPolyline);
     }
 
 
@@ -104,7 +88,7 @@ export class RenderPath {
             smoothFactor: 1
         });
 
-        this.missionPaths.addLayer(geodesicPolyline);
+        this.layer.addLayer(geodesicPolyline);
     }
 
 
@@ -119,7 +103,7 @@ export class RenderPath {
             isMidPoint: dummy
         });
 
-        this.missionPaths.addLayer(marker);
+        this.layer.addLayer(marker);
 
         marker
             .on("drag", event => { this.onMarkerDrag(event as L.LeafletMouseEvent); })
@@ -148,7 +132,7 @@ export class RenderPath {
         }
 
         if (this.editDragLine) {
-            this.missionPaths.removeLayer(this.editDragLine);
+            this.layer.removeLayer(this.editDragLine);
         }
 
         const portal = options.portal;
@@ -177,7 +161,7 @@ export class RenderPath {
             pointerEvents: 'none'
         });
 
-        this.missionPaths.addLayer(this.editDragLine);
+        this.layer.addLayer(this.editDragLine);
     }
 
 
@@ -201,7 +185,7 @@ export class RenderPath {
 
     private async onMarkerDragEnd(event: L.LeafletDragEndEvent) {
         if (this.editDragLine) {
-            this.missionPaths.removeLayer(this.editDragLine);
+            this.layer.removeLayer(this.editDragLine);
             this.editDragLine = undefined;
         }
 

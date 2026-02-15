@@ -2,6 +2,7 @@ import { debounce } from "../Helper/Debounce";
 import { main } from "../Main";
 import { MIN_PORTALS_PER_MISSION } from "../State/Missions";
 import { State } from "../State/State";
+import { RenderBase } from "./RenderBase";
 
 interface MissionStart {
     missionIndex: number;
@@ -10,37 +11,20 @@ interface MissionStart {
 }
 
 
-export class RenderNumbers {
-
-    private missionNumbers: L.LayerGroup<any>;
+export class RenderNumbers extends RenderBase {
 
     constructor() {
-        this.missionNumbers = new window.L.FeatureGroup();
-        window.addLayerGroup('UMM: Mission Numbers', this.missionNumbers, true);
+        super();
+        window.addLayerGroup('UMM: Mission Numbers', this.layer, true);
 
         main.state.onMissionChange.do(this.redraw);
         main.state.onMissionPortal.do(this.redraw);
         main.state.onSelectedMissionChange.do(this.redraw);
     }
 
-    isVisible(): boolean {
-        return window.map.hasLayer(this.missionNumbers);
-    }
-
-    isLayer(layer: L.ILayer): boolean {
-        return layer === this.missionNumbers;
-    }
-
-    toggle(show: boolean) {
-        if (show) {
-            window.map.addLayer(this.missionNumbers);
-        } else {
-            window.map.removeLayer(this.missionNumbers);
-        }
-    }
 
     redrawNow = () => {
-        this.missionNumbers.clearLayers();
+        this.layer.clearLayers();
 
         const state = main.state;
         const starts = this.getMissionStarts(state);
@@ -61,7 +45,7 @@ export class RenderNumbers {
                 interactive: false
             });
 
-            this.missionNumbers.addLayer(marker);
+            this.layer.addLayer(marker);
         });
     }
     redraw = debounce(this.redrawNow);
