@@ -2,8 +2,10 @@ export class RenderBase {
 
     protected layer: L.LayerGroup<any>;
 
-    constructor() {
+    constructor(name: string) {
         this.layer = new window.L.FeatureGroup();
+        window.addLayerGroup(name, this.layer, true);
+        this.toggle(false);
     }
 
     isVisible(): boolean {

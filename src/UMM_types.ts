@@ -10,6 +10,8 @@ export interface UMM_State {
     plannedBannerLength: number;
     titleFormat: string
     fileFormatVersion: number;
+
+    layers: boolean[];
 }
 
 export interface UMM_Mission {

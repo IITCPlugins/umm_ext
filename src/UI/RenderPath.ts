@@ -11,8 +11,7 @@ export class RenderPath extends RenderBase {
 
 
     constructor() {
-        super();
-        window.addLayerGroup('UMM: Mission Paths', this.layer, true);
+        super('UMM: Mission Paths');
 
         this.dragMarkers = [];
 

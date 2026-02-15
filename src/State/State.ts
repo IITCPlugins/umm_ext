@@ -3,6 +3,7 @@ import { UMM_State } from "../UMM_types";
 import { migrateUmmVersion } from "./StateMigration";
 import { Missions } from "./Missions";
 import { Trigger } from "../Helper/Trigger";
+import { RenderBase } from "../UI/RenderBase";
 
 
 const STORAGE_KEY = "ultimate-mission-maker";
@@ -69,6 +70,7 @@ export class State {
                     missionDescription: '',
                     portals: []
                 }],
+            layers: []
         };
 
         this.onMissionChange.trigger();
@@ -214,4 +216,15 @@ export class State {
         });
         if (updated) this.save();
     }
+
+
+    storeLayerState(layers: RenderBase[]) {
+        this.theState.layers = layers.map(l => l.isVisible());
+        this.save();
+    }
+
+    restoreLayerState(layers: RenderBase[]) {
+        this.theState.layers.forEach((vis, index) => layers[index].toggle(vis ?? true));
+    }
+
 }

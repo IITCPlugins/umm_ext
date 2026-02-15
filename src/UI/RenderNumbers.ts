@@ -14,8 +14,7 @@ interface MissionStart {
 export class RenderNumbers extends RenderBase {
 
     constructor() {
-        super();
-        window.addLayerGroup('UMM: Mission Numbers', this.layer, true);
+        super('UMM: Mission Numbers');
 
         main.state.onMissionChange.do(this.redraw);
         main.state.onMissionPortal.do(this.redraw);
