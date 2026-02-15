@@ -2,10 +2,10 @@
 // @name            IITC plugin: Ultimate Mission Maker - Extended
 // @id              iitc_plugin_UMM_Ext
 // @category        Mission
-// @version         1.0.beta
+// @version         1.0.beta.2
 // @namespace       https://github.com/IITC-CE/ingress-intel-total-conversion
-// @updateURL       https://github.com/IITCPlugins/umm_ext/raw/refs/heads/main/dist/iitc_plugin_UMM_Ext.user.js/iitc.meta.js
-// @downloadURL     https://github.com/IITCPlugins/umm_ext/raw/refs/heads/main/dist/iitc_plugin_UMM_Ext.user.js/iitc.user.js
+// @updateURL       https://github.com/IITCPlugins/umm_ext/raw/refs/heads/main/dist/iitc_plugin_UMM_Ext.meta.js
+// @downloadURL     https://github.com/IITCPlugins/umm_ext/raw/refs/heads/main/dist/iitc_plugin_UMM_Ext.user.js
 // @description     Ultimate Mission Maker - Extended
 // @match           https://intel.ingress.com/*
 // @match           https://missions.ingress.com/*
@@ -974,7 +974,7 @@ function wrapper_iitc(SCRIPT_INFO) {
         })), dialogButtonClose() ];
         window.dialog({
             html,
-            title: `${title} v1.0.beta - About`,
+            title: `${title} v1.0.beta.2 - About`,
             id: "umm-options",
             width: 350,
             buttons
@@ -999,7 +999,7 @@ function wrapper_iitc(SCRIPT_INFO) {
             at: "center top"
         }), window.dialog({
             html,
-            title: `${title} v1.0.beta`,
+            title: `${title} v1.0.beta.2`,
             id: "umm-options",
             width: 350,
             position,
@@ -1144,7 +1144,7 @@ function wrapper_iitc(SCRIPT_INFO) {
             at: "center top"
         }), window.dialog({
             html,
-            title: `${title} v1.0.beta`,
+            title: `${title} v1.0.beta.2`,
             id: "umm-options",
             width: 350,
             position,
@@ -1204,7 +1204,7 @@ function wrapper_iitc(SCRIPT_INFO) {
         html += `<label for="umm-title-format"><b>Title format</b></label>\n      <span class="umm-error" id="umm-mission-title-format-error"><b>Error: </b>Please enter a valid title-format</span>\n      <p>Title format allows:<br>N = Mission number without leading 0<br>NN = Mission number with leading 0 (if required by banner length)<br>M = Planned banner length<br>T = (banner title)<br>Examples:T NN-M (default) or NN.M T</p>\n      <input id="umm-title-format" name="umm-title-format" type="text" placeholder="Enter a title format" value="${null !== (_a = state.getTitleFormat()) && void 0 !== _a ? _a : "T NN-M"}" style="margin-bottom: 5px;">\n      <b>Preview: </b><span id="umm-mission-title-preview"></span>`, 
         html += "</div>", window.dialog({
             html,
-            title: "Edit banner details - UMM v1.0.beta",
+            title: "Edit banner details - UMM v1.0.beta.2",
             id: "umm-options",
             width: 400,
             buttons: [ dialogButton("< Main Menu", showUmmOptions), dialogButton("Save", () => successfulSave(toggleMissionModeAfterSave)), dialogButtonClose() ]
