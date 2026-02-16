@@ -149,8 +149,7 @@ export const startEdit = () => {
 
 
 export const splitMissionOptions = () => {
-    let html = '<div class="umm-split-mission-options">';
-    html = `<b>How do you want to split your mission?</b><br><br>
+    const html = `<b>How do you want to split your mission?</b><br><br>
       <b>Remainder at the end:</b> All missions will contain the same amount of portals, any portals left over after splitting are added to the last mission.<br><br>
       <b>Balanced:</b> Split the banner into missions of the same length, if any portals are left over after splitting, earlier missions will get 1 portal extra to balance it out.
       `
