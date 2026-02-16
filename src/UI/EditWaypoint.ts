@@ -2,6 +2,8 @@ import { main } from "../Main";
 import { PortalActions } from "../State/Portals";
 import { UMM_Passphrase, UMM_Portal } from "../UMM_types";
 
+const NO_MISSION = "#";
+
 
 export const addWaypointEditorToPortal = () => {
 
@@ -30,7 +32,7 @@ export const addWaypointEditorToPortal = () => {
 
     // Make mission dropdown functional
     $("#umm-mission-select").on('change', () => {
-        if ($("#umm-mission-select").val() === "#") {
+        if ($("#umm-mission-select").val() === NO_MISSION) {
             // If no mission is selected, disable other dropdowns
             $("#umm-action-select").prop("disabled", true)
             $("#umm-passphrase-container").hide();
@@ -49,7 +51,7 @@ export const addWaypointEditorToPortal = () => {
 const portalMissionSelectFactory = (validMissionIds: number[]): JQuery => {
     const missionSelect = $("<select>", { id: "umm-mission-select" });
 
-    const missionOption = $("<option>", { value: "#", text: "Select mission" })
+    const missionOption = $("<option>", { value: NO_MISSION, text: "Select mission" })
     missionSelect.append(missionOption);
 
     validMissionIds.forEach(id => {
