@@ -1,6 +1,9 @@
-import { changelog, title } from "../../Text/Text";
+import { title } from "../../Text/Text";
 import { dialogButton, dialogButtonClose } from "./Button";
 import { showUmmOptions } from "./Options";
+
+import changelogText from "../../../CHANGELOG.md";
+
 
 export const about = () => {
     let html = '<div class="umm-options-list">';
@@ -17,7 +20,7 @@ export const about = () => {
 
     const buttons = [
         dialogButton("< Main Menu", showUmmOptions),
-        dialogButton("Changelog", () => dialog({ title: "Changelog", html: changelog.replace(/\n/gm, "<br/>") })),
+        dialogButton("Changelog", () => dialog({ title: "Changelog", html: miniMarkdown(changelogText), width: 500 })),
         dialogButtonClose()
     ];
 
@@ -29,3 +32,15 @@ export const about = () => {
         buttons: buttons
     });
 };
+
+// we don't want to bloat the plugin just for the changelog. so we use a mini markdown converter:
+const miniMarkdown = (incoming: string): string => {
+    return incoming
+        .replace(/^---/gm, "<hr>")
+        .replace(/^##\s(.*)\n*/gm, "<h3>$1</h3>")
+        .replace(/^#\s(.*)\n*/gm, "<h2>$1</h2>")
+        .replace(/\*\*(.*)\*\*/gm, "<b>$1</b>")
+        .replace(/\n/gm, "<br/>")
+        .replace(/(<\/h.>)<br>/gm, "$1")
+        .replace(/<br>(<h.>)/gm, "$1")
+}

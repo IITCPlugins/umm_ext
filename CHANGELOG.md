@@ -1,34 +1,59 @@
-v1.0
+# v1.0
 
-This is a code conversation of the Ultimate Mission Maker.
-From a developer point of view the whole project was rewritten and completly changed.
-For the enduser it still feels like the original UMM. The following list should give you an impression of whats visibily changes you will notice.
+This is a complete rewrite of the Ultimate Mission Maker from a developer perspective.
+The entire codebase has been redesigned while maintaining the familiar user experience of the original UMM.
+Below are the visible improvements and changes you'll notice.
 
-What's changed:
+## What's Changed:
 
 - UMM is now hidden by default. You need to hit the "UMM" button in the Portal details window to make it appear.
 
-- "Select Mission Dialog" (open it through the toolbar or the main dialog)
-  - "select" is nolonger required. just select another mission
-  - there are + and - Buttons for walking through these too
-  - added split,clear,merge,reverse commands to apply this to the selected mission
-  - additional infos to current mission: portal-count, distances
+- **Select Mission Dialog** (open it through the toolbar or the main dialog)
+  - Selecting a mission is no longer required; simply open another mission
+  - Navigation buttons (+/-) allow you to cycle through missions
+  - Added split, clear, merge, and reverse commands for mission manipulation
+  - New mission information display: portal count and distances
 
-- "Option Dialog" (main window)
-  - changed top banner info to a short table view
-  - removed the "warning message" when mission count is not a mulitple of 6
-  - added warning if missions don't have enough waypoints
+- **Options Dialog** (main window)
+  - Banner information now displays as a compact table
+  - Removed warning for mission counts that are not multiples of 6
+  - Added warning when missions lack sufficient waypoints
 
-- Drag & Drop to the mission editor path
-  - move existing markers
-  - add new waypoints by moving intermedite markers to new locations
-  - remove waypoint by double click a marker
-  - you can merge missions by dragging the start/end together
+- **Drag & Drop** in the mission editor path
+  - Move existing markers to adjust waypoints
+  - Add new waypoints by positioning intermediate markers at new locations
+  - Remove waypoints by double-clicking a marker
+  - Merge missions by dragging start and end markers together
 
-- Mission Numbers
-  - While creating a mission possible split points will be previewed
+- **Mission Numbers**
+  - Potential split points are previewed while creating missions
 
-- Misc
-  - a custom confirm dialog make it easier to read and understand what happens
-  - you can switch to any mission even when they have no portals in it
-  - when starting a mission on a portal already in a missions you will have the option to split this mission
+- **Miscellaneous**
+  - Custom confirmation dialogs clarify actions and improve readability
+  - Switch between any missions, even those without portals
+  - Option to split missions when starting on a portal that's already assigned to another mission
+  - on mobile dialogs are not at the top instead of centered
+
+---
+
+# History:
+
+## v1.0.beta.2 - 15.02.26
+
+- fixed update-URL in script header
+
+## v1.0.beta - 15.02.26
+
+- first public release
+- automated build process on GitHub
+- fixed layer checkboxes in Option-Dialog
+- add "clear" mission to selection dialog
+- always color selected mission even when not in Edit-Mode
+- move "no" to left in custom confirm dialog
+- remove doubled "v" in version numbers
+- fix toggeling edit mode on mission detail window "save" button
+- close dialog on mission detail window "save"
+- fix linebreaks in changelog dialog
+- select mission: directly select mission on combo-box change
+- fix question text in portal details
+- on mobile dialogs are not at the top instead of centered
