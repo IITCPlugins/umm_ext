@@ -7,7 +7,7 @@ import { RenderBase } from "../UI/RenderBase";
 
 
 const STORAGE_KEY = "ultimate-mission-maker";
-export const fileFormatVersion = 2;
+export const fileFormatVersion = 3;
 
 
 export class State {
@@ -153,7 +153,8 @@ export class State {
 
 
     private generateMissionTitle(missNumber: number): string {
-        return Missions.generateMissionTitle(missNumber, this.getPlannedLength(), this.theState.missionSetName, this.theState.titleFormat);
+        return Missions.generateMissionTitle(this.theState.titleFormat,
+            { misison: missNumber, total: this.getPlannedLength(), title: this.theState.missionSetName });
     }
 
 

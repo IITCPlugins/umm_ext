@@ -6,42 +6,46 @@ import { State } from "./State";
 export type ErrorReport = Record<string, number[]>;
 export const MIN_PORTALS_PER_MISSION = 6;
 
+interface MissionInfo {
+    title: string;
+    misison: number;
+    total: number;
+}
+
 export class Missions {
 
 
-    static generateMissionTitle(missNumber: number, plannedBannerLength: number | undefined, missSetName: string | undefined, missNameFormat: string | undefined): string {
-        // eslint-disable-next-line unicorn/prefer-default-parameters
-        const format = missNameFormat ?? "";
+    static generateMissionTitle(format: string, info: Partial<MissionInfo>): string {
 
-        if (!format) {
-            return "";
-        }
-
-        let title = format;
-        const totalMissions = plannedBannerLength ?? 0;
-
-        // Replace total mission count (M+)
-        if (totalMissions >= 1) {
-            title = title.replace(/M+/g, totalMissions.toString());
-        }
-
-        // Replace mission number (N or N+)
-        if (missNumber >= 0) {
-            const numberPattern = format.match(/N+/g)?.[0];
-            if (numberPattern) {
-
-                const length = numberPattern.length > 1 ? totalMissions.toString().length : 0;
-                const paddedNumber = (missNumber + 1).toString().padStart(length, '0');
-                title = title.replace(/N+/g, paddedNumber);
+        // matches: $a $2a $aa
+        return format.replace(/\$(\d*)?(\w)/g, (_, flags: string, token: string) => {
+            let value = token;
+            switch (token.toLowerCase()) {
+                case "t": value = info.title ?? value; break;
+                case "m": value = info.total?.toString() ?? value; break;
+                case "n": value = info.misison?.toString() ?? value; break;
             }
-        }
 
-        // Replace mission set name (T)
-        if (missSetName?.trim()) {
-            title = title.replace(/T/g, missSetName);
-        }
 
-        return title;
+            let leadingZero = false;
+            if (flags?.startsWith("0")) {
+                leadingZero = true;
+                flags = flags.slice(1);
+            }
+            let length = parseInt(flags);
+            if (Number.isNaN(length)) {
+                length = 1;
+                if (leadingZero) {
+                    length = info.total?.toString().length ?? 1;
+                }
+            }
+
+            if (value.length < length) {
+                value = value.padStart(length, leadingZero ? "0" : " ");
+            }
+
+            return value;
+        });
     }
 
 

@@ -27,7 +27,12 @@ export const editMissionSetDetails = (toggleMissionModeAfterSave = false) => {
 
     html += `<label for="umm-title-format"><b>Title format</b></label>
       <span class="umm-error" id="umm-mission-title-format-error"><b>Error: </b>Please enter a valid title-format</span>
-      <p>Title format allows:<br>N = Mission number without leading 0<br>NN = Mission number with leading 0 (if required by banner length)<br>M = Planned banner length<br>T = (banner title)<br>Examples:T NN-M (default) or NN.M T</p>
+      <table>
+      <tr><td>$T = Mission title</td><td>additional flags:</td></tr>
+      <tr><td>$N = Current Missione number</td><td>$0n = with leading zeros</td></tr>
+      <tr><td>$M = Banner length</td><td>$3n = minimum length</td></tr>
+      </table>
+      <br><br>Examples: "$T $N / $M" or "$0n.$m $t"  or "$T $03N-$03M" </p>
       <input id="umm-title-format" name="umm-title-format" type="text" placeholder="Enter a title format" value="${state.getTitleFormat() ?? "T NN-M"}" style="margin-bottom: 5px;">
       <b>Preview: </b><span id="umm-mission-title-preview"></span>`
 
@@ -79,12 +84,11 @@ const updateMissionTitlePreview = () => {
     const plannedLength = parseInt(values.length);
 
     if (values.name.length > 0 && values.format.length > 0 && !isNaN(plannedLength)) {
-        const missionTitle = Missions.generateMissionTitle(
-            1,
-            plannedLength,
-            values.name,
-            values.format
-        );
+        const missionTitle = Missions.generateMissionTitle(values.format, {
+            misison: 1,
+            title: values.name,
+            total: plannedLength
+        });
         $('#umm-mission-title-preview').text(missionTitle);
     } else {
         $('#umm-mission-title-preview').text("Fill in all required fields");
