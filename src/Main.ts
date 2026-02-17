@@ -71,11 +71,11 @@ class UMM_Ext implements Plugin.Class {
             }
 
             // restore layer status
-            this.state.restoreLayerState([this.renderPath, this.renderNumbers]);
+            const layer = [this.renderPath, this.renderNumbers];
+            layer.forEach(l => l.toggle(true));
         } else {
             // store layer status
             const layer = [this.renderPath, this.renderNumbers];
-            this.state.storeLayerState(layer);
             layer.forEach(l => l.toggle(false));
         }
     }
