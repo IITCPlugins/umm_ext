@@ -62,6 +62,8 @@ class UMM_Ext implements Plugin.Class {
         $('.leaflet-umm.leaflet-bar').toggle();
 
         if ($('.leaflet-umm.leaflet-bar').is(":visible")) {
+            // drawing attention
+            $('.leaflet-umm').fadeIn().fadeOut().fadeIn().fadeOut().fadeIn().fadeOut().fadeIn();
             if (this.state.isEmpty()) {
                 editMissionSetDetails();
             } else {
