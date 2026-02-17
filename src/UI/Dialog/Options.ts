@@ -27,7 +27,7 @@ export const showUmmOptions = () => {
             "<table><tr>",
             lable("Title format"),
             stat("umm_opt_bannerformat").append(
-                $("<span>", { text: "(?)", title: "Title format allows:&#10;N = Mission number without leading 0 (if required by banner length)&#10;NN = Mission number with leading 0&#10;M = Planned banner length&#10;T = (mission title)&#10; &#10;eg. T N-M or NN.M T" }),
+                $("<span>", { text: "(?)", class: "um-helpTooltip", title: "Title format allows:\n$N = Mission number\n$M = Planned banner length\n$T = Banner title" }),
             ),
             $("<td>").css({ width: "2em" }),
             lable("Missions"), stat("umm_opt_bannerlength"),
