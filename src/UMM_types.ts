@@ -20,6 +20,8 @@ export interface UMM_Mission {
     portals: UMM_Portal[];
 }
 
+
+
 export interface UMM_Portal {
     guid: PortalGUID;
     description: string;
@@ -35,8 +37,18 @@ export interface UMM_Portal {
     objective: UMM_Objective;
 }
 
+
+export const enum Action {
+    HACK_PORTAL = "HACK_PORTAL",
+    INSTALL_MOD = "INSTALL_MOD",
+    CAPTURE_PORTAL = "CAPTURE_PORTAL",
+    CREATE_LINK = "CREATE_LINK",
+    CREATE_FIELD = "CREATE_FIELD",
+    PASSPHRASE = "PASSPHRASE",
+};
+
 export interface UMM_Objective {
-    type: string;
+    type: Action;
     passphrase_params: UMM_Passphrase;
 }
 

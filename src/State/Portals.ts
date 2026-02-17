@@ -1,15 +1,5 @@
-import { UMM_Portal } from "../UMM_types";
+import { Action, UMM_Portal } from "../UMM_types";
 import { State } from "./State";
-
-
-export const PortalActions = [
-    { action: "HACK_PORTAL", label: "Hack portal" },
-    { action: "INSTALL_MOD", label: "Install mod" },
-    { action: "CAPTURE_PORTAL", label: "Capture portal" },
-    { action: "CREATE_LINK", label: "Create link" },
-    { action: "CREATE_FIELD", label: "Create field" },
-    { action: "PASSPHRASE", label: "Enter passphrase" },
-];
 
 
 export class Portals {
@@ -121,7 +111,7 @@ export class Portals {
             isOrnamented: false,
             isStartPoint: false,
             type: "PORTAL",
-            objective: { type: "HACK_PORTAL", passphrase_params: { question: "", _single_passphrase: "" } }
+            objective: { type: Action.HACK_PORTAL, passphrase_params: { question: "", _single_passphrase: "" } }
         }
     }
 }

@@ -1,8 +1,17 @@
 import { main } from "../Main";
-import { PortalActions } from "../State/Portals";
-import { UMM_Passphrase, UMM_Portal } from "../UMM_types";
+import { Action, UMM_Passphrase, UMM_Portal } from "../UMM_types";
 
 const NO_MISSION = "#";
+
+
+export const ActionLabels = new Map<Action, string>([
+    [Action.HACK_PORTAL, "Hack portal"],
+    [Action.INSTALL_MOD, "Install mod"],
+    [Action.CAPTURE_PORTAL, "Capture portal"],
+    [Action.CREATE_LINK, "Create link"],
+    [Action.CREATE_FIELD, "Create field"],
+    [Action.PASSPHRASE, "Enter passphrase"],
+]);
 
 
 export const addWaypointEditorToPortal = () => {
@@ -71,11 +80,11 @@ const portalActionSelectFactory = (portal: UMM_Portal): JQuery => {
 
     const actionSelect = $("<select>", { id: "umm-action-select" });
 
-    PortalActions.forEach(({ action, label }) => {
+    ActionLabels.forEach((label, action) => {
         const option = $("<option>", { value: action, text: label });
         if (portal.objective.type === action) option.prop("selected", true);
         actionSelect.append(option);
-    })
+    });
 
     return actionSelect;
 }
@@ -88,7 +97,8 @@ const updatePassPhraseContent = () => {
     $("#umm-passphrase-container").replaceWith(passCodeBoxFactory(portal));
     $("#umm-passphrase-container textarea").css({ "overflow-y": "hidden" });
 
-    if ($("#umm-action-select").val() == "PASSPHRASE") {
+    const selection = $("#umm-action-select").val() as Action;
+    if (selection === Action.PASSPHRASE) {
         $("#umm-passphrase-container").css('display', 'flex');
     }
 }
@@ -145,13 +155,14 @@ const updateActionSelect = () => {
     $("#umm-action-select").replaceWith(portalActionSelectFactory(portal));
 
     $("#umm-action-select").on('change', () => {
-        if ($("#umm-action-select").val() == "PASSPHRASE") {
+        const selection = $("#umm-action-select").val() as Action;
+        if (selection === Action.PASSPHRASE) {
             updatePassPhraseContent();
         } else {
             $("#umm-passphrase-container").hide();
         }
 
-        currentPortal()!.objective.type = $("#umm-action-select").val() as string;
+        currentPortal()!.objective.type = selection;
         main.state.save();
     });
 }
