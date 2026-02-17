@@ -1,8 +1,8 @@
 import { main } from "../Main";
+import { generateQuestion } from "../Text/QuestionGen";
 import { Action, UMM_Passphrase, UMM_Portal } from "../UMM_types";
 
 const NO_MISSION = "#";
-
 
 export const ActionLabels = new Map<Action, string>([
     [Action.HACK_PORTAL, "Hack portal"],
@@ -21,25 +21,8 @@ export const addWaypointEditorToPortal = () => {
     const missions = state.missions.getMissionsOfPortal(window.selectedPortal ?? "");
     if (missions.length === 0) return;
 
-    const wayPointHtml = $("<div>", { id: "umm-waypoint-editor" });
+    appendEditor(missions);
 
-    // Construct waypoint editor HTML
-    const ummTitle = $("<span>", { text: "UMM Waypoint Editor", class: "umm-waypoint-editor-title" });
-    wayPointHtml.append(ummTitle)
-
-    const waypointSelectContainer = $("<div>", { class: "umm-waypoint-select-container" });
-    waypointSelectContainer.append(portalMissionSelectFactory(missions));
-    const actionSelect = $("<select>", { id: "umm-action-select" });
-    waypointSelectContainer.append(actionSelect);
-
-    wayPointHtml.append(waypointSelectContainer);
-
-    const passPhraseHtml = $("<div>", { id: "umm-passphrase-container" }); // Placeholder to be replaced with updatePassPhraseContent
-    wayPointHtml.append(passPhraseHtml);
-
-    $("#portaldetails #randdetails").before(wayPointHtml);
-
-    // Make mission dropdown functional
     $("#umm-mission-select").on('change', () => {
         if ($("#umm-mission-select").val() === NO_MISSION) {
             // If no mission is selected, disable other dropdowns
@@ -54,6 +37,28 @@ export const addWaypointEditorToPortal = () => {
 
     updateActionSelect(); // Replace action placeholder
     updatePassPhraseContent(); // Replace passphrase placeholder
+}
+
+
+const appendEditor = (missions: number[]) => {
+
+    const ummTitle = $("<span>", { text: "UMM Waypoint Editor", class: "umm-waypoint-editor-title" });
+
+    const waypointSelectContainer = $("<div>", { class: "umm-waypoint-select-container" });
+    waypointSelectContainer.append(portalMissionSelectFactory(missions));
+
+    const actionSelect = $("<select>", { id: "umm-action-select" });
+    waypointSelectContainer.append(actionSelect);
+
+    const passPhraseHtml = $("<div>", { id: "umm-passphrase-container" });
+
+    const container = $("<div>", { id: "umm-waypoint-editor" }).append(
+        ummTitle,
+        waypointSelectContainer,
+        passPhraseHtml
+    );
+
+    $("#portaldetails #randdetails").before(container);
 }
 
 
@@ -100,6 +105,11 @@ const updatePassPhraseContent = () => {
     const selection = $("#umm-action-select").val() as Action;
     if (selection === Action.PASSPHRASE) {
         $("#umm-passphrase-container").css('display', 'flex');
+
+        // eslint-disable-next-line no-underscore-dangle
+        if (portal.objective.passphrase_params.question === "" && portal.objective.passphrase_params._single_passphrase === "") {
+            generatePreselectedQuestion(portal);
+        }
     }
 }
 
@@ -111,6 +121,7 @@ const passCodeBoxFactory = (portal: UMM_Portal): JQuery => {
     const ppQuestion = portal.objective.passphrase_params.question ?? "";
     const question = $("<textarea>", { id: "umm-passphrase-question", type: "text", row: 1 }).val(ppQuestion);
     question.on("blur", () => savePassPhrase());
+    question.on("focus", (event: JQuery.FocusEvent) => onFocus(event));
 
     const passPhraseSpan = $("<span>", { text: "Passphrase" });
 
@@ -118,11 +129,38 @@ const passCodeBoxFactory = (portal: UMM_Portal): JQuery => {
     const spQuestion = portal.objective.passphrase_params._single_passphrase ?? "";
     const passPhrase = $("<input>", { type: "text", id: "umm-passphrase-passphrase", value: spQuestion });
     passPhrase.on("blur", () => savePassPhrase());
+    passPhrase.on("focus", (event: JQuery.FocusEvent) => onFocus(event));
 
     const passPhraseHtml = $("<div>", { id: "umm-passphrase-container" });
     passPhraseHtml.append(questionSpan, question, passPhraseSpan, passPhrase);
 
     return passPhraseHtml;
+}
+
+
+const onFocus = (event: JQuery.FocusEvent) => {
+    const element = $(event.target);
+    if (element.attr("selectAll")) {
+        // eslint-disable-next-line unicorn/no-null
+        element.attr("selectAll", null);
+        element.trigger("select");
+    }
+}
+
+
+const generatePreselectedQuestion = (portal: UMM_Portal) => {
+    const missionId = parseInt($("#umm-mission-select").val() as string);
+    const mission = main.state.missions.get(missionId);
+    if (!mission) return;
+
+    const question = generateQuestion(missionId, mission.portals.isStart(portal));
+
+    $("#umm-passphrase-question").val(question.question).attr("selectAll", "true");
+    $("#umm-passphrase-passphrase").val(question.answer).attr("selectAll", "true");
+
+    portal.objective.passphrase_params.question = question.question;
+    // eslint-disable-next-line no-underscore-dangle
+    portal.objective.passphrase_params._single_passphrase = question.answer;
 }
 
 
