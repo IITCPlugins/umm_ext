@@ -30,10 +30,10 @@ export interface UMM_Portal {
         longitude: number;
     };
     imageUrl: string;
-    isOrnamented: boolean;  // only used in MEPoral - can be removed
-    isStartPoint: boolean;  // only used in MEPoral - can be removed
+    isOrnamented: false;  // only used in MEPoral - can be removed
+    isStartPoint: false;  // only used in MEPoral - can be removed
     title: string;
-    type: string; // only used in MEPoral - can be removed
+    type: "PORTAL"; // only used in MEPoral - can be removed
     objective: UMM_Objective;
 }
 
