@@ -61,7 +61,9 @@ export const migrateUmmVersion = (ummState: any): UMM_State => {
                 for (const mission in ummState.missions) {
 
                     const plannedLength: number = (ummState.plannedBannerLength > 0 ? ummState.plannedBannerLength : ummState.missions.length);
-                    const missionTitle = Missions.generateMissionTitle(parseInt(mission) + 1, plannedLength, ummState.missionSetName as string, ummState.titleFormat as string);
+                    const missionTitle = Missions.generateMissionTitle(ummState.titleFormat as string, {
+                        misison: parseInt(mission) + 1, title: ummState.missionSetName, total: plannedLength
+                    });
                     newMissions.push({ missionTitle: missionTitle, missionDescription: ummState.missionSetDescription, portals: ummState.missions[mission] })
                 }
                 ummState.missions = newMissions;
@@ -107,6 +109,18 @@ export const migrateUmmVersion = (ummState: any): UMM_State => {
         ummState.currentMission ??= 0;
         ummState.plannedBannerLength ??= 1;
         ummState.titleFormat ??= "T NN-M";
+    }
+
+
+    // title Foramt change
+    if (ummState.fileFormatVersion < 3) {
+
+        ummState.titleFormat = (ummState.titleFormat as string ?? "")
+            .replace("T", "$T")
+            .replace(/N+/, match => match.length > 1 ? "$0N" : "$N")
+            .replace(/(M+)/g, "$M")
+
+        ummState.fileFormatVersion = 3;
     }
 
     return ummState as UMM_State;
