@@ -115,3 +115,25 @@ export class Portals {
         }
     }
 }
+
+// Helpers for Passphrase access (avoid the underscore warning)
+export const getPassphrase = (portal: UMM_Portal): { question: string, answer: string } => {
+    return {
+        question: portal.objective.passphrase_params.question ?? "",
+        // eslint-disable-next-line no-underscore-dangle
+        answer: portal.objective.passphrase_params._single_passphrase ?? ""
+    }
+}
+
+export const setPassphrase = (portal: UMM_Portal, question: string, answer: string) => {
+    portal.objective.passphrase_params.question = question;
+    // eslint-disable-next-line no-underscore-dangle
+    portal.objective.passphrase_params._single_passphrase = answer;
+}
+
+export const isPassphraseEmpty = (portal: UMM_Portal): boolean => {
+    return portal.objective.passphrase_params.question === "" &&
+        // eslint-disable-next-line no-underscore-dangle
+        portal.objective.passphrase_params._single_passphrase === "";
+
+}

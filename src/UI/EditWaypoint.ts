@@ -1,8 +1,9 @@
 import { main } from "../Main";
-import { Action, UMM_Passphrase, UMM_Portal } from "../UMM_types";
+import { getPassphrase, isPassphraseEmpty, setPassphrase } from "../State/Portals";
+import { generateQuestion } from "../Text/QuestionGen";
+import { Action, UMM_Portal } from "../UMM_types";
 
 const NO_MISSION = "#";
-
 
 export const ActionLabels = new Map<Action, string>([
     [Action.HACK_PORTAL, "Hack portal"],
@@ -16,50 +17,54 @@ export const ActionLabels = new Map<Action, string>([
 
 export const addWaypointEditorToPortal = () => {
 
-    const state = main.state;
-
-    const missions = state.missions.getMissionsOfPortal(window.selectedPortal ?? "");
+    const missions = main.state.missions.getMissionsOfPortal(window.selectedPortal ?? "");
     if (missions.length === 0) return;
 
-    const wayPointHtml = $("<div>", { id: "umm-waypoint-editor" });
+    appendEditor(missions);
 
-    // Construct waypoint editor HTML
-    const ummTitle = $("<span>", { text: "UMM Waypoint Editor", class: "umm-waypoint-editor-title" });
-    wayPointHtml.append(ummTitle)
+    const current = main.state.getCurrent();
+    const preSelect = missions.includes(current) ? current : missions[0];
+    $("#umm-mission-select").val(preSelect);
 
-    const waypointSelectContainer = $("<div>", { class: "umm-waypoint-select-container" });
-    waypointSelectContainer.append(portalMissionSelectFactory(missions));
-    const actionSelect = $("<select>", { id: "umm-action-select" });
-    waypointSelectContainer.append(actionSelect);
-
-    wayPointHtml.append(waypointSelectContainer);
-
-    const passPhraseHtml = $("<div>", { id: "umm-passphrase-container" }); // Placeholder to be replaced with updatePassPhraseContent
-    wayPointHtml.append(passPhraseHtml);
-
-    $("#portaldetails #randdetails").before(wayPointHtml);
-
-    // Make mission dropdown functional
-    $("#umm-mission-select").on('change', () => {
-        if ($("#umm-mission-select").val() === NO_MISSION) {
-            // If no mission is selected, disable other dropdowns
-            $("#umm-action-select").prop("disabled", true)
-            $("#umm-passphrase-container").hide();
-        } else {
-            // If a different mission is selected, update the waypoint selector and action selector to reflect the new portal(s)
-            updateActionSelect();
-            updatePassPhraseContent();
-        }
-    });
-
-    updateActionSelect(); // Replace action placeholder
-    updatePassPhraseContent(); // Replace passphrase placeholder
+    onMisisonSelect();
 }
 
 
-const portalMissionSelectFactory = (validMissionIds: number[]): JQuery => {
-    const missionSelect = $("<select>", { id: "umm-mission-select" });
+const appendEditor = (missions: number[]) => {
 
+    const misisonSelect = $("<select>", { id: "umm-mission-select" });
+    const actionSelect = $("<select>", { id: "umm-action-select" });
+
+    const container = $("<div>", { id: "umm-waypoint-editor" }).append(
+        $("<span>", { text: "UMM Waypoint Editor", class: "umm-waypoint-editor-title" }),
+        $("<div>", { class: "umm-waypoint-select-container" }).append(
+            misisonSelect, actionSelect
+        ),
+        $("<div>", { id: "umm-passphrase-container" }).css('display', 'flex').append(
+            $("<span>", { text: "Question" }),
+            $("<textarea>", { id: "umm-passphrase-question", type: "text", row: 1 }).css({ "overflow-y": "hidden" })
+                .on("blur", () => savePassPhrase())
+                .on("focus", (event: JQuery.FocusEvent) => onFocus(event))
+            ,
+            $("<span>", { text: "Passphrase" }),
+            $("<input>", { type: "text", id: "umm-passphrase-passphrase" })
+                .on("blur", () => savePassPhrase())
+                .on("focus", (event: JQuery.FocusEvent) => onFocus(event))
+        )
+    );
+
+
+    addMissionOptions(misisonSelect, missions);
+    addActionOptions(actionSelect);
+
+    misisonSelect.on('change', onMisisonSelect);
+    actionSelect.on('change', onActionSelect);
+
+    $("#portaldetails #randdetails").before(container);
+}
+
+
+const addMissionOptions = (missionSelect: JQuery, validMissionIds: number[]) => {
     const missionOption = $("<option>", { value: NO_MISSION, text: "Select mission" })
     missionSelect.append(missionOption);
 
@@ -67,62 +72,73 @@ const portalMissionSelectFactory = (validMissionIds: number[]): JQuery => {
         const missionOption = $("<option>", { value: id, text: id + 1 })
         missionSelect.append(missionOption);
     })
-
-    const current = main.state.getCurrent();
-    const preSelect = validMissionIds.includes(current) ? current : validMissionIds[0];
-    $(missionSelect).val(preSelect);
-
-    return missionSelect;
 }
 
 
-const portalActionSelectFactory = (portal: UMM_Portal): JQuery => {
-
-    const actionSelect = $("<select>", { id: "umm-action-select" });
-
+const addActionOptions = (actionSelect: JQuery) => {
     ActionLabels.forEach((label, action) => {
         const option = $("<option>", { value: action, text: label });
-        if (portal.objective.type === action) option.prop("selected", true);
         actionSelect.append(option);
     });
-
-    return actionSelect;
 }
 
 
-const updatePassPhraseContent = () => {
+const onMisisonSelect = () => {
+    const portal = currentPortal();
+    if (portal) {
+
+        const action = portal.objective.type;
+        const { question, answer } = getPassphrase(portal);
+
+        $("#umm-action-select").val(action);
+        $("#umm-passphrase-question").val(question);
+        $("#umm-passphrase-passphrase").val(answer);
+
+        $("#umm-passphrase-container").toggle(action === Action.PASSPHRASE);
+        onActionSelect();
+    } else {
+        $("#umm-action-select").prop("disabled", true)
+        $("#umm-passphrase-container").hide();
+    }
+};
+
+
+const onActionSelect = () => {
+    const action = $("#umm-action-select").val() as Action;
     const portal = currentPortal();
     if (!portal) return;
 
-    $("#umm-passphrase-container").replaceWith(passCodeBoxFactory(portal));
-    $("#umm-passphrase-container textarea").css({ "overflow-y": "hidden" });
+    $("#umm-passphrase-container").toggle(action === Action.PASSPHRASE);
+    if (action === Action.PASSPHRASE) pregenerateQuestion(portal);
 
-    const selection = $("#umm-action-select").val() as Action;
-    if (selection === Action.PASSPHRASE) {
-        $("#umm-passphrase-container").css('display', 'flex');
+    portal.objective.type = action;
+    main.state.save();
+};
+
+
+const onFocus = (event: JQuery.FocusEvent) => {
+    const element = $(event.target);
+    if (element.attr("selectAll")) {
+        // eslint-disable-next-line unicorn/no-null
+        element.attr("selectAll", null);
+        element.trigger("select");
     }
 }
 
+const pregenerateQuestion = (portal: UMM_Portal) => {
+    // don't overwrite existing
+    if (!isPassphraseEmpty(portal)) return;
 
-const passCodeBoxFactory = (portal: UMM_Portal): JQuery => {
+    const missionId = parseInt($("#umm-mission-select").val() as string);
+    const mission = main.state.missions.get(missionId);
+    if (!mission) return;
 
-    const questionSpan = $("<span>", { text: "Question" });
+    const { question, answer } = generateQuestion(missionId, mission.portals.isStart(portal));
 
-    const ppQuestion = portal.objective.passphrase_params.question ?? "";
-    const question = $("<textarea>", { id: "umm-passphrase-question", type: "text", row: 1 }).val(ppQuestion);
-    question.on("blur", () => savePassPhrase());
+    $("#umm-passphrase-question").val(question).attr("selectAll", "true");
+    $("#umm-passphrase-passphrase").val(answer).attr("selectAll", "true");
 
-    const passPhraseSpan = $("<span>", { text: "Passphrase" });
-
-    // eslint-disable-next-line no-underscore-dangle
-    const spQuestion = portal.objective.passphrase_params._single_passphrase ?? "";
-    const passPhrase = $("<input>", { type: "text", id: "umm-passphrase-passphrase", value: spQuestion });
-    passPhrase.on("blur", () => savePassPhrase());
-
-    const passPhraseHtml = $("<div>", { id: "umm-passphrase-container" });
-    passPhraseHtml.append(questionSpan, question, passPhraseSpan, passPhrase);
-
-    return passPhraseHtml;
+    setPassphrase(portal, question, answer);
 }
 
 
@@ -137,33 +153,11 @@ const savePassPhrase = () => {
     const portal = currentPortal();
     if (!portal) return;
 
-    // eslint-disable-next-line unicorn/prevent-abbreviations
-    const passphrase_params: UMM_Passphrase = {
-        question: $("#umm-passphrase-question").val() as string,
-        _single_passphrase: $("#umm-passphrase-passphrase").val() as string
-    };
-    portal.objective.passphrase_params = passphrase_params;
+    setPassphrase(portal,
+        $("#umm-passphrase-question").val() as string,
+        $("#umm-passphrase-passphrase").val() as string
+    )
     main.state.save();
 }
 
-
-
-const updateActionSelect = () => {
-    const portal = currentPortal();
-    if (!portal) return;
-
-    $("#umm-action-select").replaceWith(portalActionSelectFactory(portal));
-
-    $("#umm-action-select").on('change', () => {
-        const selection = $("#umm-action-select").val() as Action;
-        if (selection === Action.PASSPHRASE) {
-            updatePassPhraseContent();
-        } else {
-            $("#umm-passphrase-container").hide();
-        }
-
-        currentPortal()!.objective.type = selection;
-        main.state.save();
-    });
-}
 
