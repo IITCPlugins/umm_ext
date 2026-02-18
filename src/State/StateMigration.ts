@@ -3,23 +3,24 @@ import { Missions } from "./Missions";
 import { fileFormatVersion } from "./State";
 
 
+const undefinedOrEmptyString = (value: any): boolean => {
+    if (value == undefined || value == "") {
+        return true
+    }
+    return false;
+}
+
+
+
 export const migrateUmmVersion = (ummState: any): UMM_State => {
 
     if (ummState.fileFormatVersion > fileFormatVersion) {
         throw new Error("UMM: You've attempted to load data that's newer than what's supported by this version of UMM. Please update the plugin and try again. Data has not been loaded.");
     }
 
-
     // Original beta didn't have a fileFormatVersion yet
     if (ummState.fileFormatVersion === undefined || ummState.fileFormatVersion === "") {
         // Because of slight variations on BETA's we do some checks to avoid overwriting any data
-        const undefinedOrEmptyString = (value: any): boolean => {
-            if (value == undefined || value == "") {
-                return true
-            }
-            return false;
-        }
-
         if (undefinedOrEmptyString(ummState.missionSetName)) {
             // Check if old name was set, if so, use that for missionSetName, otherwise set blank
             if (undefinedOrEmptyString(ummState.missionName)) {
@@ -28,7 +29,6 @@ export const migrateUmmVersion = (ummState: any): UMM_State => {
                 ummState.missionSetName = ummState.missionName;
                 delete ummState.missionName; // Remove old field from state
             }
-
         }
 
         if (undefinedOrEmptyString(ummState.missionSetDescription)) {

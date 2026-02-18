@@ -62,7 +62,7 @@ export class State {
             missionSetDescription: '',
             currentMission: 0,
             plannedBannerLength: 1,
-            titleFormat: "T NN-M",
+            titleFormat: "$T $N / $M",
             fileFormatVersion: fileFormatVersion,
             missions: [
                 {

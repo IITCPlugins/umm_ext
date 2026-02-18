@@ -33,7 +33,7 @@ export const editMissionSetDetails = (toggleMissionModeAfterSave = false) => {
       <tr><td>$M = Banner length</td><td>$3n = minimum length</td></tr>
       </table>
       <br><br>Examples: "$T $N / $M" or "$0n.$m $t"  or "$T $03N-$03M" </p>
-      <input id="umm-title-format" name="umm-title-format" type="text" placeholder="Enter a title format" value="${state.getTitleFormat() ?? "T NN-M"}" style="margin-bottom: 5px;">
+      <input id="umm-title-format" name="umm-title-format" type="text" placeholder="Enter a title format" value="${state.getTitleFormat() ?? "$T $N / $M"}" style="margin-bottom: 5px;">
       <b>Preview: </b><span id="umm-mission-title-preview"></span>`
 
     html += '</div>';
