@@ -143,6 +143,7 @@ export const startEdit = () => {
         window.renderPortalDetails(lastPortal);
         bannerNotification(main.state, `Mission mode active.\nResuming mission #${missionNumber}\nSelect next portal`);
     } else {
+        lastPortal = undefined;
         bannerNotification(main.state, `Mission mode active.\nSelect start portal for mission #${missionNumber}`);
     }
 };
