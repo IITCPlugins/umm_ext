@@ -14,7 +14,10 @@ Below are the visible improvements and changes you'll notice.
   - Added split, clear, merge, and reverse commands for mission manipulation
   - New mission information display: portal count and distances
 
-- **Options Dialog** (main window)
+- **Banner Settins** (start window)
+  - changed Title placeholders to $T $M $N
+  
+- **Option Dialog** (main window)
   - Banner information now displays as a compact table
   - Removed warning for mission counts that are not multiples of 6
   - Added warning when missions lack sufficient waypoints
@@ -28,11 +31,18 @@ Below are the visible improvements and changes you'll notice.
 - **Mission Numbers**
   - Potential split points are previewed while creating missions
 
+- **Waypoint edit**
+  - current mission is preselected
+  - passphrases: add random default questions.
+    when question & answer is empty a simple question will be set.
+
 - **Miscellaneous**
   - Custom confirmation dialogs clarify actions and improve readability
   - Switch between any missions, even those without portals
   - Option to split missions when starting on a portal that's already assigned to another mission
   - on mobile dialogs are not at the top instead of centered
+  - flash buttonbar on activation to draw attention
+  
 
 ---
 
