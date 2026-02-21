@@ -2,7 +2,7 @@
 // @name            IITC plugin: Ultimate Mission Maker - Extended
 // @id              iitc_plugin_UMM_Ext
 // @category        Mission
-// @version         1.0.beta.2
+// @version         1.0
 // @namespace       https://github.com/IITC-CE/ingress-intel-total-conversion
 // @updateURL       https://github.com/IITCPlugins/umm_ext/raw/refs/heads/main/dist/iitc_plugin_UMM_Ext.meta.js
 // @downloadURL     https://github.com/IITCPlugins/umm_ext/raw/refs/heads/main/dist/iitc_plugin_UMM_Ext.user.js
@@ -13,11 +13,75 @@
 // @icon64          data:image/png;base64,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
 // ==/UserScript==
 /**
- * v1.0
+ * # v1.0
  * 
- * - init
+ * This is a complete rewrite of the Ultimate Mission Maker from a developer perspective.
+ * The entire codebase has been redesigned while maintaining the familiar user experience of the original UMM.
+ * Below are the visible improvements and changes you'll notice.
  * 
- * This is a code conversation of the Ultimate Mission Maker.
+ * ## What's Changed:
+ * 
+ * - UMM is now hidden by default. You need to hit the "UMM" button in the Portal details window to make it appear.
+ * 
+ * - **Select Mission Dialog** (open it through the toolbar or the main dialog)
+ *   - Selecting a mission is no longer required; simply open another mission
+ *   - Navigation buttons (+/-) allow you to cycle through missions
+ *   - Added split, clear, merge, and reverse commands for mission manipulation
+ *   - New mission information display: portal count and distances
+ * 
+ * - **Banner Settins** (start window)
+ *   - changed Title placeholders to $T $M $N
+ *   
+ * - **Option Dialog** (main window)
+ *   - Banner information now displays as a compact table
+ *   - Removed warning for mission counts that are not multiples of 6
+ *   - Added warning when missions lack sufficient waypoints
+ * 
+ * - **Drag & Drop** in the mission editor path
+ *   - Move existing markers to adjust waypoints
+ *   - Add new waypoints by positioning intermediate markers at new locations
+ *   - Remove waypoints by double-clicking a marker
+ *   - Merge missions by dragging start and end markers together
+ * 
+ * - **Mission Numbers**
+ *   - Potential split points are previewed while creating missions
+ * 
+ * - **Waypoint edit**
+ *   - current mission is preselected
+ *   - passphrases: add random default questions.
+ *     when question & answer is empty a simple question will be set.
+ * 
+ * - **Miscellaneous**
+ *   - Custom confirmation dialogs clarify actions and improve readability
+ *   - Switch between any missions, even those without portals
+ *   - Option to split missions when starting on a portal that's already assigned to another mission
+ *   - on mobile dialogs are not at the top instead of centered
+ *   - flash buttonbar on activation to draw attention
+ *   
+ * 
+ * ---
+ * 
+ * # History:
+ * 
+ * ## v1.0.beta.2 - 15.02.26
+ * 
+ * - fixed update-URL in script header
+ * 
+ * ## v1.0.beta - 15.02.26
+ * 
+ * - first public release
+ * - automated build process on GitHub
+ * - fixed layer checkboxes in Option-Dialog
+ * - add "clear" mission to selection dialog
+ * - always color selected mission even when not in Edit-Mode
+ * - move "no" to left in custom confirm dialog
+ * - remove doubled "v" in version numbers
+ * - fix toggeling edit mode on mission detail window "save" button
+ * - close dialog on mission detail window "save"
+ * - fix linebreaks in changelog dialog
+ * - select mission: directly select mission on combo-box change
+ * - fix question text in portal details
+ * - on mobile dialogs are not at the top instead of centered
  * 
  */
 function wrapper_iitc(SCRIPT_INFO) {
@@ -160,7 +224,7 @@ function wrapper_iitc(SCRIPT_INFO) {
                 A: () => __WEBPACK_DEFAULT_EXPORT__
             });
             var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(601), _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = __webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__), _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(314), ___CSS_LOADER_EXPORT___ = __webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__)()(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default());
-            ___CSS_LOADER_EXPORT___.push([ module.id, "#umm-mission-picker-info{border:1px solid #ff0;border-radius:2px;margin:1em 4px 4px}.umm-mission-btn{margin-bottom:2px;margin-right:1em;margin-top:2px}.umm-mission-btn.w-full{width:90%}.umm-notification{background-color:#383838;border-radius:2px;-webkit-box-shadow:0 0 24px -1px #383838;-moz-box-shadow:0 0 24px -1px #383838;box-shadow:0 0 24px -1px #383838;color:#f0f0f0;font-family:Calibri,sans-serif;font-size:20px;height:auto;left:50%;margin-left:-100px;padding:10px;position:absolute;text-align:center;top:20px;width:300px;z-index:10000}.umm-options-list{overflow:hidden}.umm-options-list .banner_info{border:1px solid grey;border-radius:2px;margin-top:0;padding:4px;position:relative}.umm-options-list .banner_info .title{font:700;font-size:large}.umm-options-list .banner_info .description{font-size:small;margin-bottom:.5em}.umm-options-list .banner_info .stat{font-weight:700;margin-left:.4em}.umm-options-list .banner_info #umm_opt_error{padding-top:.5em}.umm-options-list .banner_info #umm_opt_error .error{color:#ffa0a0;font-weight:700}.umm-options-list .banner_info .editButtom{bottom:0;position:absolute;right:0}.umm-options-list a{background:rgba(8,48,78,.9);border:1px solid #ffce00;color:#ffce00;display:block;margin:10px auto;padding:3px 0;text-align:center;width:80%}#dialog-umm-edit-mission-set-details{background-color:rgba(8,48,78,.9)}.umm-edit-mission-set-details p{display:block;margin:5px 0 8px}.umm-edit-mission-set-details label{display:block;margin-bottom:5px}.umm-edit-mission-set-details input,.umm-edit-mission-set-details textarea{margin-bottom:15px;width:100%}.umm-edit-mission-set-details textarea{background-color:#062844;color:#ffce00;font-family:inherit;resize:vertical;width:calc(100% - 6px)}.umm-edit-mission-set-details span.umm-error{color:#fff;display:block;display:none;margin-bottom:5px}.umm-edit-mission-set-details span.umm-error b{color:red}.umm-dialog-button{margin-left:5px}.umm-mission-marker .start{fill:#16d4b2;stroke:#005243;stroke-miterlimit:10}.umm-mission-marker .active{fill:#6832da;stroke:#16043f;stroke-miterlimit:10}.umm-mission-number{color:#000;font-family:monospace;font-size:14px;font-weight:700;left:0;position:absolute;text-align:center;top:6px;width:34px}#umm-waypoint-editor{border-bottom:1px solid #20a8b1;border-top:1px solid #20a8b1;box-sizing:border-box;color:#ffce00;display:flex;flex-direction:column;margin-bottom:10px;margin-top:10px;padding:8px 5px;width:100%}.umm-waypoint-editor-title{font-weight:700;margin-bottom:6px}.umm-waypoint-select-container{display:flex;flex-direction:row;width:100%}.umm-waypoint-select-container>select{background-color:#062844;border:none;color:#ffce00;height:24px}#umm-mission-select{width:60px}#umm-action-select{margin-left:4px;width:100%}#umm-passphrase-container{display:none;flex-direction:column;margin-top:5px}#umm-passphrase-container>span{margin-bottom:3px}#umm-passphrase-container>input,#umm-passphrase-container>textarea{background-color:#062844;border:none;color:#ffce00;font-family:Arial;margin-bottom:5px;min-height:24px;padding:3px;resize:vertical}.umm-confirm.no_title .ui-dialog-titlebar{display:none}.umm-confirm .header{font-size:1.4em;line-height:1.4em;margin:10px;overflow:hidden;text-align:center;text-overflow:ellipsis}.umm-confirm .details{color:#ccc;text-align:center}", "" ]);
+            ___CSS_LOADER_EXPORT___.push([ module.id, "#umm-mission-picker-info{border:1px solid #ff0;border-radius:2px;margin:1em 4px 4px}.umm-mission-btn{margin-bottom:2px;margin-right:1em;margin-top:2px}.umm-mission-btn.w-full{width:90%}.umm-notification{background-color:#383838;border-radius:2px;-webkit-box-shadow:0 0 24px -1px #383838;-moz-box-shadow:0 0 24px -1px #383838;box-shadow:0 0 24px -1px #383838;color:#f0f0f0;font-family:Calibri,sans-serif;font-size:20px;height:auto;left:50%;margin-left:-100px;padding:10px;position:absolute;text-align:center;top:20px;width:300px;z-index:10000}.umm-options-list{overflow:hidden}.umm-options-list .banner_info{border:1px solid grey;border-radius:2px;margin-top:0;padding:4px;position:relative}.umm-options-list .banner_info .title{font:700;font-size:large}.umm-options-list .banner_info .description{font-size:small;margin-bottom:.5em}.umm-options-list .banner_info .stat{font-weight:700;margin-left:.4em}.umm-options-list .banner_info #umm_opt_error{padding-top:.5em}.umm-options-list .banner_info #umm_opt_error .error{color:#ffa0a0;font-weight:700}.umm-options-list .banner_info .editButtom{bottom:0;position:absolute;right:0}.umm-options-list a{background:rgba(8,48,78,.9);border:1px solid #ffce00;color:#ffce00;display:block;margin:10px auto;padding:3px 0;text-align:center;width:80%}#dialog-umm-edit-mission-set-details{background-color:rgba(8,48,78,.9)}.umm-edit-mission-set-details p{display:block;margin:5px 0 8px}.umm-edit-mission-set-details label{display:block;margin-bottom:5px}.umm-edit-mission-set-details input,.umm-edit-mission-set-details textarea{margin-bottom:15px;width:100%}.umm-edit-mission-set-details textarea{background-color:#062844;color:#ffce00;font-family:inherit;resize:vertical;width:calc(100% - 6px)}.umm-edit-mission-set-details span.umm-error{color:#fff;display:block;display:none;margin-bottom:5px}.umm-edit-mission-set-details span.umm-error b{color:red}.umm-dialog-button{margin-left:5px}.umm-mission-marker .start{fill:#16d4b2;stroke:#005243;stroke-miterlimit:10}.umm-mission-marker .active{fill:#6832da;stroke:#16043f;stroke-miterlimit:10}.umm-mission-number{color:#000;font-family:monospace;font-size:14px;font-weight:700;left:0;position:absolute;text-align:center;top:6px;width:34px}#umm-waypoint-editor{border-bottom:1px solid #20a8b1;border-top:1px solid #20a8b1;box-sizing:border-box;color:#ffce00;display:flex;flex-direction:column;margin-bottom:10px;margin-top:10px;padding:8px 5px;width:100%}.umm-waypoint-editor-title{font-weight:700;margin-bottom:6px}.umm-waypoint-select-container{display:flex;flex-direction:row;width:100%}.umm-waypoint-select-container>select{background-color:#062844;border:none;color:#ffce00;height:24px}#umm-mission-select{width:60px}#umm-action-select{margin-left:4px;width:100%}#umm-passphrase-container{display:none;flex-direction:column;margin-top:5px}#umm-passphrase-container>span{margin-bottom:3px}#umm-passphrase-container>input,#umm-passphrase-container>textarea{background-color:#062844;border:none;color:#ffce00;font-family:Arial;margin-bottom:5px;min-height:24px;padding:3px;resize:vertical}.umm-confirm.no_title .ui-dialog-titlebar{display:none}.umm-confirm .header{font-size:1.4em;line-height:1.4em;margin:10px;overflow:hidden;text-align:center;text-overflow:ellipsis}.umm-confirm .details{color:#ccc;text-align:center}.um-helpTooltip{cursor:help;font-size:small;margin-left:5px}", "" ]);
             const __WEBPACK_DEFAULT_EXPORT__ = ___CSS_LOADER_EXPORT___;
         },
         768(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
@@ -438,25 +502,6 @@ function wrapper_iitc(SCRIPT_INFO) {
             return window.map.unproject(p1.add(p2).divideBy(2));
         }
     }
-    const PortalActions = [ {
-        action: "HACK_PORTAL",
-        label: "Hack portal"
-    }, {
-        action: "INSTALL_MOD",
-        label: "Install mod"
-    }, {
-        action: "CAPTURE_PORTAL",
-        label: "Capture portal"
-    }, {
-        action: "CREATE_LINK",
-        label: "Create link"
-    }, {
-        action: "CREATE_FIELD",
-        label: "Create field"
-    }, {
-        action: "PASSPHRASE",
-        label: "Enter passphrase"
-    } ];
     class Portals {
         constructor(state, data) {
             this.state = state, this.data = data;
@@ -537,6 +582,9 @@ function wrapper_iitc(SCRIPT_INFO) {
             };
         }
     }
+    const setPassphrase = (portal, question, answer) => {
+        portal.objective.passphrase_params.question = question, portal.objective.passphrase_params._single_passphrase = answer;
+    };
     class Mission {
         constructor(state, id, data) {
             this.missionID = id, this.data = data, this.portal_data = new Portals(state, data.portals);
@@ -583,22 +631,29 @@ function wrapper_iitc(SCRIPT_INFO) {
         }
     }
     class Missions {
-        static generateMissionTitle(missNumber, plannedBannerLength, missSetName, missNameFormat) {
-            var _a;
-            const format = null != missNameFormat ? missNameFormat : "";
-            if (!format) return "";
-            let title = format;
-            const totalMissions = null != plannedBannerLength ? plannedBannerLength : 0;
-            if (totalMissions >= 1 && (title = title.replace(/M+/g, totalMissions.toString())), 
-            missNumber >= 0) {
-                const numberPattern = null === (_a = format.match(/N+/g)) || void 0 === _a ? void 0 : _a[0];
-                if (numberPattern) {
-                    const length = numberPattern.length > 1 ? totalMissions.toString().length : 0, paddedNumber = (missNumber + 1).toString().padStart(length, "0");
-                    title = title.replace(/N+/g, paddedNumber);
+        static generateMissionTitle(format, info) {
+            return format.replace(/\$(\d*)?(\w)/g, (_, flags, token) => {
+                var _a, _b, _c, _d, _e, _f, _g;
+                let value = token;
+                switch (token.toLowerCase()) {
+                  case "t":
+                    value = null !== (_a = info.title) && void 0 !== _a ? _a : value;
+                    break;
+
+                  case "m":
+                    value = null !== (_c = null === (_b = info.total) || void 0 === _b ? void 0 : _b.toString()) && void 0 !== _c ? _c : value;
+                    break;
+
+                  case "n":
+                    value = null !== (_e = null === (_d = info.misison) || void 0 === _d ? void 0 : _d.toString()) && void 0 !== _e ? _e : value;
                 }
-            }
-            return (null == missSetName ? void 0 : missSetName.trim()) && (title = title.replace(/T/g, missSetName)), 
-            title;
+                let leadingZero = !1;
+                (null == flags ? void 0 : flags.startsWith("0")) && (leadingZero = !0, flags = flags.slice(1));
+                let length = parseInt(flags);
+                return Number.isNaN(length) && (length = 1, leadingZero && (length = null !== (_g = null === (_f = info.total) || void 0 === _f ? void 0 : _f.toString().length) && void 0 !== _g ? _g : 1)), 
+                value.length < length && (value = value.padStart(length, leadingZero ? "0" : " ")), 
+                value;
+            });
         }
         constructor(state, data) {
             this.state = state, this.data = data;
@@ -722,7 +777,7 @@ function wrapper_iitc(SCRIPT_INFO) {
             for (;mid < state.missions.count(); ) {
                 const mission = state.missions.get(mid);
                 if (null == mission ? void 0 : mission.hasPortals()) {
-                    const start = mission.getLocations()[0];
+                    const start = mission.portals.getLatLngOf(0);
                     missions.push({
                         missionIndex: mid,
                         location: start,
@@ -730,7 +785,7 @@ function wrapper_iitc(SCRIPT_INFO) {
                     });
                 }
                 let count = 1;
-                for (;mid + count <= state.missions.count(); count++) {
+                for (;mid + count < state.missions.count(); count++) {
                     const nextMission = state.missions.get(mid + count);
                     if (null == nextMission ? void 0 : nextMission.hasPortals()) break;
                 }
@@ -758,6 +813,7 @@ function wrapper_iitc(SCRIPT_INFO) {
             return `<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 49" class="umm-mission-marker"><defs><style>.cls-2{fill:#fff;}</style></defs><path class="${kclass}" d="M33,18c0,8.84-12,31-16,31S1,26.84,1,18,8.16,1,17,1,33,9.16,33,18Z" transform="translate(-0.5 -0.5)"/><circle class="cls-2" cx="16.5" cy="16.5" r="13"/><foreignObject x="0" y="0" width="34px" height="34px"><span class="umm-mission-number">${index}</span></foreignObject></svg>`;
         }
     }
+    const undefinedOrEmptyString = value => null == value || "" == value;
     class Trigger {
         constructor() {
             this.handler = [];
@@ -776,7 +832,7 @@ function wrapper_iitc(SCRIPT_INFO) {
             this.handler = [];
         }
     }
-    const fileFormatVersion = 2;
+    const fileFormatVersion = 3;
     class State {
         constructor() {
             this.onSelectedMissionChange = new Trigger, this.onMissionChange = new Trigger, 
@@ -793,10 +849,9 @@ function wrapper_iitc(SCRIPT_INFO) {
         import(jsonString) {
             const anyState = JSON.parse(jsonString);
             this.theState = (ummState => {
-                var _a, _b, _c, _d, _e;
+                var _a, _b, _c, _d, _e, _f;
                 if (ummState.fileFormatVersion > fileFormatVersion) throw new Error("UMM: You've attempted to load data that's newer than what's supported by this version of UMM. Please update the plugin and try again. Data has not been loaded.");
                 if (void 0 === ummState.fileFormatVersion || "" === ummState.fileFormatVersion) {
-                    const undefinedOrEmptyString = value => null == value || "" == value;
                     if (undefinedOrEmptyString(ummState.missionSetName) && (undefinedOrEmptyString(ummState.missionName) ? ummState.missionSetName = "" : (ummState.missionSetName = ummState.missionName, 
                     delete ummState.missionName)), undefinedOrEmptyString(ummState.missionSetDescription) && (undefinedOrEmptyString(ummState.missionDescription) ? ummState.missionSetDescription = "" : (ummState.missionSetDescription = ummState.missionDescription, 
                     delete ummState.missionDescription)), undefinedOrEmptyString(ummState.titleFormat) && (ummState.titleFormat = "T NN-M"), 
@@ -804,7 +859,11 @@ function wrapper_iitc(SCRIPT_INFO) {
                     delete ummState.numberOfMissions), !Object.keys(ummState.missions[0]).includes("portals")) if (ummState.missions[0][0].guid) {
                         const newMissions = [];
                         for (const mission in ummState.missions) {
-                            const plannedLength = ummState.plannedBannerLength > 0 ? ummState.plannedBannerLength : ummState.missions.length, missionTitle = Missions.generateMissionTitle(parseInt(mission) + 1, plannedLength, ummState.missionSetName, ummState.titleFormat);
+                            const plannedLength = ummState.plannedBannerLength > 0 ? ummState.plannedBannerLength : ummState.missions.length, missionTitle = Missions.generateMissionTitle(ummState.titleFormat, {
+                                misison: parseInt(mission) + 1,
+                                title: ummState.missionSetName,
+                                total: plannedLength
+                            });
                             newMissions.push({
                                 missionTitle,
                                 missionDescription: ummState.missionSetDescription,
@@ -835,7 +894,8 @@ function wrapper_iitc(SCRIPT_INFO) {
                 null !== (_c = ummState.currentMission) && void 0 !== _c || (ummState.currentMission = 0), 
                 null !== (_d = ummState.plannedBannerLength) && void 0 !== _d || (ummState.plannedBannerLength = 1), 
                 null !== (_e = ummState.titleFormat) && void 0 !== _e || (ummState.titleFormat = "T NN-M")), 
-                ummState;
+                ummState.fileFormatVersion < 3 && (ummState.titleFormat = (null !== (_f = ummState.titleFormat) && void 0 !== _f ? _f : "").replace("T", "$T").replace(/N+/, match => match.length > 1 ? "$0N" : "$N").replace(/(M+)/g, "$M"), 
+                ummState.fileFormatVersion = 3), ummState;
             })(anyState), this.setPlannedLength(this.getPlannedLength() || 1), this.onMissionChange.trigger(), 
             this.onMissionPortal.trigger(), this.onSelectedMissionChange.trigger();
         }
@@ -848,7 +908,7 @@ function wrapper_iitc(SCRIPT_INFO) {
                 missionSetDescription: "",
                 currentMission: 0,
                 plannedBannerLength: 1,
-                titleFormat: "T NN-M",
+                titleFormat: "$T $N / $M",
                 fileFormatVersion,
                 missions: [ {
                     missionTitle: "",
@@ -900,7 +960,11 @@ function wrapper_iitc(SCRIPT_INFO) {
             this.onMissionChange.trigger();
         }
         generateMissionTitle(missNumber) {
-            return Missions.generateMissionTitle(missNumber, this.getPlannedLength(), this.theState.missionSetName, this.theState.titleFormat);
+            return Missions.generateMissionTitle(this.theState.titleFormat, {
+                misison: missNumber,
+                total: this.getPlannedLength(),
+                title: this.theState.missionSetName
+            });
         }
         getEditMission() {
             return this.missions.get(this.theState.currentMission);
@@ -960,7 +1024,382 @@ function wrapper_iitc(SCRIPT_INFO) {
         }
         return state.save(), notification(`Banner data loaded:\n${state.getBannerName()}`), 
         !0;
-    }, title = "Ultimate Mission Maker EX", changelog = '\n  Changelog:\n\n  Version 1.0 - Alpha\n  - Complete rewrite from the ground up, based on UMM v0.7.3\n  - Toolbar hidden by default; enable via the Toolbox "UMM" command\n  - Mission Portal drag-and-drop support\n  - Preview potential mission split points\n  - Select-Mission Dialog with integrated split and merge commands\n  TODO: test mobile\n  ', about = () => {
+    }, title = "Ultimate Mission Maker EX", MissionNumberQuestions = [ "What number is this mission ?", "Which mission number is this ?", "What is the mission number ?", "Which number does this mission have ?", "What is this mission’s number ?", "Which mission index is this ?", "What is the index of this mission ?", "Which position does this mission have ?", "What is the position of this mission ?", "Which mission slot is this ?", "What number does this mission have in the banner ?", "Which banner number is this mission ?", "What is this mission’s banner position ?", "Which mission number is shown in the banner ?", "What number identifies this mission in the series ?", "Which number does this mission have in the sequence ?", "What is the mission’s number in the series ?", "Which mission position is this in the banner ?", "What number is assigned to this banner mission ?", "Which number marks this mission in the banner ?", "What mission number are you playing right now ?", "Which mission number are you currently on ?", "What number are you on in this banner ?", "Which mission number are you completing now ?", "What is the current mission number ?", "Which number is this step of the banner ?", "What number is this step in the mission series ?", "Which mission step number is this ?", "What is the step number of this mission ?", "Which number corresponds to this mission step ?", "Identify the mission number of this mission.", "Select the mission number for this mission.", "Determine this mission’s number.", "State the number of this mission.", "Indicate the index of this mission.", "Specify the position number of this mission.", "What ordinal number does this mission have ?", "Which ordinal position is this mission ?", "What numeric identifier does this mission have ?", "Which numeric index applies to this mission ?", "What is the mission number you are answering ?", "Which number corresponds to this exact mission ?", "What number is displayed for this mission ?", "Which mission number is written here ?", "What is the official number of this mission ?", "Which mission number was assigned here ?", "What number labels this mission ?", "Which number tags this mission ?", "What is the mission’s assigned number ?", "Which number marks this mission ?", "What is this mission’s index number ?", "Which index number is this mission ?", "What is the banner index of this mission ?", "Which banner index applies here ?", "What position number does this mission have ?", "Which position number is this mission ?", "What is the mission’s position number ?", "Which slot number is this mission ?", "What is this mission’s slot number ?", "Which slot position is this mission ?", "What number identifies this mission in the banner ?", "Which number identifies this mission in the banner ?", "What is the number assigned to this mission ?", "Which number is assigned to this mission ?", "What is this mission’s series number ?", "Which series number is this mission ?", "What is the banner series number of this mission ?", "Which banner series number is this mission ?", "What number corresponds to this banner entry ?", "Which number corresponds to this banner entry ?" ], NoobQuestions = [ {
+        q: "What is the capital of France?",
+        a: "Paris"
+    }, {
+        q: "What is the capital of Germany?",
+        a: "Berlin"
+    }, {
+        q: "What is the capital of Italy?",
+        a: "Rome"
+    }, {
+        q: "What is the capital of Spain?",
+        a: "Madrid"
+    }, {
+        q: "What is the capital of the United Kingdom?",
+        a: "London"
+    }, {
+        q: "What is the capital of Japan?",
+        a: "Tokyo"
+    }, {
+        q: "What is the capital of China?",
+        a: "Beijing"
+    }, {
+        q: "What is the capital of Australia?",
+        a: "Canberra"
+    }, {
+        q: "What is the capital of Canada?",
+        a: "Ottawa"
+    }, {
+        q: "What is the capital of Austria?",
+        a: "Vienna"
+    }, {
+        q: "How many days are in a week?",
+        a: "7"
+    }, {
+        q: "How many months are in a year?",
+        a: "12"
+    }, {
+        q: "How many hours are in a day?",
+        a: "24"
+    }, {
+        q: "How many minutes are in an hour?",
+        a: "60"
+    }, {
+        q: "How many seconds are in a minute?",
+        a: "60"
+    }, {
+        q: "How many continents are there?",
+        a: "7"
+    }, {
+        q: "How many letters are in the English alphabet?",
+        a: "26"
+    }, {
+        q: "What is 1 + 1?",
+        a: "2"
+    }, {
+        q: "What is 2 + 2?",
+        a: "4"
+    }, {
+        q: "What is 3 + 3?",
+        a: "6"
+    }, {
+        q: "What is 4 + 4?",
+        a: "8"
+    }, {
+        q: "What is 5 + 5?",
+        a: "10"
+    }, {
+        q: "What is 10 - 5?",
+        a: "5"
+    }, {
+        q: "What is 7 - 2?",
+        a: "5"
+    }, {
+        q: "What is 6 + 1?",
+        a: "7"
+    }, {
+        q: "What is 9 - 3?",
+        a: "6"
+    }, {
+        q: "What animal says meow?",
+        a: "Cat"
+    }, {
+        q: "What animal says woof?",
+        a: "Dog"
+    }, {
+        q: "What animal says moo?",
+        a: "Cow"
+    }, {
+        q: "What color is grass?",
+        a: "Green"
+    }, {
+        q: "What color is snow?",
+        a: "White"
+    }, {
+        q: "What color is coal?",
+        a: "Black"
+    }, {
+        q: "What color is the sun?",
+        a: "Yellow"
+    }, {
+        q: "Is the Earth round?",
+        a: "Yes"
+    }, {
+        q: "Is fire hot?",
+        a: "Yes"
+    }, {
+        q: "Is ice cold?",
+        a: "Yes"
+    }, {
+        q: "Is the sky usually blue?",
+        a: "Yes"
+    }, {
+        q: "Is water wet?",
+        a: "Yes"
+    }, {
+        q: "Is the sun a star?",
+        a: "Yes"
+    }, {
+        q: "Is the moon a satellite of Earth?",
+        a: "Yes"
+    }, {
+        q: "What is the name of the blue faction in Ingress?",
+        a: "Resistance"
+    }, {
+        q: "What is the name of the green faction in Ingress?",
+        a: "Enlightened"
+    }, {
+        q: "What is Ingress energy called?",
+        a: "XM"
+    }, {
+        q: "What is a basic item deployed on portals?",
+        a: "Resonator"
+    }, {
+        q: "How many sides does a triangle have?",
+        a: "3"
+    }, {
+        q: "How many sides does a square have?",
+        a: "4"
+    }, {
+        q: "How many sides does a pentagon have?",
+        a: "5"
+    }, {
+        q: "How many wheels does a car usually have?",
+        a: "4"
+    }, {
+        q: "How many legs does a spider have?",
+        a: "8"
+    }, {
+        q: "How many fingers does a human have?",
+        a: "10"
+    }, {
+        q: "What planet do we live on?",
+        a: "Earth"
+    }, {
+        q: "What star is at the center of our solar system?",
+        a: "Sun"
+    }, {
+        q: "What is frozen water called?",
+        a: "Ice"
+    }, {
+        q: "What is water vapor called?",
+        a: "Steam"
+    }, {
+        q: "What is the opposite of hot?",
+        a: "Cold"
+    }, {
+        q: "What is the opposite of big?",
+        a: "Small"
+    }, {
+        q: "What is the opposite of day?",
+        a: "Night"
+    }, {
+        q: "What comes after Monday?",
+        a: "Tuesday"
+    }, {
+        q: "What comes after Tuesday?",
+        a: "Wednesday"
+    }, {
+        q: "What comes after Wednesday?",
+        a: "Thursday"
+    }, {
+        q: "What comes after Thursday?",
+        a: "Friday"
+    }, {
+        q: "What comes after Friday?",
+        a: "Saturday"
+    }, {
+        q: "What comes after Saturday?",
+        a: "Sunday"
+    }, {
+        q: "Is 0 an even number?",
+        a: "Yes"
+    }, {
+        q: "Is 2 an even number?",
+        a: "Yes"
+    }, {
+        q: "Is 3 an odd number?",
+        a: "Yes"
+    }, {
+        q: "Is 10 greater than 5?",
+        a: "Yes"
+    }, {
+        q: "Is 1 less than 2?",
+        a: "Yes"
+    }, {
+        q: "What is the first month of the year?",
+        a: "January"
+    }, {
+        q: "What is the last month of the year?",
+        a: "December"
+    }, {
+        q: "How many seasons are there?",
+        a: "4"
+    }, {
+        q: "What season comes after spring?",
+        a: "Summer"
+    }, {
+        q: "What season comes after summer?",
+        a: "Autumn"
+    }, {
+        q: "What season comes after autumn?",
+        a: "Winter"
+    }, {
+        q: "What color is the Resistance faction?",
+        a: "Blue"
+    }, {
+        q: "What color is the Enlightened faction?",
+        a: "Green"
+    }, {
+        q: "What does GPS stand for?",
+        a: "Global Positioning System"
+    }, {
+        q: "What is the shape of the Earth?",
+        a: "Round"
+    }, {
+        q: "What is the natural satellite of Earth called?",
+        a: "Moon"
+    }, {
+        q: "What is the largest planet in the solar system?",
+        a: "Jupiter"
+    }, {
+        q: "What is the closest star to Earth?",
+        a: "Sun"
+    }, {
+        q: "What do you call frozen precipitation?",
+        a: "Snow"
+    }, {
+        q: "What do you call liquid precipitation?",
+        a: "Rain"
+    }, {
+        q: "What is the name of the blue faction?",
+        m: "Resistance,Enlightened,Neutral,Shapers"
+    }, {
+        q: "What is the name of the green faction?",
+        m: "Enlightened,Resistance,Neutral,Niantic"
+    }, {
+        q: "What is the energy in Ingress called?",
+        m: "XM,AP,MU,HP"
+    }, {
+        q: "What is the basic portal item called?",
+        m: "Resonator,Shield,Key,Mod"
+    }, {
+        q: "What item links two portals?",
+        m: "Link,Field,Shield,Key"
+    }, {
+        q: "What item creates a field?",
+        m: "Control Field,Link,Resonator,XMP"
+    }, {
+        q: "What device do you use to play Ingress?",
+        m: "Scanner,Portal,Beacon,Drone"
+    }, {
+        q: "What is the maximum portal level?",
+        m: "8,16,10,5"
+    }, {
+        q: "How many resonators can a portal have?",
+        m: "8,4,6,10"
+    }, {
+        q: "What is the color of the Resistance?",
+        m: "Blue,Green,Red,Yellow"
+    }, {
+        q: "What is the color of the Enlightened?",
+        m: "Green,Blue,Red,Yellow"
+    }, {
+        q: "What is a neutral portal called?",
+        m: "Neutral,Empty,Gray,Wild"
+    }, {
+        q: "What item removes enemy resonators?",
+        m: "XMP Burster,Shield,Key,Resonator"
+    }, {
+        q: "What item removes links and fields?",
+        m: "Ultra Strike,XMP Burster,Shield,Key"
+    }, {
+        q: "What item increases link range?",
+        m: "Link Amp,Shield,Key,Resonator"
+    }, {
+        q: "What item increases portal defense?",
+        m: "Shield,Link Amp,Key,Resonator"
+    }, {
+        q: "What do you deploy to increase portal level?",
+        m: "Resonator,Shield,Key,Link"
+    }, {
+        q: "What do you use to recharge portals?",
+        m: "Power Cube,Resonator,Shield,Link Amp"
+    }, {
+        q: "What is the maximum agent level?",
+        m: "16,8,10,20"
+    }, {
+        q: "What does AP stand for?",
+        m: "Action Points,Agent Power,Access Points,Action Portals"
+    }, {
+        q: "What does MU stand for?",
+        m: "Mind Units,Map Units,Mission Units,Memory Units"
+    }, {
+        q: "What is the official Ingress map called?",
+        m: "Intel,Scanner,Portal Map,XM Map"
+    }, {
+        q: "What is a portal key used for?",
+        m: "Linking,Hacking,Recharging,Shielding"
+    }, {
+        q: "What is the Enlightened flip item?",
+        m: "ADA Refactor,Jarvis Virus,XMP,Link Amp"
+    }, {
+        q: "What is the Resistance flip item?",
+        m: "Jarvis Virus,ADA Refactor,XMP,Shield"
+    }, {
+        q: "What is a group of missions called?",
+        m: "Banner,Cluster,Series,Pack"
+    }, {
+        q: "What do you call fields inside fields?",
+        m: "Nested Fields,Double Links,Overlays,Stacked Links"
+    }, {
+        q: "What is the term for destroying a portal?",
+        m: "Neutralizing,Capturing,Hacking,Linking"
+    }, {
+        q: "What is the term for capturing a portal?",
+        m: "Capturing,Neutralizing,Linking,Fielding"
+    }, {
+        q: "What is the term for repeated hacking?",
+        m: "Glyph Hacking,Power Hacking,Fast Hacking,Multi Hacking"
+    }, {
+        q: "What is the maximum resonator level?",
+        m: "8,16,10,5"
+    }, {
+        q: "What is the lowest resonator level?",
+        m: "1,0,2,3"
+    }, {
+        q: "What is the default neutral color?",
+        m: "Gray,Blue,Green,Red"
+    }, {
+        q: "What is the color of Resistance fields?",
+        m: "Blue,Green,Yellow,Red"
+    }, {
+        q: "What is the color of Enlightened fields?",
+        m: "Green,Blue,Yellow,Red"
+    }, {
+        q: "What is a portal farm called?",
+        m: "Farm,Cluster,Base,Hub"
+    }, {
+        q: "What is a dense portal area called?",
+        m: "Cluster,Farm,Hub,Base"
+    }, {
+        q: "What item boosts hack output?",
+        m: "Heat Sink,Multi-hack,Shield,Link Amp"
+    }, {
+        q: "What item boosts hack rarity?",
+        m: "Multi-hack,Heat Sink,Shield,Resonator"
+    }, {
+        q: "What is a long-distance link called?",
+        m: "Long Link,Ultra Link,Far Link,Wide Link"
+    }, {
+        q: "What is a portal with all resonators called?",
+        m: "Full Portal,Complete Portal,Max Portal,Prime Portal"
+    }, {
+        q: "What is an empty portal called?",
+        m: "Neutral Portal,Zero Portal,Empty Portal,Blank Portal"
+    } ], about = () => {
         let html = '<div class="umm-options-list">';
         html += "In short: Create missions in IITC, export as a json file:<br>", html += '<a href="https://intel.ingress.com/" target="_blank"' + (/^intel\.ingress\.com$/i.test(window.location.host) ? ' style="color: #bbb; pointer-events: none; cursor: default;"' : "") + ">https://intel.ingress.com/</a>", 
         html += "Then open the mission creator and load the json file.<br>", html += "Start creating missions and import the UMM data for every mission:<br>", 
@@ -970,16 +1409,17 @@ function wrapper_iitc(SCRIPT_INFO) {
         html += "</div>";
         const buttons = [ dialogButton("< Main Menu", showUmmOptions), dialogButton("Changelog", () => dialog({
             title: "Changelog",
-            html: changelog.replace(/\n/gm, "<br/>")
+            html: miniMarkdown('# v1.0\n\nThis is a complete rewrite of the Ultimate Mission Maker from a developer perspective.\nThe entire codebase has been redesigned while maintaining the familiar user experience of the original UMM.\nBelow are the visible improvements and changes you\'ll notice.\n\n## What\'s Changed:\n\n- UMM is now hidden by default. You need to hit the "UMM" button in the Portal details window to make it appear.\n\n- **Select Mission Dialog** (open it through the toolbar or the main dialog)\n  - Selecting a mission is no longer required; simply open another mission\n  - Navigation buttons (+/-) allow you to cycle through missions\n  - Added split, clear, merge, and reverse commands for mission manipulation\n  - New mission information display: portal count and distances\n\n- **Banner Settins** (start window)\n  - changed Title placeholders to $T $M $N\n  \n- **Option Dialog** (main window)\n  - Banner information now displays as a compact table\n  - Removed warning for mission counts that are not multiples of 6\n  - Added warning when missions lack sufficient waypoints\n\n- **Drag & Drop** in the mission editor path\n  - Move existing markers to adjust waypoints\n  - Add new waypoints by positioning intermediate markers at new locations\n  - Remove waypoints by double-clicking a marker\n  - Merge missions by dragging start and end markers together\n\n- **Mission Numbers**\n  - Potential split points are previewed while creating missions\n\n- **Waypoint edit**\n  - current mission is preselected\n  - passphrases: add random default questions.\n    when question & answer is empty a simple question will be set.\n\n- **Miscellaneous**\n  - Custom confirmation dialogs clarify actions and improve readability\n  - Switch between any missions, even those without portals\n  - Option to split missions when starting on a portal that\'s already assigned to another mission\n  - on mobile dialogs are not at the top instead of centered\n  - flash buttonbar on activation to draw attention\n  \n\n---\n\n# History:\n\n## v1.0.beta.2 - 15.02.26\n\n- fixed update-URL in script header\n\n## v1.0.beta - 15.02.26\n\n- first public release\n- automated build process on GitHub\n- fixed layer checkboxes in Option-Dialog\n- add "clear" mission to selection dialog\n- always color selected mission even when not in Edit-Mode\n- move "no" to left in custom confirm dialog\n- remove doubled "v" in version numbers\n- fix toggeling edit mode on mission detail window "save" button\n- close dialog on mission detail window "save"\n- fix linebreaks in changelog dialog\n- select mission: directly select mission on combo-box change\n- fix question text in portal details\n- on mobile dialogs are not at the top instead of centered\n'),
+            width: 500
         })), dialogButtonClose() ];
         window.dialog({
             html,
-            title: `${title} v1.0.beta.2 - About`,
+            title: `${title} v1.0 - About`,
             id: "umm-options",
             width: 350,
             buttons
         });
-    }, editActiveMission = () => {
+    }, miniMarkdown = incoming => incoming.replace(/^---/gm, "<hr>").replace(/^##\s(.*)\n*/gm, "<h3>$1</h3>").replace(/^#\s(.*)\n*/gm, "<h2>$1</h2>").replace(/\*\*(.*)\*\*/gm, "<b>$1</b>").replace(/\n/gm, "<br/>").replace(/(<\/h.>)<br>/gm, "$1").replace(/<br>(<h.>)/gm, "$1"), editActiveMission = () => {
         const html = $("<div>", {
             class: "umm-mission-picker-btn"
         }).append("Select a mission number:<br>", Button_button("<", onPreviousMission).css({
@@ -999,7 +1439,7 @@ function wrapper_iitc(SCRIPT_INFO) {
             at: "center top"
         }), window.dialog({
             html,
-            title: `${title} v1.0.beta.2`,
+            title: `${title} v1.0`,
             id: "umm-options",
             width: 350,
             position,
@@ -1109,7 +1549,8 @@ function wrapper_iitc(SCRIPT_INFO) {
             id: "umm_opt_bannerdesc"
         }), "<table><tr>", lable("Title format"), stat("umm_opt_bannerformat").append($("<span>", {
             text: "(?)",
-            title: "Title format allows:&#10;N = Mission number without leading 0 (if required by banner length)&#10;NN = Mission number with leading 0&#10;M = Planned banner length&#10;T = (mission title)&#10; &#10;eg. T N-M or NN.M T"
+            class: "um-helpTooltip",
+            title: "Title format allows:\n$N = Mission number\n$M = Planned banner length\n$T = Banner title"
         })), $("<td>").css({
             width: "2em"
         }), lable("Missions"), stat("umm_opt_bannerlength"), "</tr><tr>", lable("Waypoints"), stat("umm_opt_waypoints"), $("<td>"), lable("Length"), stat("umm_opt_bannerdistance"), "</tr></table>", $("<div>", {
@@ -1144,7 +1585,7 @@ function wrapper_iitc(SCRIPT_INFO) {
             at: "center top"
         }), window.dialog({
             html,
-            title: `${title} v1.0.beta.2`,
+            title: `${title} v1.0`,
             id: "umm-options",
             width: 350,
             position,
@@ -1201,10 +1642,10 @@ function wrapper_iitc(SCRIPT_INFO) {
         html += `<label for="umm-mission-set-name"><b>Banner name</b> (max. 50 characters)</label>\n      <span class="umm-error" id="umm-mission-set-name-error"><b>Error: </b>Please enter a valid banner name</span>\n      <input id="umm-mission-set-name" name="umm-mission-set-name" type="text" placeholder="Enter name for the banner" maxlength="50" value="${state.getBannerName()}">`, 
         html += `<label for="umm-mission-set-description"><b>Banner description</b> (max. 200 characters)</label>\n      <span class="umm-error" id="umm-mission-set-description-error"><b>Error: </b>Please enter a valid banner description</span>\n      <textarea id="umm-mission-set-description" name="umm-mission-set-description" placeholder="Enter description for the banner" maxlength="200" rows="5">${state.getBannerDesc()}</textarea>`, 
         html += `<label for="umm-banner-length"><b>Planned banner length</b>, min. ${Math.max(state.missions.count(), 1)} mission(s)</label>\n      <span class="umm-error" id="umm-mission-planned-banner-length-error"><b>Error: </b>Please enter a valid banner length</span>\n      <input id="umm-banner-length" name="umm-banner-length" type="number" placeholder="Enter length of banner set" min="1" value="${Math.max(state.getPlannedLength(), 1)}">`, 
-        html += `<label for="umm-title-format"><b>Title format</b></label>\n      <span class="umm-error" id="umm-mission-title-format-error"><b>Error: </b>Please enter a valid title-format</span>\n      <p>Title format allows:<br>N = Mission number without leading 0<br>NN = Mission number with leading 0 (if required by banner length)<br>M = Planned banner length<br>T = (banner title)<br>Examples:T NN-M (default) or NN.M T</p>\n      <input id="umm-title-format" name="umm-title-format" type="text" placeholder="Enter a title format" value="${null !== (_a = state.getTitleFormat()) && void 0 !== _a ? _a : "T NN-M"}" style="margin-bottom: 5px;">\n      <b>Preview: </b><span id="umm-mission-title-preview"></span>`, 
+        html += `<label for="umm-title-format"><b>Title format</b></label>\n      <span class="umm-error" id="umm-mission-title-format-error"><b>Error: </b>Please enter a valid title-format</span>\n      <table>\n      <tr><td>$T = Mission title</td><td>additional flags:</td></tr>\n      <tr><td>$N = Current Missione number</td><td>$0n = with leading zeros</td></tr>\n      <tr><td>$M = Banner length</td><td>$3n = minimum length</td></tr>\n      </table>\n      <br><br>Examples: "$T $N / $M" or "$0n.$m $t"  or "$T $03N-$03M" </p>\n      <input id="umm-title-format" name="umm-title-format" type="text" placeholder="Enter a title format" value="${null !== (_a = state.getTitleFormat()) && void 0 !== _a ? _a : "$T $N / $M"}" style="margin-bottom: 5px;">\n      <b>Preview: </b><span id="umm-mission-title-preview"></span>`, 
         html += "</div>", window.dialog({
             html,
-            title: "Edit banner details - UMM v1.0.beta.2",
+            title: "Edit banner details - UMM v1.0",
             id: "umm-options",
             width: 400,
             buttons: [ dialogButton("< Main Menu", showUmmOptions), dialogButton("Save", () => successfulSave(toggleMissionModeAfterSave)), dialogButtonClose() ]
@@ -1221,7 +1662,11 @@ function wrapper_iitc(SCRIPT_INFO) {
     }, updateMissionTitlePreview = () => {
         const values = getFormValues(), plannedLength = parseInt(values.length);
         if (values.name.length > 0 && values.format.length > 0 && !isNaN(plannedLength)) {
-            const missionTitle = Missions.generateMissionTitle(1, plannedLength, values.name, values.format);
+            const missionTitle = Missions.generateMissionTitle(values.format, {
+                misison: 1,
+                title: values.name,
+                total: plannedLength
+            });
             $("#umm-mission-title-preview").text(missionTitle);
         } else $("#umm-mission-title-preview").text("Fill in all required fields");
     }, setFieldError = (elementId, hasError) => {
@@ -1262,10 +1707,9 @@ function wrapper_iitc(SCRIPT_INFO) {
         const editMission = main.state.getEditMission(), missionNumber = main.state.getCurrent() + 1;
         (null == editMission ? void 0 : editMission.hasPortals()) ? (editMission.show(), 
         lastPortal = editMission.portals.get(-1).guid, window.renderPortalDetails(lastPortal), 
-        bannerNotification(main.state, `Mission mode active.\nResuming mission #${missionNumber}\nSelect next portal`)) : bannerNotification(main.state, `Mission mode active.\nSelect start portal for mission #${missionNumber}`);
+        bannerNotification(main.state, `Mission mode active.\nResuming mission #${missionNumber}\nSelect next portal`)) : (lastPortal = void 0, 
+        bannerNotification(main.state, `Mission mode active.\nSelect start portal for mission #${missionNumber}`));
     }, splitMissionOptions = () => {
-        let html = '<div class="umm-split-mission-options">';
-        html = "<b>How do you want to split your mission?</b><br><br>\n      <b>Remainder at the end:</b> All missions will contain the same amount of portals, any portals left over after splitting are added to the last mission.<br><br>\n      <b>Balanced:</b> Split the banner into missions of the same length, if any portals are left over after splitting, earlier missions will get 1 portal extra to balance it out.\n      ";
         const buttons = [ dialogButton("< Main Menu", showUmmOptions), dialogButton("Remainder at end", () => splitMissionStart(!0)), dialogButton("Balanced", () => splitMissionStart(!1)) ];
         window.dialog({
             html: "<b>How do you want to split your mission?</b><br><br>\n      <b>Remainder at the end:</b> All missions will contain the same amount of portals, any portals left over after splitting are added to the last mission.<br><br>\n      <b>Balanced:</b> Split the banner into missions of the same length, if any portals are left over after splitting, earlier missions will get 1 portal extra to balance it out.\n      ",
@@ -1349,37 +1793,75 @@ function wrapper_iitc(SCRIPT_INFO) {
         showMission(mission);
     }, showMission = mission => {
         mission.hasPortals() && (mission.show(), onMissionPortalsChanged(), main.missionModeActive ? bannerNotification(main.state, `Mission mode active.\nCurrent mission #${main.state.getCurrent() + 1}\nSelect next portal`) : bannerNotification(main.state, `Current active mission set to #${main.state.getCurrent() + 1}`));
-    }, addWaypointEditorToPortal = () => {
+    }, sample = data => data[Math.floor(Math.random() * data.length)], missionNumberQuestion = missionId => ({
+        question: sample(MissionNumberQuestions),
+        answer: (missionId + 1).toString()
+    }), standardQuestion = () => {
+        const quest = sample(NoobQuestions);
+        if (quest.m) {
+            const rawChoices = quest.m.split(",");
+            if (0 === rawChoices.length) return {
+                question: quest.q,
+                answer: ""
+            };
+            const answer = rawChoices.splice(0, 1), shuffled = (data => {
+                const a = [ ...data ];
+                for (let i = a.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [a[i], a[j]] = [ a[j], a[i] ];
+                }
+                return a;
+            })(rawChoices), correctIndex = Math.floor(4 * Math.random());
+            shuffled.splice(correctIndex, 0, ...answer).slice(0, 4);
+            const lines = shuffled.map((c, i) => `${String.fromCodePoint(65 + i)}) ${c}`).join(" "), correctLetter = correctIndex >= 0 ? String.fromCodePoint(65 + correctIndex) : "";
+            return {
+                question: `${quest.q}\n${lines}`,
+                answer: correctLetter
+            };
+        }
+        return {
+            question: quest.q,
+            answer: quest.a
+        };
+    }, ActionLabels = new Map([ [ "HACK_PORTAL", "Hack portal" ], [ "INSTALL_MOD", "Install mod" ], [ "CAPTURE_PORTAL", "Capture portal" ], [ "CREATE_LINK", "Create link" ], [ "CREATE_FIELD", "Create field" ], [ "PASSPHRASE", "Enter passphrase" ] ]), addWaypointEditorToPortal = () => {
         var _a;
         const missions = main.state.missions.getMissionsOfPortal(null !== (_a = window.selectedPortal) && void 0 !== _a ? _a : "");
         if (0 === missions.length) return;
-        const wayPointHtml = $("<div>", {
+        appendEditor(missions);
+        const current = main.state.getCurrent(), preSelect = missions.includes(current) ? current : missions[0];
+        $("#umm-mission-select").val(preSelect), onMisisonSelect();
+    }, appendEditor = missions => {
+        const misisonSelect = $("<select>", {
+            id: "umm-mission-select"
+        }), actionSelect = $("<select>", {
+            id: "umm-action-select"
+        }), container = $("<div>", {
             id: "umm-waypoint-editor"
-        }), ummTitle = $("<span>", {
+        }).append($("<span>", {
             text: "UMM Waypoint Editor",
             class: "umm-waypoint-editor-title"
-        });
-        wayPointHtml.append(ummTitle);
-        const waypointSelectContainer = $("<div>", {
+        }), $("<div>", {
             class: "umm-waypoint-select-container"
-        });
-        waypointSelectContainer.append(portalMissionSelectFactory(missions));
-        const actionSelect = $("<select>", {
-            id: "umm-action-select"
-        });
-        waypointSelectContainer.append(actionSelect), wayPointHtml.append(waypointSelectContainer);
-        const passPhraseHtml = $("<div>", {
+        }).append(misisonSelect, actionSelect), $("<div>", {
             id: "umm-passphrase-container"
-        });
-        wayPointHtml.append(passPhraseHtml), $("#portaldetails #randdetails").before(wayPointHtml), 
-        $("#umm-mission-select").on("change", () => {
-            "#" === $("#umm-mission-select").val() ? ($("#umm-action-select").prop("disabled", !0), 
-            $("#umm-passphrase-container").hide()) : (updateActionSelect(), updatePassPhraseContent());
-        }), updateActionSelect(), updatePassPhraseContent();
-    }, portalMissionSelectFactory = validMissionIds => {
-        const missionSelect = $("<select>", {
-            id: "umm-mission-select"
-        }), missionOption = $("<option>", {
+        }).css("display", "flex").append($("<span>", {
+            text: "Question"
+        }), $("<textarea>", {
+            id: "umm-passphrase-question",
+            type: "text",
+            row: 1
+        }).css({
+            "overflow-y": "hidden"
+        }).on("blur", () => savePassPhrase()).on("focus", event => onFocus(event)), $("<span>", {
+            text: "Passphrase"
+        }), $("<input>", {
+            type: "text",
+            id: "umm-passphrase-passphrase"
+        }).on("blur", () => savePassPhrase()).on("focus", event => onFocus(event))));
+        addMissionOptions(misisonSelect, missions), addActionOptions(actionSelect), misisonSelect.on("change", onMisisonSelect), 
+        actionSelect.on("change", onActionSelect), $("#portaldetails #randdetails").before(container);
+    }, addMissionOptions = (missionSelect, validMissionIds) => {
+        const missionOption = $("<option>", {
             value: "#",
             text: "Select mission"
         });
@@ -1390,66 +1872,50 @@ function wrapper_iitc(SCRIPT_INFO) {
             });
             missionSelect.append(missionOption);
         });
-        const current = main.state.getCurrent(), preSelect = validMissionIds.includes(current) ? current : validMissionIds[0];
-        return $(missionSelect).val(preSelect), missionSelect;
-    }, updatePassPhraseContent = () => {
+    }, addActionOptions = actionSelect => {
+        ActionLabels.forEach((label, action) => {
+            const option = $("<option>", {
+                value: action,
+                text: label
+            });
+            actionSelect.append(option);
+        });
+    }, onMisisonSelect = () => {
         const portal = currentPortal();
-        portal && ($("#umm-passphrase-container").replaceWith(passCodeBoxFactory(portal)), 
-        $("#umm-passphrase-container textarea").css({
-            "overflow-y": "hidden"
-        }), "PASSPHRASE" == $("#umm-action-select").val() && $("#umm-passphrase-container").css("display", "flex"));
-    }, passCodeBoxFactory = portal => {
-        var _a, _b;
-        const questionSpan = $("<span>", {
-            text: "Question"
-        }), ppQuestion = null !== (_a = portal.objective.passphrase_params.question) && void 0 !== _a ? _a : "", question = $("<textarea>", {
-            id: "umm-passphrase-question",
-            type: "text",
-            row: 1
-        }).val(ppQuestion);
-        question.on("blur", () => savePassPhrase());
-        const passPhraseSpan = $("<span>", {
-            text: "Passphrase"
-        }), spQuestion = null !== (_b = portal.objective.passphrase_params._single_passphrase) && void 0 !== _b ? _b : "", passPhrase = $("<input>", {
-            type: "text",
-            id: "umm-passphrase-passphrase",
-            value: spQuestion
-        });
-        passPhrase.on("blur", () => savePassPhrase());
-        const passPhraseHtml = $("<div>", {
-            id: "umm-passphrase-container"
-        });
-        return passPhraseHtml.append(questionSpan, question, passPhraseSpan, passPhrase), 
-        passPhraseHtml;
+        if (portal) {
+            const action = portal.objective.type, {question, answer} = (portal => {
+                var _a, _b;
+                return {
+                    question: null !== (_a = portal.objective.passphrase_params.question) && void 0 !== _a ? _a : "",
+                    answer: null !== (_b = portal.objective.passphrase_params._single_passphrase) && void 0 !== _b ? _b : ""
+                };
+            })(portal);
+            $("#umm-action-select").val(action), $("#umm-passphrase-question").val(question), 
+            $("#umm-passphrase-passphrase").val(answer), $("#umm-passphrase-container").toggle("PASSPHRASE" === action), 
+            onActionSelect();
+        } else $("#umm-action-select").prop("disabled", !0), $("#umm-passphrase-container").hide();
+    }, onActionSelect = () => {
+        const action = $("#umm-action-select").val(), portal = currentPortal();
+        portal && ($("#umm-passphrase-container").toggle("PASSPHRASE" === action), "PASSPHRASE" === action && pregenerateQuestion(portal), 
+        portal.objective.type = action, main.state.save());
+    }, onFocus = event => {
+        const element = $(event.target);
+        element.attr("selectAll") && (element.attr("selectAll", null), element.trigger("select"));
+    }, pregenerateQuestion = portal => {
+        if (!(portal => "" === portal.objective.passphrase_params.question && "" === portal.objective.passphrase_params._single_passphrase)(portal)) return;
+        const missionId = parseInt($("#umm-mission-select").val()), mission = main.state.missions.get(missionId);
+        if (!mission) return;
+        const {question, answer} = ((missionId, isStart) => isStart ? missionNumberQuestion(missionId) : standardQuestion())(missionId, mission.portals.isStart(portal));
+        $("#umm-passphrase-question").val(question).attr("selectAll", "true"), $("#umm-passphrase-passphrase").val(answer).attr("selectAll", "true"), 
+        setPassphrase(portal, question, answer);
     }, currentPortal = () => {
         var _a;
         const missionId = parseInt($("#umm-mission-select").val()), portals = null === (_a = main.state.missions.get(missionId)) || void 0 === _a ? void 0 : _a.portals;
         return null == portals ? void 0 : portals.find(window.selectedPortal);
     }, savePassPhrase = () => {
         const portal = currentPortal();
-        if (!portal) return;
-        const passphrase_params = {
-            question: $("#umm-passphrase-question").val(),
-            _single_passphrase: $("#umm-passphrase-passphrase").val()
-        };
-        portal.objective.passphrase_params = passphrase_params, main.state.save();
-    }, updateActionSelect = () => {
-        const portal = currentPortal();
-        portal && ($("#umm-action-select").replaceWith((portal => {
-            const actionSelect = $("<select>", {
-                id: "umm-action-select"
-            });
-            return PortalActions.forEach(({action, label}) => {
-                const option = $("<option>", {
-                    value: action,
-                    text: label
-                });
-                portal.objective.type === action && option.prop("selected", !0), actionSelect.append(option);
-            }), actionSelect;
-        })(portal)), $("#umm-action-select").on("change", () => {
-            "PASSPHRASE" == $("#umm-action-select").val() ? updatePassPhraseContent() : $("#umm-passphrase-container").hide(), 
-            currentPortal().objective.type = $("#umm-action-select").val(), main.state.save();
-        }));
+        portal && (setPassphrase(portal, $("#umm-passphrase-question").val(), $("#umm-passphrase-passphrase").val()), 
+        main.state.save());
     };
     const main = new class UMM_Ext {
         constructor() {
@@ -1499,10 +1965,12 @@ function wrapper_iitc(SCRIPT_INFO) {
             this.missionModeActive = !1, this.renderPath.redraw(), this.renderNumbers.redraw();
         }
         toggleUMMBar() {
-            if ($(".leaflet-umm.leaflet-bar").toggle(), $(".leaflet-umm.leaflet-bar").is(":visible")) this.state.isEmpty() ? editMissionSetDetails() : this.state.missions.zoom(), 
-            this.state.restoreLayerState([ this.renderPath, this.renderNumbers ]); else {
-                const layer = [ this.renderPath, this.renderNumbers ];
-                this.state.storeLayerState(layer), layer.forEach(l => l.toggle(!1));
+            if ($(".leaflet-umm.leaflet-bar").toggle(), $(".leaflet-umm.leaflet-bar").is(":visible")) {
+                $(".leaflet-umm").fadeIn().fadeOut().fadeIn().fadeOut().fadeIn().fadeOut().fadeIn(), 
+                this.state.isEmpty() ? editMissionSetDetails() : this.state.missions.zoom();
+                [ this.renderPath, this.renderNumbers ].forEach(l => l.toggle(!0));
+            } else {
+                [ this.renderPath, this.renderNumbers ].forEach(l => l.toggle(!1));
             }
         }
     };
@@ -1517,11 +1985,75 @@ function wrapper_iitc(SCRIPT_INFO) {
 };
 
 /**
- * v1.0
+ * # v1.0
  * 
- * - init
+ * This is a complete rewrite of the Ultimate Mission Maker from a developer perspective.
+ * The entire codebase has been redesigned while maintaining the familiar user experience of the original UMM.
+ * Below are the visible improvements and changes you'll notice.
  * 
- * This is a code conversation of the Ultimate Mission Maker.
+ * ## What's Changed:
+ * 
+ * - UMM is now hidden by default. You need to hit the "UMM" button in the Portal details window to make it appear.
+ * 
+ * - **Select Mission Dialog** (open it through the toolbar or the main dialog)
+ *   - Selecting a mission is no longer required; simply open another mission
+ *   - Navigation buttons (+/-) allow you to cycle through missions
+ *   - Added split, clear, merge, and reverse commands for mission manipulation
+ *   - New mission information display: portal count and distances
+ * 
+ * - **Banner Settins** (start window)
+ *   - changed Title placeholders to $T $M $N
+ *   
+ * - **Option Dialog** (main window)
+ *   - Banner information now displays as a compact table
+ *   - Removed warning for mission counts that are not multiples of 6
+ *   - Added warning when missions lack sufficient waypoints
+ * 
+ * - **Drag & Drop** in the mission editor path
+ *   - Move existing markers to adjust waypoints
+ *   - Add new waypoints by positioning intermediate markers at new locations
+ *   - Remove waypoints by double-clicking a marker
+ *   - Merge missions by dragging start and end markers together
+ * 
+ * - **Mission Numbers**
+ *   - Potential split points are previewed while creating missions
+ * 
+ * - **Waypoint edit**
+ *   - current mission is preselected
+ *   - passphrases: add random default questions.
+ *     when question & answer is empty a simple question will be set.
+ * 
+ * - **Miscellaneous**
+ *   - Custom confirmation dialogs clarify actions and improve readability
+ *   - Switch between any missions, even those without portals
+ *   - Option to split missions when starting on a portal that's already assigned to another mission
+ *   - on mobile dialogs are not at the top instead of centered
+ *   - flash buttonbar on activation to draw attention
+ *   
+ * 
+ * ---
+ * 
+ * # History:
+ * 
+ * ## v1.0.beta.2 - 15.02.26
+ * 
+ * - fixed update-URL in script header
+ * 
+ * ## v1.0.beta - 15.02.26
+ * 
+ * - first public release
+ * - automated build process on GitHub
+ * - fixed layer checkboxes in Option-Dialog
+ * - add "clear" mission to selection dialog
+ * - always color selected mission even when not in Edit-Mode
+ * - move "no" to left in custom confirm dialog
+ * - remove doubled "v" in version numbers
+ * - fix toggeling edit mode on mission detail window "save" button
+ * - close dialog on mission detail window "save"
+ * - fix linebreaks in changelog dialog
+ * - select mission: directly select mission on combo-box change
+ * - fix question text in portal details
+ * - on mobile dialogs are not at the top instead of centered
  * 
  */
 function wrapper_editor(SCRIPT_INFO) {
@@ -1894,22 +2426,29 @@ function wrapper_editor(SCRIPT_INFO) {
         }
     }
     class Missions {
-        static generateMissionTitle(missNumber, plannedBannerLength, missSetName, missNameFormat) {
-            var _a;
-            const format = null != missNameFormat ? missNameFormat : "";
-            if (!format) return "";
-            let title = format;
-            const totalMissions = null != plannedBannerLength ? plannedBannerLength : 0;
-            if (totalMissions >= 1 && (title = title.replace(/M+/g, totalMissions.toString())), 
-            missNumber >= 0) {
-                const numberPattern = null === (_a = format.match(/N+/g)) || void 0 === _a ? void 0 : _a[0];
-                if (numberPattern) {
-                    const length = numberPattern.length > 1 ? totalMissions.toString().length : 0, paddedNumber = (missNumber + 1).toString().padStart(length, "0");
-                    title = title.replace(/N+/g, paddedNumber);
+        static generateMissionTitle(format, info) {
+            return format.replace(/\$(\d*)?(\w)/g, (_, flags, token) => {
+                var _a, _b, _c, _d, _e, _f, _g;
+                let value = token;
+                switch (token.toLowerCase()) {
+                  case "t":
+                    value = null !== (_a = info.title) && void 0 !== _a ? _a : value;
+                    break;
+
+                  case "m":
+                    value = null !== (_c = null === (_b = info.total) || void 0 === _b ? void 0 : _b.toString()) && void 0 !== _c ? _c : value;
+                    break;
+
+                  case "n":
+                    value = null !== (_e = null === (_d = info.misison) || void 0 === _d ? void 0 : _d.toString()) && void 0 !== _e ? _e : value;
                 }
-            }
-            return (null == missSetName ? void 0 : missSetName.trim()) && (title = title.replace(/T/g, missSetName)), 
-            title;
+                let leadingZero = !1;
+                (null == flags ? void 0 : flags.startsWith("0")) && (leadingZero = !0, flags = flags.slice(1));
+                let length = parseInt(flags);
+                return Number.isNaN(length) && (length = 1, leadingZero && (length = null !== (_g = null === (_f = info.total) || void 0 === _f ? void 0 : _f.toString().length) && void 0 !== _g ? _g : 1)), 
+                value.length < length && (value = value.padStart(length, leadingZero ? "0" : " ")), 
+                value;
+            });
         }
         constructor(state, data) {
             this.state = state, this.data = data;
@@ -2006,6 +2545,7 @@ function wrapper_editor(SCRIPT_INFO) {
             return this.filter(mis => mis.portals.includes(guid)).map(m => m.id);
         }
     }
+    const undefinedOrEmptyString = value => null == value || "" == value;
     class Trigger {
         constructor() {
             this.handler = [];
@@ -2024,7 +2564,7 @@ function wrapper_editor(SCRIPT_INFO) {
             this.handler = [];
         }
     }
-    const fileFormatVersion = 2;
+    const fileFormatVersion = 3;
     class State {
         constructor() {
             this.onSelectedMissionChange = new Trigger, this.onMissionChange = new Trigger, 
@@ -2041,10 +2581,9 @@ function wrapper_editor(SCRIPT_INFO) {
         import(jsonString) {
             const anyState = JSON.parse(jsonString);
             this.theState = (ummState => {
-                var _a, _b, _c, _d, _e;
+                var _a, _b, _c, _d, _e, _f;
                 if (ummState.fileFormatVersion > fileFormatVersion) throw new Error("UMM: You've attempted to load data that's newer than what's supported by this version of UMM. Please update the plugin and try again. Data has not been loaded.");
                 if (void 0 === ummState.fileFormatVersion || "" === ummState.fileFormatVersion) {
-                    const undefinedOrEmptyString = value => null == value || "" == value;
                     if (undefinedOrEmptyString(ummState.missionSetName) && (undefinedOrEmptyString(ummState.missionName) ? ummState.missionSetName = "" : (ummState.missionSetName = ummState.missionName, 
                     delete ummState.missionName)), undefinedOrEmptyString(ummState.missionSetDescription) && (undefinedOrEmptyString(ummState.missionDescription) ? ummState.missionSetDescription = "" : (ummState.missionSetDescription = ummState.missionDescription, 
                     delete ummState.missionDescription)), undefinedOrEmptyString(ummState.titleFormat) && (ummState.titleFormat = "T NN-M"), 
@@ -2052,7 +2591,11 @@ function wrapper_editor(SCRIPT_INFO) {
                     delete ummState.numberOfMissions), !Object.keys(ummState.missions[0]).includes("portals")) if (ummState.missions[0][0].guid) {
                         const newMissions = [];
                         for (const mission in ummState.missions) {
-                            const plannedLength = ummState.plannedBannerLength > 0 ? ummState.plannedBannerLength : ummState.missions.length, missionTitle = Missions.generateMissionTitle(parseInt(mission) + 1, plannedLength, ummState.missionSetName, ummState.titleFormat);
+                            const plannedLength = ummState.plannedBannerLength > 0 ? ummState.plannedBannerLength : ummState.missions.length, missionTitle = Missions.generateMissionTitle(ummState.titleFormat, {
+                                misison: parseInt(mission) + 1,
+                                title: ummState.missionSetName,
+                                total: plannedLength
+                            });
                             newMissions.push({
                                 missionTitle,
                                 missionDescription: ummState.missionSetDescription,
@@ -2083,7 +2626,8 @@ function wrapper_editor(SCRIPT_INFO) {
                 null !== (_c = ummState.currentMission) && void 0 !== _c || (ummState.currentMission = 0), 
                 null !== (_d = ummState.plannedBannerLength) && void 0 !== _d || (ummState.plannedBannerLength = 1), 
                 null !== (_e = ummState.titleFormat) && void 0 !== _e || (ummState.titleFormat = "T NN-M")), 
-                ummState;
+                ummState.fileFormatVersion < 3 && (ummState.titleFormat = (null !== (_f = ummState.titleFormat) && void 0 !== _f ? _f : "").replace("T", "$T").replace(/N+/, match => match.length > 1 ? "$0N" : "$N").replace(/(M+)/g, "$M"), 
+                ummState.fileFormatVersion = 3), ummState;
             })(anyState), this.setPlannedLength(this.getPlannedLength() || 1), this.onMissionChange.trigger(), 
             this.onMissionPortal.trigger(), this.onSelectedMissionChange.trigger();
         }
@@ -2096,7 +2640,7 @@ function wrapper_editor(SCRIPT_INFO) {
                 missionSetDescription: "",
                 currentMission: 0,
                 plannedBannerLength: 1,
-                titleFormat: "T NN-M",
+                titleFormat: "$T $N / $M",
                 fileFormatVersion,
                 missions: [ {
                     missionTitle: "",
@@ -2148,7 +2692,11 @@ function wrapper_editor(SCRIPT_INFO) {
             this.onMissionChange.trigger();
         }
         generateMissionTitle(missNumber) {
-            return Missions.generateMissionTitle(missNumber, this.getPlannedLength(), this.theState.missionSetName, this.theState.titleFormat);
+            return Missions.generateMissionTitle(this.theState.titleFormat, {
+                misison: missNumber,
+                total: this.getPlannedLength(),
+                title: this.theState.missionSetName
+            });
         }
         getEditMission() {
             return this.missions.get(this.theState.currentMission);
