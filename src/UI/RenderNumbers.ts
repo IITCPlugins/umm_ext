@@ -57,7 +57,7 @@ export class RenderNumbers extends RenderBase {
             const mission = state.missions.get(mid);
 
             if (mission?.hasPortals()) {
-                const start = mission.getLocations()[0]; // TODO optimize; this converts all portals to LatLng while only the first is needed
+                const start = mission.portals.getLatLngOf(0)!;
                 missions.push({
                     missionIndex: mid,
                     location: start,
@@ -67,7 +67,7 @@ export class RenderNumbers extends RenderBase {
 
             // count empty mission + 1
             let count = 1;
-            for (; mid + count <= state.missions.count(); count++) {
+            for (; mid + count < state.missions.count(); count++) {
                 const nextMission = state.missions.get(mid + count);
                 if (nextMission?.hasPortals()) {
                     break;
