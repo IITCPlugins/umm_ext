@@ -23,7 +23,7 @@ export class Missions {
             switch (token.toLowerCase()) {
                 case "t": value = info.title ?? value; break;
                 case "m": value = info.total?.toString() ?? value; break;
-                case "n": value = info.misison?.toString() ?? value; break;
+                case "n": value = ((info.misison || 0)+1).toString() ?? value; break;
             }
 
 
