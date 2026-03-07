@@ -1,3 +1,7 @@
+# v1.0.1
+
+- fix mission number (index started by 0 instead of 1)
+
 # v1.0
 
 This is a complete rewrite of the Ultimate Mission Maker from a developer perspective.
