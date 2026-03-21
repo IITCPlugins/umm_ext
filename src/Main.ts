@@ -19,11 +19,11 @@ class UMM_Ext implements Plugin.Class {
 
     constructor() {
         // prevent UMM boot
-        const index = window.bootPlugins.findIndex((x: any) => {
-            return x.info.script.name === "IITC Plugin: Ultimate Mission Maker";
+        const index = window.bootPlugins?.findIndex((x: any) => {
+            return x.info?.script?.name === "IITC Plugin: Ultimate Mission Maker";
         });
 
-        if (index !== -1) {
+        if (index && index !== -1) {
             console.info("Ultimate Mission Editor found - this is no longer required for UMM-Ext");
             window.bootPlugins.splice(index, 1);
         }
