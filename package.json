@@ -10,7 +10,8 @@
     "build:prod": "yarn ipk build:prod && yarn merge",
     "start": "yarn ipk fileserver",
     "autobuild": "yarn ipk autobuild",
-    "merge": "node scripts/merge-userscripts.cjs"
+    "merge": "node scripts/merge-userscripts.cjs",
+    "copy": "cross-env-shell $ANDROID_SDK_ROOT/platform-tools/adb push dist/iitc_plugin_UMM_Ext.user.js /storage/emulated/0/IITC_Mobile/plugins/iitc_plugin_UMM_Ext.user.js"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
