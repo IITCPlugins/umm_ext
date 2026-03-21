@@ -95,14 +95,14 @@ const combinedInit = `
     info.script = { version: GM_info.script.version, name: GM_info.script.name, description: GM_info.script.description };
   if (typeof unsafeWindow != 'undefined' || typeof GM_info == 'undefined' || GM_info.scriptHandler != 'Tampermonkey') {
 
-    var pluginContent;
+    let pluginContentUMMExt;
     if (window.location.host.match(/^intel\.ingress\.com$/i)) 
-      pluginContent = wrapper_iitc;
+      pluginContentUMMExt = wrapper_iitc;
     else 
-      pluginContent = wrapper_editor;
+      pluginContentUMMExt = wrapper_editor;
     
     const script = document.createElement('script');
-    const code = '(' + pluginContent + ')(' + JSON.stringify(info) + ');'
+    const code = '(' + pluginContentUMMExt + ')(' + JSON.stringify(info) + ');'
     script.appendChild(document.createTextNode(code));
     document.head.appendChild(script);
   } 
