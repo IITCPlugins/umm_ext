@@ -1,3 +1,9 @@
+# v1.0.2
+
+- fix IITC-Button load
+in iitc-button load order is differnet and custom "if UUM is loaded then disable it" failed
+- fix variable if both plugins are active
+
 # v1.0.1
 
 - fix mission number (index started by 0 instead of 1)
