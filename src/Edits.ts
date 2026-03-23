@@ -240,7 +240,7 @@ export const reverseMission = () => {
     const state = main.state;
 
     const text = `Which missions do you want to reverse (1-${state.getPlannedLength()})?\n\n<small>Use "1-5" to reverse a missions from 1 to5\nUse "2" to reverse missions only 2\nUse "1,3,5-7" to reverse missions 1, 3 and 5 to 7</small>`;
-    const missionToReverse = prompt(text, (state.getCurrent() + 1).toString());
+    const missionToReverse = prompt(text, `1-${state.getPlannedLength()}`);
     if (missionToReverse === null) return;
 
     // parse

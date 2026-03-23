@@ -207,22 +207,13 @@ export class Missions {
             to = Math.min(Math.max(to, 0), this.count() - 1);
             if (from > to) { [from, to] = [to, from] }
 
-            const backup = this.data.map(mission => mission.portals);
+            const portal_copy = this.data.map(mission => mission.portals.splice(0));
 
             for (let i = from; i <= to; i++) {
-                console.log("Reversing mission " + i);
-                const mission = this.get(i);
-                if (mission) {
-                    mission.portals.clear();
-                    mission.portals.add(...backup[to - (i - from)]);
-                    mission.reverse();
-                }
+                this.data[i].portals = portal_copy[to - (i - from)].reverse();
             }
         } else {
             this.get(from)?.reverse();
         }
     }
-
-
-
 }
