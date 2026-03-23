@@ -149,7 +149,7 @@ export class Missions {
         const portals: UMM_Portal[] = []
         this.data.forEach(m => {
             portals.push(...m.portals);
-            portals.length = 0;
+            m.portals.length = 0;
         });
 
         this.data[0].portals = portals;
