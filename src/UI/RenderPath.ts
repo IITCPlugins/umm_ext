@@ -11,7 +11,7 @@ export class RenderPath extends RenderBase {
 
 
     constructor() {
-        super('UMM: Mission Paths');
+        super();
 
         this.dragMarkers = [];
 
