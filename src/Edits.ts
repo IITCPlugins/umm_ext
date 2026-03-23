@@ -196,9 +196,9 @@ const splitMission = async (numMissions: number, remainderAtEnd: boolean) => {
     if (!mission) return;
 
     let hasPortals = false;
-    for (let i = 0; i < numMissions; i++) hasPortals ||= main.state.missions.get(i)?.hasPortals() === true;
+    for (let i = 1; i < numMissions; i++) hasPortals ||= main.state.missions.get(i)?.hasPortals() === true;
     if (hasPortals) {
-        if (!await confirmDialog({ message: "Merge missione before split?", details: "Mission(s) already contain portals. These will be merged into one" })) {
+        if (!await confirmDialog({ message: "Merge mission before split?", details: "Mission(s) already contain portals. These will be merged into one" })) {
             return;
         }
     }
