@@ -46,7 +46,7 @@ export const showUmmOptions = () => {
         $("<hr>"),
         button("Split mission", splitMissionOptions, "w-full"),
         button("Merge missions", mergeMissions, "w-full"),
-        button("Reverse mission", reverseMission, "w-full"),
+        button("Reverse missions", reverseMission, "w-full"),
         button("Clear ALL missions data", confirmClear, "w-full"),
         $("<hr>"),
 
@@ -78,37 +78,14 @@ export const showUmmOptions = () => {
     })
 
 
-    window.map.on('layeradd', onLayerAdd);
-    window.map.on('layerremove', onLayerRemove);
     main.state.onMissionChange.do(updateDialog);
     updateDialog();
 };
 
 
 const destroy = () => {
-    window.map.off('layeradd', onLayerAdd);
-    window.map.off('layerremove', onLayerRemove);
     main.state.onMissionChange.dont(updateDialog);
 }
-
-
-const onLayerAdd = (event: L.LeafletLayerEvent) => {
-    if (main.renderPath.isLayer(event.layer)) {
-        $('#umm-layercheckbox-paths').prop("checked", true);
-    }
-    if (main.renderNumbers.isLayer(event.layer)) {
-        $('#umm-layercheckbox-numbers').prop("checked", true);
-    }
-};
-
-const onLayerRemove = (event: L.LeafletLayerEvent) => {
-    if (main.renderPath.isLayer(event.layer)) {
-        $('#umm-layercheckbox-paths').prop("checked", false);
-    }
-    if (main.renderNumbers.isLayer(event.layer)) {
-        $('#umm-layercheckbox-numbers').prop("checked", false);
-    }
-};
 
 
 const updateDialog = () => {
