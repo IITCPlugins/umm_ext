@@ -1,7 +1,16 @@
+# v1.1
+
+- Use static layers
+  UMM is now fully hidden when inactive. Background processing is also disabled while inactive.
+- Added Multi-Reverse
+  Using the reverse action in the main dialog, you can now reverse an entire banner or selected parts of it—not just a single mission.
+- Fixed merge in main dialog
+- Fixed “Should merge?” prompt in split option (main dialog)
+
 # v1.0.2
 
 - fix IITC-Button load
-in iitc-button load order is differnet and custom "if UUM is loaded then disable it" failed
+  in iitc-button load order is differnet and custom "if UUM is loaded then disable it" failed
 - fix variable if both plugins are active
 
 # v1.0.1
@@ -26,7 +35,6 @@ Below are the visible improvements and changes you'll notice.
 
 - **Banner Settins** (start window)
   - changed Title placeholders to $T $M $N
-  
 - **Option Dialog** (main window)
   - Banner information now displays as a compact table
   - Removed warning for mission counts that are not multiples of 6
@@ -52,7 +60,6 @@ Below are the visible improvements and changes you'll notice.
   - Option to split missions when starting on a portal that's already assigned to another mission
   - on mobile dialogs are not at the top instead of centered
   - flash buttonbar on activation to draw attention
-  
 
 ---
 
