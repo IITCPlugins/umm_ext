@@ -78,6 +78,8 @@ class UMM_Ext implements Plugin.Class {
         window.addHook('portalSelected', this.onPortalSelected);
         window.addHook('portalDetailsUpdated', this.onPortalDetailsUpdated);
         window.addHook('mapDataRefreshEnd', this.onMapDataRefreshEnd);
+
+        addWaypointEditorToPortal();
     }
 
 
@@ -89,6 +91,9 @@ class UMM_Ext implements Plugin.Class {
         window.removeHook('portalSelected', this.onPortalSelected);
         window.removeHook('portalDetailsUpdated', this.onPortalDetailsUpdated);
         window.removeHook('mapDataRefreshEnd', this.onMapDataRefreshEnd);
+
+        // remove editor if open
+        $("#umm-waypoint-editor").remove();
     }
 
 
