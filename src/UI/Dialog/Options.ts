@@ -1,4 +1,4 @@
-import { clearMissionData, mergeMissions, reverseMission, splitMissionOptions } from "../../Edits";
+import { clearMissionData, mergeMissions, reverseMission as reverseMissions, splitMissionOptions } from "../../Edits";
 import { exportData, loadFileInput } from "../../ImportExport";
 import { main } from "../../Main";
 import { State } from "../../State/State";
@@ -46,7 +46,7 @@ export const showUmmOptions = () => {
         $("<hr>"),
         button("Split mission", splitMissionOptions, "w-full"),
         button("Merge missions", mergeMissions, "w-full"),
-        button("Reverse missions", reverseMission, "w-full"),
+        button("Reverse missions", reverseMissions, "w-full"),
         button("Clear ALL missions data", confirmClear, "w-full"),
         $("<hr>"),
 

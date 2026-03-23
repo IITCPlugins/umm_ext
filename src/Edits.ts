@@ -238,16 +238,24 @@ export const mergeMissions = async () => {
 
 export const reverseMission = () => {
     const state = main.state;
-    const missionToReverse = prompt(`Which mission do you want to reverse (1-${state.getPlannedLength()})?`, (state.getCurrent() + 1).toString());
+
+    const text = `Which missions do you want to reverse (1-${state.getPlannedLength()})?\n\n<small>Use "1-5" to reverse a missions from 1 to5\nUse "2" to reverse missions only 2\nUse "1,3,5-7" to reverse missions 1, 3 and 5 to 7</small>`;
+    const missionToReverse = prompt(text, `1-${state.getPlannedLength()}`);
     if (missionToReverse === null) return;
 
-    const mission = state.missions.get(parseInt(missionToReverse));
-    if (!mission) {
-        alert(`This mission doesn't exist, enter a value between 1-${state.getPlannedLength()}.`)
-        return;
-    }
+    // parse
+    const regex = new RegExp(/(?<range>(?<from>\d+)\s*[-]\s*(?<to>\d+))|(?<single>\d+)/gm);
+    [...missionToReverse.matchAll(regex)].forEach((match: any) => {
+        if (match.groups?.single) {
+            const missionId = parseInt(match.groups.single) - 1;
+            state.missions.reverse(missionId);
+        } else if (match.groups?.range) {
+            const from = parseInt(match.groups.from) - 1;
+            const to = parseInt(match.groups.to) - 1;
+            state.missions.reverse(from, to);
+        }
+    });
 
-    mission.reverse();
     state.save();
 }
 

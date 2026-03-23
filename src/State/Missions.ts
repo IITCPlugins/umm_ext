@@ -23,7 +23,7 @@ export class Missions {
             switch (token.toLowerCase()) {
                 case "t": value = info.title ?? value; break;
                 case "m": value = info.total?.toString() ?? value; break;
-                case "n": value = ((info.misison || 0)+1).toString() ?? value; break;
+                case "n": value = ((info.misison || 0) + 1).toString() ?? value; break;
             }
 
 
@@ -199,4 +199,21 @@ export class Missions {
     }
 
 
+
+    reverse(from: number, to?: number) {
+
+        if (to) {
+            from = Math.min(Math.max(from, 0), this.count() - 1);
+            to = Math.min(Math.max(to, 0), this.count() - 1);
+            if (from > to) { [from, to] = [to, from] }
+
+            const portal_copy = this.data.map(mission => mission.portals.splice(0));
+
+            for (let i = from; i <= to; i++) {
+                this.data[i].portals = portal_copy[to - (i - from)].reverse();
+            }
+        } else {
+            this.get(from)?.reverse();
+        }
+    }
 }
