@@ -40,26 +40,13 @@ export const showUmmOptions = () => {
             button("Edit", () => editMissionSetDetails(), "editButtom"),
         ),
         $("<p>").append(
-            'Layers:',
-            '<label style="user-select: none">Mission Paths</label>',
-            $("<input>", {
-                type: "checkbox",
-                click: (event: Event) => tooglePathsLayer((event.target as HTMLInputElement).checked),
-                checked: main.renderPath.isVisible()
-            }),
-            '<label style="user-select: none">Mission Numbers</label>',
-            $("<input>", {
-                type: "checkbox",
-                click: (event: Event) => toggleLayerNumbers((event.target as HTMLInputElement).checked),
-                checked: main.renderNumbers.isVisible()
-            }),
             button("Change active mission #", editActiveMission, "w-full"),
             button("Zoom to view all missions", () => state.missions.zoom(), "w-full"),
         ),
         $("<hr>"),
         button("Split mission", splitMissionOptions, "w-full"),
         button("Merge missions", mergeMissions, "w-full"),
-        button("Reverse mission", reverseMission, "w-full"),
+        button("Reverse missions", reverseMission, "w-full"),
         button("Clear ALL missions data", confirmClear, "w-full"),
         $("<hr>"),
 
@@ -91,37 +78,14 @@ export const showUmmOptions = () => {
     })
 
 
-    window.map.on('layeradd', onLayerAdd);
-    window.map.on('layerremove', onLayerRemove);
     main.state.onMissionChange.do(updateDialog);
     updateDialog();
 };
 
 
 const destroy = () => {
-    window.map.off('layeradd', onLayerAdd);
-    window.map.off('layerremove', onLayerRemove);
     main.state.onMissionChange.dont(updateDialog);
 }
-
-
-const onLayerAdd = (event: L.LeafletLayerEvent) => {
-    if (main.renderPath.isLayer(event.layer)) {
-        $('#umm-layercheckbox-paths').prop("checked", true);
-    }
-    if (main.renderNumbers.isLayer(event.layer)) {
-        $('#umm-layercheckbox-numbers').prop("checked", true);
-    }
-};
-
-const onLayerRemove = (event: L.LeafletLayerEvent) => {
-    if (main.renderPath.isLayer(event.layer)) {
-        $('#umm-layercheckbox-paths').prop("checked", false);
-    }
-    if (main.renderNumbers.isLayer(event.layer)) {
-        $('#umm-layercheckbox-numbers').prop("checked", false);
-    }
-};
 
 
 const updateDialog = () => {
@@ -170,6 +134,3 @@ const confirmLoad = async (event: Event) => {
     }
 };
 
-
-const tooglePathsLayer = (show: boolean) => main.renderPath.toggle(show);
-const toggleLayerNumbers = (show: boolean) => main.renderNumbers.toggle(show);

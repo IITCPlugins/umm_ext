@@ -38,47 +38,72 @@ class UMM_Ext implements Plugin.Class {
 
         createToolbar();
         $('#toolbox').append(
-            $('<a>', { text: "UMM", title: "Ultimate Mission Maker", click: () => this.toggleUMMBar() }));
+            $('<a>', { text: "UMM", title: "Ultimate Mission Maker", click: () => this.toggleUMM() }));
 
         // hide toolbar by default
         $('.leaflet-umm.leaflet-bar').hide();
 
-
         this.renderPath = new RenderPath();
         this.renderNumbers = new RenderNumbers();
 
-        window.addHook('portalSelected', (event) => addPortalToCurrentMission(event));
-        window.addHook('portalDetailsUpdated', addWaypointEditorToPortal);
-        window.addHook('mapDataRefreshEnd', () => this.state.checkAllPortals()); // TODO: only do it if required
-        window.addHook("portalDetailsUpdated", event => this.state.checkPortal(event));
-
         this.missionModeActive = false;
-
-        this.renderPath.redraw();
-        this.renderNumbers.redraw();
     }
 
-    toggleUMMBar() {
+    toggleUMM() {
         $('.leaflet-umm.leaflet-bar').toggle();
 
         if ($('.leaflet-umm.leaflet-bar').is(":visible")) {
-            // drawing attention
-            $('.leaflet-umm').fadeIn().fadeOut().fadeIn().fadeOut().fadeIn().fadeOut().fadeIn();
-            if (this.state.isEmpty()) {
-                editMissionSetDetails();
-            } else {
-                this.state.missions.zoom();
-            }
-
-            // restore layer status
-            const layer = [this.renderPath, this.renderNumbers];
-            layer.forEach(l => l.toggle(true));
+            this.activateUMM();
         } else {
-            // store layer status
-            const layer = [this.renderPath, this.renderNumbers];
-            layer.forEach(l => l.toggle(false));
+            this.deactivateUMM();
         }
     }
+
+    activateUMM() {
+        // drawing attention
+        $('.leaflet-umm').fadeIn().fadeOut().fadeIn().fadeOut().fadeIn().fadeOut().fadeIn();
+        if (this.state.isEmpty()) {
+            editMissionSetDetails();
+        } else {
+            this.state.missions.zoom();
+        }
+
+        this.renderPath.toggle(true);
+        this.renderNumbers.toggle(true);
+
+        this.missionModeActive = false;
+        this.renderPath.redraw();
+        this.renderNumbers.redraw();
+
+        window.addHook('portalSelected', this.onPortalSelected);
+        window.addHook('portalDetailsUpdated', this.onPortalDetailsUpdated);
+        window.addHook('mapDataRefreshEnd', this.onMapDataRefreshEnd);
+
+        addWaypointEditorToPortal();
+    }
+
+
+    deactivateUMM() {
+        this.missionModeActive = false;
+        this.renderPath.toggle(false);
+        this.renderNumbers.toggle(false);
+
+        window.removeHook('portalSelected', this.onPortalSelected);
+        window.removeHook('portalDetailsUpdated', this.onPortalDetailsUpdated);
+        window.removeHook('mapDataRefreshEnd', this.onMapDataRefreshEnd);
+
+        // remove editor if open
+        $("#umm-waypoint-editor").remove();
+    }
+
+
+    onPortalSelected = (event: EventPortalSelected) => void addPortalToCurrentMission(event);
+    onPortalDetailsUpdated = (event: EventPortalDetailsUpdated) => {
+        this.state.checkPortal(event);
+        addWaypointEditorToPortal();
+    }
+    onMapDataRefreshEnd = () => this.state.checkAllPortals();
+
 }
 
 
