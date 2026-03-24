@@ -6,6 +6,7 @@ import { title } from "../../Text/Text";
 import { button, dialogButton, dialogButtonClose } from "./Button";
 import { showUmmOptions } from "./Options";
 import { confirmDialog } from "./Confirm";
+import { isMobile } from "../../Helper/Mobile";
 
 // FIXME: missing in IITCPluginKit 1.9.6
 declare global {
@@ -33,10 +34,9 @@ export const editActiveMission = () => {
         button("Merge next into this", onMergePost),
     );
 
-    let position;
-    if (typeof android !== "undefined" && !!android) {
-        position = { my: "center top", at: "center top" };
-    }
+    const position = isMobile() ?
+        { my: "center top", at: "center top" } :
+        { my: "left bottom", at: "left+64px center" };
 
     window.dialog({
         html,
