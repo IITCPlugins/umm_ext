@@ -233,6 +233,7 @@ export const mergeMissions = async () => {
 
     main.state.missions.mergeAll();
     main.state.setCurrent(0);
+    main.state.save();
 }
 
 
