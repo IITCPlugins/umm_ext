@@ -13,9 +13,8 @@ export const dialogButton = (label: string, callback: (event?: JQuery.Event) => 
     }
 }
 
-export const dialogButtonClose = () => {
-    // return dialogButton("Close", function () { $(this).dialog("close") });
-    return dialogButton("Close", event => {
+export const dialogButtonClose = (label?: string) => {
+    return dialogButton(label ?? "Close", event => {
         // jquery-ui and arrow functions won't work well
         const dialog = $((event as any).currentTarget).parents(".ui-dialog").children(".ui-dialog-content");
         dialog.dialog("close")
