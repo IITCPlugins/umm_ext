@@ -1,4 +1,5 @@
 import { isMobile } from "../../Helper/Mobile";
+import { getMapPortals, hasDrawTools } from "../../lib/GetMapPortals";
 import { getPathDistance } from "../../lib/PathDistance";
 import { Ant } from "../../lib/TSP/Ant";
 import { TSP } from "../../lib/TSP/TSP";
@@ -26,8 +27,8 @@ export const showMissionGenerator = () => {
         ),
         button("Reset", resetPortals, "w-full"),
         button("Add Portal", addPortal, "w-full"),
-        // checkbox("AP_inpoly", "Only in Drawtool polygon", true),
-        // checkbox("AP_skipportals", "Skip Drawtool markers", true),
+        checkbox("AP_inpoly", "Only in Drawtool polygon", true).toggle(hasDrawTools()),
+        checkbox("AP_skipportals", "Skip Drawtool markers", true).toggle(hasDrawTools()),
         // checkbox("AP_sort", "Sort after add", false),
         button("Sort Portals", sortPortals, "w-full"),
         // checkbox("SP_startend", "Keep start/end portals", false),
@@ -94,7 +95,12 @@ const addPortal = () => {
         return;
     }
 
-    const distances = portalDistances(currentPortals);
+    const useDTPolygon = $("#AP_inpoly", dialog).is(":checked");
+    const useSkipPortals = $("#AP_skipportals", dialog).is(":checked");
+    const possiblePortals = getMapPortals(useDTPolygon, useSkipPortals);
+
+
+    const distances = portalDistances(possiblePortals, currentPortals);
     if (distances.length === 0) {
         alert("No more portals available (wait until all portals are loaded or change viewport");
         return;
@@ -106,13 +112,13 @@ const addPortal = () => {
 }
 
 
-const portalDistances = (portals: Portals): { guid: string, distance: number, index: number }[] => {
+const portalDistances = (incomginPortals: IITC.Portal[], portals: Portals): { guid: string, distance: number, index: number }[] => {
 
     const latLngs = portals.toLatLng();
     console.assert(latLngs.length > 0, "need at least one portal");
     if (latLngs.length === 0) return [];
 
-    const allPortals = Object.values(window.portals).filter(p => !portals.includes(p.options.guid));
+    const allPortals = incomginPortals.filter(p => !portals.includes(p.options.guid));
 
     return allPortals.map(portal => {
         const position = portal.getLatLng();
