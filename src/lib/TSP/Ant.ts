@@ -68,26 +68,30 @@ export class Ant {
     }
 
     getEdgeProbability(p1: PortalNode, p2: PortalNode): number {
-        return Math.pow(p1.tau.get(p2.guid)!, TAlpha) * Math.pow(p1.n.get(p2.guid)!, TBeta);
+        const edge = p1.edges.get(p2.guid)!;
+        return Math.pow(edge.tau, TAlpha) * Math.pow(edge.n, TBeta);
     }
 
     getDistance(p1: PortalNode, p2: PortalNode): number {
-        return 1 / p1.n.get(p2.guid)!;
+        const edge = p1.edges.get(p2.guid)!;
+        return edge.distance;
     }
 
 
     optimize(): void {
+        // test if swapping two neighbour portals will decrease the length of the route
         for (let i = 2; i < this.route.length; i++) {
             const p1 = this.route[i - 2];
             const p2 = this.route[i - 1];
             const p3 = this.route[i];
             const p4 = this.route[(i + 1) % this.route.length];
 
-            const d1 = p1.distanceTo(p2.portal) + p3.distanceTo(p4.portal);
-            const d2 = p1.distanceTo(p3.portal) + p2.distanceTo(p4.portal);
+            const d1 = this.getDistance(p1, p2) + this.getDistance(p3, p4);
+            const d2 = this.getDistance(p1, p3) + this.getDistance(p2, p4);
 
             if (d1 > d2) {
-                [this.route[i - 1], this.route[i]] = [this.route[i], this.route[i - 1]];
+                this.route[i - 1] = p3;
+                this.route[i] = p2;
                 this.length += d2 - d1;
             }
         }

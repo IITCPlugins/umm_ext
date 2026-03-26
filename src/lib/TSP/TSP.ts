@@ -12,7 +12,6 @@ const P = 0.8; // <1 ; how quick old route will be forgotten.. if ants can be pr
 const P_BEST = 0.05; // for tau_min
 const USE_GLOBAL_BEST = 10; // How often the BEST route will be learned
 
-
 /**
  * TSP solver using Ant Colony Optimization
  * 
@@ -36,24 +35,7 @@ export class TSP<MAnt extends Ant> {
 
 
     init(portals: UMM_Portal[]): void {
-
-        this.nodes = portals.map(p => {
-
-            const portal = new PortalNode(p);
-            portal.n = new Map();
-            portal.tau = new Map();
-
-            portals.forEach(p2 => {
-                if (portal.guid !== p2.guid) {
-                    portal.tau.set(p2.guid, TAU_0);
-
-                    const distance = portal.distanceTo(p2);
-                    portal.n.set(p2.guid, 1 / distance);
-                }
-            })
-
-            return portal;
-        })
+        this.nodes = portals.map(p => new PortalNode(p, portals, TAU_0));
 
         this.length = Infinity;
         this.useGlobalBest = USE_GLOBAL_BEST;
@@ -72,19 +54,23 @@ export class TSP<MAnt extends Ant> {
         // Set (Anti)Weights to start to Infinity
         this.nodes.forEach(portal => {
             if (portal.guid !== startNode.guid) {
-                portal.n.set(startNode.guid, 0);
+                const edge = portal.edges.get(startNode.guid)!;
+                edge.n = 1e-16;
+                edge.distance = Infinity;
             }
         });
 
-        // Set (Anti)Weights for end to start to null
-        endNode.n.set(startNode.guid, Infinity);
+        // Set (Anti)Weight for end to start to null
+        endNode.edges.get(startNode.guid)!.n = 1e16;
+        endNode.edges.get(startNode.guid)!.distance = 0;
+        startNode.edges.get(endNode.guid)!.n = 1e-16;
     }
 
 
     solve(generations: number, maxTime: number): void {
         this.length = Infinity;
 
-        const startTime = Date.now()
+        const startTime = Date.now();
 
         for (; generations > 0; generations--) {
             this.step();
@@ -155,9 +141,7 @@ export class TSP<MAnt extends Ant> {
     updatePheromons(bestAnt: Ant) {
 
         this.nodes.forEach(n => {
-            n.tau.forEach((value, key) => {
-                n.tau.set(key, P * value);
-            })
+            n.edges.forEach(edge => edge.tau = P * edge.tau);
         });
 
 
@@ -176,10 +160,10 @@ export class TSP<MAnt extends Ant> {
         const tau_min = Math.min(tau_max, tau_max * (1 - p) / ((avg - 1) * p));
 
         this.nodes.forEach(n => {
-            n.tau.forEach((value, key) => {
-                if (value < tau_min) n.tau.set(key, tau_min);
-                if (value > tau_max) n.tau.set(key, tau_max);
-            })
+            n.edges.forEach(edge => {
+                if (edge.tau < tau_min) edge.tau = tau_min;
+                if (edge.tau > tau_max) edge.tau = tau_max;
+            });
         });
 
     }
@@ -190,9 +174,11 @@ export class TSP<MAnt extends Ant> {
             const current = route[i];
             const next = route[(i + 1) % route.length];
 
-            const value = current.tau.get(next.portal.guid)! + delta;
-            current.tau.set(next.portal.guid, value);
-            next.tau.set(current.portal.guid, value);
+            const currentEdge = current.edges.get(next.guid)!;
+            const nextEdge = next.edges.get(current.portal.guid)!;
+
+            currentEdge.tau = currentEdge.tau * delta;
+            nextEdge.tau = currentEdge.tau * delta;
         }
     }
 
@@ -214,12 +200,13 @@ export class TSP<MAnt extends Ant> {
         let sum = 0;
 
         this.nodes.forEach(p => {
-            const rmin = Math.min(...p.tau.values());
-            const rmax = Math.max(...p.tau.values());
+            const taus = [...p.edges.values()].map(n => n.tau);
+            const rmin = Math.min(...taus);
+            const rmax = Math.max(...taus);
 
             const l = rmin + lambda * (rmax - rmin);
 
-            p.lambdaFactor = [...p.tau.values()].reduce((count, r) => r > l ? count + 1 : count, 0);
+            p.lambdaFactor = taus.reduce((count, r) => r > l ? count + 1 : count, 0);
             sum += p.lambdaFactor;
         });
 
