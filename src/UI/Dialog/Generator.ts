@@ -8,6 +8,7 @@ import { Mission } from "../../State/Mission";
 import { Portals } from "../../State/Portals";
 import { title } from "../../Text/Text";
 import { button, dialogButton, dialogButtonClose } from "./Button";
+import { checkbox } from "./Checkbox";
 
 
 let mission: Mission | undefined;
@@ -29,9 +30,9 @@ export const showMissionGenerator = () => {
         button("Add Portal", addPortal, "w-full"),
         checkbox("AP_inpoly", "Only in Drawtool polygon", true).toggle(hasDrawTools()),
         checkbox("AP_skipportals", "Skip Drawtool markers", true).toggle(hasDrawTools()),
-        // checkbox("AP_sort", "Sort after add", false),
+        checkbox("AP_sort", "Sort after add", false),
         button("Sort Portals", sortPortals, "w-full"),
-        // checkbox("SP_startend", "Keep start/end portals", false),
+        // checkbox("SP_startend", "Keep End Portal", false),
         // checkbox("SP_borders", "Don't cross Drawtool lines", false),
     );
 
@@ -70,11 +71,13 @@ const initCurrentPortals = () => {
     currentPortals = mission.portals.cloneWithoutEvents();
 }
 
+
 const resetPortals = () => {
     initCurrentPortals();
     if (layer) layer.clearLayers();
     updatePreview(false);
 }
+
 
 const applyPortals = () => {
     if (!mission) {
@@ -109,6 +112,11 @@ const addPortal = () => {
     const closePortal = distances.reduce((previous, current) => previous.distance < current.distance ? previous : current, distances[0]);
     currentPortals.insert(closePortal.index + 1, currentPortals.create(closePortal.guid));
     updatePreview();
+
+
+    if ($("#AP_sort", dialog).is(":checked")) {
+        sortPortals();
+    }
 }
 
 
