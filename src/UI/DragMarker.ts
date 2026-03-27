@@ -160,7 +160,7 @@ export class DragMarker {
             } else
                 if (this.mission.portals.length === 1 && preMission?.portals.includes(target.guid)) {
                     if (await confirmDialog({ message: "Split mission ?" })) {
-                        const index = preMission.portals.indexOf(target);
+                        const index = preMission.portals.indexOf(target.guid);
 
                         this.mission.portals.clear();
                         missions.split(preMission, index, this.mission);

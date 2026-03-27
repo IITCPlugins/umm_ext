@@ -42,7 +42,7 @@ export const addPortalToCurrentMission = async (data: EventPortalSelected) => {
                 message: "Split mission?",
                 details: "Your start portal overlaps another mission's portal. Reuse it or split the previous mission?"
             })) {
-                const index = preMission.portals.indexOf(portalToAdd);
+                const index = preMission.portals.indexOf(portalToAdd.guid);
                 mission.portals.clear();
                 state.missions.split(preMission, index, mission);
 

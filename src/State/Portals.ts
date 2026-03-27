@@ -75,8 +75,8 @@ export class Portals {
         return this.data.find(x => x.guid === guid);
     }
 
-    indexOf(portal: UMM_Portal): number {
-        return this.data.findIndex(x => x.guid === portal.guid);
+    indexOf(guid: PortalGUID): number {
+        return this.data.findIndex(x => x.guid === guid);
     }
 
 
