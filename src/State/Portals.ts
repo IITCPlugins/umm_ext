@@ -4,12 +4,19 @@ import { State } from "./State";
 
 export class Portals {
 
-    private state: State;
+    private state?: State;
     private data: UMM_Portal[];
 
-    constructor(state: State, data: UMM_Portal[]) {
+    constructor(state: State | undefined, data: UMM_Portal[]) {
         this.state = state;
         this.data = data;
+    }
+
+    /**
+     * create a portal copy but WITHOUT event trigger
+     */
+    cloneWithoutEvents(): Portals {
+        return new Portals(undefined, [...this.data]);
     }
 
     get length(): number {
@@ -29,29 +36,29 @@ export class Portals {
 
     set(index: number, portal: UMM_Portal) {
         this.data[index] = portal;
-        this.state.onMissionPortal.trigger();
+        this.state?.onMissionPortal.trigger();
     }
 
     add(...portal: UMM_Portal[]) {
         console.assert(!portal.some(p => this.includes(p.guid)), "portal is already in");
         this.data.push(...portal);
-        this.state.onMissionPortal.trigger();
+        this.state?.onMissionPortal.trigger();
     }
 
     insert(index: number, ...portal: UMM_Portal[]) {
         console.assert(!portal.some(p => this.includes(p.guid)), "portal is already in");
         this.data.splice(index, 0, ...portal);
-        this.state.onMissionPortal.trigger();
+        this.state?.onMissionPortal.trigger();
     }
 
     remove(index: number, count = 1) {
         this.data.splice(index, count);
-        this.state.onMissionPortal.trigger();
+        this.state?.onMissionPortal.trigger();
     }
 
     clear() {
         this.data.length = 0;
-        this.state.onMissionPortal.trigger();
+        this.state?.onMissionPortal.trigger();
     }
 
     toLatLng(): L.LatLng[] {
@@ -90,7 +97,7 @@ export class Portals {
 
     reverse() {
         this.data.reverse();
-        this.state.onMissionPortal.trigger();
+        this.state?.onMissionPortal.trigger();
     }
 
     create(guid: string): UMM_Portal {
@@ -114,6 +121,12 @@ export class Portals {
             objective: { type: Action.HACK_PORTAL, passphrase_params: { question: "", _single_passphrase: "" } }
         }
     }
+
+    getDistance(): number {
+        const locations = this.toLatLng();
+        return locations.reduce((sum, ll, index, lls) => index > 0 ? sum + ll.distanceTo(lls[index - 1]) : 0, 0);
+    }
+
 }
 
 // Helpers for Passphrase access (avoid the underscore warning)

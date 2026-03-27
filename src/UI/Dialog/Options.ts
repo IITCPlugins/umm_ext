@@ -6,6 +6,7 @@ import { title } from "../../Text/Text";
 import { about } from "./About";
 import { button, dialogButton, dialogButtonClose } from "./Button";
 import { confirmDialog } from "./Confirm";
+import { showMissionGenerator } from "./Generator";
 import { editMissionSetDetails } from "./MissionDetails";
 import { editActiveMission } from "./SelectMission";
 
@@ -44,6 +45,7 @@ export const showUmmOptions = () => {
             button("Zoom to view all missions", () => state.missions.zoom(), "w-full"),
         ),
         $("<hr>"),
+        button("Generate mission", showMissionGenerator, "w-full"),
         button("Split mission", splitMissionOptions, "w-full"),
         button("Merge missions", mergeMissions, "w-full"),
         button("Reverse missions", reverseMissions, "w-full"),
