@@ -23,7 +23,7 @@ export const showMissionGenerator = () => {
 
     const html = $("<div>", { class: "umm-generator" }).append(
         $("<p>").append(
-            "Portals in current mission: ", $("<b>", { id: "count" }), $("<br>"),
+            "Portals: ", $("<b>", { id: "count" }), $("<br>"),
             "Length: ", $("<b>", { id: "length" }),
         ),
         button("Reset", resetPortals, "w-full"),
@@ -61,7 +61,7 @@ export const showMissionGenerator = () => {
 
 
 const initCurrentPortals = () => {
-    mission = main.state.missions.get(0);
+    mission = main.state.getEditMission();
     if (!mission) {
         alert("No active mission");
         currentPortals = new Portals(undefined, []);
