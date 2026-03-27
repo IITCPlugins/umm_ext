@@ -4,6 +4,7 @@
   UMM is now fully hidden when inactive. Background processing is also disabled while inactive.
 - Added Multi-Reverse
   Using the reverse action in the main dialog, you can now reverse an entire banner or selected parts of it—not just a single mission.
+- Drag: allow swapping mission portals
 - Fixed merge in main dialog
 - Fixed “Should merge?” prompt in split option (main dialog)
 
