@@ -105,7 +105,7 @@ export class DragMarker {
 
         const marker: L.Marker = event.target;
 
-        const snappedPortal = this.getSnapPortal(marker.getLatLng(), this.mission.getLocations());
+        const snappedPortal = this.getSnapPortal(marker.getLatLng());
         const newTarget = snappedPortal ? snappedPortal.getLatLng() : marker.getLatLng();
 
         const latlngs = this.editDragLine.getLatLngs();
@@ -124,20 +124,35 @@ export class DragMarker {
         const marker: L.Marker = event.target;
         const options: MarkerOptions = event.target.options;
 
-        const coordinatesList = this.mission.getLocations();
-
-        const snappedPortal = this.getSnapPortal(marker.getLatLng(), coordinatesList);
+        const snappedPortal = this.getSnapPortal(marker.getLatLng());
         if (!snappedPortal) {
             this.marker.setLatLng(this.startLocation);
             return;
         }
 
+        const oldPortalIndex = this.mission.portals.indexOf(snappedPortal.options.guid);
         const portalToAdd = this.mission.portals.create(snappedPortal.options.guid);
 
+
         if (options.isMidPoint) {
+            // Midpoint -> new portal
+            if (oldPortalIndex !== -1) {
+                // Mid point moved to existing portal -> remove old portal
+                this.mission.portals.remove(oldPortalIndex);
+                if (options.portal > oldPortalIndex) options.portal--;
+            }
             this.mission.portals.insert(options.portal, portalToAdd);
         } else {
-            await this.movePortal(options.portal, portalToAdd);
+            if (oldPortalIndex === -1) {
+                // Move to new location
+                await this.movePortal(options.portal, portalToAdd);
+            } else {
+                // Swap locations
+                const a = this.mission.portals.get(options.portal)!;
+                const b = this.mission.portals.get(oldPortalIndex)!;
+                this.mission.portals.set(oldPortalIndex, a);
+                this.mission.portals.set(options.portal, b);
+            }
         }
 
         main.state.save();
@@ -187,14 +202,13 @@ export class DragMarker {
     }
 
 
-    private getSnapPortal(unsnappedLatLng: L.LatLng, ignore: L.LatLng[] = []): IITC.Portal | undefined {
+    private getSnapPortal(unsnappedLatLng: L.LatLng): IITC.Portal | undefined {
         const containerPoint = window.map.latLngToContainerPoint(unsnappedLatLng);
         let best_portal: IITC.Portal | undefined = undefined;
         let best_distance = Infinity;
         for (const guid in window.portals) {
             const portal = window.portals[guid];
             const ll = portal.getLatLng();
-            if (ignore.some(x => x.equals(ll))) continue;
 
             const pp = window.map.latLngToContainerPoint(ll);
             const options = portal.options as unknown as { weight: number; radius: number };  // type: missing Leaflet
