@@ -18,12 +18,12 @@
      Set the selected Portal as new mission start.
      If no portal is selected, the start point will cycle through all mission portals.
 
-  All changes are temporary until "applied" or be "dismissed".
+  All changes are temporary until "applied" or be "dismissed".  
   Note: Distance calculations are based on straight-line (“as-the-crow-flies”) distances; real-world paths are not considered.
 
-- Use static layers
+- Use static layers  
   UMM is now fully hidden when inactive. Background processing is also disabled while inactive.
-- Added Multi-Reverse
+- Added Multi-Reverse  
   Using the reverse action in the main dialog, you can now reverse an entire banner or selected parts of it—not just a single mission.
 - Drag: allow swapping mission portals
 - Fixed merge in main dialog
