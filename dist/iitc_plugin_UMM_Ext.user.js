@@ -2,7 +2,7 @@
 // @name            IITC plugin: Ultimate Mission Maker - Extended
 // @id              iitc_plugin_UMM_Ext
 // @category        Mission
-// @version         1.0.2
+// @version         1.1
 // @namespace       https://github.com/IITC-CE/ingress-intel-total-conversion
 // @updateURL       https://github.com/IITCPlugins/umm_ext/raw/refs/heads/main/dist/iitc_plugin_UMM_Ext.meta.js
 // @downloadURL     https://github.com/IITCPlugins/umm_ext/raw/refs/heads/main/dist/iitc_plugin_UMM_Ext.user.js
@@ -13,10 +13,42 @@
 // @icon64          data:image/png;base64,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
 // ==/UserScript==
 /**
+ * # v1.1
+ * 
+ * - new "Mission Generator" dialog
+ *   This new dialog provides several tools to modify missions:
+ *   1. "Reset"
+ *      Discard all current changes.
+ *   2. Add portals
+ *      Adds nearby portals to the current mission.
+ *      You can:
+ *      - Limit selection using a DrawTools polygon
+ *      - Exclude individual portals with DrawTool Markers
+ *      - Restrict selection to portals within path hack range
+ *   3. Sort portals
+ *      Attempts to arrange portals for the shortest possible path.
+ *      (Note: This is a complex optimization problem—results may vary.
+ *      The “keep end portal” option may occasionally fail.)
+ *   4. Change start
+ *      Set the selected Portal as new mission start.
+ *      If no portal is selected, the start point will cycle through all mission portals.
+ * 
+ *   All changes are temporary until "applied" or be "dismissed".
+ *   Note: Distance calculations are based on straight-line (“as-the-crow-flies”) distances; real-world paths are not considered.
+ * 
+ * - Use static layers
+ *   UMM is now fully hidden when inactive. Background processing is also disabled while inactive.
+ * - Added Multi-Reverse
+ *   Using the reverse action in the main dialog, you can now reverse an entire banner or selected parts of it—not just a single mission.
+ * - Drag: allow swapping mission portals
+ * - Fixed merge in main dialog
+ * - Fixed “Should merge?” prompt in split option (main dialog)
+ * - Mission-Select dialog moved to the left
+ * 
  * # v1.0.2
  * 
  * - fix IITC-Button load
- * in iitc-button load order is differnet and custom "if UUM is loaded then disable it" failed
+ *   in iitc-button load order is differnet and custom "if UUM is loaded then disable it" failed
  * - fix variable if both plugins are active
  * 
  * # v1.0.1
@@ -41,7 +73,6 @@
  * 
  * - **Banner Settins** (start window)
  *   - changed Title placeholders to $T $M $N
- *   
  * - **Option Dialog** (main window)
  *   - Banner information now displays as a compact table
  *   - Removed warning for mission counts that are not multiples of 6
@@ -67,7 +98,6 @@
  *   - Option to split missions when starting on a portal that's already assigned to another mission
  *   - on mobile dialogs are not at the top instead of centered
  *   - flash buttonbar on activation to draw attention
- *   
  * 
  * ---
  * 
@@ -404,15 +434,19 @@ function wrapper_iitc(SCRIPT_INFO) {
         }
         onMarkerDrag(event) {
             if (!this.editDragLine) return;
-            const marker = event.target, snappedPortal = this.getSnapPortal(marker.getLatLng(), this.mission.getLocations()), newTarget = snappedPortal ? snappedPortal.getLatLng() : marker.getLatLng(), latlngs = this.editDragLine.getLatLngs();
+            const marker = event.target, snappedPortal = this.getSnapPortal(marker.getLatLng()), newTarget = snappedPortal ? snappedPortal.getLatLng() : marker.getLatLng(), latlngs = this.editDragLine.getLatLngs();
             latlngs[3 === latlngs.length ? 1 : 0] = newTarget, this.editDragLine.setLatLngs(latlngs);
         }
         async onMarkerDragEnd(event) {
             this.editDragLine && (this.layer.removeLayer(this.editDragLine), this.editDragLine = void 0);
-            const marker = event.target, options = event.target.options, coordinatesList = this.mission.getLocations(), snappedPortal = this.getSnapPortal(marker.getLatLng(), coordinatesList);
+            const marker = event.target, options = event.target.options, snappedPortal = this.getSnapPortal(marker.getLatLng());
             if (!snappedPortal) return void this.marker.setLatLng(this.startLocation);
-            const portalToAdd = this.mission.portals.create(snappedPortal.options.guid);
-            options.isMidPoint ? this.mission.portals.insert(options.portal, portalToAdd) : await this.movePortal(options.portal, portalToAdd), 
+            const oldPortalIndex = this.mission.portals.indexOf(snappedPortal.options.guid), portalToAdd = this.mission.portals.create(snappedPortal.options.guid);
+            if (options.isMidPoint) -1 !== oldPortalIndex && (this.mission.portals.remove(oldPortalIndex), 
+            options.portal > oldPortalIndex && options.portal--), this.mission.portals.insert(options.portal, portalToAdd); else if (-1 === oldPortalIndex) await this.movePortal(options.portal, portalToAdd); else {
+                const a = this.mission.portals.get(options.portal), b = this.mission.portals.get(oldPortalIndex);
+                this.mission.portals.set(oldPortalIndex, a), this.mission.portals.set(options.portal, b);
+            }
             main.state.save();
         }
         async movePortal(portalID, target) {
@@ -425,7 +459,7 @@ function wrapper_iitc(SCRIPT_INFO) {
                 } else if (1 === this.mission.portals.length && (null == preMission ? void 0 : preMission.portals.includes(target.guid)) && await confirmDialog({
                     message: "Split mission ?"
                 })) {
-                    const index = preMission.portals.indexOf(target);
+                    const index = preMission.portals.indexOf(target.guid);
                     return this.mission.portals.clear(), void missions.split(preMission, index, this.mission);
                 }
             }
@@ -437,13 +471,11 @@ function wrapper_iitc(SCRIPT_INFO) {
             }
             this.mission.portals.set(portalID, target);
         }
-        getSnapPortal(unsnappedLatLng, ignore = []) {
+        getSnapPortal(unsnappedLatLng) {
             const containerPoint = window.map.latLngToContainerPoint(unsnappedLatLng);
             let best_portal, best_distance = 1 / 0;
             for (const guid in window.portals) {
-                const portal = window.portals[guid], ll = portal.getLatLng();
-                if (ignore.some(x => x.equals(ll))) continue;
-                const pp = window.map.latLngToContainerPoint(ll), options = portal.options, size = options.weight + 5 * options.radius, distance = pp.distanceTo(containerPoint);
+                const portal = window.portals[guid], ll = portal.getLatLng(), pp = window.map.latLngToContainerPoint(ll), options = portal.options, size = options.weight + 5 * options.radius, distance = pp.distanceTo(containerPoint);
                 distance > size || distance < best_distance && (best_distance = distance, best_portal = portal);
             }
             return best_portal;
@@ -454,9 +486,8 @@ function wrapper_iitc(SCRIPT_INFO) {
         }
     }
     class RenderBase {
-        constructor(name) {
-            this.layer = new window.L.FeatureGroup, window.addLayerGroup(name, this.layer, !0), 
-            this.toggle(!1);
+        constructor() {
+            this.layer = new window.L.FeatureGroup, this.toggle(!1);
         }
         isVisible() {
             return window.map.hasLayer(this.layer);
@@ -470,7 +501,7 @@ function wrapper_iitc(SCRIPT_INFO) {
     }
     class RenderPath extends RenderBase {
         constructor() {
-            super("UMM: Mission Paths"), this.redrawNow = () => {
+            super(), this.redrawNow = () => {
                 this.layer.clearLayers(), this.dragMarkers.forEach(m => m.destroy()), this.dragMarkers = [];
                 const editMode = main.missionModeActive;
                 main.state.missions.forEach(mission => {
@@ -516,6 +547,9 @@ function wrapper_iitc(SCRIPT_INFO) {
         constructor(state, data) {
             this.state = state, this.data = data;
         }
+        cloneWithoutEvents() {
+            return new Portals(void 0, [ ...this.data ]);
+        }
         get length() {
             return this.data.length;
         }
@@ -526,20 +560,25 @@ function wrapper_iitc(SCRIPT_INFO) {
             return this.data.slice(start, end);
         }
         set(index, portal) {
-            this.data[index] = portal, this.state.onMissionPortal.trigger();
+            var _a;
+            this.data[index] = portal, null === (_a = this.state) || void 0 === _a || _a.onMissionPortal.trigger();
         }
         add(...portal) {
-            portal.some(p => this.includes(p.guid)), this.data.push(...portal), this.state.onMissionPortal.trigger();
+            var _a;
+            portal.some(p => this.includes(p.guid)), this.data.push(...portal), null === (_a = this.state) || void 0 === _a || _a.onMissionPortal.trigger();
         }
         insert(index, ...portal) {
+            var _a;
             portal.some(p => this.includes(p.guid)), this.data.splice(index, 0, ...portal), 
-            this.state.onMissionPortal.trigger();
+            null === (_a = this.state) || void 0 === _a || _a.onMissionPortal.trigger();
         }
         remove(index, count = 1) {
-            this.data.splice(index, count), this.state.onMissionPortal.trigger();
+            var _a;
+            this.data.splice(index, count), null === (_a = this.state) || void 0 === _a || _a.onMissionPortal.trigger();
         }
         clear() {
-            this.data.length = 0, this.state.onMissionPortal.trigger();
+            var _a;
+            this.data.length = 0, null === (_a = this.state) || void 0 === _a || _a.onMissionPortal.trigger();
         }
         toLatLng() {
             return this.data.map(portal => new L.LatLng(portal.location.latitude, portal.location.longitude));
@@ -554,8 +593,8 @@ function wrapper_iitc(SCRIPT_INFO) {
         find(guid) {
             return this.data.find(x => x.guid === guid);
         }
-        indexOf(portal) {
-            return this.data.findIndex(x => x.guid === portal.guid);
+        indexOf(guid) {
+            return this.data.findIndex(x => x.guid === guid);
         }
         isStart(portal) {
             var _a;
@@ -566,7 +605,8 @@ function wrapper_iitc(SCRIPT_INFO) {
             return (null === (_a = this.data.at(-1)) || void 0 === _a ? void 0 : _a.guid) === portal.guid;
         }
         reverse() {
-            this.data.reverse(), this.state.onMissionPortal.trigger();
+            var _a;
+            this.data.reverse(), null === (_a = this.state) || void 0 === _a || _a.onMissionPortal.trigger();
         }
         create(guid) {
             const iitcPortal = window.portals[guid], options = iitcPortal.options.data, ll = iitcPortal.getLatLng();
@@ -590,6 +630,9 @@ function wrapper_iitc(SCRIPT_INFO) {
                     }
                 }
             };
+        }
+        getDistance() {
+            return this.toLatLng().reduce((sum, ll, index, lls) => index > 0 ? sum + ll.distanceTo(lls[index - 1]) : 0, 0);
         }
     }
     const setPassphrase = (portal, question, answer) => {
@@ -631,7 +674,7 @@ function wrapper_iitc(SCRIPT_INFO) {
             !0);
         }
         getDistance() {
-            return this.portals.toLatLng().reduce((sum, ll, index, lls) => index > 0 ? sum + ll.distanceTo(lls[index - 1]) : 0, 0);
+            return this.portals.getDistance();
         }
         clear() {
             this.portal_data.clear();
@@ -729,7 +772,7 @@ function wrapper_iitc(SCRIPT_INFO) {
         mergeAll() {
             const portals = [];
             this.data.forEach(m => {
-                portals.push(...m.portals), portals.length = 0;
+                portals.push(...m.portals), m.portals.length = 0;
             }), this.data[0].portals = portals;
         }
         split(source, at, destination) {
@@ -759,10 +802,18 @@ function wrapper_iitc(SCRIPT_INFO) {
         getMissionsOfPortal(guid) {
             return this.filter(mis => mis.portals.includes(guid)).map(m => m.id);
         }
+        reverse(from, to) {
+            var _a;
+            if (to) {
+                (from = Math.min(Math.max(from, 0), this.count() - 1)) > (to = Math.min(Math.max(to, 0), this.count() - 1)) && ([from, to] = [ to, from ]);
+                const portal_copy = this.data.map(mission => mission.portals.splice(0));
+                for (let i = from; i <= to; i++) this.data[i].portals = portal_copy[to - (i - from)].reverse();
+            } else null === (_a = this.get(from)) || void 0 === _a || _a.reverse();
+        }
     }
     class RenderNumbers extends RenderBase {
         constructor() {
-            super("UMM: Mission Numbers"), this.redrawNow = () => {
+            super(), this.redrawNow = () => {
                 this.layer.clearLayers();
                 const state = main.state;
                 this.getMissionStarts(state).forEach(start => {
@@ -1023,7 +1074,7 @@ function wrapper_iitc(SCRIPT_INFO) {
         text: label,
         click: callback,
         class: "umm-dialog-button"
-    }), dialogButtonClose = () => dialogButton("Close", event => {
+    }), dialogButtonClose = label => dialogButton(null != label ? label : "Close", event => {
         $(event.currentTarget).parents(".ui-dialog").children(".ui-dialog-content").dialog("close");
     }), loadFile = async (state, inputFile) => {
         const text = await inputFile.text();
@@ -1419,17 +1470,336 @@ function wrapper_iitc(SCRIPT_INFO) {
         html += "</div>";
         const buttons = [ dialogButton("< Main Menu", showUmmOptions), dialogButton("Changelog", () => dialog({
             title: "Changelog",
-            html: miniMarkdown('# v1.0.2\n\n- fix IITC-Button load\nin iitc-button load order is differnet and custom "if UUM is loaded then disable it" failed\n- fix variable if both plugins are active\n\n# v1.0.1\n\n- fix mission number (index started by 0 instead of 1)\n\n# v1.0\n\nThis is a complete rewrite of the Ultimate Mission Maker from a developer perspective.\nThe entire codebase has been redesigned while maintaining the familiar user experience of the original UMM.\nBelow are the visible improvements and changes you\'ll notice.\n\n## What\'s Changed:\n\n- UMM is now hidden by default. You need to hit the "UMM" button in the Portal details window to make it appear.\n\n- **Select Mission Dialog** (open it through the toolbar or the main dialog)\n  - Selecting a mission is no longer required; simply open another mission\n  - Navigation buttons (+/-) allow you to cycle through missions\n  - Added split, clear, merge, and reverse commands for mission manipulation\n  - New mission information display: portal count and distances\n\n- **Banner Settins** (start window)\n  - changed Title placeholders to $T $M $N\n  \n- **Option Dialog** (main window)\n  - Banner information now displays as a compact table\n  - Removed warning for mission counts that are not multiples of 6\n  - Added warning when missions lack sufficient waypoints\n\n- **Drag & Drop** in the mission editor path\n  - Move existing markers to adjust waypoints\n  - Add new waypoints by positioning intermediate markers at new locations\n  - Remove waypoints by double-clicking a marker\n  - Merge missions by dragging start and end markers together\n\n- **Mission Numbers**\n  - Potential split points are previewed while creating missions\n\n- **Waypoint edit**\n  - current mission is preselected\n  - passphrases: add random default questions.\n    when question & answer is empty a simple question will be set.\n\n- **Miscellaneous**\n  - Custom confirmation dialogs clarify actions and improve readability\n  - Switch between any missions, even those without portals\n  - Option to split missions when starting on a portal that\'s already assigned to another mission\n  - on mobile dialogs are not at the top instead of centered\n  - flash buttonbar on activation to draw attention\n  \n\n---\n\n# History:\n\n## v1.0.beta.2 - 15.02.26\n\n- fixed update-URL in script header\n\n## v1.0.beta - 15.02.26\n\n- first public release\n- automated build process on GitHub\n- fixed layer checkboxes in Option-Dialog\n- add "clear" mission to selection dialog\n- always color selected mission even when not in Edit-Mode\n- move "no" to left in custom confirm dialog\n- remove doubled "v" in version numbers\n- fix toggeling edit mode on mission detail window "save" button\n- close dialog on mission detail window "save"\n- fix linebreaks in changelog dialog\n- select mission: directly select mission on combo-box change\n- fix question text in portal details\n- on mobile dialogs are not at the top instead of centered\n'),
+            html: miniMarkdown('# v1.1\n\n- new "Mission Generator" dialog\n  This new dialog provides several tools to modify missions:\n  1. "Reset"\n     Discard all current changes.\n  2. Add portals\n     Adds nearby portals to the current mission.\n     You can:\n     - Limit selection using a DrawTools polygon\n     - Exclude individual portals with DrawTool Markers\n     - Restrict selection to portals within path hack range\n  3. Sort portals\n     Attempts to arrange portals for the shortest possible path.\n     (Note: This is a complex optimization problem—results may vary.\n     The “keep end portal” option may occasionally fail.)\n  4. Change start\n     Set the selected Portal as new mission start.\n     If no portal is selected, the start point will cycle through all mission portals.\n\n  All changes are temporary until "applied" or be "dismissed".\n  Note: Distance calculations are based on straight-line (“as-the-crow-flies”) distances; real-world paths are not considered.\n\n- Use static layers\n  UMM is now fully hidden when inactive. Background processing is also disabled while inactive.\n- Added Multi-Reverse\n  Using the reverse action in the main dialog, you can now reverse an entire banner or selected parts of it—not just a single mission.\n- Drag: allow swapping mission portals\n- Fixed merge in main dialog\n- Fixed “Should merge?” prompt in split option (main dialog)\n- Mission-Select dialog moved to the left\n\n# v1.0.2\n\n- fix IITC-Button load\n  in iitc-button load order is differnet and custom "if UUM is loaded then disable it" failed\n- fix variable if both plugins are active\n\n# v1.0.1\n\n- fix mission number (index started by 0 instead of 1)\n\n# v1.0\n\nThis is a complete rewrite of the Ultimate Mission Maker from a developer perspective.\nThe entire codebase has been redesigned while maintaining the familiar user experience of the original UMM.\nBelow are the visible improvements and changes you\'ll notice.\n\n## What\'s Changed:\n\n- UMM is now hidden by default. You need to hit the "UMM" button in the Portal details window to make it appear.\n\n- **Select Mission Dialog** (open it through the toolbar or the main dialog)\n  - Selecting a mission is no longer required; simply open another mission\n  - Navigation buttons (+/-) allow you to cycle through missions\n  - Added split, clear, merge, and reverse commands for mission manipulation\n  - New mission information display: portal count and distances\n\n- **Banner Settins** (start window)\n  - changed Title placeholders to $T $M $N\n- **Option Dialog** (main window)\n  - Banner information now displays as a compact table\n  - Removed warning for mission counts that are not multiples of 6\n  - Added warning when missions lack sufficient waypoints\n\n- **Drag & Drop** in the mission editor path\n  - Move existing markers to adjust waypoints\n  - Add new waypoints by positioning intermediate markers at new locations\n  - Remove waypoints by double-clicking a marker\n  - Merge missions by dragging start and end markers together\n\n- **Mission Numbers**\n  - Potential split points are previewed while creating missions\n\n- **Waypoint edit**\n  - current mission is preselected\n  - passphrases: add random default questions.\n    when question & answer is empty a simple question will be set.\n\n- **Miscellaneous**\n  - Custom confirmation dialogs clarify actions and improve readability\n  - Switch between any missions, even those without portals\n  - Option to split missions when starting on a portal that\'s already assigned to another mission\n  - on mobile dialogs are not at the top instead of centered\n  - flash buttonbar on activation to draw attention\n\n---\n\n# History:\n\n## v1.0.beta.2 - 15.02.26\n\n- fixed update-URL in script header\n\n## v1.0.beta - 15.02.26\n\n- first public release\n- automated build process on GitHub\n- fixed layer checkboxes in Option-Dialog\n- add "clear" mission to selection dialog\n- always color selected mission even when not in Edit-Mode\n- move "no" to left in custom confirm dialog\n- remove doubled "v" in version numbers\n- fix toggeling edit mode on mission detail window "save" button\n- close dialog on mission detail window "save"\n- fix linebreaks in changelog dialog\n- select mission: directly select mission on combo-box change\n- fix question text in portal details\n- on mobile dialogs are not at the top instead of centered\n'),
             width: 500
         })), dialogButtonClose() ];
         window.dialog({
             html,
-            title: `${title} v1.0.2 - About`,
+            title: `${title} v1.1 - About`,
             id: "umm-options",
             width: 350,
             buttons
         });
-    }, miniMarkdown = incoming => incoming.replace(/^---/gm, "<hr>").replace(/^##\s(.*)\n*/gm, "<h3>$1</h3>").replace(/^#\s(.*)\n*/gm, "<h2>$1</h2>").replace(/\*\*(.*)\*\*/gm, "<b>$1</b>").replace(/\n/gm, "<br/>").replace(/(<\/h.>)<br>/gm, "$1").replace(/<br>(<h.>)/gm, "$1"), editActiveMission = () => {
+    }, miniMarkdown = incoming => incoming.replace(/^---/gm, "<hr>").replace(/^##\s(.*)\n*/gm, "<h3>$1</h3>").replace(/^#\s(.*)\n*/gm, "<h2>$1</h2>").replace(/\*\*(.*)\*\*/gm, "<b>$1</b>").replace(/\n/gm, "<br/>").replace(/(<\/h.>)<br>/gm, "$1").replace(/<br>(<h.>)/gm, "$1"), isMobile = () => "undefined" != typeof android && !!android, hasDrawTools = () => !!window.plugin.drawTools, getDTPolygons = () => {
+        const DT = window.plugin.drawTools;
+        return DT ? Object.values(DT.drawnItems._layers).filter(layer => layer instanceof L.GeodesicPolygon).map(polygon => polygon.getLatLngs()) : [];
+    }, getDTMarkerLocations = () => {
+        const DT = window.plugin.drawTools;
+        return DT ? Object.values(DT.drawnItems._layers).filter(layer => layer instanceof L.Marker).map(marker => marker.getLatLng()) : [];
+    }, isInPolygon = (polygon, point) => {
+        if (polygon.some(p => point.equals(p))) return !0;
+        let c = !1;
+        for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) polygon[i].lat > point.lat != polygon[j].lat > point.lat && point.lng < polygon[i].lng + (polygon[j].lng - polygon[i].lng) * (point.lat - polygon[i].lat) / (polygon[j].lat - polygon[i].lat) && (c = !c);
+        return c;
+    }, closedPoint = (a, b, x) => {
+        const dx = b.lat - a.lat, dy = b.lng - a.lng, d = dx * dx + dy * dy;
+        if (0 === d) return a;
+        let r = (dx * x.lat + dy * x.lng - (dx * a.lat + dy * a.lng)) / d;
+        return r < 0 && (r = 0), r > 1 && (r = 1), L.latLng(a.lat + r * dx, a.lng + r * dy);
+    }, distance2 = (a, b) => {
+        const dx = b.lat - a.lat, dy = b.lng - a.lng;
+        return dx * dx + dy * dy;
+    };
+    class PortalNode {
+        constructor(portal, portals, TAU_0) {
+            this.portal = portal, this.edges = new Map, portals.forEach(p2 => {
+                if (portal.guid !== p2.guid) {
+                    const distance = this.distanceTo(p2);
+                    this.edges.set(p2.guid, {
+                        distance,
+                        n: 1 / distance,
+                        tau: TAU_0
+                    });
+                }
+            });
+        }
+        get guid() {
+            return this.portal.guid;
+        }
+        distanceTo(other) {
+            const a = L.latLng(this.portal.location.latitude, this.portal.location.longitude), b = L.latLng(other.location.latitude, other.location.longitude);
+            return a.distanceTo(b);
+        }
+    }
+    class TSP {
+        constructor(type) {
+            this.antType = type;
+        }
+        init(portals) {
+            this.nodes = portals.map(p => new PortalNode(p, portals, 1)), this.length = 1 / 0, 
+            this.useGlobalBest = 10, this.generation = 0;
+        }
+        setStartEnd(start, end) {
+            const startNode = this.nodes.find(n => n.guid === start), endNode = this.nodes.find(n => n.guid === end);
+            if (!startNode || !endNode) throw new Error("Start or end portal not found");
+            this.nodes.forEach(portal => {
+                if (portal.guid !== startNode.guid) {
+                    const edge = portal.edges.get(startNode.guid);
+                    edge.n = 1e-16, edge.distance = 1 / 0;
+                }
+            }), endNode.edges.get(startNode.guid).n = 1e16, endNode.edges.get(startNode.guid).distance = 0, 
+            startNode.edges.get(endNode.guid).n = 1e-16;
+        }
+        solve(generations, maxTime) {
+            this.length = 1 / 0;
+            const startTime = Date.now();
+            for (;generations > 0 && (this.step(), !(Date.now() - startTime > maxTime)); generations--) ;
+        }
+        step() {
+            this.generation++;
+            const ants = this.createAntPath(), bestAnt = ants.reduce((best, ant) => best.length < ant.length ? best : ant, ants[0]);
+            bestAnt.optimize(), bestAnt.length < this.length && (this.route = [ ...bestAnt.route ], 
+            this.length = bestAnt.length, this.best = bestAnt.clone()), this.updatePheromons(bestAnt);
+        }
+        createAntPath() {
+            if (this.nodes.length < 160) {
+                const countOfAnts = this.nodes.length;
+                return Array.from({
+                    length: countOfAnts
+                }).map((_, index) => {
+                    const ant = new this.antType;
+                    return ant.init(this.nodes, index), ant.walk(), ant;
+                });
+            }
+            return this.sample(this.nodes.length, 160).map(index => {
+                const ant = new this.antType;
+                return ant.init(this.nodes, index), ant.walk(), ant;
+            });
+        }
+        sample(max, count) {
+            const numbers = Array.from({
+                length: max
+            }).map((_, index) => index);
+            if (count > max) return numbers;
+            const results = [];
+            let length = numbers.length;
+            for (;count > 0; count--) {
+                const index = Math.floor(Math.random() * length);
+                results.push(numbers[index]), length--, numbers[index] = numbers[length];
+            }
+            return results;
+        }
+        updatePheromons(bestAnt) {
+            this.nodes.forEach(n => {
+                n.edges.forEach(edge => edge.tau = .8 * edge.tau);
+            }), this.useGlobalBest-- < 0 ? (this.useGlobalBest = 10, this.addPheromons(this.route, this.length)) : this.addPheromons(bestAnt.route, bestAnt.length);
+            const tau_max = 1 / ((1 - .8) * this.length), avg = this.nodes.length / 2, p = Math.pow(.05, 1 / this.nodes.length), tau_min = Math.min(tau_max, tau_max * (1 - p) / ((avg - 1) * p));
+            this.nodes.forEach(n => {
+                n.edges.forEach(edge => {
+                    edge.tau < tau_min && (edge.tau = tau_min), edge.tau > tau_max && (edge.tau = tau_max);
+                });
+            });
+        }
+        addPheromons(route, length) {
+            const delta = 1 / length;
+            for (let i = 0; i < route.length; i++) {
+                const current = route[i], next = route[(i + 1) % route.length], currentEdge = current.edges.get(next.guid), nextEdge = next.edges.get(current.portal.guid);
+                currentEdge.tau = currentEdge.tau * delta, nextEdge.tau = currentEdge.tau * delta;
+            }
+        }
+        routeChangeStart(id) {
+            const index = this.route.findIndex(p => p.guid === id);
+            this.route = [ ...this.route.slice(index), ...this.route.slice(0, index) ];
+        }
+        routeReverse() {
+            this.route.reverse(), this.route = [ ...this.route.slice(-1), ...this.route.slice(0, -1) ];
+        }
+        getLambdaFactor(lambda) {
+            let sum = 0;
+            return this.nodes.forEach(p => {
+                const taus = [ ...p.edges.values() ].map(n => n.tau), rmin = Math.min(...taus), rmax = Math.max(...taus), l = rmin + lambda * (rmax - rmin);
+                p.lambdaFactor = taus.reduce((count, r) => r > l ? count + 1 : count, 0), sum += p.lambdaFactor;
+            }), sum / this.nodes.length;
+        }
+    }
+    class Ant {
+        init(portals, useStart) {
+            this.notVisited = [ ...portals ], this.length = 0, this.pickStart(useStart);
+        }
+        clone() {
+            const newAnt = new Ant;
+            return newAnt.route = [ ...this.route ], newAnt.length = this.length, newAnt.notVisited = [ ...this.notVisited ], 
+            newAnt;
+        }
+        pickStart(index) {
+            this.route = this.notVisited.splice(index, 1);
+        }
+        walk() {
+            const start = this.route.at(-1);
+            let current = start;
+            for (;this.notVisited.length > 0; ) {
+                const nextIndex = this.getNextNode(current, this.notVisited), next = this.notVisited.splice(nextIndex, 1)[0];
+                this.route.push(next), this.addNode(current, next), current = next;
+            }
+            this.length += this.getDistance(current, start);
+        }
+        addNode(current, next) {
+            this.length += this.getDistance(current, next);
+        }
+        getNextNode(current, portals) {
+            portals.length, portals.some(p => p.guid === current.guid);
+            const sum = portals.reduce((sum, p) => sum + this.getEdgeProbability(current, p), 0);
+            let rand = Math.random() * sum, index = -1;
+            do {
+                index++, rand -= this.getEdgeProbability(current, portals[index]);
+            } while (rand > 0);
+            return index;
+        }
+        getEdgeProbability(p1, p2) {
+            const edge = p1.edges.get(p2.guid);
+            return Math.pow(edge.tau, 1) * Math.pow(edge.n, 5);
+        }
+        getDistance(p1, p2) {
+            return p1.edges.get(p2.guid).distance;
+        }
+        optimize() {
+            for (let i = 2; i < this.route.length; i++) {
+                const p1 = this.route[i - 2], p2 = this.route[i - 1], p3 = this.route[i], p4 = this.route[(i + 1) % this.route.length], d1 = this.getDistance(p1, p2) + this.getDistance(p3, p4), d2 = this.getDistance(p1, p3) + this.getDistance(p2, p4);
+                d1 > d2 && (this.route[i - 1] = p3, this.route[i] = p2, this.length += d2 - d1);
+            }
+        }
+    }
+    const Checkbox_checkbox = (id, label, checked) => $("<div>", {
+        class: "form-control"
+    }).append($("<label>", {
+        class: "cursor-pointer label"
+    }).append($("<input>", {
+        type: "checkbox",
+        id,
+        checked,
+        class: "checkbox"
+    }), $("<span>", {
+        class: "label-text",
+        text: label
+    })));
+    let currentMission, currentPortals, Generator_dialog, Generator_layer;
+    const showMissionGenerator = () => {
+        initCurrentPortals();
+        const html = $("<div>", {
+            class: "umm-generator"
+        }).append($("<p>").append("Portals: ", $("<b>", {
+            id: "count"
+        }), $("<br>"), "Length: ", $("<b>", {
+            id: "length"
+        })), Button_button("Reset", resetPortals, "w-full"), Button_button("Add Portal", addPortal, "w-full"), Checkbox_checkbox("AP_hackrange", "Only in Hackrange", !1), Checkbox_checkbox("AP_inpoly", "Only in Drawtool polygon", !0).toggle(hasDrawTools()), Checkbox_checkbox("AP_skipportals", "Skip Drawtool markers", !0).toggle(hasDrawTools()), Checkbox_checkbox("AP_sort", "Sort after add", !1), Button_button("Sort Portals", sortPortals, "w-full"), Checkbox_checkbox("SP_startend", "Keep End Portal", hasNextMissionPortals()), Checkbox_checkbox("SP_moresorttime", "Take more time to sort", !1), Button_button("Change start", changeStartPortal, "w-full")), position = isMobile() ? {
+            my: "center top",
+            at: "center top"
+        } : {
+            my: "left bottom",
+            at: "left+64px center"
+        };
+        Generator_dialog = window.dialog({
+            html,
+            title: `${title} v1.1`,
+            id: "umm-options_generator",
+            width: 350,
+            position,
+            closeCallback: () => destroy(),
+            buttons: [ dialogButton("Apply", () => {
+                applyPortals(), Generator_dialog.dialog("close");
+            }), dialogButtonClose("Dismiss") ]
+        }), updatePreview(!1);
+    }, initCurrentPortals = () => {
+        if (currentMission = main.state.getEditMission(), !currentMission) return notification("No active mission"), 
+        void (currentPortals = new Portals(void 0, []));
+        currentPortals = currentMission.portals.cloneWithoutEvents();
+    }, hasNextMissionPortals = () => {
+        var _a;
+        const nextMission = main.state.missions.get(currentMission.id + 1);
+        return (null !== (_a = null == nextMission ? void 0 : nextMission.portals.length) && void 0 !== _a ? _a : 0) > 0;
+    }, resetPortals = () => {
+        initCurrentPortals(), Generator_layer && Generator_layer.clearLayers(), updatePreview(!1);
+    }, applyPortals = () => {
+        currentMission && (currentMission.portals.clear(), currentMission.portals.add(...currentPortals.getRange()), 
+        currentMission.show(), resetPortals());
+    }, addPortal = () => {
+        if (0 === currentPortals.length) return void notification("Need at least one start portal");
+        const possiblePortals = ((useDrawTool = !1, skipMarkers) => {
+            let allPortals = Object.values(window.portals);
+            if (useDrawTool) {
+                const polygons = getDTPolygons();
+                polygons.length > 0 && (allPortals = allPortals.filter(p => polygons.some(polygon => isInPolygon(polygon, p.getLatLng()))));
+            }
+            if (skipMarkers) {
+                const skipLocations = getDTMarkerLocations();
+                skipLocations.length > 0 && (allPortals = allPortals.filter(p => skipLocations.every(loc => !loc.equals(p.getLatLng()))));
+            }
+            return allPortals;
+        })($("#AP_inpoly", Generator_dialog).is(":checked"), $("#AP_skipportals", Generator_dialog).is(":checked")), distances = portalDistances(possiblePortals, currentPortals);
+        if (0 === distances.length) return void notification("No more portals available");
+        const closePortal = distances.reduce((previous, current) => previous.distance < current.distance ? previous : current, distances[0]);
+        $("#AP_hackrange", Generator_dialog).is(":checked") && closePortal.distance > HACK_RANGE ? notification("No more portals in Hack range") : (currentPortals.insert(closePortal.index + 1, currentPortals.create(closePortal.guid)), 
+        updatePreview(), $("#AP_sort", Generator_dialog).is(":checked") && sortPortals());
+    }, portalDistances = (incomginPortals, portals) => {
+        const latLngs = portals.toLatLng();
+        if (latLngs.length, 0 === latLngs.length) return [];
+        return incomginPortals.filter(p => !portals.includes(p.options.guid)).map(portal => {
+            const position = portal.getLatLng(), closestPoint = ((path, location) => {
+                if (0 === path.length) return {
+                    distance: 1 / 0,
+                    index: -1
+                };
+                if (1 === path.length) return {
+                    distance: location.distanceTo(path[0]),
+                    index: 0
+                };
+                let index = 0, bestPoint = path[0], minDistance = 1 / 0;
+                for (let i = 0; i < path.length - 1; i++) {
+                    const closestPoint = closedPoint(path[i], path[i + 1], location), distance = distance2(location, closestPoint);
+                    distance < minDistance && (minDistance = distance, index = i, bestPoint = closestPoint);
+                }
+                return {
+                    distance: location.distanceTo(bestPoint),
+                    index
+                };
+            })(latLngs, position);
+            return {
+                guid: portal.options.guid,
+                distance: closestPoint.distance,
+                index: closestPoint.index
+            };
+        });
+    }, sortPortals = () => {
+        if (0 === currentPortals.length) return;
+        const keep_end = $("#SP_startend", Generator_dialog).is(":checked"), moreTime = $("#SP_moresorttime", Generator_dialog).is(":checked"), start = currentPortals.get(0).guid, end = currentPortals.get(currentPortals.length - 1).guid, solver = new TSP(Ant);
+        solver.init(currentPortals.getRange()), keep_end && solver.setStartEnd(start, end), 
+        solver.solve(100, moreTime ? 1e3 : 500), solver.routeChangeStart(start), solver.route[0].guid, 
+        solver.route.at(-1).guid, currentPortals.clear();
+        const newportals = solver.route.map(p => p.portal);
+        currentPortals.add(...newportals), updatePreview();
+    }, changeStartPortal = () => {
+        let newStart = currentPortals.indexOf(selectedPortal);
+        for (-1 === newStart && (newStart = 1); newStart > 0; ) {
+            const portal = currentPortals.get(0);
+            currentPortals.remove(0), currentPortals.add(portal), newStart--;
+        }
+        updatePreview();
+    }, updatePreview = (withPath = !0) => {
+        if ($("#count", Generator_dialog).text(currentPortals.length), $("#length", Generator_dialog).text(formatDistance(currentPortals.getDistance())), 
+        withPath) {
+            null != Generator_layer || (Generator_layer = L.layerGroup().addTo(window.map)), 
+            Generator_layer.clearLayers();
+            const latLngs = currentPortals.toLatLng(), polyline = L.geodesicPolyline(latLngs, {
+                color: "#c52e23",
+                weight: 5,
+                opacity: .8,
+                dashArray: "8,8",
+                interactive: !1
+            });
+            Generator_layer.addLayer(polyline), latLngs.forEach((latLng, index) => {
+                const options = {
+                    color: "#c52e23",
+                    radius: 0 === index ? 10 : 5,
+                    weight: 5,
+                    interactive: !1
+                }, portal = L.circleMarker(latLng, options);
+                Generator_layer.addLayer(portal);
+            });
+        }
+    }, destroy = () => {
+        Generator_layer && (window.map.removeLayer(Generator_layer), Generator_layer.clearLayers(), 
+        Generator_layer = void 0);
+    }, editActiveMission = () => {
         const html = $("<div>", {
             class: "umm-mission-picker-btn"
         }).append("Select a mission number:<br>", Button_button("<", onPreviousMission).css({
@@ -1442,22 +1812,24 @@ function wrapper_iitc(SCRIPT_INFO) {
             "margin-left": "1em"
         })), $("<div>", {
             id: "umm-mission-picker-info"
-        }), Button_button("Split", onMissionSplit), Button_button("Clear", onMissionClear), Button_button("Reverse", onMissionReverse), $("<br>"), Button_button("Merge with previous", onMergePrevious), Button_button("Merge next into this", onMergePost));
-        let position;
-        "undefined" != typeof android && android && (position = {
+        }), Button_button("Split", onMissionSplit), Button_button("Clear", onMissionClear), Button_button("Reverse", onMissionReverse), $("<br>"), Button_button("Merge with previous", onMergePrevious), Button_button("Merge next into this", onMergePost)), position = isMobile() ? {
             my: "center top",
             at: "center top"
-        }), window.dialog({
+        } : {
+            my: "left bottom",
+            at: "left+64px center"
+        };
+        window.dialog({
             html,
-            title: `${title} v1.0.2`,
+            title: `${title} v1.1`,
             id: "umm-options",
             width: 350,
             position,
             buttons: [ dialogButton("< Main Menu", showUmmOptions), dialogButtonClose() ],
-            closeCallback: destroy
+            closeCallback: SelectMission_destroy
         }), main.state.onSelectedMissionChange.do(updateSelection), main.state.onMissionPortal.do(updateMissionInfo), 
         updateMissionList(), updateMissionInfo();
-    }, destroy = () => {
+    }, SelectMission_destroy = () => {
         main.state.onSelectedMissionChange.dont(updateSelection);
     }, getSelectedMission = () => {
         const missionNumber = parseInt($("#umm-mission-picker").val());
@@ -1565,15 +1937,7 @@ function wrapper_iitc(SCRIPT_INFO) {
             width: "2em"
         }), lable("Missions"), stat("umm_opt_bannerlength"), "</tr><tr>", lable("Waypoints"), stat("umm_opt_waypoints"), $("<td>"), lable("Length"), stat("umm_opt_bannerdistance"), "</tr></table>", $("<div>", {
             id: "umm_opt_error"
-        }), Button_button("Edit", () => editMissionSetDetails(), "editButtom")), $("<p>").append("Layers:", '<label style="user-select: none">Mission Paths</label>', $("<input>", {
-            type: "checkbox",
-            click: event => tooglePathsLayer(event.target.checked),
-            checked: main.renderPath.isVisible()
-        }), '<label style="user-select: none">Mission Numbers</label>', $("<input>", {
-            type: "checkbox",
-            click: event => toggleLayerNumbers(event.target.checked),
-            checked: main.renderNumbers.isVisible()
-        }), Button_button("Change active mission #", editActiveMission, "w-full"), Button_button("Zoom to view all missions", () => state.missions.zoom(), "w-full")), $("<hr>"), Button_button("Split mission", splitMissionOptions, "w-full"), Button_button("Merge missions", mergeMissions, "w-full"), Button_button("Reverse mission", reverseMission, "w-full"), Button_button("Clear ALL missions data", confirmClear, "w-full"), $("<hr>"), $("<b>", {
+        }), Button_button("Edit", () => editMissionSetDetails(), "editButtom")), $("<p>").append(Button_button("Change active mission #", editActiveMission, "w-full"), Button_button("Zoom to view all missions", () => state.missions.zoom(), "w-full")), $("<hr>"), Button_button("Generate mission", showMissionGenerator, "w-full"), Button_button("Split mission", splitMissionOptions, "w-full"), Button_button("Merge missions", mergeMissions, "w-full"), Button_button("Reverse missions", reverseMission, "w-full"), Button_button("Clear ALL missions data", confirmClear, "w-full"), $("<hr>"), $("<b>", {
             text: "Import/Export"
         }), $("<br>"), Button_button("Export banner data to file", () => (state => {
             const data = state.asString(), filename = state.getBannerName().replace(/[\W_]+/g, " ") + "-mission-data.json";
@@ -1595,23 +1959,15 @@ function wrapper_iitc(SCRIPT_INFO) {
             at: "center top"
         }), window.dialog({
             html,
-            title: `${title} v1.0.2`,
+            title: `${title} v1.1`,
             id: "umm-options",
             width: 350,
             position,
             buttons: [ dialogButton("About this plugin", about), dialogButtonClose() ],
             closeCallback: () => Options_destroy()
-        }), window.map.on("layeradd", onLayerAdd), window.map.on("layerremove", onLayerRemove), 
-        main.state.onMissionChange.do(updateDialog), updateDialog();
+        }), main.state.onMissionChange.do(updateDialog), updateDialog();
     }, Options_destroy = () => {
-        window.map.off("layeradd", onLayerAdd), window.map.off("layerremove", onLayerRemove), 
         main.state.onMissionChange.dont(updateDialog);
-    }, onLayerAdd = event => {
-        main.renderPath.isLayer(event.layer) && $("#umm-layercheckbox-paths").prop("checked", !0), 
-        main.renderNumbers.isLayer(event.layer) && $("#umm-layercheckbox-numbers").prop("checked", !0);
-    }, onLayerRemove = event => {
-        main.renderPath.isLayer(event.layer) && $("#umm-layercheckbox-paths").prop("checked", !1), 
-        main.renderNumbers.isLayer(event.layer) && $("#umm-layercheckbox-numbers").prop("checked", !1);
     }, updateDialog = () => {
         var _a, _b, _c;
         const state = main.state;
@@ -1644,7 +2000,7 @@ function wrapper_iitc(SCRIPT_INFO) {
             alert(files[0].name + " has not been recognized as JSON file. Make sure you've loaded the right file."), 
             !1) : loadFile(state, files[0]);
         })(event, main.state), main.state.checkAllPortals(), main.state.missions.zoom());
-    }, tooglePathsLayer = show => main.renderPath.toggle(show), toggleLayerNumbers = show => main.renderNumbers.toggle(show), editMissionSetDetails = (toggleMissionModeAfterSave = !1) => {
+    }, editMissionSetDetails = (toggleMissionModeAfterSave = !1) => {
         var _a;
         const state = main.state;
         let html = '<div class="umm-edit-mission-set-details">';
@@ -1655,7 +2011,7 @@ function wrapper_iitc(SCRIPT_INFO) {
         html += `<label for="umm-title-format"><b>Title format</b></label>\n      <span class="umm-error" id="umm-mission-title-format-error"><b>Error: </b>Please enter a valid title-format</span>\n      <table>\n      <tr><td>$T = Mission title</td><td>additional flags:</td></tr>\n      <tr><td>$N = Current Missione number</td><td>$0n = with leading zeros</td></tr>\n      <tr><td>$M = Banner length</td><td>$3n = minimum length</td></tr>\n      </table>\n      <br><br>Examples: "$T $N / $M" or "$0n.$m $t"  or "$T $03N-$03M" </p>\n      <input id="umm-title-format" name="umm-title-format" type="text" placeholder="Enter a title format" value="${null !== (_a = state.getTitleFormat()) && void 0 !== _a ? _a : "$T $N / $M"}" style="margin-bottom: 5px;">\n      <b>Preview: </b><span id="umm-mission-title-preview"></span>`, 
         html += "</div>", window.dialog({
             html,
-            title: "Edit banner details - UMM v1.0.2",
+            title: "Edit banner details - UMM v1.1",
             id: "umm-options",
             width: 400,
             buttons: [ dialogButton("< Main Menu", showUmmOptions), dialogButton("Save", () => successfulSave(toggleMissionModeAfterSave)), dialogButtonClose() ]
@@ -1739,9 +2095,9 @@ function wrapper_iitc(SCRIPT_INFO) {
         const mission = main.state.missions.get(0);
         if (!mission) return;
         let hasPortals = !1;
-        for (let i = 0; i < numMissions; i++) hasPortals || (hasPortals = !0 === (null === (_a = main.state.missions.get(i)) || void 0 === _a ? void 0 : _a.hasPortals()));
+        for (let i = 1; i < numMissions; i++) hasPortals || (hasPortals = !0 === (null === (_a = main.state.missions.get(i)) || void 0 === _a ? void 0 : _a.hasPortals()));
         if (hasPortals && !await confirmDialog({
-            message: "Merge missione before split?",
+            message: "Merge mission before split?",
             details: "Mission(s) already contain portals. These will be merged into one"
         })) return;
         const numPortals = null == mission ? void 0 : mission.portals.length, numRestPortals = numPortals % numMissions, message = `Your path of ${numPortals} will be divided into ${numMissions} missions of ${Math.floor(numPortals / numMissions)} portals each.`;
@@ -1757,12 +2113,21 @@ function wrapper_iitc(SCRIPT_INFO) {
         await confirmDialog({
             message: "Merge mission?",
             details: "Are you sure you want to merge all your missions into 1?\r\n\r\nThis can't be undone."
-        }) && (main.state.missions.mergeAll(), main.state.setCurrent(0));
+        }) && (main.state.missions.mergeAll(), main.state.setCurrent(0), main.state.save());
     }, reverseMission = () => {
-        const state = main.state, missionToReverse = prompt(`Which mission do you want to reverse (1-${state.getPlannedLength()})?`, (state.getCurrent() + 1).toString());
+        const state = main.state, text = `Which missions do you want to reverse (1-${state.getPlannedLength()})?\n\n<small>Use "1-5" to reverse a missions from 1 to5\nUse "2" to reverse missions only 2\nUse "1,3,5-7" to reverse missions 1, 3 and 5 to 7</small>`, missionToReverse = prompt(text, `1-${state.getPlannedLength()}`);
         if (null === missionToReverse) return;
-        const mission = state.missions.get(parseInt(missionToReverse));
-        mission ? (mission.reverse(), state.save()) : alert(`This mission doesn't exist, enter a value between 1-${state.getPlannedLength()}.`);
+        const regex = new RegExp(/(?<range>(?<from>\d+)\s*[-]\s*(?<to>\d+))|(?<single>\d+)/gm);
+        [ ...missionToReverse.matchAll(regex) ].forEach(match => {
+            var _a, _b;
+            if (null === (_a = match.groups) || void 0 === _a ? void 0 : _a.single) {
+                const missionId = parseInt(match.groups.single) - 1;
+                state.missions.reverse(missionId);
+            } else if (null === (_b = match.groups) || void 0 === _b ? void 0 : _b.range) {
+                const from = parseInt(match.groups.from) - 1, to = parseInt(match.groups.to) - 1;
+                state.missions.reverse(from, to);
+            }
+        }), state.save();
     }, setCurrentMission = missionId => {
         main.state.setCurrent(missionId), main.state.save();
     }, toolBarButton = (id, image, tooltip, click) => $("<a>", {
@@ -1930,6 +2295,31 @@ function wrapper_iitc(SCRIPT_INFO) {
     const main = new class UMM_Ext {
         constructor() {
             var _a;
+            this.onPortalSelected = event => {
+                (async data => {
+                    if (lastPortal === data.selectedPortalGuid) return;
+                    if (lastPortal = data.selectedPortalGuid, !data.selectedPortalGuid) return;
+                    const state = main.state;
+                    if (!main.missionModeActive) return;
+                    const mission = state.getEditMission();
+                    if (!mission) return;
+                    const portalToAdd = mission.portals.create(data.selectedPortalGuid);
+                    if (mission.portals.includes(portalToAdd.guid)) mission.portals.isEnd(portalToAdd) && bannerNotification(state, `Portal already in mission #${main.state.getCurrent() + 1}`); else {
+                        const preMission = state.missions.previous(mission);
+                        if (0 === mission.portals.length && preMission && preMission.portals.includes(portalToAdd.guid) && !preMission.portals.isStart(portalToAdd) && !preMission.portals.isEnd(portalToAdd) && await confirmDialog({
+                            message: "Split mission?",
+                            details: "Your start portal overlaps another mission's portal. Reuse it or split the previous mission?"
+                        })) {
+                            const index = preMission.portals.indexOf(portalToAdd.guid);
+                            return mission.portals.clear(), state.missions.split(preMission, index, mission), 
+                            void state.save();
+                        }
+                        mission.portals.add(portalToAdd), state.save(), notification(`${main.state.getBannerName()}\nAdded to mission #${main.state.getCurrent() + 1}`);
+                    }
+                })(event);
+            }, this.onPortalDetailsUpdated = event => {
+                this.state.checkPortal(event), addWaypointEditorToPortal();
+            }, this.onMapDataRefreshEnd = () => this.state.checkAllPortals();
             const index = null === (_a = window.bootPlugins) || void 0 === _a ? void 0 : _a.findIndex(x => {
                 var _a, _b;
                 return "IITC Plugin: Ultimate Mission Maker" === (null === (_b = null === (_a = x.info) || void 0 === _a ? void 0 : _a.script) || void 0 === _b ? void 0 : _b.name);
@@ -1952,40 +2342,25 @@ function wrapper_iitc(SCRIPT_INFO) {
             })(), $("#toolbox").append($("<a>", {
                 text: "UMM",
                 title: "Ultimate Mission Maker",
-                click: () => this.toggleUMMBar()
+                click: () => this.toggleUMM()
             })), $(".leaflet-umm.leaflet-bar").hide(), this.renderPath = new RenderPath, this.renderNumbers = new RenderNumbers, 
-            window.addHook("portalSelected", event => (async data => {
-                if (lastPortal === data.selectedPortalGuid) return;
-                if (lastPortal = data.selectedPortalGuid, !data.selectedPortalGuid) return;
-                const state = main.state;
-                if (!main.missionModeActive) return;
-                const mission = state.getEditMission();
-                if (!mission) return;
-                const portalToAdd = mission.portals.create(data.selectedPortalGuid);
-                if (mission.portals.includes(portalToAdd.guid)) mission.portals.isEnd(portalToAdd) && bannerNotification(state, `Portal already in mission #${main.state.getCurrent() + 1}`); else {
-                    const preMission = state.missions.previous(mission);
-                    if (0 === mission.portals.length && preMission && preMission.portals.includes(portalToAdd.guid) && !preMission.portals.isStart(portalToAdd) && !preMission.portals.isEnd(portalToAdd) && await confirmDialog({
-                        message: "Split mission?",
-                        details: "Your start portal overlaps another mission's portal. Reuse it or split the previous mission?"
-                    })) {
-                        const index = preMission.portals.indexOf(portalToAdd);
-                        return mission.portals.clear(), state.missions.split(preMission, index, mission), 
-                        void state.save();
-                    }
-                    mission.portals.add(portalToAdd), state.save(), notification(`${main.state.getBannerName()}\nAdded to mission #${main.state.getCurrent() + 1}`);
-                }
-            })(event)), window.addHook("portalDetailsUpdated", addWaypointEditorToPortal), window.addHook("mapDataRefreshEnd", () => this.state.checkAllPortals()), 
-            window.addHook("portalDetailsUpdated", event => this.state.checkPortal(event)), 
-            this.missionModeActive = !1, this.renderPath.redraw(), this.renderNumbers.redraw();
+            this.missionModeActive = !1;
         }
-        toggleUMMBar() {
-            if ($(".leaflet-umm.leaflet-bar").toggle(), $(".leaflet-umm.leaflet-bar").is(":visible")) {
-                $(".leaflet-umm").fadeIn().fadeOut().fadeIn().fadeOut().fadeIn().fadeOut().fadeIn(), 
-                this.state.isEmpty() ? editMissionSetDetails() : this.state.missions.zoom();
-                [ this.renderPath, this.renderNumbers ].forEach(l => l.toggle(!0));
-            } else {
-                [ this.renderPath, this.renderNumbers ].forEach(l => l.toggle(!1));
-            }
+        toggleUMM() {
+            $(".leaflet-umm.leaflet-bar").toggle(), $(".leaflet-umm.leaflet-bar").is(":visible") ? this.activateUMM() : this.deactivateUMM();
+        }
+        activateUMM() {
+            $(".leaflet-umm").fadeIn().fadeOut().fadeIn().fadeOut().fadeIn().fadeOut().fadeIn(), 
+            this.state.isEmpty() ? editMissionSetDetails() : this.state.missions.zoom(), this.renderPath.toggle(!0), 
+            this.renderNumbers.toggle(!0), this.missionModeActive = !1, this.renderPath.redraw(), 
+            this.renderNumbers.redraw(), window.addHook("portalSelected", this.onPortalSelected), 
+            window.addHook("portalDetailsUpdated", this.onPortalDetailsUpdated), window.addHook("mapDataRefreshEnd", this.onMapDataRefreshEnd), 
+            addWaypointEditorToPortal();
+        }
+        deactivateUMM() {
+            this.missionModeActive = !1, this.renderPath.toggle(!1), this.renderNumbers.toggle(!1), 
+            window.removeHook("portalSelected", this.onPortalSelected), window.removeHook("portalDetailsUpdated", this.onPortalDetailsUpdated), 
+            window.removeHook("mapDataRefreshEnd", this.onMapDataRefreshEnd), $("#umm-waypoint-editor").remove();
         }
     };
     !function Register(plugin, name) {
@@ -1999,10 +2374,42 @@ function wrapper_iitc(SCRIPT_INFO) {
 };
 
 /**
+ * # v1.1
+ * 
+ * - new "Mission Generator" dialog
+ *   This new dialog provides several tools to modify missions:
+ *   1. "Reset"
+ *      Discard all current changes.
+ *   2. Add portals
+ *      Adds nearby portals to the current mission.
+ *      You can:
+ *      - Limit selection using a DrawTools polygon
+ *      - Exclude individual portals with DrawTool Markers
+ *      - Restrict selection to portals within path hack range
+ *   3. Sort portals
+ *      Attempts to arrange portals for the shortest possible path.
+ *      (Note: This is a complex optimization problem—results may vary.
+ *      The “keep end portal” option may occasionally fail.)
+ *   4. Change start
+ *      Set the selected Portal as new mission start.
+ *      If no portal is selected, the start point will cycle through all mission portals.
+ * 
+ *   All changes are temporary until "applied" or be "dismissed".
+ *   Note: Distance calculations are based on straight-line (“as-the-crow-flies”) distances; real-world paths are not considered.
+ * 
+ * - Use static layers
+ *   UMM is now fully hidden when inactive. Background processing is also disabled while inactive.
+ * - Added Multi-Reverse
+ *   Using the reverse action in the main dialog, you can now reverse an entire banner or selected parts of it—not just a single mission.
+ * - Drag: allow swapping mission portals
+ * - Fixed merge in main dialog
+ * - Fixed “Should merge?” prompt in split option (main dialog)
+ * - Mission-Select dialog moved to the left
+ * 
  * # v1.0.2
  * 
  * - fix IITC-Button load
- * in iitc-button load order is differnet and custom "if UUM is loaded then disable it" failed
+ *   in iitc-button load order is differnet and custom "if UUM is loaded then disable it" failed
  * - fix variable if both plugins are active
  * 
  * # v1.0.1
@@ -2027,7 +2434,6 @@ function wrapper_iitc(SCRIPT_INFO) {
  * 
  * - **Banner Settins** (start window)
  *   - changed Title placeholders to $T $M $N
- *   
  * - **Option Dialog** (main window)
  *   - Banner information now displays as a compact table
  *   - Removed warning for mission counts that are not multiples of 6
@@ -2053,7 +2459,6 @@ function wrapper_iitc(SCRIPT_INFO) {
  *   - Option to split missions when starting on a portal that's already assigned to another mission
  *   - on mobile dialogs are not at the top instead of centered
  *   - flash buttonbar on activation to draw attention
- *   
  * 
  * ---
  * 
@@ -2328,6 +2733,9 @@ function wrapper_editor(SCRIPT_INFO) {
         constructor(state, data) {
             this.state = state, this.data = data;
         }
+        cloneWithoutEvents() {
+            return new Portals(void 0, [ ...this.data ]);
+        }
         get length() {
             return this.data.length;
         }
@@ -2338,20 +2746,25 @@ function wrapper_editor(SCRIPT_INFO) {
             return this.data.slice(start, end);
         }
         set(index, portal) {
-            this.data[index] = portal, this.state.onMissionPortal.trigger();
+            var _a;
+            this.data[index] = portal, null === (_a = this.state) || void 0 === _a || _a.onMissionPortal.trigger();
         }
         add(...portal) {
-            portal.some(p => this.includes(p.guid)), this.data.push(...portal), this.state.onMissionPortal.trigger();
+            var _a;
+            portal.some(p => this.includes(p.guid)), this.data.push(...portal), null === (_a = this.state) || void 0 === _a || _a.onMissionPortal.trigger();
         }
         insert(index, ...portal) {
+            var _a;
             portal.some(p => this.includes(p.guid)), this.data.splice(index, 0, ...portal), 
-            this.state.onMissionPortal.trigger();
+            null === (_a = this.state) || void 0 === _a || _a.onMissionPortal.trigger();
         }
         remove(index, count = 1) {
-            this.data.splice(index, count), this.state.onMissionPortal.trigger();
+            var _a;
+            this.data.splice(index, count), null === (_a = this.state) || void 0 === _a || _a.onMissionPortal.trigger();
         }
         clear() {
-            this.data.length = 0, this.state.onMissionPortal.trigger();
+            var _a;
+            this.data.length = 0, null === (_a = this.state) || void 0 === _a || _a.onMissionPortal.trigger();
         }
         toLatLng() {
             return this.data.map(portal => new L.LatLng(portal.location.latitude, portal.location.longitude));
@@ -2366,8 +2779,8 @@ function wrapper_editor(SCRIPT_INFO) {
         find(guid) {
             return this.data.find(x => x.guid === guid);
         }
-        indexOf(portal) {
-            return this.data.findIndex(x => x.guid === portal.guid);
+        indexOf(guid) {
+            return this.data.findIndex(x => x.guid === guid);
         }
         isStart(portal) {
             var _a;
@@ -2378,7 +2791,8 @@ function wrapper_editor(SCRIPT_INFO) {
             return (null === (_a = this.data.at(-1)) || void 0 === _a ? void 0 : _a.guid) === portal.guid;
         }
         reverse() {
-            this.data.reverse(), this.state.onMissionPortal.trigger();
+            var _a;
+            this.data.reverse(), null === (_a = this.state) || void 0 === _a || _a.onMissionPortal.trigger();
         }
         create(guid) {
             const iitcPortal = window.portals[guid], options = iitcPortal.options.data, ll = iitcPortal.getLatLng();
@@ -2402,6 +2816,9 @@ function wrapper_editor(SCRIPT_INFO) {
                     }
                 }
             };
+        }
+        getDistance() {
+            return this.toLatLng().reduce((sum, ll, index, lls) => index > 0 ? sum + ll.distanceTo(lls[index - 1]) : 0, 0);
         }
     }
     class Mission {
@@ -2440,7 +2857,7 @@ function wrapper_editor(SCRIPT_INFO) {
             !0);
         }
         getDistance() {
-            return this.portals.toLatLng().reduce((sum, ll, index, lls) => index > 0 ? sum + ll.distanceTo(lls[index - 1]) : 0, 0);
+            return this.portals.getDistance();
         }
         clear() {
             this.portal_data.clear();
@@ -2538,7 +2955,7 @@ function wrapper_editor(SCRIPT_INFO) {
         mergeAll() {
             const portals = [];
             this.data.forEach(m => {
-                portals.push(...m.portals), portals.length = 0;
+                portals.push(...m.portals), m.portals.length = 0;
             }), this.data[0].portals = portals;
         }
         split(source, at, destination) {
@@ -2567,6 +2984,14 @@ function wrapper_editor(SCRIPT_INFO) {
         }
         getMissionsOfPortal(guid) {
             return this.filter(mis => mis.portals.includes(guid)).map(m => m.id);
+        }
+        reverse(from, to) {
+            var _a;
+            if (to) {
+                (from = Math.min(Math.max(from, 0), this.count() - 1)) > (to = Math.min(Math.max(to, 0), this.count() - 1)) && ([from, to] = [ to, from ]);
+                const portal_copy = this.data.map(mission => mission.portals.splice(0));
+                for (let i = from; i <= to; i++) this.data[i].portals = portal_copy[to - (i - from)].reverse();
+            } else null === (_a = this.get(from)) || void 0 === _a || _a.reverse();
         }
     }
     const undefinedOrEmptyString = value => null == value || "" == value;
