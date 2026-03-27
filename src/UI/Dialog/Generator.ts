@@ -41,7 +41,7 @@ export const showMissionGenerator = () => {
         checkbox("SP_moresorttime", "Take more time to sort", false),
         // checkbox("SP_borders", "Don't cross Drawtool lines", false),
 
-        // button("Change start", resetPortals, "w-full"),
+        button("Change start", changeStartPortal, "w-full"),
         // button("Reverse", resetPortals, "w-full"),
     );
 
@@ -184,6 +184,22 @@ const sortPortals = () => {
 }
 
 
+const changeStartPortal = () => {
+
+    let newStart = currentPortals.indexOf(selectedPortal!);
+    if (newStart === -1) newStart = 1;
+
+    while (newStart > 0) {
+        const portal = currentPortals.get(0)!;
+        currentPortals.remove(0);
+        currentPortals.add(portal);
+        newStart--;
+    }
+
+    updatePreview();
+}
+
+
 const updatePreview = (withPath: boolean = true) => {
 
     $("#count", dialog).text(currentPortals.length);
@@ -226,3 +242,5 @@ const destroy = () => {  /* noop */
     }
 
 }
+
+
