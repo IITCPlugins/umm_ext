@@ -12,7 +12,7 @@ import { button, dialogButton, dialogButtonClose } from "./Button";
 import { checkbox } from "./Checkbox";
 
 
-const preview_color = "#35ac9c";
+const preview_color = "#c52e23";
 
 let currentMission: Mission | undefined;
 let currentPortals: Portals;
@@ -198,12 +198,19 @@ const updatePreview = (withPath: boolean = true) => {
             color: preview_color,
             weight: 5,
             opacity: 0.8,
-            dashArray: "8,8"
+            dashArray: "8,8",
+            interactive: false
         });
         layer.addLayer(polyline);
 
-        latLngs.forEach(latLng => {
-            const portal = L.circleMarker(latLng, { color: preview_color, radius: 5 });
+        latLngs.forEach((latLng, index) => {
+            const options /*: L.PathOptions*/ = {
+                color: preview_color,
+                radius: index === 0 ? 10 : 5,
+                weight: 5,
+                interactive: false
+            };
+            const portal = L.circleMarker(latLng, options);
             layer!.addLayer(portal);
         });
     }
