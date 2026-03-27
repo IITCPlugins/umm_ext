@@ -1,5 +1,26 @@
 # v1.1
 
+- new "Mission Generator" dialog
+  This new dialog provides several tools to modify missions:
+  1. "Reset"
+     Discard all current changes.
+  2. Add portals
+     Adds nearby portals to the current mission.
+     You can:
+     - Limit selection using a DrawTools polygon
+     - Exclude individual portals with DrawTool Markers
+     - Restrict selection to portals within path hack range
+  3. Sort portals
+     Attempts to arrange portals for the shortest possible path.
+     (Note: This is a complex optimization problem—results may vary.
+     The “keep end portal” option may occasionally fail.)
+  4. Change start
+     Set the selected Portal as new mission start.
+     If no portal is selected, the start point will cycle through all mission portals.
+
+  All changes are temporary until "applied" or be "dismissed".
+  Note: Distance calculations are based on straight-line (“as-the-crow-flies”) distances; real-world paths are not considered.
+
 - Use static layers
   UMM is now fully hidden when inactive. Background processing is also disabled while inactive.
 - Added Multi-Reverse
@@ -7,6 +28,7 @@
 - Drag: allow swapping mission portals
 - Fixed merge in main dialog
 - Fixed “Should merge?” prompt in split option (main dialog)
+- Mission-Select dialog moved to the left
 
 # v1.0.2
 
