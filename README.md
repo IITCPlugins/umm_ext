@@ -1,4 +1,4 @@
-# IITC Ultimate Mission Maker Extension
+# IITC Ultimate Mission Maker Extended
 
 An IITC plugin extension that enhances the Ultimate Mission Maker functionality for Ingress Intel Total Conversion.
 
