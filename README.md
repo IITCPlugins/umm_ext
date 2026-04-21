@@ -2,6 +2,16 @@
 
 An IITC plugin extension that enhances the Ultimate Mission Maker functionality for Ingress Intel Total Conversion.
 
+# Users
+
+Install like any other IITC plugin:  
+Use the latest [release](https://github.com/IITCPlugins/umm_ext/releases) iitc_plugin_UMM_Ext.user.js link.  
+Or use this [direct link](https://github.com/IITCPlugins/umm_ext/raw/refs/heads/main/dist/iitc_plugin_UMM_Ext.user.js).
+
+After installation, there is a small "UMM" button below the portal details. If you click it, the edit buttons will appear on the left side of the map.
+
+# Developers
+
 ## Prerequisites
 
 - [Node.js](https://nodejs.org/) (version 16 or higher)
