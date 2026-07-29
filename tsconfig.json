@@ -1,20 +1,28 @@
 {
   "compilerOptions": {
-    "module": "ES6",
-    "target": "ES2018",
+    "module": "es2022",
+    "target": "es2022",
     "outDir": "dist/",
-    "moduleResolution": "node",
-    "typeRoots": ["node_modules/@types", "types"],
+    "moduleResolution": "bundler",
+    "typeRoots": [
+      "./node_modules/@types",
+      "./node_modules/iitcpluginkit/types"
+    ],
     "forceConsistentCasingInFileNames": true,
-    "noImplicitReturns": true,
-    "noImplicitAny": true,
-    "noImplicitThis": true,
-    "alwaysStrict": true,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "noUnusedLocals": true
+    "rootDir": "./src",
+    "types": [
+      "node",
+      "jquery",
+      "build_constances",
+      "greasemonkey",
+      "iitc",
+      "jqueryui",
+      "leaflet",
+      "images"
+    ]
   },
-  "types": ["webpack-env"],
-  "files": ["src/Main.ts", "src_MissionEditor/Main.ts"],
-  "include": ["types/*.d.ts", "src/**/*.ts"]
+  "files": [
+    "src/Main.ts",
+    "src_MissionEditor/Main.ts"
+  ]
 }
