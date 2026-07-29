@@ -1520,10 +1520,10 @@ ignore@^7.0.5:
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-7.0.6.tgz#6a57aaef4c90df27ac3590875d29e8f11988c88e"
   integrity sha512-BAg6QkE8W+TuQLrrw0Ugr7HegXduRuuj8/ti2kSOc+jz1dmx8/WNcjr6XGnq5YpDWxFwwaavqD0+jIUOKelTsw==
 
-iitcpluginkit@^1.10.2:
-  version "1.10.2"
-  resolved "https://registry.yarnpkg.com/iitcpluginkit/-/iitcpluginkit-1.10.2.tgz#a7e356846cbe8279e7e5b9e0c98f1e6182db09bb"
-  integrity sha512-QpXtVBfffbSmxEc1JL3YNv1Q+tAE5qVCCWAssqi8vOy3yg8zhcH/1R+UiCtbeJCRjzimkrWbU67iBZZgBgxbUQ==
+iitcpluginkit@^1.10.3:
+  version "1.10.3"
+  resolved "https://registry.yarnpkg.com/iitcpluginkit/-/iitcpluginkit-1.10.3.tgz#172c81d7667c25540b3b6e01dfc38067f50c4bdd"
+  integrity sha512-Kec95THGDgE5c1/t+slnnHcAjXRafxLxL+s39+DIWhS7f2n125kgANTlXRj3T4W324/Eqeg39dYIT5sEd/VhTA==
   dependencies:
     "@types/gapi.auth2" "^0.0.61"
     "@types/jquery" "^4.0.1"
@@ -1549,6 +1549,7 @@ iitcpluginkit@^1.10.2:
     svg-url-loader "^8.0.0"
     svgo "^4.0.1"
     svgo-loader "^5.0.0"
+    terser-webpack-plugin "^5.6.1"
     ts-loader "^9.2.3"
     ts-node "^10.0.0"
     typescript "^6.0.2"
@@ -2721,6 +2722,16 @@ tapable@^2.3.0, tapable@^2.3.3:
   version "2.3.3"
   resolved "https://registry.yarnpkg.com/tapable/-/tapable-2.3.3.tgz#5da7c9992c46038221267985ab28421a8879f160"
   integrity sha512-uxc/zpqFg6x7C8vOE7lh6Lbda8eEL9zmVm/PLeTPBRhh1xCgdWaQ+J1CUieGpIfm2HdtsUpRv+HshiasBMcc6A==
+
+terser-webpack-plugin@^5.6.1:
+  version "5.6.1"
+  resolved "https://registry.yarnpkg.com/terser-webpack-plugin/-/terser-webpack-plugin-5.6.1.tgz#47bc41bd8b8fab8383b62ec763b7394829097e7b"
+  integrity sha512-201R5j+sJpK8nFWwKVyNfZot8FaJbLZDq5evriVzbV1wDtSXDjRUDRfJzHpAaxFDMEhsZL1QkeqM61wgsS3KaQ==
+  dependencies:
+    "@jridgewell/trace-mapping" "^0.3.25"
+    jest-worker "^27.4.5"
+    schema-utils "^4.3.0"
+    terser "^5.31.1"
 
 terser@^5.31.1:
   version "5.49.0"
