@@ -7,7 +7,7 @@ import { createToolbar } from "./UI/ButtonBar";
 import { addWaypointEditorToPortal } from "./UI/EditWaypoint";
 import { editMissionSetDetails } from "./UI/Dialog/MissionDetails";
 //** DEBUG-START **
-import { showMissionGenerator } from "./UI/Dialog/Generator";
+// import { showMissionGenerator } from "./UI/Dialog/Generator";
 //** DEBUG-END **
 
 
@@ -52,8 +52,8 @@ class UMM_Ext implements Plugin.Class {
         this.missionModeActive = false;
 
         //** DEBUG-START **
-        this.activateUMM();
-        showMissionGenerator();
+        // this.activateUMM();
+        // showMissionGenerator();
         //** DEBUG-END **
     }
 
