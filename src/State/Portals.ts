@@ -102,7 +102,7 @@ export class Portals {
 
     create(guid: string): UMM_Portal {
         const iitcPortal = window.portals[guid];
-        console.assert(iitcPortal, "portal not defined");
+        console.assert(iitcPortal !== undefined, "portal not defined");
 
         // TODO try to get full details of iitc-cache
 

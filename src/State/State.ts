@@ -12,7 +12,7 @@ export const fileFormatVersion = 3;
 
 export class State {
 
-    private theState: UMM_State;
+    private theState!: UMM_State;
 
     constructor() {
         this.load();

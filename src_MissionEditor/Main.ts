@@ -60,7 +60,7 @@ interface MEPortal {
 
 
 class UMM_Editor {
-    public state: State;
+    public state!: State;
 
 
     init() {
@@ -192,7 +192,7 @@ class UMM_Editor {
             const portal = mission.portals.get(index)!;
             aportal.objective!.type = portal.objective.type;
             aportal.objective!.passphrase_params.question = portal.objective.passphrase_params.question;
-            // eslint-disable-next-line no-underscore-dangle
+
             aportal.objective!.passphrase_params._single_passphrase = portal.objective.passphrase_params._single_passphrase;
         })
 
@@ -200,7 +200,7 @@ class UMM_Editor {
 
         const angularApp = this.getAngularApp();
         const angularTimeout = angularApp.injector().get('$timeout');
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+
         angularTimeout(() => {
             if (missingImagesCount > 0) {
                 // If there are missing images, refresh as soon as the new import has been saved, otherwise it'll load the old mission data
@@ -211,7 +211,7 @@ class UMM_Editor {
                 }
 
                 const validateRefresh = () => {
-                    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+
                     const angularHttp = angularApp.injector().get('$http');
                     let isMissionSaving = false;
                     for (const request of angularHttp.pendingRequests) {
@@ -271,7 +271,7 @@ class UMM_Editor {
         }
 
         return {
-            mePortal: <MEPortal>{
+            mePortal: {
                 // eslint-disable-next-line unicorn/no-null
                 "$$hashKey": null,
                 guid: portal.guid,
@@ -296,13 +296,13 @@ class UMM_Editor {
         const angularHttp = angularApp.injector().get('$http');
         const angularApi = angularApp.injector().get('Api');
         const angularTimeout = angularApp.injector().get('$timeout');
-        const wireUtil = angularApp.injector().get('WireUtil');
+        const wireUtility = angularApp.injector().get('WireUtil');
         const styles = angularApp.injector().get('Styles');
 
         // By using the build in http we don't have to mess with botGuard and it just gets handled by MAT
         angularHttp.post(angularApi.GET_MISSION, { mission_id: missionId }).success((data: any) => {
 
-            data = wireUtil.convertMissionWireToLocal(data.mission, data.pois);
+            data = wireUtility.convertMissionWireToLocal(data.mission, data.pois);
             const angularscope = this.getAngularAppScope();
 
             // Replace mission data with the mission data retrieved from the server

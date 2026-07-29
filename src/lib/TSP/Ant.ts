@@ -5,9 +5,9 @@ import { PortalNode } from "./PortalNode";
 
 export class Ant {
 
-    public route: PortalNode[];
-    public notVisited: PortalNode[];
-    public length: number;
+    public route: PortalNode[] = [];
+    public notVisited: PortalNode[] = [];
+    public length: number = Infinity;
 
 
     init(portals: PortalNode[], useStart: number) {

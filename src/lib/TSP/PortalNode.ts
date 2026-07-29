@@ -10,7 +10,7 @@ export class PortalNode {
     // TODO: test if separated arrays would increase performance
     // guids, weigths, taus, distances
     public edges: Map<PortalGUID, Edge>;
-    public lambdaFactor: number;
+    public lambdaFactor: number = 0;
 
     public portal: UMM_Portal;
     public forcedNext: PortalGUID | undefined;

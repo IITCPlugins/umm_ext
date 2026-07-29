@@ -11,10 +11,10 @@ import { editMissionSetDetails } from "./UI/Dialog/MissionDetails";
 // eslint-disable-next-line unicorn/prevent-abbreviations
 class UMM_Ext implements Plugin.Class {
 
-    public state: State;
-    public renderPath: RenderPath;
-    public renderNumbers: RenderNumbers;
-    public missionModeActive: boolean;
+    public state!: State;
+    public renderPath!: RenderPath;
+    public renderNumbers!: RenderNumbers;
+    public missionModeActive: boolean = false;
 
 
     constructor() {

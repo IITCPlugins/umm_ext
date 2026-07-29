@@ -19,12 +19,12 @@ const USE_GLOBAL_BEST = 10; // How often the BEST route will be learned
  */
 export class TSP<MAnt extends Ant> {
 
-    public nodes: PortalNode[];
-    public route: PortalNode[];
-    public length: number;
-    public best: MAnt;
-    private useGlobalBest: number;
-    public generation: number;
+    public nodes: PortalNode[] = [];
+    public route: PortalNode[] = [];
+    public length: number = Infinity;
+    public best!: MAnt;
+    private useGlobalBest: number = 10;
+    public generation: number = 0;
 
     protected antType: new () => MAnt;
 

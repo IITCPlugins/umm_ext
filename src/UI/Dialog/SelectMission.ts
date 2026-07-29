@@ -213,7 +213,7 @@ const onMergePrevious = () => {
     if (!previous) {
         if (mission.id === 0) return;
         previous = missions.get(0)!;
-        console.assert(previous);
+        console.assert(previous !== undefined);
     }
 
     main.state.missions.merge(previous, mission);

@@ -95,7 +95,7 @@ const nextMission = () => {
     setCurrentMission(state.getCurrent() + 1)
 
     const mission = state.getEditMission()!;
-    console.assert(mission, "no mission found");
+    console.assert(mission !== undefined, "no mission found");
 
     if (mission.hasPortals()) {
         showMission(mission);
@@ -114,7 +114,7 @@ const previousMission = () => {
     setCurrentMission(state.getCurrent() - 1)
 
     const mission = state.getEditMission()!;
-    console.assert(mission, "no mission found");
+    console.assert(mission !== undefined, "no mission found");
 
     showMission(mission);
 }
