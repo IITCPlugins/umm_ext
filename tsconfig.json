@@ -6,7 +6,8 @@
     "moduleResolution": "bundler",
     "typeRoots": [
       "./node_modules/@types",
-      "./node_modules/iitcpluginkit/types"
+      "./node_modules/iitcpluginkit/types",
+      "./@types"
     ],
     "forceConsistentCasingInFileNames": true,
     "rootDir": "./src",
@@ -21,8 +22,6 @@
       "images"
     ]
   },
-  "files": [
-    "src/Main.ts",
-    "src_MissionEditor/Main.ts"
-  ]
+  "files": ["src/Main.ts", "src_MissionEditor/Main.ts"],
+  "include": ["./src"]
 }
