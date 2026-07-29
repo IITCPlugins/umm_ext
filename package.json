@@ -9,7 +9,7 @@
     "build:dev": "yarn ipk build:dev && yarn merge",
     "build:prod": "yarn ipk build:prod && yarn merge",
     "start": "yarn ipk fileserver",
-    "autobuild": "yarn ipk autobuild",
+    "autobuild": "echo --- autobuild not possible because of merge step ---  use 'yarn build' and 'yarn start' manually",
     "merge": "node scripts/merge-userscripts.cjs",
     "copy": "cross-env-shell $ANDROID_SDK_ROOT/platform-tools/adb push dist/iitc_plugin_UMM_Ext.user.js /storage/emulated/0/IITC_Mobile/plugins/iitc_plugin_UMM_Ext.user.js"
   },
