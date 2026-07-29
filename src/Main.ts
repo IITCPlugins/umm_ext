@@ -6,6 +6,9 @@ import { addPortalToCurrentMission } from "./Edits";
 import { createToolbar } from "./UI/ButtonBar";
 import { addWaypointEditorToPortal } from "./UI/EditWaypoint";
 import { editMissionSetDetails } from "./UI/Dialog/MissionDetails";
+//** DEBUG-START **
+import { showMissionGenerator } from "./UI/Dialog/Generator";
+//** DEBUG-END **
 
 
 // eslint-disable-next-line unicorn/prevent-abbreviations
@@ -47,6 +50,11 @@ class UMM_Ext implements Plugin.Class {
         this.renderNumbers = new RenderNumbers();
 
         this.missionModeActive = false;
+
+        //** DEBUG-START **
+        this.activateUMM();
+        showMissionGenerator();
+        //** DEBUG-END **
     }
 
     toggleUMM() {
