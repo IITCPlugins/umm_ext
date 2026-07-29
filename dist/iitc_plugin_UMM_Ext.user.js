@@ -2,7 +2,7 @@
 // @name            IITC plugin: Ultimate Mission Maker - Extended
 // @id              iitc_plugin_UMM_Ext
 // @category        Mission
-// @version         1.1.1
+// @version         1.1.2
 // @namespace       https://github.com/IITC-CE/ingress-intel-total-conversion
 // @updateURL       https://github.com/IITCPlugins/umm_ext/raw/refs/heads/main/dist/iitc_plugin_UMM_Ext.meta.js
 // @downloadURL     https://github.com/IITCPlugins/umm_ext/raw/refs/heads/main/dist/iitc_plugin_UMM_Ext.user.js
@@ -1487,7 +1487,7 @@ function wrapper_iitc(SCRIPT_INFO) {
         })), dialogButtonClose() ];
         window.dialog({
             html,
-            title: `${title} v1.1.1 - About`,
+            title: `${title} v1.1.2 - About`,
             id: "umm-options",
             width: 350,
             buttons
@@ -1716,7 +1716,7 @@ function wrapper_iitc(SCRIPT_INFO) {
         };
         Generator_dialog = window.dialog({
             html,
-            title: `${title} v1.1.1`,
+            title: `${title} v1.1.2`,
             id: "umm-options_generator",
             width: 350,
             position,
@@ -1845,7 +1845,7 @@ function wrapper_iitc(SCRIPT_INFO) {
         };
         window.dialog({
             html,
-            title: `${title} v1.1.1`,
+            title: `${title} v1.1.2`,
             id: "umm-options",
             width: 350,
             position,
@@ -1981,7 +1981,7 @@ function wrapper_iitc(SCRIPT_INFO) {
             at: "center top"
         }), window.dialog({
             html,
-            title: `${title} v1.1.1`,
+            title: `${title} v1.1.2`,
             id: "umm-options",
             width: 350,
             position,
@@ -2029,7 +2029,7 @@ function wrapper_iitc(SCRIPT_INFO) {
         html += `<label for="umm-title-format"><b>Title format</b></label>\n      <span class="umm-error" id="umm-mission-title-format-error"><b>Error: </b>Please enter a valid title-format</span>\n      <table>\n      <tr><td>$T = Mission title</td><td>additional flags:</td></tr>\n      <tr><td>$N = Current Missione number</td><td>$0n = with leading zeros</td></tr>\n      <tr><td>$M = Banner length</td><td>$3n = minimum length</td></tr>\n      </table>\n      <br><br>Examples: "$T $N / $M" or "$0n.$m $t"  or "$T $03N-$03M" </p>\n      <input id="umm-title-format" name="umm-title-format" type="text" placeholder="Enter a title format" value="${state.getTitleFormat() ?? "$T $N / $M"}" style="margin-bottom: 5px;">\n      <b>Preview: </b><span id="umm-mission-title-preview"></span>`, 
         html += "</div>", window.dialog({
             html,
-            title: "Edit banner details - UMM v1.1.1",
+            title: "Edit banner details - UMM v1.1.2",
             id: "umm-options",
             width: 400,
             buttons: [ dialogButton("< Main Menu", showUmmOptions), dialogButton("Save", () => successfulSave(toggleMissionModeAfterSave)), dialogButtonClose() ]
@@ -2325,7 +2325,7 @@ function wrapper_iitc(SCRIPT_INFO) {
                 title: "Ultimate Mission Maker",
                 click: () => this.toggleUMM()
             })), $(".leaflet-umm.leaflet-bar").hide(), this.renderPath = new RenderPath, this.renderNumbers = new RenderNumbers, 
-            this.missionModeActive = !1, this.activateUMM(), showMissionGenerator();
+            this.missionModeActive = !1;
         }
         toggleUMM() {
             $(".leaflet-umm.leaflet-bar").toggle(), $(".leaflet-umm.leaflet-bar").is(":visible") ? this.activateUMM() : this.deactivateUMM();
