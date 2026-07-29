@@ -1,3 +1,8 @@
+# v1.1.1
+
+- fix: "edit" button was covering banner length in main dialog
+- dependencies update
+
 # v1.1
 
 - new "Mission Generator" dialog  
