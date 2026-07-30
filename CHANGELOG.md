@@ -1,3 +1,8 @@
+# v1.1.2
+
+- fix: dialogs auto open on load - forgotten debug code
+  (nah, the truth: the build script should have removed it, but it failed)
+
 # v1.1.1
 
 - fix: "edit" button was covering banner length in main dialog
