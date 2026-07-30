@@ -43,7 +43,8 @@ export class Mission {
     show() {
         if (this.hasPortals()) {
             const bounds = new L.LatLngBounds(this.getLocations()).pad(0.2);
-            window.map.fitBounds(bounds, { maxZoom: 18 });
+            if (bounds.isValid())
+                window.map.fitBounds(bounds, { maxZoom: 18 });
         }
     }
 
