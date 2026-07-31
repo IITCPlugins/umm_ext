@@ -3,7 +3,7 @@ import { notification } from "./UI/Notification";
 
 
 export const exportData = (state: State) => {
-    const data = state.asString();
+    const data = state.export();
     const sanitizedName = state.getBannerName().replace(/[\W_]+/g, " ");
     const filename = sanitizedName + "-mission-data.json";
 

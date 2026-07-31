@@ -624,6 +624,11 @@ brace-expansion@^5.0.8:
   dependencies:
     balanced-match "^4.0.2"
 
+bresenham-zingl@0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/bresenham-zingl/-/bresenham-zingl-0.2.0.tgz#38f017703611d3d628554c6b1fc82b8d6c17f57d"
+  integrity sha512-vM4cFU/8LK1drpWRH71WDTNEfeMyRCPiwqOPOaH0Ji1gUDKgysN0HGU0juIszPv5JyACKR+eRYzaeUie9SZk9w==
+
 browserslist@^4.0.0, browserslist@^4.28.1, browserslist@^4.28.2:
   version "4.28.7"
   resolved "https://registry.yarnpkg.com/browserslist/-/browserslist-4.28.7.tgz#409046517fccd2e51cdc20f077454b7141184028"
@@ -1520,10 +1525,8 @@ ignore@^7.0.5:
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-7.0.6.tgz#6a57aaef4c90df27ac3590875d29e8f11988c88e"
   integrity sha512-BAg6QkE8W+TuQLrrw0Ugr7HegXduRuuj8/ti2kSOc+jz1dmx8/WNcjr6XGnq5YpDWxFwwaavqD0+jIUOKelTsw==
 
-iitcpluginkit@^1.10.3:
+iitcpluginkit@../iitcpluginkit:
   version "1.10.3"
-  resolved "https://registry.yarnpkg.com/iitcpluginkit/-/iitcpluginkit-1.10.3.tgz#172c81d7667c25540b3b6e01dfc38067f50c4bdd"
-  integrity sha512-Kec95THGDgE5c1/t+slnnHcAjXRafxLxL+s39+DIWhS7f2n125kgANTlXRj3T4W324/Eqeg39dYIT5sEd/VhTA==
   dependencies:
     "@types/gapi.auth2" "^0.0.61"
     "@types/jquery" "^4.0.1"
@@ -1558,6 +1561,11 @@ iitcpluginkit@^1.10.3:
     webpack-merge "^6.0.1"
     webpack-strip-block "^0.3.0"
     yargs "^18.0.0"
+
+immediate@~3.0.5:
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/immediate/-/immediate-3.0.6.tgz#9db1dbd0faf8de6fbe0f5dd5e56bb606280de69b"
+  integrity sha512-XXOFtyqDjNDAQxVfYxuF7g9Il/IbWmmlQg2MYKOH8ExIT1qg6xc4zyS3HaEEATgs1btfzxq15ciUiY7gjSXRGQ==
 
 import-fresh@^3.3.0:
   version "3.3.1"
@@ -1746,6 +1754,13 @@ levn@^0.4.1:
     prelude-ls "^1.2.1"
     type-check "~0.4.0"
 
+lie@3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/lie/-/lie-3.1.1.tgz#9a436b2cc7746ca59de7a41fa469b3efb76bd87e"
+  integrity sha512-RiNhHysUjhrDQntfYSfY4MU24coXXdEOgw9WGcKHNeEwffDYbF//u87M1EWaMGzuFoSbqW0C9C6lEEhDOAswfw==
+  dependencies:
+    immediate "~3.0.5"
+
 lilconfig@^3.1.3:
   version "3.1.3"
   resolved "https://registry.yarnpkg.com/lilconfig/-/lilconfig-3.1.3.tgz#a1bcfd6257f9585bf5ae14ceeebb7b559025e4c4"
@@ -1773,6 +1788,13 @@ loader-utils@^2.0.0:
     big.js "^5.2.2"
     emojis-list "^3.0.0"
     json5 "^2.1.2"
+
+localforage@^1.10.0:
+  version "1.10.0"
+  resolved "https://registry.yarnpkg.com/localforage/-/localforage-1.10.0.tgz#5c465dc5f62b2807c3a84c0c6a1b1b3212781dd4"
+  integrity sha512-14/H1aX7hzBBmmh7sGPd+AOMkkIrHM3Z1PAyGgZigA1H1p5O5ANnMyWzvpAETtG68/dC4pC0ncy3+PPGzXZHPg==
+  dependencies:
+    lie "3.1.1"
 
 locate-path@^5.0.0:
   version "5.0.0"

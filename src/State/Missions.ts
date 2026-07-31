@@ -76,6 +76,13 @@ export class Missions {
         });
     }
 
+    map<T>(callback: (mission: Mission) => T): T[] {
+        return this.data.map((missionData, index) => {
+            const mission = new Mission(this.state, index, missionData);
+            return callback(mission);
+        });
+    }
+
     filter(callback: (mission: Mission) => boolean): Mission[] {
         const result: Mission[] = [];
         this.forEach(mission => {

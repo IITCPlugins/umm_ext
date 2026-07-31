@@ -16,9 +16,20 @@ export interface UMM_State {
     layers: boolean[];
 }
 
+export interface Rect {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+}
+
 export interface UMM_Mission {
     missionTitle: string;
     missionDescription: string;
+
+    image: number;
+    rect?: Rect;
+
     portals: UMM_Portal[];
 }
 

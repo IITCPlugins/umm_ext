@@ -61,6 +61,7 @@ export const addPortalToCurrentMission = async (data: EventPortalSelected) => {
 
 export const clearMissionData = () => {
     main.state.reset();
+    main.state.clearImages();
     main.state.save();
 
     if (main.missionModeActive) {

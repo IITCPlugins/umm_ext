@@ -8,6 +8,7 @@ import { button, dialogButton, dialogButtonClose } from "./Button";
 import { confirmDialog } from "./Confirm";
 import { showMissionGenerator } from "./Generator";
 import { editMissionSetDetails } from "./MissionDetails";
+import { showImageEditor } from "./ImageEdit/ImageEditor";
 import { editActiveMission } from "./SelectMission";
 
 const lable = (lable: string): JQuery => {
@@ -38,7 +39,8 @@ export const showUmmOptions = () => {
             lable("Length"), stat("umm_opt_bannerdistance"),
             "</tr></table>",
             $("<div>", { id: "umm_opt_error" }),
-            button("Edit", () => editMissionSetDetails(), "editButtom"),
+            button("Edit", () => editMissionSetDetails(), "editButton"),
+            button("Pics", () => showImageEditor(), "imageButton"),
         ),
         $("<p>").append(
             button("Change active mission #", editActiveMission, "w-full"),
@@ -51,7 +53,7 @@ export const showUmmOptions = () => {
         button("Reverse missions", reverseMissions, "w-full"),
         button("Clear ALL missions data", confirmClear, "w-full"),
         $("<hr>"),
- 
+
         $("<b>", { text: "Import/Export" }), $("<br>"),
         button("Export banner data to file", () => exportData(main.state), "w-full"),
         $("<div>").css({ width: 800, margin: "auto" }).append(
@@ -135,4 +137,3 @@ const confirmLoad = async (event: Event) => {
         main.state.missions.zoom();
     }
 };
-
