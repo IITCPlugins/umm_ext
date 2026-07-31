@@ -18,6 +18,7 @@ class UMM_Ext implements Plugin.Class {
     public renderPath!: RenderPath;
     public renderNumbers!: RenderNumbers;
     public missionModeActive: boolean = false;
+    public firstToobarShow: boolean = true;
 
 
     constructor() {
@@ -52,6 +53,7 @@ class UMM_Ext implements Plugin.Class {
         this.missionModeActive = false;
 
         /* DEBUG-START */
+        this.firstToobarShow = false;
         // this.activateUMM();
         // showMissionGenerator();
         /* DEBUG-END */
@@ -68,8 +70,14 @@ class UMM_Ext implements Plugin.Class {
     }
 
     activateUMM() {
-        // drawing attention
-        $('.leaflet-umm').fadeIn().fadeOut().fadeIn().fadeOut().fadeIn().fadeOut().fadeIn();
+        if (this.firstToobarShow) {
+            // drawing attention
+            this.firstToobarShow = false;
+            $('.leaflet-umm').fadeIn().fadeOut().fadeIn().fadeOut().fadeIn().fadeOut().fadeIn();
+        } else {
+            $('.leaflet-umm').fadeIn();
+        }
+
         if (this.state.isEmpty()) {
             editMissionSetDetails();
         } else {
