@@ -73,7 +73,7 @@ class UMM_Editor {
             $("<div>", { id: "umm-mission-editor-bar" }).append(
                 $("<div>", { id: "umm-mission-title", click: () => $("#umm-import-file").trigger("click") }),
                 $("<div>", { style: "margin-top: 0.3em;" }).append(
-                    $("<input>", { id: "umm-import-file", type: "file" }),
+                    $("<input>", { id: "umm-import-file", type: "file", accept: "application/JSON" }),
                     $("<label>", { for: "umm-import-file", class: "umm-upload-label" })
                 ),
                 $("<div>", { id: "umm-mission-picker-wrapper" }).append(

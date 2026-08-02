@@ -51,12 +51,12 @@ export const showUmmOptions = () => {
         button("Reverse missions", reverseMissions, "w-full"),
         button("Clear ALL missions data", confirmClear, "w-full"),
         $("<hr>"),
-
+ 
         $("<b>", { text: "Import/Export" }), $("<br>"),
         button("Export banner data to file", () => exportData(main.state), "w-full"),
         $("<div>").css({ width: 800, margin: "auto" }).append(
             '<b>Import banner data from file:</b><br>',
-            $("<input>", { type: "file", change: confirmLoad }),
+            $("<input>", { type: "file", change: confirmLoad, accept: "application/JSON" }),
 
         )
     );
