@@ -28,7 +28,7 @@ export class MissionImage {
     }
 
     public update() {
-        const picture = this.mission.getImage(this.state);
+        const picture = this.mission.getImage();
         const image = $(".image", this.tile).get(0) as HTMLImageElement;
 
         picture.render(image);

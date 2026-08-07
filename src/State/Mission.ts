@@ -9,11 +9,17 @@ export class Mission {
     private missionID: number;
     private data: UMM_Mission;
     private portal_data: Portals;
+    private state: State;
 
     constructor(state: State, id: number, data: UMM_Mission) {
         this.missionID = id;
         this.data = data;
+        this.state = state;
         this.portal_data = new Portals(state, data.portals);
+    }
+
+    isEmpty(): boolean {
+        return this.title === "" || this.description === '' || this.portals.length === 0;
     }
 
     get title(): string {
@@ -71,6 +77,10 @@ export class Mission {
 
     getLocations(): L.LatLng[] {
         return this.portal_data.toLatLng();
+    }
+
+    getSequential(): { sequential: boolean, hiddenLocation: boolean } {
+        return this.state.getSequential();
     }
 
 

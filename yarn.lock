@@ -184,6 +184,11 @@
   resolved "https://registry.yarnpkg.com/@tsconfig/node16/-/node16-1.0.4.tgz#0b92dcc0cc1c81f6f306a381f28e31b1a56536e9"
   integrity sha512-vxhUy4J8lyeyinH7Azl1pdd43GJhZH/tP2weN8TntQblOY+A0XbT8DJk1/oCPuOOyg/Ja757rG0CgHcWC8OfMA==
 
+"@types/angular@^1.8.9":
+  version "1.8.9"
+  resolved "https://registry.yarnpkg.com/@types/angular/-/angular-1.8.9.tgz#d1ae3e87a67f72342d55ff26e611df83df0fb176"
+  integrity sha512-Z0HukqZkx0fotsV3QO00yqU9NzcQI+tMcrum+8MvfB4ePqCawZctF/gz6QiuII+T1ax+LitNoPx/eICTgnF4sg==
+
 "@types/esrecurse@^4.3.1":
   version "4.3.1"
   resolved "https://registry.yarnpkg.com/@types/esrecurse/-/esrecurse-4.3.1.tgz#6f636af962fbe6191b830bd676ba5986926bccec"
@@ -623,11 +628,6 @@ brace-expansion@^5.0.8:
   integrity sha512-JZyDyq3D4AUifKTPOB7DELf6XsB3WdPuNxCtob1vFXPsSXhdAiHBWJ/tJ8HAc9aH84BK+5JFZLNkJKx3G9kzQg==
   dependencies:
     balanced-match "^4.0.2"
-
-bresenham-zingl@0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/bresenham-zingl/-/bresenham-zingl-0.2.0.tgz#38f017703611d3d628554c6b1fc82b8d6c17f57d"
-  integrity sha512-vM4cFU/8LK1drpWRH71WDTNEfeMyRCPiwqOPOaH0Ji1gUDKgysN0HGU0juIszPv5JyACKR+eRYzaeUie9SZk9w==
 
 browserslist@^4.0.0, browserslist@^4.28.1, browserslist@^4.28.2:
   version "4.28.7"
@@ -1525,8 +1525,10 @@ ignore@^7.0.5:
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-7.0.6.tgz#6a57aaef4c90df27ac3590875d29e8f11988c88e"
   integrity sha512-BAg6QkE8W+TuQLrrw0Ugr7HegXduRuuj8/ti2kSOc+jz1dmx8/WNcjr6XGnq5YpDWxFwwaavqD0+jIUOKelTsw==
 
-iitcpluginkit@../iitcpluginkit:
-  version "1.10.3"
+iitcpluginkit@^1.10.4:
+  version "1.10.4"
+  resolved "https://registry.yarnpkg.com/iitcpluginkit/-/iitcpluginkit-1.10.4.tgz#c6886d0becb60d6343dc3957f03e1ecb7a800d67"
+  integrity sha512-bfNfPSn/TpL/14CySJdvlftWOyML8baeiGpTnJKKB8g/wv2VI3Fn+hotua1RGJGR+d/waAdENsuoP8JXBsFaqQ==
   dependencies:
     "@types/gapi.auth2" "^0.0.61"
     "@types/jquery" "^4.0.1"
