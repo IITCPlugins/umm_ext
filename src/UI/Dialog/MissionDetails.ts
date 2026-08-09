@@ -5,6 +5,18 @@ import { bannerNotification } from "../Notification";
 import { dialogButton, dialogButtonClose } from "./Button";
 import { showUmmOptions } from "./MainDialog";
 
+let currentDialog: JQuery;
+interface FormValues {
+    name: string;
+    description: string;
+    length: number;
+    format: string;
+    sequential: boolean;
+    hiddenLocation: boolean;
+}
+
+const MAX_TITLE_LENGTH = 50;
+const MAX_DESCRIPTION_LENGTH = 200;
 
 export const editMissionSetDetails = (toggleMissionModeAfterSave = false) => {
     const state = main.state;
@@ -13,32 +25,34 @@ export const editMissionSetDetails = (toggleMissionModeAfterSave = false) => {
     html += '<b>Banner details</b>';
     html += '<p>Please enter the details for your banner. All fields are required.</p><br>';
 
-    html += `<label for="umm-mission-set-name"><b>Banner name</b> (max. 50 characters)</label>
-      <span class="umm-error" id="umm-mission-set-name-error"><b>Error: </b>Please enter a valid banner name</span>
-      <input id="umm-mission-set-name" name="umm-mission-set-name" type="text" placeholder="Enter name for the banner" maxlength="50" value="${state.getBannerName()}">`
+    html += createLabel("umm-mission-set-name", "Banner name", `(max. ${MAX_TITLE_LENGTH} characters)`, "Please enter a valid banner name");
+    html += `<input id="umm-mission-set-name" name="umm-mission-set-name" type="text" placeholder="Enter name for the banner" maxlength="${MAX_TITLE_LENGTH}">`
 
-    html += `<label for="umm-mission-set-description"><b>Banner description</b> (max. 200 characters)</label>
-      <span class="umm-error" id="umm-mission-set-description-error"><b>Error: </b>Please enter a valid banner description</span>
-      <textarea id="umm-mission-set-description" name="umm-mission-set-description" placeholder="Enter description for the banner" maxlength="200" rows="5">${state.getBannerDesc()}</textarea>`
+    html += createLabel("umm-mission-set-description", "Banner description", `(max. ${MAX_DESCRIPTION_LENGTH} characters)`, "Please enter a valid banner description");
+    html += `<textarea id="umm-mission-set-description" name="umm-mission-set-description" placeholder="Enter description for the banner" maxlength="200" rows="5"></textarea>`
 
-    html += `<label for="umm-banner-length"><b>Planned banner length</b>, min. ${Math.max(state.missions.count(), 1)} mission(s)</label>
-      <span class="umm-error" id="umm-mission-planned-banner-length-error"><b>Error: </b>Please enter a valid banner length</span>
-      <input id="umm-banner-length" name="umm-banner-length" type="number" placeholder="Enter length of banner set" min="1" value="${Math.max(state.getPlannedLength(), 1)}">`
+    html += createLabel("umm-mission-planned-banner-length", "Planned banner length", `, min. ${Math.max(state.missions.count(), 1)} mission(s)`, "Please enter a valid banner length");
+    html += `<input id="umm-mission-planned-banner-length" name="umm-mission-planned-banner-length" type="number" placeholder="Enter length of banner set" min="1">`
 
-    html += `<label for="umm-title-format"><b>Title format</b></label>
-      <span class="umm-error" id="umm-mission-title-format-error"><b>Error: </b>Please enter a valid title-format</span>
-      <table>
+    html += `<label><input id="umm-mission-sequential" name="umm-mission-sequential" type="checkbox" checked />
+        <b>Sequential Missions</b>(Sequential or Anyorder)</label>`;
+
+    html += `<label><input id="umm-mission-hide-waypoint" name="umm-mission-hide-waypoint" type="checkbox" style="margin-left:2em;"/>
+        <b>Hide waypoint location</b>(only for Sequential missions)</label>`;
+
+    html += createLabel("umm-mission-title-format", "Title format", "", "Please enter a valid title-format");
+    html += `<table>
       <tr><td>$T = Mission title</td><td>additional flags:</td></tr>
       <tr><td>$N = Current Missione number</td><td>$0n = with leading zeros</td></tr>
       <tr><td>$M = Banner length</td><td>$3n = minimum length</td></tr>
       </table>
       <br><br>Examples: "$T $N / $M" or "$0n.$m $t"  or "$T $03N-$03M" </p>
-      <input id="umm-title-format" name="umm-title-format" type="text" placeholder="Enter a title format" value="${state.getTitleFormat() ?? "$T $N / $M"}" style="margin-bottom: 5px;">
+      <input id="umm-mission-title-format" name="umm-mission-title-format" type="text" placeholder="Enter a title format" style="margin-bottom: 5px;">
       <b>Preview: </b><span id="umm-mission-title-preview"></span>`
 
     html += '</div>';
 
-    window.dialog({
+    currentDialog = window.dialog({
         html: html,
         title: `Edit banner details - UMM ${VERSION}`,
         id: 'umm-options',
@@ -50,25 +64,29 @@ export const editMissionSetDetails = (toggleMissionModeAfterSave = false) => {
         ]
     });
 
+    updateFormValues({
+        name: state.getBannerName(),
+        description: state.getBannerDesc(),
+        length: Math.max(state.getPlannedLength(), 1),
+        format: state.getTitleFormat() ?? "$T $N / $M",
+        sequential: state.getSequential().sequential,
+        hiddenLocation: state.getSequential().hiddenLocation,
+    })
     updateMissionTitlePreview();
 
     $('#umm-mission-set-name, #umm-mission-set-description, #umm-banner-length, #umm-title-format').on('input', updateMissionTitlePreview);
 };
 
-const getFormValues = () => ({
-    name: $('#umm-mission-set-name').val() as string,
-    description: $('#umm-mission-set-description').val() as string,
-    length: $('#umm-banner-length').val() as string,
-    format: $('#umm-title-format').val() as string
-});
+
+const createLabel = (forID: string, title: string, description: string, error: string) => {
+    return `<label for="${forID}"><b>${title}</b>${description}</label>
+      <span class="umm-error" id="${forID}-error"><b>Error: </b>${error}</span>`
+}
+
 
 const successfulSave = (toggleMissionModeAfterSave: boolean) => {
     const values = getFormValues();
-    const isSavedSuccessful = saveMissionSetDetails(
-        values.name,
-        values.description,
-        values.length,
-        values.format);
+    const isSavedSuccessful = saveMissionSetDetails(values);
 
     if (isSavedSuccessful) {
         bannerNotification(main.state, `Mission details saved`);
@@ -79,9 +97,10 @@ const successfulSave = (toggleMissionModeAfterSave: boolean) => {
     }
 }
 
+
 const updateMissionTitlePreview = () => {
     const values = getFormValues();
-    const plannedLength = parseInt(values.length);
+    const plannedLength = values.length;
 
     if (values.name.length > 0 && values.format.length > 0 && !isNaN(plannedLength)) {
         const missionTitle = Missions.generateMissionTitle(values.format, {
@@ -96,44 +115,66 @@ const updateMissionTitlePreview = () => {
 }
 
 
-const setFieldError = (elementId: string, hasError: boolean) => {
-    $(elementId).css('display', hasError ? 'block' : 'none');
-};
-
-const saveMissionSetDetails = (missionSetName?: string, missionSetDescription?: string, plannedBannerLength?: string, titleFormat?: string): boolean => {
-    let isValid = true;
-
-    const hasName = missionSetName && missionSetName.length > 0;
-    if (hasName) {
-        main.state.setBannerName(missionSetName);
-    }
-    setFieldError('#umm-mission-set-name-error', !hasName);
-    isValid = isValid && !!hasName;
-
-    const hasDescription = missionSetDescription && missionSetDescription.length > 0;
-    if (hasDescription) {
-        main.state.setBannerDesc(missionSetDescription);
-    }
-    setFieldError('#umm-mission-set-description-error', !hasDescription);
-    isValid = isValid && !!hasDescription;
-
-    const plannedLength = parseInt(plannedBannerLength ?? "");
-    const hasValidLength = plannedLength && !isNaN(plannedLength);
-    if (hasValidLength) {
-        main.state.setPlannedLength(plannedLength);
-    }
-    setFieldError('#umm-mission-planned-banner-length-error', !hasValidLength);
-    isValid = isValid && !!hasValidLength;
-
-    const hasFormat = titleFormat && titleFormat.length > 0;
-    if (hasFormat) {
-        main.state.setTitleFormat(titleFormat);
-    }
-    setFieldError('#umm-mission-title-format-error', !hasFormat);
-    isValid = isValid && !!hasFormat;
+const saveMissionSetDetails = (data: FormValues): boolean => {
+    const isValid = validateForm(data);
 
     if (isValid) {
+        main.state.setBannerName(data.name);
+        main.state.setBannerDesc(data.description);
+        main.state.setPlannedLength(data.length);
+        main.state.setTitleFormat(data.format);
+        main.state.setSequential(data.sequential,data.hiddenLocation);
         main.state.save();
     }
+
     return isValid;
 }
+
+
+const validateForm = (data: FormValues): boolean => {
+    let isValid = true;
+
+    isValid = validate('umm-mission-set-name', 
+            data.name !== undefined && data.name.length > 0 && data.name.length <= MAX_TITLE_LENGTH)
+            && isValid;
+
+    isValid = validate('umm-mission-set-description', 
+            data.description !== undefined && data.description.length > 0 && data.description.length <= MAX_DESCRIPTION_LENGTH)
+            && isValid;
+
+    isValid = validate('umm-mission-planned-banner-length', 
+            data.length>0 && !isNaN(data.length))
+            && isValid;
+
+    isValid = validate('umm-mission-title-format', 
+            data.format !== undefined && data.format.length > 0)
+            && isValid;
+
+    return isValid;
+}
+
+const validate = (elementId: string, isValid: boolean): boolean => {
+    $(`#${elementId}-error`, currentDialog).toggle(!isValid);
+    return isValid;
+};
+
+
+const getFormValues = ():FormValues => ({
+    name: $('#umm-mission-set-name', currentDialog).val() as string,
+    description: $('#umm-mission-set-description', currentDialog).val() as string,
+    length: parseInt($('#umm-mission-planned-banner-length', currentDialog).val() as string ?? ""),
+    format: $('#umm-mission-title-format', currentDialog).val() as string,
+    sequential: $('#umm-mission-sequential', currentDialog).is(":checked"),
+    hiddenLocation: $('#umm-mission-hide-waypoint', currentDialog).is(":checked")
+});
+
+
+const updateFormValues = (data: FormValues) => {
+    $('#umm-mission-set-name', currentDialog).val(data.name);
+    $('#umm-mission-set-description', currentDialog).val(data.description);
+    $('#umm-mission-planned-banner-length', currentDialog).val(data.length);
+    $('#umm-mission-title-format', currentDialog).val(data.format);
+    $('#umm-mission-sequential', currentDialog).prop(":checked", data.sequential);
+    $('#umm-mission-hide-waypoint', currentDialog).prop(":checked", data.hiddenLocation);
+};
+

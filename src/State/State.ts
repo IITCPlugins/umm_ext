@@ -70,6 +70,8 @@ export class State {
                     missionDescription: '',
                     portals: []
                 }],
+            sequential: true,
+            hiddenLocation: false,
             layers: []
         };
 
@@ -151,7 +153,21 @@ export class State {
         this.onMissionChange.trigger();
     }
 
+    setSequential(sequential: boolean, hiddenLocation: boolean) {
+        this.theState.sequential = sequential;
+        this.theState.hiddenLocation = hiddenLocation;
 
+        // we skip this because this flags have no effect here
+        // this.onMissionChange.trigger();
+    }
+    
+    getSequential(): {sequential: boolean, hiddenLocation: boolean} {
+        return {
+            sequential: this.theState.sequential,
+            hiddenLocation: this.theState.hiddenLocation
+        }
+    }
+    
     private generateMissionTitle(missNumber: number): string {
         return Missions.generateMissionTitle(this.theState.titleFormat,
             { misison: missNumber, total: this.getPlannedLength(), title: this.theState.missionSetName });

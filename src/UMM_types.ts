@@ -10,6 +10,8 @@ export interface UMM_State {
     plannedBannerLength: number;
     titleFormat: string
     fileFormatVersion: number;
+    sequential: boolean;
+    hiddenLocation: boolean;
 
     layers: boolean[];
 }
