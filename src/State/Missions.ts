@@ -136,8 +136,11 @@ export class Missions {
         const location = this.data.flatMap(m => new Portals(this.state, m.portals).toLatLng())
         if (location.length > 0) {
             const bounds = new L.LatLngBounds(location).pad(0.1);
-            if (bounds.isValid())
-                window.map.fitBounds(bounds, { maxZoom: 18 });
+            if (bounds.isValid()) {
+                const minBounds = bounds.pad(-0.2);
+                if (!window.map.getBounds().intersects(minBounds))
+                    window.map.fitBounds(bounds, { maxZoom: 18 });
+            }
         }
     }
 

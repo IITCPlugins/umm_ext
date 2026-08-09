@@ -40,13 +40,17 @@ export class Mission {
         return this.portal_data.toLatLng();
     }
 
-    show() {
+    show(forceZoom = false) {
         if (this.hasPortals()) {
             const bounds = new L.LatLngBounds(this.getLocations()).pad(0.2);
-            if (bounds.isValid())
+            if (bounds.isValid()) {
+                const minBounds = bounds.pad(-0.3);
+                if (forceZoom || !window.map.getBounds().intersects(minBounds))
                 window.map.fitBounds(bounds, { maxZoom: 18 });
+            }
         }
     }
+
 
     focusLastPortal(): boolean {
         const last_ll = this.portal_data.getLatLngOf(-1);

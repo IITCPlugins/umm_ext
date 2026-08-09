@@ -160,7 +160,7 @@ const onZoomToMission = () => {
     const mission = getSelectedMission();
 
     if (mission) {
-        mission.show();
+        mission.show(true);
     } else {
         notification("Can't zoom in on this mission. No portals.");
     }
