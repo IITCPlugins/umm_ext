@@ -1,6 +1,6 @@
 import { title } from "../../Text/Text";
 import { dialogButton, dialogButtonClose } from "./Button";
-import { showUmmOptions } from "./Options";
+import { showUmmOptions } from "./MainDialog";
 
 
 import changelogText from "../../../CHANGELOG.md";

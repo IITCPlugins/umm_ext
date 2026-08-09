@@ -4,7 +4,7 @@ import { Mission } from "../../State/Mission";
 import { notification } from "../Notification";
 import { title } from "../../Text/Text";
 import { button, dialogButton, dialogButtonClose } from "./Button";
-import { showUmmOptions } from "./Options";
+import { showUmmOptions } from "./MainDialog";
 import { confirmDialog } from "./Confirm";
 import { isMobile } from "../../Helper/Mobile";
 

@@ -3,7 +3,7 @@ import { main } from "../../Main";
 import { Missions } from "../../State/Missions";
 import { bannerNotification } from "../Notification";
 import { dialogButton, dialogButtonClose } from "./Button";
-import { showUmmOptions } from "./Options";
+import { showUmmOptions } from "./MainDialog";
 
 
 export const editMissionSetDetails = (toggleMissionModeAfterSave = false) => {
