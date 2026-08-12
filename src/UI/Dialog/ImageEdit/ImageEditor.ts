@@ -8,6 +8,7 @@ import { EM_MassEdit } from "./EM_MassEdit";
 import { EM_DragEdit } from "./EM_Drag";
 import { EM_Single } from "./EM_Single";
 import { Mission } from "../../../State/Mission";
+import { ZIP } from "../../../Helper/zip";
 
 const tiles: MissionImage[] = [];
 
@@ -69,7 +70,7 @@ export const showImageEditor = () => {
                 $("<hr>").css({ width: "80%" }),
                 $("<div>").append(
                     $("<button>", { id: "download-image", type: "button", text: "Download Images", click: downloadImages }),
-                    // checkbox("temp3", "as ZIP", true),
+                    checkbox("saveAsZip", "as ZIP", true),
                 )
             )
         )
@@ -171,22 +172,31 @@ const downloadImages = async (): Promise<void> => {
     let missions = currentEditMode.getSelected();
     if (missions.length === 0) missions = main.state.missions.getAll();
 
+    const files: File[] = [];
     // eslint-disable-next-line @typescript-eslint/prefer-for-of, unicorn/no-for-loop
     for (let i = 0; i < missions.length; i++) {
         const mission = missions[i];
         const file = await mission.getImage().toFile(mission.getImageFilename(), 'image/png');
-        saveAs(file, file.name, 'image/png');
+        files.push(file);
     }
 
-    /*
-    const readableStream = new ZIP({
-        start(ctrl) {
-            ctrl.enqueue(file1)
-            ctrl.enqueue(file2)
-            ctrl.close()
-        }
-    })
-    */
+    const asZip = $("#dialog-umm_image_edit #saveAsZip").is(":checked")
+
+    if (asZip) {
+        const readableStream = ZIP({
+            start(ctrl) {
+                files.forEach(file => ctrl.enqueue(file))
+                ctrl.close()
+            }
+        })
+
+        new Response(readableStream).blob().then(blob => {
+            saveAs(blob, "_all.zip", 'application/zip');
+        })
+
+    } else {
+        files.forEach(file => saveAs(file, file.name, 'image/png'));
+    }
 };
 
 
