@@ -63,6 +63,10 @@ export class Missions {
         return mis && new Mission(this.state, missionId, mis);
     }
 
+    getAll(): Mission[] {
+        return this.data.map((missionData, index) => new Mission(this.state, index, missionData));
+    }
+
 
     count(): number {
         return this.data.length;
@@ -90,6 +94,8 @@ export class Missions {
         });
         return result
     }
+
+
 
     previous(mission: Mission): Mission | undefined {
         let preMissionID = mission.id - 1;

@@ -7,8 +7,8 @@ import { EditMode, EditModeNone } from "./EditMode";
 import { EM_MassEdit } from "./EM_MassEdit";
 import { EM_DragEdit } from "./EM_Drag";
 import { EM_Single } from "./EM_Single";
+import { Mission } from "../../../State/Mission";
 
-let dialog: JQuery;
 const tiles: MissionImage[] = [];
 
 const enum EM {
@@ -67,12 +67,15 @@ export const showImageEditor = () => {
                     change: loadImage
                 }),
                 $("<hr>").css({ width: "80%" }),
-                $("<button>", { id: "download-image", type: "button", text: "Download PNG", click: downloadCurrentImage }),
+                $("<div>").append(
+                    $("<button>", { id: "download-image", type: "button", text: "Download PNG", click: downloadCurrentImage }),
+                    // checkbox("temp3", "as ZIP", true),
+                )
             )
         )
     );
 
-    dialog = window.dialog({
+    window.dialog({
         title: "UUM-Image Edit",
         id: "umm_image_edit",
         width: 600,
@@ -110,26 +113,42 @@ const loadImage = async (event: Event) => {
     const files = (event.target as HTMLInputElement).files;
     if (!files || files.length === 0) return;
 
-    // TODO load multiple
-    void loadImageFile(main.state, files[0]);
+    const state = main.state;
+
+    let selected = currentEditMode.getSelected();
+    if (selected.length === 0) selected = state.missions.getAll();
+    console.assert(selected.length > 0, "there are no missions?!?");
+
+    // selected.sort((a, b) => a.id - b.id);
+
+    const chunks = selected.length / files.length;
+    // eslint-disable-next-line unicorn/no-for-loop
+    for (let index = 0; index < files.length; index++) {
+        const missions = selected.slice(index * chunks, (index + 1) * chunks);
+        await loadImageFile(state, missions, files[index]);
+    }
+
+    state.removeUnusedImages();
+    updatePreview();
+    currentEditMode.imageReloaded();
 };
 
 
-const loadImageFile = async (state: State, inputFile: File): Promise<void> => {
+const loadImageFile = async (state: State, missions: Mission[], inputFile: File): Promise<void> => {
     const image = await Bimage.fromFile(inputFile);
 
     // split
-    const count = state.getPlannedLength();
+    const count = missions.length;
     const rows = Math.ceil(count / 6);
-    const imgSize = Math.min(image.width / 6, image.height / rows);
+    const columnCount = Math.min(count, 6);
+    const imgSize = Math.min(image.width / columnCount, image.height / rows);
 
-    const offsetX = (image.width - imgSize * 6) / 2;
+    const offsetX = (image.width - imgSize * columnCount) / 2;
     const offsetY = (image.height - imgSize * rows) / 2;
 
-    state.clearImages();
     const imageIndex = state.addImage(image);
-    state.missions.forEach(mission => {
-        const id = count - mission.id - 1; // reverse
+    missions.forEach((mission, index) => {
+        const id = count - index - 1; // reverse
         const x = id % 6;
         const y = Math.floor(id / 6);
         mission.setImage(imageIndex, {
@@ -139,9 +158,6 @@ const loadImageFile = async (state: State, inputFile: File): Promise<void> => {
             height: imgSize,
         });
     })
-
-    updatePreview();
-    currentEditMode.imageReloaded();
 };
 
 
@@ -152,15 +168,25 @@ const updatePreview = (): void => {
 
 
 const downloadCurrentImage = async (): Promise<void> => {
-    /*    if (!currentImage) return;
-    
-        const file = await currentImage.toFile('umm-image.png', 'image/png');
-        const url = URL.createObjectURL(file);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = file.name;
-        link.click();
-        URL.revokeObjectURL(url);*/
+    let missions = currentEditMode.getSelected();
+    if (missions.length === 0) missions = main.state.missions.getAll();
+
+    // eslint-disable-next-line @typescript-eslint/prefer-for-of, unicorn/no-for-loop
+    for (let i = 0; i < missions.length; i++) {
+        const mission = missions[i];
+        const file = await mission.getImage().toFile(mission.getImageFilename(), 'image/png');
+        saveAs(file, file.name, 'image/png');
+    }
+
+    /*
+    const readableStream = new ZIP({
+        start(ctrl) {
+            ctrl.enqueue(file1)
+            ctrl.enqueue(file2)
+            ctrl.close()
+        }
+    })
+    */
 };
 
 

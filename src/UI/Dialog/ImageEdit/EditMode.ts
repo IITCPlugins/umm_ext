@@ -1,12 +1,15 @@
+import { Mission } from "../../../State/Mission";
 import { MissionImage } from "./MissionsImage";
 
+const SELECTED_CLASS = "selected";
 export abstract class EditMode {
 
     protected images: MissionImage[];
-    private selected: number = -1;
+    private lastClicked: number;
 
     constructor(images: MissionImage[]) {
         this.images = images;
+        this.lastClicked = -1;
 
         this.images.forEach(i => i.tile.on("click", this.onClick));
     }
@@ -14,7 +17,7 @@ export abstract class EditMode {
     destroy(): void {
         this.images.forEach(i => {
             i.tile.off("click", this.onClick);
-            i.tile.removeClass("selected");
+            i.tile.removeClass(SELECTED_CLASS);
         });
     }
 
@@ -25,19 +28,27 @@ export abstract class EditMode {
         if (!image) return;
         const index = this.getImageIndex(image);
 
-        if (this.selected !== -1)
-            this.images[this.selected].tile.removeClass("selected");
+        if (index === -1) return;
 
-        if (this.selected === index) {
-            this.selected = -1;
-            return;
+        if (event.shiftKey && this.lastClicked !== -1) {
+            const start = Math.min(index, this.lastClicked);
+            const end = Math.max(index, this.lastClicked);
+            const toggle = this.images[this.lastClicked].tile.hasClass(SELECTED_CLASS);
+            for (let i = start; i <= end; i++)
+                this.images[i].tile.toggleClass(SELECTED_CLASS, toggle);
+        } else {
+            this.images[index].tile.toggleClass(SELECTED_CLASS);
         }
 
-        this.selected = index;
-        if (this.selected !== -1)
-            this.images[this.selected].tile.addClass("selected");
+        this.lastClicked = index;
     }
 
+    getSelected(): Mission[] {
+        return this.images
+            .filter(i => i.tile.hasClass(SELECTED_CLASS))
+            .map(i => i.mission)
+            .reverse()
+    }
 
     getImage(element: HTMLElement): MissionImage | undefined {
         return this.images.find(i => i.tile.is(element) || i.tile.is(element.parentElement!));

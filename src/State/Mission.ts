@@ -2,6 +2,7 @@ import { Portals } from "./Portals";
 import { Rect, UMM_Mission } from "../UMM_types";
 import { State } from "./State";
 import { Bimage } from "../Helper/Image";
+import { createFilename } from "../ImportExport";
 
 
 export class Mission {
@@ -56,7 +57,8 @@ export class Mission {
     }
 
     getImageFilename(): string {
-        return `badge_${this.id + 1}.png`;
+        const num = window.zeroPad(this.id + 1, String(this.state.getPlannedLength()).length);
+        return createFilename(this.state, `_${num}.png`);
     }
 
     get imageRect(): Rect | undefined {
