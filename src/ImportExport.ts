@@ -2,10 +2,14 @@ import { State } from "./State/State";
 import { notification } from "./UI/Notification";
 
 
+export const createFilename = (state: State, addition: string): string => {
+    const sanitizedName = state.getBannerName().replace(/[\W_]+/g, " ");
+    return sanitizedName + addition;
+}
+
 export const exportData = (state: State) => {
     const data = state.export();
-    const sanitizedName = state.getBannerName().replace(/[\W_]+/g, " ");
-    const filename = sanitizedName + "-mission-data.json";
+    const filename = createFilename(state, "-mission-data.json");
 
     if (typeof window.saveFile == 'function') {
         window.saveFile(data, filename, "application/json");
@@ -44,13 +48,13 @@ export const loadFile = async (state: State, inputFile: File): Promise<boolean> 
     const text = await inputFile.text()
 
     try {
-        state.import(text);
+        await state.import(text);
     } catch (error) {
         notification(`Loadgin error: \n${error}`);
         return false;
     }
 
-    state.save();
+    await state.save();
     notification(`Banner data loaded:\n${state.getBannerName()}`);
 
     return true;

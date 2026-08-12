@@ -43,9 +43,12 @@ export abstract class EditMode {
         this.lastClicked = index;
     }
 
+    getSelectedImages(): MissionImage[] {
+        return this.images.filter(i => i.tile.hasClass(SELECTED_CLASS));
+    }
+
     getSelected(): Mission[] {
-        return this.images
-            .filter(i => i.tile.hasClass(SELECTED_CLASS))
+        return this.getSelectedImages()
             .map(i => i.mission)
             .reverse()
     }

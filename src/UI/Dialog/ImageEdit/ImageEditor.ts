@@ -68,7 +68,7 @@ export const showImageEditor = () => {
                 }),
                 $("<hr>").css({ width: "80%" }),
                 $("<div>").append(
-                    $("<button>", { id: "download-image", type: "button", text: "Download PNG", click: downloadCurrentImage }),
+                    $("<button>", { id: "download-image", type: "button", text: "Download Images", click: downloadImages }),
                     // checkbox("temp3", "as ZIP", true),
                 )
             )
@@ -167,7 +167,7 @@ const updatePreview = (): void => {
 
 
 
-const downloadCurrentImage = async (): Promise<void> => {
+const downloadImages = async (): Promise<void> => {
     let missions = currentEditMode.getSelected();
     if (missions.length === 0) missions = main.state.missions.getAll();
 

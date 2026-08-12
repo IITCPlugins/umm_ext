@@ -112,7 +112,7 @@ export class EM_MouseEdit extends EditMode {
         const c1x = imgrect.x + imgrect.width / 2;
         const c1y = imgrect.y + imgrect.height / 2;
 
-        const scale = (imgrect.width ?? 500) / 500;
+        const scale = (imgrect.width ?? 500) / 10000;
         const zoom = 1 + delta * scale;
 
         this.zoom(image, zoom, c1x, c1y);
