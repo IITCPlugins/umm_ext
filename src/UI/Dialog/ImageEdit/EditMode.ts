@@ -6,10 +6,12 @@ export abstract class EditMode {
 
     protected images: MissionImage[];
     private lastClicked: number;
+    private disableSelection: boolean;
 
     constructor(images: MissionImage[]) {
         this.images = images;
         this.lastClicked = -1;
+        this.disableSelection = false;
 
         this.images.forEach(i => i.tile.on("click", this.onClick));
     }
@@ -24,6 +26,8 @@ export abstract class EditMode {
     imageReloaded(): void { /* overload */ }
 
     onClick = (event: JQuery.ClickEvent) => {
+        if (this.disableSelection) return;
+
         const image = this.getImage(event.target);
         if (!image) return;
         const index = this.getImageIndex(image);
@@ -51,6 +55,13 @@ export abstract class EditMode {
         return this.getSelectedImages()
             .map(i => i.mission)
             .reverse()
+    }
+
+    toggleSelectionMode(status: boolean) {
+        this.disableSelection = !status;
+        if (this.disableSelection) {
+            this.images.forEach(i => i.tile.removeClass(SELECTED_CLASS));
+        }
     }
 
     getImage(element: HTMLElement): MissionImage | undefined {

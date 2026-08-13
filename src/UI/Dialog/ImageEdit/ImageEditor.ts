@@ -9,6 +9,7 @@ import { EM_DragEdit } from "./EM_Drag";
 import { EM_Single } from "./EM_Single";
 import { Mission } from "../../../State/Mission";
 import { ZIP } from "../../../Helper/zip";
+import { createFilename } from "../../../ImportExport";
 
 const tiles: MissionImage[] = [];
 
@@ -37,6 +38,7 @@ export const showImageEditor = () => {
         $("<div>", { class: "umm_group_container" }).append(
             $("<fieldset>", { class: "umm_group" }).append(
                 $("<legend>", { text: "Edit mode" }),
+                checkbox("temp2", "select mission", true).on("change", event => onSelectionMode($(event.target as HTMLElement).is(":checked"))),
                 $("<div>").append(
                     $("<input>", { type: "radio", id: "EM_noEdit", name: "editmode", click: () => setEditMode(EM.None) }),
                     $("<label>", { for: "EM_noEdit", text: "no edit" }),
@@ -66,11 +68,11 @@ export const showImageEditor = () => {
                     multiple: true,
                     accept: "image/png, image/jpeg",
                     change: loadImage
-                }),
+                }).css({ "max-width": "20em" }),
                 $("<hr>").css({ width: "80%" }),
-                $("<div>").append(
+                $("<div>").css({ "display": "flex" }).append(
                     $("<button>", { id: "download-image", type: "button", text: "Download Images", click: downloadImages }),
-                    checkbox("saveAsZip", "as ZIP", true),
+                    checkbox("saveAsZip", "as ZIP", true).css({ "margin-left": "auto", width: "6em" }),
                 )
             )
         )
@@ -181,17 +183,18 @@ const downloadImages = async (): Promise<void> => {
     }
 
     const asZip = $("#dialog-umm_image_edit #saveAsZip").is(":checked")
-
     if (asZip) {
         const readableStream = ZIP({
+            // eslint-disable-next-line prefer-arrow-functions/prefer-arrow-functions
             start(ctrl) {
                 files.forEach(file => ctrl.enqueue(file))
                 ctrl.close()
             }
         })
 
-        new Response(readableStream).blob().then(blob => {
-            saveAs(blob, "_all.zip", 'application/zip');
+        const filename = createFilename(main.state, "_badges.zip");
+        await new Response(readableStream).blob().then(blob => {
+            saveAs(blob, filename, 'application/zip');
         })
 
     } else {
@@ -207,4 +210,10 @@ const onMaskChanged = (status: boolean) => {
 const onBorderChanged = (status: boolean) => {
     tiles.forEach(t => t.showBorder(status));
 }
+
+const onSelectionMode = (status: boolean) => {
+    currentEditMode.toggleSelectionMode(status);
+}
+
+
 

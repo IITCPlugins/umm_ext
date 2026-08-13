@@ -88,7 +88,7 @@ export class EM_MouseEdit extends EditMode {
     onWheel = (event: JQuery.Event) => {
         event.preventDefault();
 
-        const delta = (event as any).originalEvent.wheelDelta;
+        let delta = (event as any).originalEvent.wheelDelta;
         const image = this.getImage((event as any).target as HTMLElement);
         if (!image) return;
 
@@ -111,11 +111,11 @@ export class EM_MouseEdit extends EditMode {
         */
         const c1x = imgrect.x + imgrect.width / 2;
         const c1y = imgrect.y + imgrect.height / 2;
-
-        const scale = (imgrect.width ?? 500) / 10000;
-        const zoom = 1 + delta * scale;
+        // const scale = (imgrect.width ?? 500) / 200000;
+        // const zoom = 1 + delta * scale; // delta = +-120 or +-80
+        if (event.shiftKey) delta /= 10;
+        const zoom = 1 + delta / 1000; // delta = +-120 or +-80
 
         this.zoom(image, zoom, c1x, c1y);
     }
-
 }
