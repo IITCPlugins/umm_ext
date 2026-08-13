@@ -73,6 +73,10 @@ export class Mission {
         return this.data.image;
     }
 
+    get category(): string {
+        return this.state.category;
+    }
+
     hasPortals(): boolean {
         return this.portal_data.length > 0;
     }

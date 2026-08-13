@@ -138,7 +138,8 @@ export class State {
                 }],
             sequential: true,
             hiddenLocation: false,
-            layers: []
+            layers: [],
+            category: undefined
         };
 
         this.images = [];
@@ -238,6 +239,20 @@ export class State {
             sequential: this.theState.sequential,
             hiddenLocation: this.theState.hiddenLocation
         }
+    }
+
+    set category(name: string | undefined) {
+        if (name === this.theState.category) name = undefined;
+        this.theState.category = name;
+    }
+
+    get category(): string {
+        if (!this.theState.category) return this.getBannerName();
+        return this.theState.category;
+    }
+
+    isCustomCategory(): boolean {
+        return this.theState.category === undefined;
     }
 
     private generateMissionTitle(missNumber: number): string {

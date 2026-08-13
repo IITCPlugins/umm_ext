@@ -12,6 +12,7 @@ export interface UMM_State {
     fileFormatVersion: number;
     sequential: boolean;
     hiddenLocation: boolean;
+    category: string | undefined;
 
     layers: boolean[];
 }
