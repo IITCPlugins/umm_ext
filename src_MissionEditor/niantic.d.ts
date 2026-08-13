@@ -1,4 +1,7 @@
 
+// eslint-disable-next-line unicorn/require-module-specifiers
+export { };
+
 declare global {
 
     enum MissionStates {

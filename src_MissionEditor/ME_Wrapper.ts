@@ -1,9 +1,9 @@
 /* eslint-disable no-underscore-dangle */
 import { Mission } from "../src/State/Mission"
-import { Bimage } from "../src/Helper/Image";
 import { notification } from "../src/UI/Notification";
 import { UMM_Portal } from "../src/UMM_types";
 import * as ME from "./ME_APP";
+import * as IMATTC from "./Imattc";
 
 
 // By creating a new Mission in MC and adding an image for the mission, it uploads the image to googleusercontent. The mission image URL is visible in the console source code.
@@ -15,7 +15,7 @@ const ummLogo = "https://lh3.googleusercontent.com/s0kCRS7KE-i0gQhbH_gx-qxvC2kHB
  * Angualar entry points  
 */
 let angularApp: ME.App;
-const getAngularApp = (): ME.App => {
+export const getAngularApp = (): ME.App => {
     if (!angularApp) {
         const container = document.body;  // or the Element with "ng-app"
         // @ts-ignore
@@ -25,15 +25,21 @@ const getAngularApp = (): ME.App => {
 }
 
 
-const getScope = <T>(element?: Element | JQuery): T => {
+export const getScope = <T>(element?: Element | JQuery): T => {
     element ??= document.body;
     // @ts-ignore
     return angular.element(element).scope() as T;
 }
 
-const getEditorScope = (): ME.EditorScope => {
+// angular.element($("div.editor").scope()
+export const getEditorScope = (): ME.EditorScope => {
     return getScope($("div.editor"));
 }
+
+
+// const getMissionsScope = (): ME.MissionsScope => {
+//     return getScope($(".container").get(0));
+// }
 
 
 /**
@@ -59,7 +65,7 @@ export const doImport = async (mission: Mission) => {
     });
 
     // 4. import mission
-    const missingImages = await importMissionPorals(editor, mission);
+    const missingImages = importMissionPorals(editor, mission);
 
     // 5. upload logo (if availabe)
     if (mission.hasImage()) {
@@ -80,11 +86,23 @@ export const doImport = async (mission: Mission) => {
         const scope = getEditorScope();
         await loadMission(scope.mission.mission_id);
     }
+
+    // 8. IMATTC
+    if (IMATTC.isInstalled()) {
+        // IMATTC has hijack 
+        // editor.setView(editor.EditorScreenViews.PREVIEW); // <- takes 500ms 
+        const category = mission.category;
+        if (category && category !== "") {
+            const catID = IMATTC.findOrCreateCategory(category);
+            if (catID === -1) {
+                IMATTC.setCurrentMissionCat(catID);
+            }
+        }
+    }
 }
 
 
-
-const importMissionPorals = async (editorScope: ME.EditorScope, mission: Mission): Promise<number> => {
+const importMissionPorals = (editorScope: ME.EditorScope, mission: Mission): number => {
 
     resetWaypoints(editorScope);
 
@@ -128,13 +146,7 @@ const checkEditorState = (editorScope: ME.EditorScope): boolean => {
     }
 
     if (!editorScope.mission) {
-        notification('You can not import a mission on the preview page\nStart with Create New Mission');
-        return false;
-    }
-
-    if (($('.title.title-4').length > 0 && !$('.title.title-4').hasClass("ng-hide")) || $('.pagination li:nth-child(4)').hasClass('active')) {
-        // stop import if (IMATTC) preview bullet is displayed
-        notification('You can not import a mission on this page\nGo back to a previous page');
+        notification('You can not import a mission on this page\nStart with Create New Mission');
         return false;
     }
 

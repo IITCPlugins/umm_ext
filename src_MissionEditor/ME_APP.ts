@@ -24,6 +24,7 @@ export interface MissionData {
         _hidden: boolean;
     };
 };
+
 export interface EditorScope extends angular.IScope {
     // Mission data
     mission: MissionData;
@@ -47,9 +48,23 @@ export interface EditorScope extends angular.IScope {
 
     /**
      * Save current state on backend
-     * NOTE: won't save on PREVIEW screen
+     * NOTE: won't save if PREVIEW screen is active (except nextScreen is set)
      */
     save: (nextScreen?: string) => Promise<void>;
+}
+
+export interface MissionDef {
+    // similar to MissionData but with empty and different fields
+    definition: {
+        name: string;
+        description: string;
+    }
+}
+
+
+// angular.element($("container").get(0)).scope()
+export interface MissionsScope extends angular.IScope {
+    missions: MissionDef[];
 }
 
 export interface Api {
@@ -69,7 +84,6 @@ export interface Api {
     SEARCH_POIS: string;
     UNPUBLISH_MISSION: string;
 }
-
 
 export interface Styles {
     CLUSTER_MARKER_LABEL_SIZE: number;
@@ -131,7 +145,3 @@ export interface Portal {
     objective?: UMM_Objective;
 }
 
-
-/*    export interface missionLogoUploadDirective {
- 
-    }*/
