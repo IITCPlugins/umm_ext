@@ -1,0 +1,37 @@
+#userscript-progress-overlay {
+  position: fixed;
+  inset: 0;
+  zindex: 2147483647;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  alignitems: center;
+  justifycontent: center;
+  cursor: wait;
+
+  .progress-dialog {
+    background: #fff;
+    padding: 24px 32px;
+    borderradius: 8px;
+    boxshadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    display: flex;
+    alignitems: center;
+    gap: 16px;
+    fontfamily: Arial, sans-serif;
+    fontsize: 16px;
+  }
+
+  .spinner {
+    width: 24px;
+    height: 24px;
+    border: 3px solid #ddd;
+    bordertopcolor: #333;
+    borderradius: 50%;
+    animation: userscript-spin 0.8s linear infinite;
+  }
+}
+
+@keyframes userscript-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

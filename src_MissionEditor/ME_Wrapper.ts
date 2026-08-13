@@ -2,6 +2,7 @@
 import { Mission } from "../src/State/Mission"
 import { notification } from "../src/UI/Notification";
 import { UMM_Portal } from "../src/UMM_types";
+import { showProgress, hideProgress } from "./ProgressDialog";
 import * as ME from "./ME_APP";
 import * as IMATTC from "./Imattc";
 
@@ -46,58 +47,69 @@ export const getEditorScope = (): ME.EditorScope => {
  * The new Import
  */
 export const doImport = async (mission: Mission) => {
-    // 1. create new mission if not in editor
-    if (getEditorScope() === undefined) {
-        await createNewMission();
-    }
 
-    // 2. make sure Editor is ready
-    const editor = getEditorScope();
-    if (!checkEditorState(editor)) return;
+    try {
+        // 1. create new mission if not in editor
+        showProgress("Create mission");
+        if (getEditorScope() === undefined) {
+            await createNewMission();
+        }
 
-    // 3. set baseics
-    editor.$apply(() => {
-        const { sequential, hiddenLocation } = mission.getSequential();
-        editor.mission.definition._sequential = sequential;
-        editor.mission.definition._hidden = editor.mission.definition._sequential && hiddenLocation;
-        editor.mission.definition.name = mission.title;
-        editor.mission.definition.description = mission.description;
-    });
+        // 2. make sure Editor is ready
+        const editor = getEditorScope();
+        if (!checkEditorState(editor)) return;
 
-    // 4. import mission
-    const missingImages = importMissionPorals(editor, mission);
+        // 3. set basics
+        editor.$apply(() => {
+            const { sequential, hiddenLocation } = mission.getSequential();
+            editor.mission.definition._sequential = sequential;
+            editor.mission.definition._hidden = editor.mission.definition._sequential && hiddenLocation;
+            editor.mission.definition.name = mission.title;
+            editor.mission.definition.description = mission.description;
+        });
 
-    // 5. upload logo (if availabe)
-    if (mission.hasImage()) {
-        await uploadLogo(mission);
-    }
+        // 4. import mission
+        showProgress("set portals");
+        const missingImages = importMissionPorals(editor, mission);
 
-    // 6. save & go to preview page
-    const nextPage = mission.hasImage() ? editor.EditorScreenViews.PREVIEW : editor.EditorScreenViews.NAME;
-    await editor.save(nextPage);
-    if (editor.savingFailed) {
-        throw new Error("Mission save failed");
-    }
+        // 5. upload logo (if availabe)
+        if (mission.hasImage()) {
+            showProgress("upload image");
+            await uploadLogo(mission);
+        }
+
+        // 6. save & go to preview page
+        const nextPage = mission.hasImage() ? editor.EditorScreenViews.PREVIEW : editor.EditorScreenViews.NAME;
+        showProgress("save");
+        await editor.save(nextPage);
+        if (editor.savingFailed) {
+            throw new Error("Mission save failed");
+        }
 
 
-    // 7. refresh missing images
-    if (missingImages > 0) {
-        notification('Refreshing mission...\n(Missing data detected)', true);
-        const scope = getEditorScope();
-        await loadMission(scope.mission.mission_id);
-    }
+        // 7. refresh missing images
+        if (missingImages > 0) {
+            showProgress("save");
+            notification('Refreshing mission...\n(Missing data detected)', true);
+            const scope = getEditorScope();
+            await loadMission(scope.mission.mission_id);
+        }
 
-    // 8. IMATTC
-    if (IMATTC.isInstalled()) {
-        // IMATTC has hijack 
-        // editor.setView(editor.EditorScreenViews.PREVIEW); // <- takes 500ms 
-        const category = mission.category;
-        if (category && category !== "") {
-            const catID = IMATTC.findOrCreateCategory(category);
-            if (catID === -1) {
-                IMATTC.setCurrentMissionCat(catID);
+        // 8. IMATTC
+        if (IMATTC.isInstalled()) {
+            showProgress("create category");
+            // IMATTC has hijack 
+            // editor.setView(editor.EditorScreenViews.PREVIEW); // <- takes 500ms 
+            const category = mission.category;
+            if (category && category !== "") {
+                const catID = IMATTC.findOrCreateCategory(category);
+                if (catID === -1) {
+                    IMATTC.setCurrentMissionCat(catID);
+                }
             }
         }
+    } finally {
+        hideProgress();
     }
 }
 
