@@ -1,8 +1,12 @@
-// IMATTIC api
+/**
+ * IMATTC api
+ * 
+ * most of IMATTC is running in a hidden scope.
+ * so we directly manipulate the saved data
+ */
 
-import { getEditorScope, getScope } from "./ME_Wrapper";
+import { getEditorScope } from "./ME_Wrapper";
 import * as ME from "./ME_APP";
-import * as angular from "angular";
 
 
 interface Category {
@@ -14,44 +18,54 @@ interface Category {
 }
 
 
-interface MissionScope extends angular.IScope {
-    categoryContent: Category[];
-}
-
-
 interface EditorScope extends ME.EditorScope {
     selectedCategoryID: number;
 }
 
 
-const getMissionScope = (): MissionScope => {
-    return getScope($(".container").get(0));
+let oldFormat = false;
+export const loadCategoryContent = (): Category[] => {
+    oldFormat = true;
+    let data = localStorage.getItem("allCategories");
+    if (!data) {
+        oldFormat = false;
+        const activeuser = $('.navbar-login a').first().text().trim(); // expect username here
+        const key = `allCategories_${activeuser}`;
+        data = localStorage.getItem(key);
+    }
+
+    if (!data) return [];
+    return JSON.parse(data) as Category[];
 }
 
-const getCategories = (): Category[] | undefined => {
-    const scope = getMissionScope();
-    return scope?.categoryContent;
+const storeCategoryContent = (categories: Category[]) => {
+    if (oldFormat) {
+        localStorage.setItem("allCategories", JSON.stringify(categories));
+    } else {
+        const activeuser = $('.navbar-login a').first().text().trim(); // expect username here
+        const key = `allCategories_${activeuser}`;
+        localStorage.setItem(key, JSON.stringify(categories));
+    }
 }
-
-const storeCategoryContent = () => {
-    const activeuser = $('.navbar-login a').first().text().trim(); // expect username here
-    const key = `allCategories_${activeuser}`;
-
-    const scope = getMissionScope();
-    localStorage.setItem(key, JSON.stringify(scope.categoryContent));
-}
-
 
 export const isInstalled = (): boolean => {
-    return getCategories() !== undefined;
+    if (localStorage.getItem("allCategories")) return true;
+    const activeuser = $('.navbar-login a').first().text().trim();
+    const key = `allCategories_${activeuser}`;
+
+    return localStorage.getItem(key) !== undefined;
 }
+
 
 
 export const findOrCreateCategory = (name: string): number => {
-    const cat = findCategory(name);
+    const store = loadCategoryContent();
+    const cat = findCategory(store, name);
     if (cat !== -1) return cat;
 
-    return createCategory(name);
+    const index = createCategory(store, name);
+    storeCategoryContent(store);
+    return index;
 }
 
 
@@ -61,8 +75,8 @@ export const setCurrentMissionCat = (category: number) => {
     console.assert(id !== undefined, "dont have a mission guid");
 
     // remove from all others
-    const categories = getMissionScope().categoryContent;
-    categories.forEach((cat, index) => {
+    const store = loadCategoryContent();
+    store.forEach((cat, index) => {
         if (index !== category) {
             const pos = cat.missions.indexOf(id);
             if (pos !== -1) cat.missions.splice(index, 1);
@@ -70,36 +84,73 @@ export const setCurrentMissionCat = (category: number) => {
     });
 
     // add to new
-    if (!categories[category].missions.includes(id)) {
-        categories[category].missions.push(id);
+    if (!store[category].missions.includes(id)) {
+        console.log("categories[category].missions.push(id);", category, id);
+        store[category].missions.push(id);
+    }
+    storeCategoryContent(store);
+
+    // catch the control
+    void waitForControl($(".preview-buttons").get(0), ".category-dropdown").then(element => {
+        console.log("void waitForControl catched")
+        editor.selectedCategoryID = category;
+        $(element).val(category);
+
+        // IMATTC will add it again
+        store[category].missions.pop();
+        storeCategoryContent(store);
+    });
+}
+
+
+const waitForControl = (parent: HTMLElement | undefined, selector: string, timeoutMs = 100000): Promise<Element> => {
+    const existing = document.querySelector(selector);
+
+    if (existing) {
+        return Promise.resolve(existing);
     }
 
-    editor.$apply(() => editor.selectedCategoryID = category)
+    return new Promise((resolve, reject) => {
+        const observer = new MutationObserver(() => {
+            const element = document.querySelector(selector);
+
+            if (element) {
+                observer.disconnect();
+                clearTimeout(timeout);
+                resolve(element);
+            }
+        });
+
+        observer.observe(parent ?? document.body, {
+            childList: true,
+            subtree: true
+        });
+
+        const timeout = setTimeout(() => {
+            observer.disconnect();
+            reject(new Error(`Timed out waiting for ${selector}`));
+        }, timeoutMs);
+    });
 }
 
 
-export const findCategory = (name: string): number => {
-    const cats = getCategories();
-    if (!cats) return -1;
 
-    return cats.findIndex(c => c.name === name);
+export const findCategory = (store: Category[], name: string): number => {
+    return store.findIndex(c => c.name === name);
 }
 
 
-export const createCategory = (categoryName: string): number => {
-    const missionScope = getMissionScope();
-
+export const createCategory = (store: Category[], categoryName: string): number => {
     const newCategory = {
-        id: missionScope.categoryContent.length,
+        id: store.length,
         name: categoryName,
         missions: [],
         collapse: false,
         sortCriteria: 'initial'
     };
-    missionScope.categoryContent.push(newCategory);
+    store.push(newCategory);
 
-    // store it
-    storeCategoryContent();
+    storeCategoryContent(store);
 
     return newCategory.id;
 }
