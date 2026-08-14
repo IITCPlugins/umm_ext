@@ -1,3 +1,18 @@
+# v1.2
+
+- new Picture dialog - setup Banner images directly in UMM.
+- added "Sequential" flag
+- with IMATTC support
+- reduce map movements
+
+with all this addition you can now import a mission in minimal Steps:
+
+1.  load banner json
+2.  select mission
+3.  click "import"
+4.  submit mission
+    (repeat 2-4 for all missions)
+
 # v1.1.2
 
 - fix: dialogs auto open on load - forgotten debug code
