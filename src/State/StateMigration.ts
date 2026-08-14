@@ -123,5 +123,9 @@ export const migrateUmmVersion = (ummState: any): UMM_State => {
         ummState.fileFormatVersion = 3;
     }
 
+    // init new flags (ummState.fileFormatVersion = 4, but test not required)
+    ummState.sequential ??= true;
+    ummState.hiddenLocation ??= false;
+
     return ummState as UMM_State;
 }

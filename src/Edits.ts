@@ -1,7 +1,7 @@
 import { main } from "./Main";
 import { dialogButton } from "./UI/Dialog/Button";
 import { editMissionSetDetails } from "./UI/Dialog/MissionDetails";
-import { showUmmOptions } from "./UI/Dialog/Options";
+import { showUmmOptions } from "./UI/Dialog/MainDialog";
 import { bannerNotification, notification } from "./UI/Notification";
 import { title } from "./Text/Text";
 import { confirmDialog } from "./UI/Dialog/Confirm";
@@ -61,6 +61,7 @@ export const addPortalToCurrentMission = async (data: EventPortalSelected) => {
 
 export const clearMissionData = () => {
     main.state.reset();
+    main.state.clearImages();
     main.state.save();
 
     if (main.missionModeActive) {

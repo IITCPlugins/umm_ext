@@ -1,9 +1,7 @@
 import { Action, UMM_Portal } from "../UMM_types";
 import { State } from "./State";
 
-
 export class Portals {
-
     private state?: State;
     private data: UMM_Portal[];
 
@@ -40,13 +38,19 @@ export class Portals {
     }
 
     add(...portal: UMM_Portal[]) {
-        console.assert(!portal.some(p => this.includes(p.guid)), "portal is already in");
+        console.assert(
+            !portal.some((p) => this.includes(p.guid)),
+            "portal is already in",
+        );
         this.data.push(...portal);
         this.state?.onMissionPortal.trigger();
     }
 
     insert(index: number, ...portal: UMM_Portal[]) {
-        console.assert(!portal.some(p => this.includes(p.guid)), "portal is already in");
+        console.assert(
+            !portal.some((p) => this.includes(p.guid)),
+            "portal is already in",
+        );
         this.data.splice(index, 0, ...portal);
         this.state?.onMissionPortal.trigger();
     }
@@ -62,7 +66,10 @@ export class Portals {
     }
 
     toLatLng(): L.LatLng[] {
-        return this.data.map(portal => new L.LatLng(portal.location.latitude, portal.location.longitude));
+        return this.data.map(
+            (portal) =>
+                new L.LatLng(portal.location.latitude, portal.location.longitude),
+        );
     }
 
     /**
@@ -75,17 +82,16 @@ export class Portals {
     }
 
     includes(guid: PortalGUID): boolean {
-        return this.data.some(x => x.guid === guid);
+        return this.data.some((x) => x.guid === guid);
     }
 
     find(guid: PortalGUID): UMM_Portal | undefined {
-        return this.data.find(x => x.guid === guid);
+        return this.data.find((x) => x.guid === guid);
     }
 
     indexOf(guid: PortalGUID): number {
-        return this.data.findIndex(x => x.guid === guid);
+        return this.data.findIndex((x) => x.guid === guid);
     }
-
 
     isStart(portal: UMM_Portal): boolean {
         return this.data[0]?.guid === portal.guid;
@@ -111,42 +117,86 @@ export class Portals {
 
         return {
             guid,
-            title: options.title || '[undefined]',
+            title: options.title || "[undefined]",
             imageUrl: options.image,
             description: "",
             location: { latitude: ll.lat, longitude: ll.lng },
             isOrnamented: false,
             isStartPoint: false,
             type: "PORTAL",
-            objective: { type: Action.HACK_PORTAL, passphrase_params: { question: "", _single_passphrase: "" } }
-        }
+            objective: {
+                type: Action.HACK_PORTAL,
+                passphrase_params: { question: "", _single_passphrase: "" },
+            },
+        };
     }
 
     getDistance(): number {
         const locations = this.toLatLng();
-        return locations.reduce((sum, ll, index, lls) => index > 0 ? sum + ll.distanceTo(lls[index - 1]) : 0, 0);
+        return locations.reduce(
+            (sum, ll, index, lls) =>
+                index > 0 ? sum + ll.distanceTo(lls[index - 1]) : 0,
+            0,
+        );
     }
 
+    overlappingPath(other: Portals): number {
+        let maxlen = 0;
+        for (let p = 0; p < this.data.length; p++) {
+            const portal = this.data[p];
+            const inOther = other.data.findIndex((op) => op.guid === portal.guid);
+            if (inOther !== -1) {
+                let len = 1;
+                while (
+                    inOther + len < other.data.length &&
+                    p + len < this.data.length &&
+                    this.data[p + len].guid === other.data[inOther + len].guid
+                )
+                    len++;
+
+                maxlen = Math.max(maxlen, len);
+
+                len = 1;
+                while (
+                    inOther - len >= 0 &&
+                    p - len >= 0 &&
+                    this.data[p - len].guid === other.data[inOther - len].guid
+                )
+                    len++;
+
+                maxlen = Math.max(maxlen, len);
+            }
+        }
+
+        return maxlen;
+    }
 }
 
 // Helpers for Passphrase access (avoid the underscore warning)
-export const getPassphrase = (portal: UMM_Portal): { question: string, answer: string } => {
+export const getPassphrase = (
+    portal: UMM_Portal,
+): { question: string; answer: string } => {
     return {
         question: portal.objective.passphrase_params.question ?? "",
         // eslint-disable-next-line no-underscore-dangle
-        answer: portal.objective.passphrase_params._single_passphrase ?? ""
-    }
-}
+        answer: portal.objective.passphrase_params._single_passphrase ?? "",
+    };
+};
 
-export const setPassphrase = (portal: UMM_Portal, question: string, answer: string) => {
+export const setPassphrase = (
+    portal: UMM_Portal,
+    question: string,
+    answer: string,
+) => {
     portal.objective.passphrase_params.question = question;
     // eslint-disable-next-line no-underscore-dangle
     portal.objective.passphrase_params._single_passphrase = answer;
-}
+};
 
 export const isPassphraseEmpty = (portal: UMM_Portal): boolean => {
-    return portal.objective.passphrase_params.question === "" &&
+    return (
+        portal.objective.passphrase_params.question === "" &&
         // eslint-disable-next-line no-underscore-dangle
-        portal.objective.passphrase_params._single_passphrase === "";
-
-}
+        portal.objective.passphrase_params._single_passphrase === ""
+    );
+};

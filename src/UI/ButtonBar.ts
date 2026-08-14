@@ -1,7 +1,7 @@
 import { removeLastPortal, setCurrentMission, toggleMissionMode } from "../Edits";
 import { main } from "../Main";
 import { Mission } from "../State/Mission";
-import { showUmmOptions } from "./Dialog/Options";
+import { showUmmOptions } from "./Dialog/MainDialog";
 import { editActiveMission } from "./Dialog/SelectMission";
 import { bannerNotification } from "./Notification";
 

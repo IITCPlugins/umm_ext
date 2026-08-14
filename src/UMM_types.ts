@@ -10,13 +10,27 @@ export interface UMM_State {
     plannedBannerLength: number;
     titleFormat: string
     fileFormatVersion: number;
+    sequential: boolean;
+    hiddenLocation: boolean;
+    category: string | undefined;
 
     layers: boolean[];
+}
+
+export interface Rect {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
 }
 
 export interface UMM_Mission {
     missionTitle: string;
     missionDescription: string;
+
+    image: number;
+    rect?: Rect;
+
     portals: UMM_Portal[];
 }
 

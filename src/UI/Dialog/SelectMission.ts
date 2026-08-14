@@ -4,9 +4,10 @@ import { Mission } from "../../State/Mission";
 import { notification } from "../Notification";
 import { title } from "../../Text/Text";
 import { button, dialogButton, dialogButtonClose } from "./Button";
-import { showUmmOptions } from "./Options";
+import { showUmmOptions } from "./MainDialog";
 import { confirmDialog } from "./Confirm";
 import { isMobile } from "../../Helper/Mobile";
+import { MissionImage } from "./ImageEdit/MissionsImage";
 
 // FIXME: missing in IITCPluginKit 1.9.6
 declare global {
@@ -111,6 +112,12 @@ const updateMissionInfo = () => {
     to Next:\t${(distanceToNext && window.formatDistance(distanceToNext)) ?? "---"}\n`;
 
     info.html(window.convertTextToTableMagic(table));
+
+    if (mission.hasImage()) {
+        const image = new MissionImage(mission);
+        const element = image.createImage();
+        info.append(element);
+    }
 };
 
 

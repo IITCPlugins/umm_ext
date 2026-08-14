@@ -1,0 +1,138 @@
+import { main } from "../../Main";
+import { State } from "../../State/State";
+import { checkbox } from "./Checkbox";
+import imgMask from "../../../images/mask.png";
+import { Bimage } from "../../Helper/Image";
+import { MissionImage } from "./MissionsImage";
+
+let dialog: JQuery;
+const tiles: MissionImage[] = [];
+
+export const showImageEditor = () => {
+
+    const state = main.state;
+
+    state.missions.forEach(mission => {
+        tiles[mission.id] = new MissionImage(state, mission);
+    })
+
+
+    const html = $("<div>").append(
+        $("<div>", { class: "imageContainer" }).append(
+            [...tiles.map(t => t.createImage())]
+        ),
+<<<<<<< HEAD
+        checkbox("temp", "seperated images", false),
+        checkbox("temp2", "show mask", true).on("change", event => onMaskChanged($(event.target).is(":checked"))),
+        $("<button>", { id: "download-image", type: "button", text: "Download PNG", click: downloadCurrentImage }),
+        $("<input>", {
+            type: "file",
+            multiple: true,
+            accept: "image/png, image/jpeg",
+            change: loadImage
+        })
+=======
+        $("<div>", { class: "umm_group_container" }).append(
+            $("<fieldset>", { class: "umm_group" }).append(
+                $("<legend>", { text: "Edit mode" }),
+                checkbox("temp", "seperated images", false),
+                checkbox("temp", "swap images", false),
+            ),
+            $("<fieldset>", { class: "umm_group" }).append(
+                $("<legend>", { text: "View options" }),
+                checkbox("temp2", "show mask", true).on("change", event => onMaskChanged($(event.target as HTMLElement).is(":checked"))),
+                checkbox("temp2", "show mask", true).on("change", event => onMaskChanged($(event.target as HTMLElement).is(":checked"))),
+            ),
+            $("<fieldset>", { class: "umm_group" }).append(
+                $("<legend>", { text: "Import / Export" }),
+                $("<button>", { id: "download-image", type: "button", text: "Download PNG", click: downloadCurrentImage }),
+                $("<input>", {
+                    type: "file",
+                    multiple: true,
+                    accept: "image/png, image/jpeg",
+                    change: loadImage
+                })
+            )
+        )
+>>>>>>> 477c3b0 (imagedit: improve interface)
+    );
+
+    dialog = window.dialog({
+        title: "UUM-Image Edit",
+        id: "umm_image_edit",
+        width: 600,
+        html,
+        closeCallback: onDialogClose,
+        classes: { "ui-dialog": "dialog-umm_image_edit" }
+    });
+
+    updatePreview();
+};
+
+const onDialogClose = () => {
+    void main.state.save();
+}
+
+const loadImage = async (event: Event) => {
+    const files = (event.target as HTMLInputElement).files;
+    if (!files || files.length === 0) return;
+
+    // TODO load multiple
+    void loadImageFile(main.state, files[0]);
+};
+
+const loadImageFile = async (state: State, inputFile: File): Promise<void> => {
+    const image = await Bimage.fromFile(inputFile);
+
+    // split
+    const rows = Math.ceil(state.getPlannedLength() / 6);
+    const imgSize = Math.min(image.width / 6, image.height / rows);
+
+    const offsetX = (image.width - imgSize * 6) / 2;
+    const offsetY = (image.height - imgSize * rows) / 2;
+
+    state.images = [image];
+    state.missions.forEach(mission => {
+<<<<<<< HEAD
+        const x = mission.id % 6;
+        const y = Math.floor(mission.id / 6);
+=======
+        const id = count - mission.id - 1; // reverse
+        const x = id % 6;
+        const y = Math.floor(id / 6);
+>>>>>>> 477c3b0 (imagedit: improve interface)
+        mission.setImage(0, {
+            x: offsetX + x * imgSize,
+            y: offsetY + y * imgSize,
+            width: imgSize,
+            height: imgSize,
+        });
+    })
+
+    tiles.forEach(t => t.onRectReset());
+    updatePreview();
+};
+
+
+const updatePreview = (): void => {
+    tiles.forEach(t => t.update());
+};
+
+
+
+const downloadCurrentImage = async (): Promise<void> => {
+    /*    if (!currentImage) return;
+    
+        const file = await currentImage.toFile('umm-image.png', 'image/png');
+        const url = URL.createObjectURL(file);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = file.name;
+        link.click();
+        URL.revokeObjectURL(url);*/
+};
+
+
+const onMaskChanged = (status: boolean) => {
+    tiles.forEach(t => t.showMask(status));
+}

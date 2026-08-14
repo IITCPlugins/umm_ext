@@ -1,15 +1,19 @@
 {
   "dependencies": {
-    "iitcpluginkit": "^1.10.3"
+    "@types/angular": "^1.8.9",
+    "iitcpluginkit": "^1.10.4",
+    "localforage": "^1.10.0"
   },
   "license": "Unlicense",
   "type": "module",
   "scripts": {
     "build": "yarn build:dev",
-    "build:dev": "yarn ipk build:dev && yarn merge",
+    "build:dev_ori": "yarn ipk build:dev && yarn merge",
+    "build:dev": "yarn ipk build:dev",
     "build:prod": "yarn ipk build:prod && yarn merge",
     "start": "yarn ipk fileserver",
-    "autobuild": "echo --- autobuild not possible because of merge step ---  use 'yarn build' and 'yarn start' manually",
+    "autobuild_ori": "echo --- autobuild not possible because of merge step ---  use 'yarn build' and 'yarn start' manually",
+    "autobuild": "yarn ipk autobuild",
     "merge": "node scripts/merge-userscripts.cjs",
     "copy": "cross-env-shell $ANDROID_SDK_ROOT/platform-tools/adb push dist/iitc_plugin_UMM_Ext.user.js /storage/emulated/0/IITC_Mobile/plugins/iitc_plugin_UMM_Ext.user.js"
   },

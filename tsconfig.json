@@ -23,5 +23,5 @@
     ]
   },
   "files": ["src/Main.ts", "src_MissionEditor/Main.ts"],
-  "include": ["./src"]
+  "include": ["./src", "./src_MissionEditor"]
 }
