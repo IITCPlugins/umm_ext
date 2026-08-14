@@ -4,7 +4,6 @@ import { loadFileInput } from "../src/ImportExport";
 import { State } from "../src/State/State";
 import { notification } from "../src/UI/Notification";
 import { doImport } from "./ME_Wrapper";
-import { hideProgress, showProgress } from "./ProgressDialog";
 
 
 class UMM_Editor {
@@ -32,8 +31,6 @@ class UMM_Editor {
                     $("<button>", { id: "umm-mission-picker-btn", class: "umm-mission-picker-btn", text: "Import", click: () => this.importMission() /*, disabled: true*/ }),
                 )
             ),
-            $("<button>", { id: "umm-mission-picker-btn", class: "umm-mission-picker-btn", text: "show", click: () => showProgress("loading") }),
-            $("<button>", { id: "umm-mission-picker-btn", class: "umm-mission-picker-btn", text: "hide", click: () => hideProgress() }),
         );
 
         this.state = new State();

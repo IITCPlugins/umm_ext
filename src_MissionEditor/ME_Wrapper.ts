@@ -2,7 +2,7 @@
 import { Mission } from "../src/State/Mission"
 import { notification } from "../src/UI/Notification";
 import { UMM_Portal } from "../src/UMM_types";
-import { showProgress, hideProgress } from "./ProgressDialog";
+import { showProgress, hideProgress, updateProgress } from "./ProgressDialog";
 import * as ME from "./ME_APP";
 import * as IMATTC from "./Imattc";
 
@@ -69,18 +69,18 @@ export const doImport = async (mission: Mission) => {
         });
 
         // 4. import mission
-        showProgress("set portals");
+        updateProgress("set portals");
         const missingImages = importMissionPorals(editor, mission);
 
         // 5. upload logo (if availabe)
         if (mission.hasImage()) {
-            showProgress("upload image");
+            updateProgress("upload image");
             await uploadLogo(mission);
         }
 
         // 6. save & go to preview page
         const nextPage = mission.hasImage() ? editor.EditorScreenViews.PREVIEW : editor.EditorScreenViews.NAME;
-        showProgress("save");
+        updateProgress("save");
         await editor.save(nextPage);
         if (editor.savingFailed) {
             throw new Error("Mission save failed");
@@ -89,7 +89,7 @@ export const doImport = async (mission: Mission) => {
 
         // 7. refresh missing images
         if (missingImages > 0) {
-            showProgress("save");
+            updateProgress("save");
             notification('Refreshing mission...\n(Missing data detected)', true);
             const scope = getEditorScope();
             await loadMission(scope.mission.mission_id);
@@ -97,13 +97,14 @@ export const doImport = async (mission: Mission) => {
 
         // 8. IMATTC
         if (IMATTC.isInstalled()) {
-            showProgress("create category");
-            // IMATTC has hijack 
-            // editor.setView(editor.EditorScreenViews.PREVIEW); // <- takes 500ms 
+            updateProgress("create category");
+            // IMATTC has hijack setView..give it a chance to do its job (takes 500ms...we just move on and don't wait)
+            editor.setView(editor.EditorScreenViews.PREVIEW);
             const category = mission.category;
             if (category && category !== "") {
                 const catID = IMATTC.findOrCreateCategory(category);
-                if (catID === -1) {
+                if (catID !== -1) {
+                    console.log("IMATTC.setCurrentMissionCat(catID)", catID)
                     IMATTC.setCurrentMissionCat(catID);
                 }
             }
