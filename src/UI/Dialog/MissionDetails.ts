@@ -13,7 +13,7 @@ interface FormValues {
     format: string;
     sequential: boolean;
     hiddenLocation: boolean;
-    category: string;
+    category?: string;
 }
 
 const MAX_TITLE_LENGTH = 50;
@@ -77,11 +77,12 @@ export const editMissionSetDetails = (toggleMissionModeAfterSave = false) => {
         format: state.getTitleFormat() ?? "$T $N / $M",
         sequential: state.getSequential().sequential,
         hiddenLocation: state.getSequential().hiddenLocation,
-        category: state.category,
+        category: state.isCustomCategory() ? state.category : undefined,
     })
     updateCalcualtedValues();
 
     $('#umm-mission-set-name, #umm-mission-set-description, #umm-banner-length, #umm-title-format').on('input', updateCalcualtedValues);
+    $('#umm-mission-category').on('input', () => $('#umm-mission-category').prop("unset", false));
 };
 
 
@@ -120,7 +121,7 @@ const updateCalcualtedValues = () => {
         $('#umm-mission-title-preview').text("Fill in all required fields");
     }
 
-    if (!main.state.isCustomCategory()) {
+    if ($('#umm-mission-category', currentDialog).prop("unset")) {
         $('#umm-mission-category').val(values.name);
     }
 }
@@ -178,7 +179,9 @@ const getFormValues = (): FormValues => ({
     format: $('#umm-mission-title-format', currentDialog).val() as string,
     sequential: $('#umm-mission-sequential', currentDialog).is(":checked"),
     hiddenLocation: $('#umm-mission-hide-waypoint', currentDialog).is(":checked"),
-    category: $('#umm-mission-category', currentDialog).val() as string,
+    category: $('#umm-mission-category', currentDialog).prop("unset") ?
+        $('#umm-mission-category', currentDialog).val() as string :
+        undefined
 });
 
 
@@ -189,6 +192,7 @@ const updateFormValues = (data: FormValues) => {
     $('#umm-mission-title-format', currentDialog).val(data.format);
     $('#umm-mission-sequential', currentDialog).prop(":checked", data.sequential);
     $('#umm-mission-hide-waypoint', currentDialog).prop(":checked", data.hiddenLocation);
-    $('#umm-mission-category', currentDialog).val(data.category);
+    $('#umm-mission-category', currentDialog).val(data.category ?? "");
+    $('#umm-mission-category', currentDialog).prop("unset", !data.category);
 };
 

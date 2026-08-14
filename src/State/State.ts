@@ -252,7 +252,7 @@ export class State {
     }
 
     isCustomCategory(): boolean {
-        return this.theState.category === undefined;
+        return this.theState.category !== undefined;
     }
 
     private generateMissionTitle(missNumber: number): string {
