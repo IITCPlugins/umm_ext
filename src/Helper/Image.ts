@@ -9,7 +9,46 @@ export class Bimage {
     }
 
     public static empty(): Bimage {
-        return new Bimage(document.createElement('canvas'));
+        const canvas = Bimage.createDummyCanvas();
+        return new Bimage(canvas);
+    }
+
+
+    private static createDummyCanvas() {
+        const canvas = document.createElement('canvas');
+        canvas.width = 100;
+        canvas.height = 100;
+        const context = canvas.getContext('2d');
+        if (!context) {
+            throw new Error('Unable to get 2D rendering context for placeholder canvas');
+        }
+
+        context.fillStyle = '#efefef';
+        context.fillRect(0, 0, canvas.width, canvas.height);
+
+        const size = 16;
+        context.fillStyle = '#e0e0e0';
+        for (let y = 0; y < canvas.height; y += size) {
+            for (let x = (y / size) % 2 ? 0 : size; x < canvas.width; x += size * 2) {
+                context.fillRect(x, y, size, size);
+            }
+        }
+
+        context.strokeStyle = '#c0c0c0';
+        context.lineWidth = 2;
+        context.beginPath();
+        context.moveTo(0, 0);
+        context.lineTo(canvas.width, canvas.height);
+        context.moveTo(canvas.width, 0);
+        context.lineTo(0, canvas.height);
+        context.stroke();
+
+        context.fillStyle = '#666';
+        context.font = '16px sans-serif';
+        context.textAlign = 'center';
+        context.textBaseline = 'middle';
+        context.fillText('No image', canvas.width / 2, canvas.height / 2);
+        return canvas;
     }
 
     public static async fromString(dataString: string): Promise<Bimage> {

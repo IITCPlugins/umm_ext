@@ -27,6 +27,10 @@ export class MissionImage {
         return $(".image", this.tile)
     }
 
+    hasImage(): boolean {
+        return this.mission.hasImage();
+    }
+
     public update() {
         const picture = this.mission.getImage();
         const image = $(".image", this.tile).get(0) as HTMLImageElement;

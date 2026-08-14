@@ -42,13 +42,14 @@ export class EM_MouseEdit extends EditMode {
 
 
     onDoubleClick = (event: JQuery.DoubleClickEvent) => {
-        const image = this.getImage(event?.target as HTMLElement);
-        if (!image) return;
+        const tile = this.getImage(event?.target as HTMLElement);
+        if (!tile?.hasImage()) return;
 
-        const index = this.getImageIndex(image);
 
-        image.mission.imageRect = this.rect_backup[index];
-        image.update();
+        const index = this.getImageIndex(tile);
+
+        tile.mission.imageRect = this.rect_backup[index];
+        tile.update();
     }
 
 
@@ -58,7 +59,7 @@ export class EM_MouseEdit extends EditMode {
         event.preventDefault();
 
         this.dragging_image = this.getImage((event?.target as HTMLElement));
-        if (!this.dragging_image) return;
+        if (!this.dragging_image?.hasImage()) return;
 
         $(window).on("mousemove", this.onMouseMove);
         $(window).on("mouseup", this.onMouseUp);
@@ -89,11 +90,11 @@ export class EM_MouseEdit extends EditMode {
         event.preventDefault();
 
         let delta = (event as any).originalEvent.wheelDelta;
-        const image = this.getImage((event as any).target as HTMLElement);
-        if (!image) return;
+        const tile = this.getImage((event as any).target as HTMLElement);
+        if (!tile?.hasImage()) return;
 
 
-        const imgrect = image.mission.imageRect!;
+        const imgrect = tile.mission.imageRect!;
         /*
             TODO: Take the real mouse position
             const htmlpos = image.tile.position();
@@ -116,6 +117,6 @@ export class EM_MouseEdit extends EditMode {
         if (event.shiftKey) delta /= 10;
         const zoom = 1 + delta / 1000; // delta = +-120 or +-80
 
-        this.zoom(image, zoom, c1x, c1y);
+        this.zoom(tile, zoom, c1x, c1y);
     }
 }
