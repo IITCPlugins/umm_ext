@@ -74,6 +74,13 @@ export const doImport = async (mission: Mission) => {
 
         // 5. upload logo (if availabe)
         if (mission.hasImage()) {
+
+            if (editor.mission.mission_guid === undefined) {
+                updateProgress("get mission id");
+                await editor.save();
+                if (editor.mission.mission_guid === undefined) throw new Error("still no id")
+            }
+
             updateProgress("upload image");
             await uploadLogo(mission);
         }
@@ -89,7 +96,7 @@ export const doImport = async (mission: Mission) => {
 
         // 7. refresh missing images
         if (missingImages > 0) {
-            updateProgress("save");
+            updateProgress("Refreshing");
             notification('Refreshing mission...\n(Missing data detected)', true);
             const scope = getEditorScope();
             await loadMission(scope.mission.mission_id);
@@ -293,7 +300,6 @@ const createNewMission = async (): Promise<void> => {
         });
     });
 }
-
 
 
 const uploadLogo = async (mission: Mission) => {
