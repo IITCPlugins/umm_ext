@@ -26,7 +26,7 @@ jobs:
             dist/iitc_plugin_UMM_Ext.user.js
             dist/iitc_plugin_UMM_Ext.meta.js
       - name: Git add Dist
-        uses: EndBug/add-and-commit@v9
+        uses: EndBug/add-and-commit@v10
         with:
           add: dist/iitc_plugin_UMM* -f
           message: Release ${{ github.ref_name }}
