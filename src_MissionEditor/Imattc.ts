@@ -85,21 +85,23 @@ export const setCurrentMissionCat = (category: number) => {
 
     // add to new
     if (!store[category].missions.includes(id)) {
-        console.log("categories[category].missions.push(id);", category, id);
         store[category].missions.push(id);
     }
     storeCategoryContent(store);
 
     // catch the control
-    void waitForControl($(".preview-buttons").get(0), ".category-dropdown").then(element => {
-        console.log("void waitForControl catched")
+    //  it shouldn't appear, but better make sure we handle it
+    try {
+        const element = waitForControl($(".preview-buttons").get(0), ".category-dropdown");
         editor.selectedCategoryID = category;
         $(element).val(category);
 
         // IMATTC will add it again
         store[category].missions.pop();
         storeCategoryContent(store);
-    });
+    } catch {
+        console.debug("timeout");
+    }
 }
 
 
