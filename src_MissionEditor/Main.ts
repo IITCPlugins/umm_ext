@@ -3,11 +3,12 @@
 import { loadFileInput } from "../src/ImportExport";
 import { State } from "../src/State/State";
 import { notification } from "../src/UI/Notification";
-import { doImport } from "./ME_Wrapper";
+import { doImport, doImportAll, getRemainingMissions } from "./ME_Wrapper";
 
 
 class UMM_Editor {
     public state!: State;
+    private last_mission = -1;
 
 
     init() {
@@ -37,7 +38,7 @@ class UMM_Editor {
 
         this.setActiveBannerTitle();
         this.bindFileImport();
-        this.generateMissionSelect();
+        void this.generateMissionSelect();
     }
 
 
@@ -60,23 +61,31 @@ class UMM_Editor {
             $("#umm-mission-title").text("Loading banner... ");
             await loadFileInput(event, this.state);
             this.setActiveBannerTitle();
-            this.generateMissionSelect();
+            void this.generateMissionSelect();
         });
     }
 
-    generateMissionSelect() {
-        const selectedMission = this.state.getCurrent();
-
+    async generateMissionSelect() {
         const container = $("#umm-mission-picker");
         container.empty();
 
+        // Import All
+        const remaining = await getRemainingMissions();
+        if (remaining >= this.state.missions.count()) {
+            container.append($("<option>", { value: -1, text: `-- ALL MISSIONS -- (${this.state.missions.count()})` }));
+        } else {
+            this.last_mission = 0;
+            container.append($("<option>", { value: -1, text: `-- not enough remaining missions slots --`, disable: true }));
+        }
+
+        // Single Missions
         this.state.missions.forEach(mission => {
             container.append(
                 $("<option>", { value: mission.id, text: `${mission.id + 1}: ${mission.title}` })
             )
         })
 
-        $("#umm-mission-picker").val(selectedMission);
+        $("#umm-mission-picker").val(this.last_mission);
 
         if (this.state.missions.count() > 0) {
             $("#umm-mission-picker-btn").prop("disabled", false);
@@ -86,7 +95,14 @@ class UMM_Editor {
 
     importMission() {
         const selectedMission = parseInt($("#umm-mission-picker").val() as string);
+
+        if (selectedMission === -1) {
+            void this.importAllMissions();
+            return;
+        }
+
         main.state.setCurrent(selectedMission);
+        this.last_mission = selectedMission;
         void main.state.save();
 
         const mission = main.state.getEditMission();
@@ -98,6 +114,21 @@ class UMM_Editor {
         void doImport(mission);
     }
 
+    async importAllMissions() {
+        const remaining = await getRemainingMissions();
+        if (remaining < this.state.missions.count()) {
+            notification('No enough missions slots remaining');
+            return;
+        }
+
+        const missions = main.state.missions.getAll();
+        if (missions.some(m => m.isEmpty() || !m.hasImage() || m.portals.length < 6)) {
+            notification('Some Missions are missing data');
+            return;
+        }
+
+        await doImportAll(missions);
+    }
 }
 
 

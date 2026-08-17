@@ -1,6 +1,6 @@
 
 
-export const showProgress = (message = "Please wait…") => {
+export const show = (message = "Please wait…", prefix?: string) => {
     if ($("#userscript-progress-overlay").length > 0) {
         throw new Error("progress already visible");
     }
@@ -8,8 +8,9 @@ export const showProgress = (message = "Please wait…") => {
     const overlay = $("<div>", { id: "userscript-progress-overlay" }).append(
         $("<div>", { class: "progress-dialog" }).append(
             '<canvas id="progress-anim" width="250" height="250"></canvas>',
+            $("<div>", { class: "progress-prefix", text: prefix ?? "" }),
             $("<div>", { class: "progress-message", }),
-            $("<button>", { id: "progress-cancel", text: "cancel", click: () => hideProgress() })
+            $("<button>", { id: "progress-cancel", text: "cancel", click: () => hide() })
         ),
     );
 
@@ -19,21 +20,25 @@ export const showProgress = (message = "Please wait…") => {
     $(".progress-message").text(message);
 }
 
-export const updateProgress = (message = "Please wait…") => {
+export const update = (message = "Please wait…") => {
     if ($("#userscript-progress-overlay").length === 0) {
         throw new Error("progress termiated");
     }
     $(".progress-message").text(message);
 }
 
+export const setPrefix = (text: string) => {
+    $(".progress-prefix").text(text);
+}
 
-export const hideProgress = () => {
+
+export const hide = () => {
     (anim_context as any) = undefined;
     $("#userscript-progress-overlay").remove();
 }
 
 
-export const isProgressTerminates = (): boolean => {
+export const isTerminated = (): boolean => {
     const existing = $("#userscript-progress-overlay");
     return (existing.length === 0);
 }

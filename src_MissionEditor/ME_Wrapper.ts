@@ -2,7 +2,7 @@
 import { Mission } from "../src/State/Mission"
 import { notification } from "../src/UI/Notification";
 import { UMM_Portal } from "../src/UMM_types";
-import { showProgress, hideProgress, updateProgress } from "./ProgressDialog";
+import * as Progress from "./ProgressDialog";
 import * as ME from "./ME_APP";
 import * as IMATTC from "./Imattc";
 
@@ -38,86 +38,185 @@ export const getEditorScope = (): ME.EditorScope => {
 }
 
 
-// const getMissionsScope = (): ME.MissionsScope => {
-//     return getScope($(".container").get(0));
-// }
+const getMissionsScope = async (): Promise<ME.MissionsScope> => {
+
+    const container = await waitForElement(".container");
+    // @ts-ignore
+    const scope: ME.MissionsScope = angular.element(container).scope();
+
+    return new Promise((resolve, reject) => {
+        if (!scope) {
+            reject(new Error("Container scope not available"));
+            return;
+        }
+
+        if (scope.missions) {
+            resolve(scope);
+            return;
+        }
+
+        const unwatch = scope.$watch(
+            "mission",
+            (mission: any) => {
+                if (mission) {
+                    unwatch();
+                    resolve(scope);
+                }
+            }
+        );
+    });
+}
+
+
+const submitMissionAndWait = async (editor: ME.EditorScope): Promise<void> => {
+    editor.submitMission();
+    await waitForRouteChange();
+}
+
+
+const waitForElement = async (selector: string): Promise<Element> => {
+    const existing = document.querySelector(selector);
+
+    if (existing) {
+        return existing;
+    }
+
+    return new Promise(resolve => {
+        const observer = new MutationObserver(() => {
+            const element = document.querySelector(selector);
+
+            if (element) {
+                observer.disconnect();
+                resolve(element);
+            }
+        });
+
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+    });
+}
+
+
+export const getRemainingMissions = async (): Promise<number> => {
+    try {
+        const scope = await getMissionsScope();
+        return scope.user.mission_limit - scope.missions.length;
+    } catch {
+        return 0;
+    }
+}
 
 
 /**
- * The new Import
+ * Import
  */
 export const doImport = async (mission: Mission) => {
-
     try {
-        // 1. create new mission if not in editor
-        showProgress("Create mission");
-        if (getEditorScope() === undefined) {
-            await createNewMission();
-        }
-
-        // 2. make sure Editor is ready
-        const editor = getEditorScope();
-        if (!checkEditorState(editor)) return;
-
-        // 3. set basics
-        editor.$apply(() => {
-            const { sequential, hiddenLocation } = mission.getSequential();
-            editor.mission.definition._sequential = sequential;
-            editor.mission.definition._hidden = editor.mission.definition._sequential && hiddenLocation;
-            editor.mission.definition.name = mission.title;
-            editor.mission.definition.description = mission.description;
-        });
-
-        // 4. import mission
-        updateProgress("set portals");
-        const missingImages = importMissionPorals(editor, mission);
-
-        // 5. upload logo (if availabe)
-        if (mission.hasImage()) {
-
-            if (editor.mission.mission_guid === undefined) {
-                updateProgress("get mission id");
-                await editor.save();
-                if (editor.mission.mission_guid === undefined) throw new Error("still no id")
-            }
-
-            updateProgress("upload image");
-            await uploadLogo(mission);
-        }
-
-        // 6. save & go to preview page
-        const nextPage = mission.hasImage() ? editor.EditorScreenViews.PREVIEW : editor.EditorScreenViews.NAME;
-        updateProgress("save");
-        await editor.save(nextPage);
-        if (editor.savingFailed) {
-            throw new Error("Mission save failed");
-        }
-
-
-        // 7. refresh missing images
-        if (missingImages > 0) {
-            updateProgress("Refreshing");
-            notification('Refreshing mission...\n(Missing data detected)', true);
-            const scope = getEditorScope();
-            await loadMission(scope.mission.mission_id);
-        }
-
-        // 8. IMATTC
-        if (IMATTC.isInstalled()) {
-            updateProgress("create category");
-            // IMATTC has hijack setView..give it a chance to do its job (takes 500ms...we just move on and don't wait)
-            editor.setView(editor.EditorScreenViews.PREVIEW);
-            const category = mission.category;
-            if (category && category !== "") {
-                const catID = IMATTC.findOrCreateCategory(category);
-                if (catID !== -1) {
-                    console.log("IMATTC.setCurrentMissionCat(catID)", catID)
-                    IMATTC.setCurrentMissionCat(catID);
-                }
-            }
-        }
+        Progress.show(`create ${mission.title}`);
+        await fillMission(mission, false);
     } finally {
-        hideProgress();
+        Progress.hide();
+    }
+}
+
+
+export const doImportAll = async (missions: Mission[]) => {
+    try {
+        Progress.show("creating banner");
+        for (const mission of missions) {
+            Progress.setPrefix(`${mission.id + 1} / ${missions.length}: `);
+            await fillMission(mission, true);
+        }
+    } catch {
+        console.error("end by exception");
+        Progress.hide();
+    } finally {
+        Progress.hide();
+    }
+}
+
+
+const fillMission = async (mission: Mission, submit: boolean) => {
+
+    // 1. create new mission if not in editor
+    Progress.update("Create mission");
+    if (getEditorScope() === undefined) {
+        await createNewMission();
+    }
+
+    // 2. make sure Editor is ready
+    const editor = getEditorScope();
+    if (!submit && !checkEditorState(editor)) return;
+
+    // 3. set basics
+    editor.$apply(() => {
+        const { sequential, hiddenLocation } = mission.getSequential();
+        editor.mission.definition._sequential = sequential;
+        editor.mission.definition._hidden = editor.mission.definition._sequential && hiddenLocation;
+        editor.mission.definition.name = mission.title;
+        editor.mission.definition.description = mission.description;
+    });
+
+    // 4. set portals
+    Progress.update("set portals");
+    const missingImages = importMissionPorals(editor, mission);
+
+    // 5. upload logo (if availabe)
+    if (mission.hasImage()) {
+
+        if (editor.mission.mission_guid === undefined) {
+            Progress.update("get mission id");
+            await editor.save();
+            if (editor.mission.mission_guid === undefined) throw new Error("still no id")
+        }
+
+        Progress.update("upload image");
+        await uploadLogo(mission);
+    } else {
+        // prevent accidental submit
+        submit = false;
+    }
+
+    // 6. save & go to preview page
+    const nextPage = mission.hasImage() ? editor.EditorScreenViews.PREVIEW : editor.EditorScreenViews.NAME;
+    Progress.update("save");
+    await editor.save(nextPage);
+    if (editor.savingFailed) {
+        throw new Error("Mission save failed");
+    }
+
+
+    // 7. refresh missing images
+    if (missingImages > 0) {
+        Progress.update("Refreshing");
+        notification('Refreshing mission...\n(Missing data detected)', true);
+        const scope = getEditorScope();
+        await loadMission(scope.mission.mission_id);
+    }
+
+    // 8. IMATTC
+    if (IMATTC.isInstalled()) {
+        Progress.update("create category");
+        const category = mission.category;
+        if (category && category !== "") {
+            const catID = IMATTC.findOrCreateCategory(category);
+            if (catID !== -1) {
+                console.log("IMATTC.setCurrentMissionCat(catID)", catID)
+                IMATTC.setCurrentMissionCat(catID);
+            }
+        }
+    }
+
+    // 9. Submit
+    if (submit) {
+        Progress.update("submit");
+        await submitMissionAndWait(editor);
+    } else {
+        // IMATTC has hijack setView..give it a chance to do its job (takes 500ms...we just move on and don't wait)
+        // but is triggers another save
+        editor.setView(editor.EditorScreenViews.PREVIEW);
     }
 }
 
@@ -297,6 +396,18 @@ const createNewMission = async (): Promise<void> => {
 
         appScope.$evalAsync(() => {
             $location.path("/edit");
+        });
+    });
+}
+
+const waitForRouteChange = async (): Promise<void> => {
+    const angularApp = getAngularApp();
+    const appScope = angularApp.scope();
+
+    return new Promise<void>(resolve => {
+        const unwatch = appScope.$on("$routeChangeSuccess", () => {
+            unwatch();
+            resolve();
         });
     });
 }

@@ -40,11 +40,14 @@ export interface EditorScope extends angular.IScope {
     pendingSave: boolean;
     savingFailed: boolean;
     waypointMarkers: any[];
+    saving: boolean;
+    saved: boolean;
 
     addWaypoint: (portal: Portal) => void;
     isWaypointSelected: (b: Portal) => boolean;
     setSelectedWaypoint: (b: Portal, f: boolean) => void;
     setView: (screen: string) => void;
+    submitMission: () => void;
 
     /**
      * Save current state on backend
@@ -64,6 +67,7 @@ export interface MissionDef {
 
 // angular.element($("container").get(0)).scope()
 export interface MissionsScope extends angular.IScope {
+    user: { email: string, mission_limit: number, nickname: string };
     missions: MissionDef[];
 }
 
