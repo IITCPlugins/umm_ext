@@ -3,7 +3,7 @@
 import { loadFileInput } from "../src/ImportExport";
 import { State } from "../src/State/State";
 import { notification } from "../src/UI/Notification";
-import { doImport, doImportAll, getRemainingMissions } from "./ME_Wrapper";
+import { doImport, doImportAll, findMission, getRemainingMissions } from "./ME_Wrapper";
 import "./PatchNia";
 
 
@@ -31,7 +31,12 @@ class UMM_Editor {
                 $("<div>", { id: "umm-mission-picker-wrapper" }).append(
                     $("<select>", { id: "umm-mission-picker", class: "umm-mission-picker" }),
                     $("<button>", { id: "umm-mission-picker-btn", class: "umm-mission-picker-btn", text: "Import", click: () => this.importMission() /*, disabled: true*/ }),
-                )
+                ),
+                $("<select>", { id: "umm-mission-edit", class: "umm-mission-picker", hidden: true }).append(
+                    $("<option>", { text: "New: always create new mission", value: "new" }),
+                    $("<option>", { text: "Edit: Edit existing mission", value: "edit_all" }),
+                    $("<option>", { text: "Skip: skip published, edit existing", value: "edit" }),
+                ),
             ),
         );
 
@@ -40,6 +45,7 @@ class UMM_Editor {
         this.setActiveBannerTitle();
         this.bindFileImport();
         void this.generateMissionSelect();
+        void this.generateImportOptions();
     }
 
 
@@ -63,6 +69,7 @@ class UMM_Editor {
             await loadFileInput(event, this.state);
             this.setActiveBannerTitle();
             void this.generateMissionSelect();
+            void this.generateImportOptions();
         });
     }
 
@@ -92,6 +99,27 @@ class UMM_Editor {
             $("#umm-mission-picker-btn").prop("disabled", false);
         }
     }
+
+    async generateImportOptions() {
+        let exists = 0;
+        let draft = 0;
+        const allmissions = this.state.missions.getAll();
+        for (const mission of allmissions) {
+            const existing_mission = await findMission(mission.title);
+            if (existing_mission !== undefined) {
+                exists++;
+                if (existing_mission.state !== MissionStates.PUBLISHED) {
+                    draft++;
+                }
+            }
+        }
+        console.log("exists", exists, draft)
+
+        $("#umm-mission-edit").toggle(exists > 0);
+        $("#umm-mission-edit option [value='edit']").toggle(draft > 0);
+        $("#umm-mission-edit").val(draft > 0 ? "edit" : (exists > 0 ? "edit_all" : "new"));
+    }
+
 
 
     importMission() {

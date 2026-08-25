@@ -13,7 +13,7 @@ export interface MissionData {
         view: "type" | "name" | "waypoints" | "preview"
     }
     mission_guid: string;
-    mission_id: number;
+    mission_id: string; // ="None"; only set for DRAFT or "not published" ?
     definition: {
         name: string;
         description: string;
@@ -24,6 +24,15 @@ export interface MissionData {
         _hidden: boolean;
     };
 };
+
+export interface MissionDef extends MissionData {
+    // similar to MissionData but with empty and some different fields
+    state: MissionStates;
+    position: number; // = index in mission array
+    /* definition: MissionData['definition'] & {
+        waypoints: null;
+    }*/
+}
 
 export interface EditorScope extends angular.IScope {
     // Mission data
@@ -56,13 +65,6 @@ export interface EditorScope extends angular.IScope {
     save: (nextScreen?: string) => Promise<void>;
 }
 
-export interface MissionDef {
-    // similar to MissionData but with empty and some different fields
-    definition: {
-        name: string;
-        description: string;
-    }
-}
 
 
 // angular.element($("container").get(0)).scope()

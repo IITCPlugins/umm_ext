@@ -110,10 +110,12 @@ export const getRemainingMissions = async (): Promise<number> => {
     }
 }
 
+export const findMission = async (name: string): Promise<ME.MissionDef | undefined> => {
+    const scope = await getMissionsScope();
+    return scope.missions?.find(m => m.definition.name === name);
+}
 
-/**
- * Import
- */
+
 export const doImport = async (mission: Mission) => {
     try {
         Progress.show(`create ${mission.title}`);
@@ -375,7 +377,7 @@ const createPortal = (portal: UMM_Portal): { mePortal: ME.Portal, hasError: bool
     };
 }
 
-const loadMission = async (missionId: number) => {
+const loadMission = async (missionId: string) => {
     const angularApp = getAngularApp();
     const $http = angularApp.injector().get('$http');
     const Api: ME.Api = angularApp.injector().get('Api');
