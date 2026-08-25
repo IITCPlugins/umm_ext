@@ -104,7 +104,7 @@ export const getRemainingMissions = async (): Promise<number> => {
         const scope = await getMissionsScope();
         return scope.user.mission_limit - scope.missions.length;
     } catch {
-        return 0;
+        return -1;
     }
 }
 

@@ -71,7 +71,7 @@ class UMM_Editor {
 
         // Import All
         const remaining = await getRemainingMissions();
-        if (remaining >= this.state.missions.count()) {
+        if (remaining !== -1 && remaining >= this.state.missions.count()) {
             container.append($("<option>", { value: -1, text: `-- ALL MISSIONS -- (${this.state.missions.count()})` }));
         } else {
             this.last_mission = 0;
