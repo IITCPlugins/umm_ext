@@ -155,12 +155,12 @@ export const compareCurrentMission = async (mission: Mission): Promise<boolean> 
         const portal = mission.portals.get(index);
         if (!portal) return false;
 
-        return portal.location.latitude === waypoint.location.latitude &&
-            portal.location.longitude === waypoint.location.longitude &&
-            portal.guid === waypoint.guid &&
-            portal.description === waypoint.description &&
-            portal.title === waypoint.title &&
-            portal.type === waypoint.type && // = "PORTAL"
+        return portal.location.latitude === waypoint._poi?.location.latitude &&
+            portal.location.longitude === waypoint._poi.location.longitude &&
+            portal.guid === waypoint._poi?.guid &&
+            portal.description === waypoint._poi?.description &&
+            portal.title === waypoint._poi?.title &&
+            portal.type === waypoint._poi?.type && // = "PORTAL"
             portal.objective.type === waypoint.objective?.type &&
             portal.objective.passphrase_params.question === waypoint.objective?.passphrase_params.question &&
             portal.objective.passphrase_params._single_passphrase === waypoint.objective?.passphrase_params._single_passphrase;

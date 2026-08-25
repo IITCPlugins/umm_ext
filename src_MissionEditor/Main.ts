@@ -3,7 +3,7 @@
 import { loadFileInput } from "../src/ImportExport";
 import { State } from "../src/State/State";
 import { notification } from "../src/UI/Notification";
-import { doImport, doImportAll, findMission, getRemainingMissions } from "./ME_Wrapper";
+import { compareCurrentMission, doImport, doImportAll, findMission, getRemainingMissions } from "./ME_Wrapper";
 import "./PatchNia";
 
 
@@ -38,6 +38,7 @@ class UMM_Editor {
                     $("<option>", { text: "Skip: skip published, edit existing", value: "edit" }),
                 ),
             ),
+            $("<button>", { class: "umm-mission-picker-btn", text: "Compare", click: () => this.compareMission() }),
         );
 
         this.state = new State();
@@ -120,7 +121,13 @@ class UMM_Editor {
         $("#umm-mission-edit").val(draft > 0 ? "edit" : (exists > 0 ? "edit_all" : "new"));
     }
 
+    async compareMission() {
+        const selectedMission = parseInt($("#umm-mission-picker").val() as string);
+        const mission = main.state.missions.get(selectedMission)!;
 
+        const equal = await compareCurrentMission(mission);
+        notification(`Mission are: ${equal ? "equal" : "NOT equal"}`);
+    }
 
     importMission() {
         const selectedMission = parseInt($("#umm-mission-picker").val() as string);

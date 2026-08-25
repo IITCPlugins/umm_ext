@@ -129,15 +129,23 @@ export interface UploadResult {
 }
 
 export interface Portal {
-    _poi?: {
+    _poi?: { // verified portal
+        guid: PortalGUID;
+        description: string;
+        title: string;
         location: {
             latitude: number;
             longitude: number;
         };
+        imageUrl: string;
+        isOrnamented: boolean; // Unknown what it does, seems false everwhere
+        isStartPoint: boolean; // Unknown what NIA uses it for, seems false everywhere
     };
 
     "$$hashKey": string | null;
+    // import portal
     guid: PortalGUID;
+    title: string;
     description: string;
     location: {
         latitude: number;
@@ -146,7 +154,6 @@ export interface Portal {
     imageUrl: string;
     isOrnamented: boolean; // Unknown what it does, seems false everwhere
     isStartPoint: boolean; // Unknown what NIA uses it for, seems false everywhere
-    title: string;
     type: string;
     objective?: UMM_Objective;
 }
