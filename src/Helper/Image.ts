@@ -208,4 +208,25 @@ export class Bimage {
     }
 
 
+    async equal(a: Blob): Promise<boolean> {
+        const b = await this.toBlob();
+        if (a.size !== b.size || a.type !== b.type) {
+            return false;
+        }
+
+        const [aBuffer, bBuffer] = await Promise.all([
+            a.arrayBuffer(),
+            b.arrayBuffer(),
+        ]);
+
+        const aBytes = new Uint8Array(aBuffer);
+        const bBytes = new Uint8Array(bBuffer);
+
+        if (aBytes.length !== bBytes.length) {
+            return false;
+        }
+
+        return aBytes.every((value, i) => value === bBytes[i]);
+    }
+
 }

@@ -5,6 +5,8 @@ import { UMM_Portal } from "../src/UMM_types";
 import * as Progress from "./ProgressDialog";
 import * as ME from "./ME_APP";
 import * as IMATTC from "./Imattc";
+import { Bimage } from "../src/Helper/Image";
+
 
 
 // By creating a new Mission in MC and adding an image for the mission, it uploads the image to googleusercontent. The mission image URL is visible in the console source code.
@@ -135,6 +137,59 @@ export const doImportAll = async (missions: Mission[]) => {
     } finally {
         Progress.hide();
     }
+}
+
+
+export const compareCurrentMission = async (mission: Mission): Promise<boolean> => {
+    const editor = getEditorScope();
+
+    // base info
+    if (editor.mission.definition.name !== mission.title ||
+        editor.mission.definition.description !== mission.description ||
+        editor.mission.definition.waypoints.length !== mission.portals.length) return false;
+
+    // portals
+    if (!editor.mission.definition.waypoints.every((waypoint, index) => {
+        const portal = mission.portals.get(index);
+        if (!portal) return false;
+
+        return portal.location.latitude === waypoint.location.latitude &&
+            portal.location.longitude === waypoint.location.longitude &&
+            portal.guid === waypoint.guid &&
+            portal.description === waypoint.description &&
+            portal.title === waypoint.title &&
+            portal.type === waypoint.type && // = "PORTAL"
+            portal.objective.type === waypoint.objective?.type &&
+            portal.objective.passphrase_params.question === waypoint.objective?.passphrase_params.question &&
+            portal.objective.passphrase_params._single_passphrase === waypoint.objective?.passphrase_params._single_passphrase;
+    })) return false;
+
+
+    // image
+    if (mission.hasImage()) {
+        return compareImages(editor.mission.definition.logo_url, mission.getImage())
+    }
+
+    return true;
+}
+
+
+const compareImages = async (url: string, image: Bimage): Promise<boolean> => {
+    const mission_image = await getImage(url);
+    return await image.equal(mission_image);
+}
+
+
+const getImage = async (url: string): Promise<Blob> => {
+    const response = await fetch(url, {
+        cache: "default",
+    });
+
+    if (!response.ok) {
+        throw new Error(`Failed to load image: ${response.status}`);
+    }
+
+    return response.blob();
 }
 
 
