@@ -56,13 +56,13 @@ declare global {
                 title: "Edit Draft",
                 description: "Edit draft Mission.",
                 onClickFunction: "editMission",
-                show: !0,
+                show: boolean, /*true*/
             },
             BUTTON2: {
                 title: "Delete",
                 description: "Permanently delete Mission.",
                 onClickFunction: "deleteDraftMission",
-                show: !0,
+                show: boolean, /*true*/
             },
             titleSuffix: "(Draft)",
         },
@@ -71,13 +71,13 @@ declare global {
                 title: "Edit Draft",
                 description: "Edit draft (published version will remain).",
                 onClickFunction: "editMission",
-                show: !0,
+                show: boolean, /*true*/
             },
             BUTTON2: {
                 title: "Discard Draft",
                 description: "Discard draft (published version will remain).",
                 onClickFunction: "deleteDraftMission",
-                show: !0,
+                show: boolean, /*true*/
             },
             titleSuffix: "(Draft)",
         },
@@ -87,41 +87,41 @@ declare global {
                 description:
                 "Edit published Mission (edits will require new review and old Mission will remain playable unless unpublished).",
                 onClickFunction: "editMission",
-                show: !0,
+                show: boolean, /*true*/
             },
             BUTTON2: {
                 title: "Unpublish",
                 description:
                 "Remove Mission from active play and return it to Draft form.",
                 onClickFunction: "unpublishMission",
-                show: !0,
+                show: boolean, /*true*/
             },
             titleSuffix: "",
         },
         SUBMITTED: {
-            BUTTON1: { show: !1 },
+            BUTTON1: { show: boolean, /*false*/ },
             BUTTON2: {
                 title: "Withdraw",
                 description: "Withdraw from review.",
                 onClickFunction: "cancelReview",
-                show: !0,
+                show: boolean, /*true*/
             },
             titleSuffix: "(In Review)",
         },
         SUBMITTED_AND_PUBLISHED: {
-            BUTTON1: { show: !1 },
+            BUTTON1: { show: boolean, /*false*/ },
             BUTTON2: {
                 title: "Withdraw Draft",
                 description: "Withdraw draft from review.",
                 onClickFunction: "cancelReview",
-                show: !0,
+                show: boolean, /*true*/
             },
             titleSuffix: "(Draft in review)",
         },
     };
 
-    const TimeConversionConstants = {
-        MINUTE_GRANULARITY_MINUTES: 15,
+    const TimeConversionConstants: {
+        MINUTE_GRANULARITY_MINUTES: number, /* =15 */
         HOUR_GRANULARITY_MINUTES: 30,
         DAY_GRANULARITY_HOURS: 24,
         TEMPLATE_MINUTES: " min",
@@ -132,12 +132,12 @@ declare global {
         MS_IN_ONE_HOUR: 36e5,
         MISSING_TIME_PLACEHOLDER: "-",
     };
-    const MissionRevisionCssStrings = {
-        REVISED: "revised",
-        UNREVISED: "",
-        MISSION_IMAGE_REVISED: "mission-image-revised",
-        MISSION_IMAGE_UNREVISED: "mission-image",
+    const MissionRevisionCssStrings: {
+        REVISED: string, /* "revised" */
+        UNREVISED: string, // ="",
+        MISSION_IMAGE_REVISED: string, // ="mission-image-revised",
+        MISSION_IMAGE_UNREVISED: string, // ="mission-image",
     };
-    const MissionPreviewStates = { AUTHOR: "author", OPS: "ops", PROFILE: "profile" };
+    const MissionPreviewStates: { AUTHOR: "author", OPS: "ops", PROFILE: "profile" };
 }
 

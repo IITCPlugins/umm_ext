@@ -5,7 +5,7 @@ import * as angular from "angular";
 
 // Angular APP
 export interface App extends angular.IAngularStatic {
-    scope: () => angular.IScope; // NOTE: these are not the correct types. please fix if you have a better idea how angular is structured
+    scope: () => angular.IScope; // NOTE: these are not the fully correct types
 };
 
 export interface MissionData {
@@ -57,7 +57,7 @@ export interface EditorScope extends angular.IScope {
 }
 
 export interface MissionDef {
-    // similar to MissionData but with empty and different fields
+    // similar to MissionData but with empty and some different fields
     definition: {
         name: string;
         description: string;
@@ -92,17 +92,17 @@ export interface Api {
 export interface Styles {
     CLUSTER_MARKER_LABEL_SIZE: number;
     CLUSTER_MARKER_Z_INDEX: number;
-    FIELDTRIP_ICON: { anchor: {}, url: string }
-    GOOGLE_MAP_STYLES: [{}, {}, {},]
+    FIELDTRIP_ICON: { anchor: object, url: string }
+    GOOGLE_MAP_STYLES: [object, object, object]
     POI_MARKER_Z_INDEX: number;
-    PORTAL_ICON: { anchor: {}, url: string };
-    PORTAL_ORNAMENT_ICON: { anchor: {}, url: string };
+    PORTAL_ICON: { anchor: object, url: string };
+    PORTAL_ORNAMENT_ICON: { anchor: object, url: string };
     SELECTED_CLUSTER_ICON: { url: string };
-    SELECTED_FIELDTRIP_ICON: { anchor: {}, url: string };
-    SELECTED_PORTAL_ICON: { anchor: {}, url: string }
-    SELECTED_WAYPOINT_ICON: { anchor: {}, url: string }
+    SELECTED_FIELDTRIP_ICON: { anchor: object, url: string };
+    SELECTED_PORTAL_ICON: { anchor: object, url: string }
+    SELECTED_WAYPOINT_ICON: { anchor: object, url: string }
     UNSELECTED_CLUSTER_ICON: { url: string }
-    WAYPOINT_ICON: { anchor: {}, url: string }
+    WAYPOINT_ICON: { anchor: object, url: string }
     WAYPOINT_LABEL_ANCHOR: string;
     WAYPOINT_LINE_STROKE_OPTIONS: { color: string, weight: number, opacity: number }
     WAYPOINT_MARKER_Z_INDEX: number;
