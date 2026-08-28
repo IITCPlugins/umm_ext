@@ -153,45 +153,29 @@ export const compareCurrentMission = async (mission: Mission): Promise<boolean> 
     // portals
     if (!editor.mission.definition.waypoints.every((waypoint, index) => {
         const portal = mission.portals.get(index);
-        if (!portal) return false;
+        if (!portal) return true;
 
         return portal.location.latitude === waypoint._poi?.location.latitude &&
             portal.location.longitude === waypoint._poi.location.longitude &&
             portal.guid === waypoint._poi?.guid &&
-            portal.description === waypoint._poi?.description &&
-            portal.title === waypoint._poi?.title &&
+            // portal.title === waypoint._poi?.title && // no compare needed
             portal.type === waypoint._poi?.type && // = "PORTAL"
+            portal.description === waypoint.custom_description &&
             portal.objective.type === waypoint.objective?.type &&
             portal.objective.passphrase_params.question === waypoint.objective?.passphrase_params.question &&
             portal.objective.passphrase_params._single_passphrase === waypoint.objective?.passphrase_params._single_passphrase;
     })) return false;
 
 
-    // image
+    // images are resampled by google compare will faile because it is reencoded by google
     if (mission.hasImage()) {
-        return compareImages(editor.mission.definition.logo_url, mission.getImage())
+        const mission_image = await Bimage.fromURL(editor.mission.definition.logo_url + "=s74-c");
+        const diff = mission.getImage().difference(mission_image);
+        console.debug("Image difference:", diff);
+        return diff < 0.015;
     }
 
     return true;
-}
-
-
-const compareImages = async (url: string, image: Bimage): Promise<boolean> => {
-    const mission_image = await getImage(url);
-    return await image.equal(mission_image);
-}
-
-
-const getImage = async (url: string): Promise<Blob> => {
-    const response = await fetch(url, {
-        cache: "default",
-    });
-
-    if (!response.ok) {
-        throw new Error(`Failed to load image: ${response.status}`);
-    }
-
-    return response.blob();
 }
 
 

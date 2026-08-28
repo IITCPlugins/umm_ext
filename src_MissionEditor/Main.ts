@@ -29,7 +29,7 @@ class UMM_Editor {
                     $("<label>", { for: "umm-import-file", class: "umm-upload-label" })
                 ),
                 $("<div>", { id: "umm-mission-picker-wrapper" }).append(
-                    $("<select>", { id: "umm-mission-picker", class: "umm-mission-picker" }),
+                    $("<select>", { id: "umm-mission-picker", class: "umm-mission-picker", click: () => this.onMissionSelect() }),
                     $("<button>", { id: "umm-mission-picker-btn", class: "umm-mission-picker-btn", text: "Import", click: () => this.importMission() /*, disabled: true*/ }),
                 ),
                 $("<select>", { id: "umm-mission-edit", class: "umm-mission-picker", hidden: true }).append(
@@ -38,7 +38,6 @@ class UMM_Editor {
                     $("<option>", { text: "Skip: skip published, edit existing", value: "edit" }),
                 ),
             ),
-            $("<button>", { class: "umm-mission-picker-btn", text: "Compare", click: () => this.compareMission() }),
         );
 
         this.state = new State();
@@ -101,6 +100,11 @@ class UMM_Editor {
         }
     }
 
+    onMissionSelect() {
+        this.generateImportOptions();
+    }
+
+
     async generateImportOptions() {
         let exists = 0;
         let draft = 0;
@@ -121,13 +125,6 @@ class UMM_Editor {
         $("#umm-mission-edit").val(draft > 0 ? "edit" : (exists > 0 ? "edit_all" : "new"));
     }
 
-    async compareMission() {
-        const selectedMission = parseInt($("#umm-mission-picker").val() as string);
-        const mission = main.state.missions.get(selectedMission)!;
-
-        const equal = await compareCurrentMission(mission);
-        notification(`Mission are: ${equal ? "equal" : "NOT equal"}`);
-    }
 
     importMission() {
         const selectedMission = parseInt($("#umm-mission-picker").val() as string);

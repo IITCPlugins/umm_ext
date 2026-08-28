@@ -61,6 +61,16 @@ export class Bimage {
         return this.fromImageBitmap(bitmap);
     }
 
+    public static async fromURL(url: string): Promise<Bimage> {
+        const response = await fetch(url, { cache: "default", });
+        if (!response.ok) {
+            throw new Error(`Failed to load image: ${response.status}`);
+        }
+
+        return Bimage.fromFile(await response.blob());
+    }
+
+
     private static async loadImage(source: string): Promise<HTMLImageElement> {
         return new Promise<HTMLImageElement>((resolve, reject) => {
             const image = new Image();
@@ -185,6 +195,7 @@ export class Bimage {
         return new Bimage(canvas);
     }
 
+
     public render(element: HTMLImageElement | HTMLCanvasElement): void {
         if (element instanceof HTMLImageElement) {
             element.src = this.toString();
@@ -208,25 +219,55 @@ export class Bimage {
     }
 
 
-    async equal(a: Blob): Promise<boolean> {
-        const b = await this.toBlob();
-        if (a.size !== b.size || a.type !== b.type) {
-            return false;
+    private getPixels(width: number, height: number): ImageDataArray {
+
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+
+        const context = canvas.getContext("2d")!;
+        if (!context) {
+            throw new Error('Unable to get 2D rendering context for crop');
         }
 
-        const [aBuffer, bBuffer] = await Promise.all([
-            a.arrayBuffer(),
-            b.arrayBuffer(),
-        ]);
-
-        const aBytes = new Uint8Array(aBuffer);
-        const bBytes = new Uint8Array(bBuffer);
-
-        if (aBytes.length !== bBytes.length) {
-            return false;
-        }
-
-        return aBytes.every((value, i) => value === bBytes[i]);
+        context.drawImage(this.canvas, 0, 0, width, height);
+        return context.getImageData(0, 0, width, height).data;
     }
 
+
+    public difference(b: Bimage): number {
+        const width = 64;
+        const height = 64;
+
+        const aPixels = this.getPixels(width, height);
+        const bPixels = b.getPixels(width, height);
+
+        let score = 0;
+        let pixels = 0;
+
+        for (let i = 0; i < aPixels.length; i += 4) {
+            const r1 = aPixels[i];
+            const g1 = aPixels[i + 1];
+            const b1 = aPixels[i + 2];
+
+            const r2 = bPixels[i];
+            const g2 = bPixels[i + 1];
+            const b2 = bPixels[i + 2];
+
+            // use YUV colorsapce with Luma weighted to compensate rescale and compression error
+            const y1 = 0.299 * r1 + 0.587 * g1 + 0.114 * b1;
+            const y2 = 0.299 * r2 + 0.587 * g2 + 0.114 * b2;
+            const u1 = -0.168736 * r1 - 0.331264 * g1 + 0.5 * b1 + 128;
+            const u2 = -0.168736 * r2 - 0.331264 * g2 + 0.5 * b2 + 128;
+            const v1 = 0.5 * r1 - 0.418688 * g1 - 0.081312 * b1 + 128;
+            const v2 = 0.5 * r2 - 0.418688 * g2 - 0.081312 * b2 + 128;
+
+            score += Math.abs(y1 - y2) / 255 * 0.7;
+            score += Math.abs(u1 - u2) / 255 * 0.15;
+            score += Math.abs(v1 - v2) / 255 * 0.15;
+            pixels += 1;
+        }
+
+        return score / pixels;
+    }
 }
