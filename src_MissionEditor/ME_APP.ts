@@ -128,25 +128,11 @@ export interface UploadResult {
     badge_url: string;
 }
 
-export interface Portal {
-    _poi?: { // verified portal
-        guid: PortalGUID;
-        description: string;
-        title: string;
-        location: {
-            latitude: number;
-            longitude: number;
-        };
-        imageUrl: string;
-        isOrnamented: boolean; // Unknown what it does, seems false everwhere
-        isStartPoint: boolean; // Unknown what NIA uses it for, seems false everywhere
-    };
-
+export interface Portaldata {
     "$$hashKey": string | null;
-    // import portal
     guid: PortalGUID;
-    title: string;
     description: string;
+    title: string;
     location: {
         latitude: number;
         longitude: number;
@@ -155,6 +141,15 @@ export interface Portal {
     isOrnamented: boolean; // Unknown what it does, seems false everwhere
     isStartPoint: boolean; // Unknown what NIA uses it for, seems false everywhere
     type: string;
-    objective?: UMM_Objective;
 }
 
+// maybe an import and an export type?
+export interface Portal {
+    _poi?: Portaldata // verified portal  set by backend;
+    "$$hashKey": string | null;
+    objective?: UMM_Objective;
+    custom_description?: string;
+    hidden?: boolean;
+    hidden_location_clue?: string;
+    poi_type?: string; // == type?
+}

@@ -345,7 +345,7 @@ const resetWaypoints = (scope: ME.EditorScope) => {
 }
 
 
-const createPortal = (portal: UMM_Portal): { mePortal: ME.Portal, hasError: boolean } => {
+const createPortal = (portal: UMM_Portal): { mePortal: ME.Portaldata, hasError: boolean } => {
     let hasError = false;
 
     let imageUrl = portal.imageUrl;
