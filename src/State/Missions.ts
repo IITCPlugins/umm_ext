@@ -96,7 +96,6 @@ export class Missions {
     }
 
 
-
     previous(mission: Mission): Mission | undefined {
         let preMissionID = mission.id - 1;
         let preMission;
@@ -104,9 +103,11 @@ export class Missions {
         return preMission;
     }
 
+
     next(mission: Mission): Mission | undefined {
         return this.get(mission.id + 1);
     }
+
 
     distanceToStart(id: number): number | undefined {
         const mission = this.get(id);
@@ -136,11 +137,31 @@ export class Missions {
     validate(): ErrorReport {
         const errors: ErrorReport = {};
 
-        const notEnoughWaypoint = this.filter(m => m.portals.length < MIN_PORTALS_PER_MISSION)
+        const missions = this.getAll();
+
+        const notEnoughWaypoint = missions.filter(m => m.portals.length < MIN_PORTALS_PER_MISSION)
             .map(m => m.id);
         if (notEnoughWaypoint.length > 0) {
             errors["not enough waypoints"] = notEnoughWaypoint;
         }
+
+        const inside = new Set<number>();
+        const overlaping = new Set<number>();
+        missions.forEach(mission => {
+            const [overlap, index] = missions.reduce((result, current) => {
+                const overlap = mission.id === current.id ? 0 : mission.portals.overlappingPath(current.portals);
+                if (overlap < result[0]) return result;
+                return [overlap, current.id];
+            }, [0, 0]);
+
+            const count = mission.portals.length;
+            if (count > 0) {
+                if (overlap === count) { inside.add(mission.id); inside.add(index) }
+                else if (overlap > 1 && overlap > count * 0.75) { overlaping.add(mission.id); overlaping.add(index) };
+            }
+        })
+        if (inside.size > 0) errors["Mission include other"] = [...inside].sort();
+        if (overlaping.size > 0) errors["Mission include other"] = [...overlaping].sort();
 
         return errors;
     }
