@@ -91,12 +91,23 @@ export const setCurrentMissionCat = (category: number) => {
 
     // catch the control
     //  it shouldn't appear, but better make sure we handle it
+    void catchCategoryControl(category);
+}
+
+
+const catchCategoryControl = async (category: number) => {
+    // catch the control
+    //  it shouldn't appear, but better make sure we handle it (it has a 500ms delay)
     try {
-        const element = waitForControl($(".preview-buttons").get(0), ".category-dropdown");
+        const element = await waitForControl($(".preview-buttons").get(0), ".category-dropdown", 800);
+
+        console.log("catchCategoryControl")
+        const editor = getEditorScope() as EditorScope;
         editor.selectedCategoryID = category;
         $(element).val(category);
 
         // IMATTC will add it again
+        const store = loadCategoryContent();
         store[category].missions.pop();
         storeCategoryContent(store);
     } catch {
