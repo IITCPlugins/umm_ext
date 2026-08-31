@@ -4,6 +4,7 @@ import { loadFileInput } from "../src/ImportExport";
 import { State } from "../src/State/State";
 import { notification } from "../src/UI/Notification";
 import { doImport, doImportAll, getRemainingMissions } from "./ME_Wrapper";
+import "./PatchNia";
 
 
 class UMM_Editor {
