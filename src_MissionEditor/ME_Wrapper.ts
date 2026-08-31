@@ -127,18 +127,21 @@ export const doImport = async (mission: Mission) => {
 
 
 export const doImportAll = async (missions: Mission[]) => {
-    try {
-        Progress.show("creating banner");
-        for (const mission of missions) {
-            Progress.setPrefix(`${mission.id + 1} / ${missions.length}: `);
-            await fillMission(mission, true);
+
+    if (!confirm(`Import all ${missions.length} missions?`))
+
+        try {
+            Progress.show("creating banner");
+            for (const mission of missions) {
+                Progress.setPrefix(`${mission.id + 1} / ${missions.length}: `);
+                await fillMission(mission, true);
+            }
+        } catch {
+            console.error("end by exception");
+            Progress.hide();
+        } finally {
+            Progress.hide();
         }
-    } catch {
-        console.error("end by exception");
-        Progress.hide();
-    } finally {
-        Progress.hide();
-    }
 }
 
 
@@ -169,10 +172,10 @@ export const compareCurrentMission = async (mission: Mission): Promise<boolean> 
 
     // images are resampled by google compare will faile because it is reencoded by google
     if (mission.hasImage()) {
-        const mission_image = await Bimage.fromURL(editor.mission.definition.logo_url + "=s74-c");
+        const mission_image = await Bimage.fromURL(editor.mission.definition.logo_url + "=s64-c"); // difference will use a 64x64 image
         const diff = mission.getImage().difference(mission_image);
         console.debug("Image difference:", diff);
-        return diff < 0.015;
+        return diff < 0.025;
     }
 
     return true;
@@ -181,17 +184,191 @@ export const compareCurrentMission = async (mission: Mission): Promise<boolean> 
 
 const fillMission = async (mission: Mission, submit: boolean) => {
 
+    // 0. test current mission
+    let editor = getEditorScope();
+    if (editor && !checkEditorState(editor)) return;
+
     // 1. create new mission if not in editor
-    Progress.update("Create mission");
-    if (getEditorScope() === undefined) {
-        await createNewMission();
-    }
+    const hasMission = await openMission(mission);
 
     // 2. make sure Editor is ready
-    const editor = getEditorScope();
-    if (!submit && !checkEditorState(editor)) return;
+    editor = getEditorScope();
+    if (!hasMission || !editor) return;
 
     // 3. set basics
+    importMissionBasics(editor, mission);
+
+    // 4. set portals
+    const missingImages = importMissionPorals(editor, mission);
+
+    // 5. upload logo (if availabe)
+    await uploadImage(mission, editor);
+
+    // 6. save & go to preview page
+    await saveAndPreview(mission, editor);
+
+
+    // 7. refresh missing images
+    if (missingImages > 0) {
+        await refreshMission();
+    }
+
+    // 8. IMATTC
+    if (IMATTC.isInstalled()) {
+        setIMATTCCategory(mission);
+    }
+
+    // 9. Submit
+    if (submit && mission.hasImage()) {
+        Progress.update("submit");
+        await submitMissionAndWait(editor);
+    } else {
+        // IMATTC has hijack setView..give it a chance to do its job (takes 500ms...we just move on and don't wait)
+        // but it triggers another save
+        editor.setView(editor.EditorScreenViews.PREVIEW);
+    }
+}
+
+
+const openMission = async (mission: Mission) => {
+
+    if (getEditorScope() === undefined) {
+        const existing = await findMission(mission.title);
+
+        if (existing) {
+            Progress.update("Open mission");
+            await editMission(existing);
+            if (await compareCurrentMission(mission)) {
+                await openMissionOverview();
+                return false;
+            }
+        } else {
+            Progress.update("Create mission");
+            await editMission();
+        }
+    }
+
+    return true;
+}
+
+
+const editMission = async (mission?: ME.MissionDef): Promise<void> => {
+    const angularApp = getAngularApp();
+    const $location = angularApp.injector().get("$location");
+    const appScope = angularApp.scope();
+
+    return new Promise<void>(resolve => {
+        const unwatch = appScope.$on("$routeChangeSuccess", () => {
+            unwatch();
+            resolve();
+        });
+
+
+        appScope.$evalAsync(() => {
+            $location
+                .path("/edit")
+                .search(mission ? { id: mission.mission_id } : {});
+        });
+    });
+}
+
+
+const openMissionOverview = () => {
+    const angularApp = getAngularApp();
+    const $location = angularApp.injector().get("$location");
+    const appScope = angularApp.scope();
+
+    return new Promise<void>(resolve => {
+        const unwatch = appScope.$on("$routeChangeSuccess", () => {
+            unwatch();
+            resolve();
+        });
+
+        appScope.$evalAsync(() => {
+            $location.path("");
+        });
+    });
+}
+
+
+const uploadLogo = async (mission: Mission) => {
+    let image = mission.getImage();
+
+    // resize image
+    if (image.width < 256) image = image.scale(256, 256);
+    if (image.width > 512) image = image.scale(512, 512);
+
+    const file = await image.toFile("banner.png", 'image/png');
+
+    const editorScope = getEditorScope();
+    const $upload: ME.Upload = getAngularApp().injector().get("$upload");
+
+    const result: any = await $upload.upload({
+        url: "/logo_upload/",
+        file: file,
+        data: {
+            missionGuid: editorScope.mission.mission_guid
+        }
+    });
+
+    const resultData: ME.UploadResult = result.data;
+
+    await new Promise<void>(resolve => {
+        editorScope.$evalAsync(() => {
+            editorScope.mission.definition.logo_url = resultData.logo_url;
+            editorScope.mission.definition.badge_url = resultData.badge_url;
+            resolve();
+        });
+    });
+}
+
+
+const setIMATTCCategory = (mission: Mission) => {
+    Progress.update("create category");
+    const category = mission.category;
+    if (category && category !== "") {
+        const catID = IMATTC.findOrCreateCategory(category);
+        if (catID !== -1) {
+            console.log("IMATTC.setCurrentMissionCat(catID)", catID);
+            IMATTC.setCurrentMissionCat(catID);
+        }
+    }
+}
+
+
+const refreshMission = async () => {
+    Progress.update("Refreshing");
+    notification('Refreshing mission...\n(Missing data detected)', true);
+    const scope = getEditorScope();
+    await loadMission(scope.mission.mission_id);
+}
+
+
+const saveAndPreview = async (mission: Mission, editor: ME.EditorScope) => {
+    const nextPage = mission.hasImage() ? editor.EditorScreenViews.PREVIEW : editor.EditorScreenViews.NAME;
+    Progress.update("save");
+    await editor.save(nextPage);
+    if (editor.savingFailed) {
+        throw new Error("Mission save failed");
+    }
+}
+
+
+const uploadImage = async (mission: Mission, editor: ME.EditorScope) => {
+    if (mission.hasImage()) {
+
+        if (editor.mission.mission_guid === undefined) {
+            Progress.update("get mission id");
+            await editor.save();
+            if (editor.mission.mission_guid === undefined) throw new Error("still no id");
+        }
+
+        Progress.update("upload image");
+        await uploadLogo(mission);
+    }
+}
+
+const importMissionBasics = (editor: ME.EditorScope, mission: Mission) => {
     editor.$apply(() => {
         const { sequential, hiddenLocation } = mission.getSequential();
         editor.mission.definition._sequential = sequential;
@@ -199,70 +376,11 @@ const fillMission = async (mission: Mission, submit: boolean) => {
         editor.mission.definition.name = mission.title;
         editor.mission.definition.description = mission.description;
     });
-
-    // 4. set portals
-    Progress.update("set portals");
-    const missingImages = importMissionPorals(editor, mission);
-
-    // 5. upload logo (if availabe)
-    if (mission.hasImage()) {
-
-        if (editor.mission.mission_guid === undefined) {
-            Progress.update("get mission id");
-            await editor.save();
-            if (editor.mission.mission_guid === undefined) throw new Error("still no id")
-        }
-
-        Progress.update("upload image");
-        await uploadLogo(mission);
-    } else {
-        // prevent accidental submit
-        submit = false;
-    }
-
-    // 6. save & go to preview page
-    const nextPage = mission.hasImage() ? editor.EditorScreenViews.PREVIEW : editor.EditorScreenViews.NAME;
-    Progress.update("save");
-    await editor.save(nextPage);
-    if (editor.savingFailed) {
-        throw new Error("Mission save failed");
-    }
-
-
-    // 7. refresh missing images
-    if (missingImages > 0) {
-        Progress.update("Refreshing");
-        notification('Refreshing mission...\n(Missing data detected)', true);
-        const scope = getEditorScope();
-        await loadMission(scope.mission.mission_id);
-    }
-
-    // 8. IMATTC
-    if (IMATTC.isInstalled()) {
-        Progress.update("create category");
-        const category = mission.category;
-        if (category && category !== "") {
-            const catID = IMATTC.findOrCreateCategory(category);
-            if (catID !== -1) {
-                console.log("IMATTC.setCurrentMissionCat(catID)", catID)
-                IMATTC.setCurrentMissionCat(catID);
-            }
-        }
-    }
-
-    // 9. Submit
-    if (submit) {
-        Progress.update("submit");
-        await submitMissionAndWait(editor);
-    } else {
-        // IMATTC has hijack setView..give it a chance to do its job (takes 500ms...we just move on and don't wait)
-        // but is triggers another save
-        editor.setView(editor.EditorScreenViews.PREVIEW);
-    }
 }
 
 
 const importMissionPorals = (editorScope: ME.EditorScope, mission: Mission): number => {
+    Progress.update("set portals");
 
     resetWaypoints(editorScope);
 
@@ -424,23 +542,6 @@ const loadMission = async (missionId: string) => {
 }
 
 
-const createNewMission = async (): Promise<void> => {
-    const angularApp = getAngularApp();
-    const $location = angularApp.injector().get("$location");
-    const appScope = angularApp.scope();
-
-    return new Promise<void>(resolve => {
-        const unwatch = appScope.$on("$routeChangeSuccess", () => {
-            unwatch();
-            resolve();
-        });
-
-        appScope.$evalAsync(() => {
-            $location.path("/edit");
-        });
-    });
-}
-
 const waitForRouteChange = async (): Promise<void> => {
     const angularApp = getAngularApp();
     const appScope = angularApp.scope();
@@ -454,29 +555,3 @@ const waitForRouteChange = async (): Promise<void> => {
 }
 
 
-const uploadLogo = async (mission: Mission) => {
-    const image = mission.getImage();
-
-    const file = await image.toFile("banner.png", 'image/png');
-
-    const editorScope = getEditorScope();
-    const $upload: ME.Upload = getAngularApp().injector().get("$upload");
-
-    const result: any = await $upload.upload({
-        url: "/logo_upload/",
-        file: file,
-        data: {
-            missionGuid: editorScope.mission.mission_guid
-        }
-    });
-
-    const resultData: ME.UploadResult = result.data;
-
-    await new Promise<void>(resolve => {
-        editorScope.$evalAsync(() => {
-            editorScope.mission.definition.logo_url = resultData.logo_url;
-            editorScope.mission.definition.badge_url = resultData.badge_url;
-            resolve();
-        });
-    });
-}

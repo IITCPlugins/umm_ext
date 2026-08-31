@@ -219,6 +219,23 @@ export class Bimage {
     }
 
 
+    scale(width: number, height: number): Bimage {
+
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+
+        const newimage = new Bimage(canvas)
+        const context = canvas.getContext("2d")!;
+        if (!context) {
+            throw new Error('Unable to get 2D rendering context for crop');
+        }
+
+        context.drawImage(this.canvas, 0, 0, width, height);
+        return newimage;
+    }
+
+
     private getPixels(width: number, height: number): ImageDataArray {
 
         const canvas = document.createElement("canvas");
