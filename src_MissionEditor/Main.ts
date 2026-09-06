@@ -3,7 +3,7 @@
 import { loadFileInput } from "../src/ImportExport";
 import { State } from "../src/State/State";
 import { notification } from "../src/UI/Notification";
-import { doImport, doImportAll, getRemainingMissions } from "./ME_Wrapper";
+import { doImport, doImportAll, findMission, getRemainingMissions } from "./ME_Wrapper";
 import "./PatchNia";
 
 
@@ -29,9 +29,10 @@ class UMM_Editor {
                     $("<label>", { for: "umm-import-file", class: "umm-upload-label" })
                 ),
                 $("<div>", { id: "umm-mission-picker-wrapper" }).append(
-                    $("<select>", { id: "umm-mission-picker", class: "umm-mission-picker" }),
+                    $("<select>", { id: "umm-mission-picker", class: "umm-mission-picker", click: () => this.onMissionSelect() }),
                     $("<button>", { id: "umm-mission-picker-btn", class: "umm-mission-picker-btn", text: "Import", click: () => this.importMission() /*, disabled: true*/ }),
-                )
+                ),
+                $("<span>", { id: "umm-mission-edit" })
             ),
         );
 
@@ -40,6 +41,7 @@ class UMM_Editor {
         this.setActiveBannerTitle();
         this.bindFileImport();
         void this.generateMissionSelect();
+        void this.generateImportOptions();
     }
 
 
@@ -63,6 +65,7 @@ class UMM_Editor {
             await loadFileInput(event, this.state);
             this.setActiveBannerTitle();
             void this.generateMissionSelect();
+            void this.generateImportOptions();
         });
     }
 
@@ -90,6 +93,53 @@ class UMM_Editor {
 
         if (this.state.missions.count() > 0) {
             $("#umm-mission-picker-btn").prop("disabled", false);
+        }
+    }
+
+    onMissionSelect() {
+        void this.generateImportOptions();
+    }
+
+
+    async generateImportOptions() {
+        const selectedMission = parseInt($("#umm-mission-picker").val() as string);
+
+        if (selectedMission === -1) {
+            let exists = 0;
+            let draft = 0;
+            const allmissions = this.state.missions.getAll();
+            for (const mission of allmissions) {
+                const existing_mission = await findMission(mission.title);
+                if (existing_mission !== undefined) {
+                    exists++;
+                    if (existing_mission.state !== MissionStates.PUBLISHED) {
+                        draft++;
+                    }
+                }
+            }
+            const newMisison = allmissions.length - exists;
+            const text = [];
+            if (newMisison > 0) text.push(`${newMisison} will be created`);
+            if (draft > 0) text.push(`${draft} will be skipped`);
+            if (exists > 0) text.push(`${exists} will be checked and update`);
+
+            $("#umm-mission-edit").text(text.join(", "));
+        } else {
+
+            const mission = this.state.missions.get(selectedMission);
+            if (!mission) {
+                $("#umm-mission-edit").text("");
+                return;
+            }
+            const exists = await findMission(mission.title);
+            if (exists) {
+                if (exists.state === MissionStates.PUBLISHED) {
+                    $("#umm-mission-edit").text("must be ");
+                } else {
+                    $("#umm-mission-edit").text("will be updated");
+                }
+            }
+            else $("#umm-mission-edit").text("will be created")
         }
     }
 

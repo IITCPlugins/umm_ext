@@ -13,7 +13,7 @@ export interface MissionData {
         view: "type" | "name" | "waypoints" | "preview"
     }
     mission_guid: string;
-    mission_id: number;
+    mission_id: string; // ="None"; only set for DRAFT or "not published" ?
     definition: {
         name: string;
         description: string;
@@ -24,6 +24,15 @@ export interface MissionData {
         _hidden: boolean;
     };
 };
+
+export interface MissionDef extends MissionData {
+    // similar to MissionData but with empty and some different fields
+    state: MissionStates;
+    position: number; // = index in mission array
+    /* definition: MissionData['definition'] & {
+        waypoints: null;
+    }*/
+}
 
 export interface EditorScope extends angular.IScope {
     // Mission data
@@ -56,13 +65,6 @@ export interface EditorScope extends angular.IScope {
     save: (nextScreen?: string) => Promise<void>;
 }
 
-export interface MissionDef {
-    // similar to MissionData but with empty and some different fields
-    definition: {
-        name: string;
-        description: string;
-    }
-}
 
 
 // angular.element($("container").get(0)).scope()
@@ -126,17 +128,11 @@ export interface UploadResult {
     badge_url: string;
 }
 
-export interface Portal {
-    _poi?: {
-        location: {
-            latitude: number;
-            longitude: number;
-        };
-    };
-
+export interface Portaldata {
     "$$hashKey": string | null;
     guid: PortalGUID;
     description: string;
+    title: string;
     location: {
         latitude: number;
         longitude: number;
@@ -144,8 +140,16 @@ export interface Portal {
     imageUrl: string;
     isOrnamented: boolean; // Unknown what it does, seems false everwhere
     isStartPoint: boolean; // Unknown what NIA uses it for, seems false everywhere
-    title: string;
     type: string;
-    objective?: UMM_Objective;
 }
 
+// maybe an import and an export type?
+export interface Portal {
+    _poi?: Portaldata // verified portal  set by backend;
+    "$$hashKey": string | null;
+    objective?: UMM_Objective;
+    custom_description?: string;
+    hidden?: boolean;
+    hidden_location_clue?: string;
+    poi_type?: string; // == type?
+}

@@ -42,7 +42,7 @@ class UMM_Ext implements Plugin.Class {
 
         createToolbar();
         $('#toolbox').append(
-            $('<a>', { text: "UMM", title: "Ultimate Mission Maker", click: () => this.toggleUMM() }));
+            $('<a>', { text: "UMM", title: "Ultimate Mission Maker", on: {click: () => this.toggleUMM() }}));
 
         // hide toolbar by default
         $('.leaflet-umm.leaflet-bar').hide();
