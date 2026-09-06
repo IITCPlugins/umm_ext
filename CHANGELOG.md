@@ -1,3 +1,13 @@
+# v1.3
+
+- Import all missions.
+  Create new missions or update existing unpublished missions.
+  Note: Changes to images are difficult to detect and may not always be recognized.
+- Warn when missions overlap, such as when one mission is simply the reverse of another.
+- Scale images if smaller as 256x256 or bigger as 512x512
+- Fixed an IMATTC interaction bug.
+- fixed two bugs of the origin page (they use outdated versions) to get a cleaner log
+
 # v1.2
 
 - new Picture dialog - setup Banner images directly in UMM.
