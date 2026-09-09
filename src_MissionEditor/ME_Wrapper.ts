@@ -128,20 +128,20 @@ export const doImport = async (mission: Mission) => {
 
 export const doImportAll = async (missions: Mission[]) => {
 
-    if (!confirm(`Import all ${missions.length} missions?`))
+    if (!confirm(`Import all ${missions.length} missions?`)) return;
 
-        try {
-            Progress.show("creating banner");
-            for (const mission of missions) {
-                Progress.setPrefix(`${mission.id + 1} / ${missions.length}: `);
-                await fillMission(mission, true);
-            }
-        } catch {
-            console.error("end by exception");
-            Progress.hide();
-        } finally {
-            Progress.hide();
+    try {
+        Progress.show("creating banner");
+        for (const mission of missions) {
+            Progress.setPrefix(`${mission.id + 1} / ${missions.length}: `);
+            await fillMission(mission, true);
         }
+    } catch {
+        console.error("end by exception");
+        Progress.hide();
+    } finally {
+        Progress.hide();
+    }
 }
 
 

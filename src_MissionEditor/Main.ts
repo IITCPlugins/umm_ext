@@ -120,8 +120,8 @@ class UMM_Editor {
             const newMisison = allmissions.length - exists;
             const text = [];
             if (newMisison > 0) text.push(`${newMisison} will be created`);
-            if (draft > 0) text.push(`${draft} will be skipped`);
-            if (exists > 0) text.push(`${exists} will be checked and update`);
+            if (exists - draft > 0) text.push(`${exists - draft} will be skipped`);
+            if (draft > 0) text.push(`${draft} will be checked and update`);
 
             $("#umm-mission-edit").text(text.join(", "));
         } else {
