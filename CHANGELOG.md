@@ -1,3 +1,8 @@
+# v1.3.1
+
+- fix confirm dialog for import all missions ("ok" and "cancle" were inverted)
+- fix status text for import
+
 # v1.3
 
 - Import all missions.
