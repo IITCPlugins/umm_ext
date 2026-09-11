@@ -23,14 +23,14 @@ class UMM_Editor {
         $('.navbar-header').append(
             $("<div>", { id: "umm-badge", text: "UMM:" }),
             $("<div>", { id: "umm-mission-editor-bar" }).append(
-                $("<div>", { id: "umm-mission-title", click: () => $("#umm-import-file").trigger("click") }),
+                $("<div>", { id: "umm-mission-title", on: { click: () => $("#umm-import-file").trigger("click") } }),
                 $("<div>", { style: "margin-top: 0.3em;" }).append(
                     $("<input>", { id: "umm-import-file", type: "file", accept: "application/JSON" }),
                     $("<label>", { for: "umm-import-file", class: "umm-upload-label" })
                 ),
                 $("<div>", { id: "umm-mission-picker-wrapper" }).append(
-                    $("<select>", { id: "umm-mission-picker", class: "umm-mission-picker", click: () => this.onMissionSelect() }),
-                    $("<button>", { id: "umm-mission-picker-btn", class: "umm-mission-picker-btn", text: "Import", click: () => this.importMission() /*, disabled: true*/ }),
+                    $("<select>", { id: "umm-mission-picker", class: "umm-mission-picker", on: { click: () => this.onMissionSelect() } }),
+                    $("<button>", { id: "umm-mission-picker-btn", class: "umm-mission-picker-btn", text: "Import", on: { click: () => this.importMission() /*, disabled: true*/ } }),
                 ),
                 $("<span>", { id: "umm-mission-edit" })
             ),

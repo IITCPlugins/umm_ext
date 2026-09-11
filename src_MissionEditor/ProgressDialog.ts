@@ -10,7 +10,7 @@ export const show = (message = "Please wait…", prefix?: string) => {
             '<canvas id="progress-anim" width="250" height="250"></canvas>',
             $("<div>", { class: "progress-prefix", text: prefix ?? "" }),
             $("<div>", { class: "progress-message", }),
-            $("<button>", { id: "progress-cancel", text: "cancel", click: () => hide() })
+            $("<button>", { id: "progress-cancel", text: "cancel", on: { click: () => hide() } })
         ),
     );
 

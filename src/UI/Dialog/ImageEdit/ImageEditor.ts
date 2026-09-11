@@ -40,19 +40,19 @@ export const showImageEditor = () => {
                 $("<legend>", { text: "Edit mode" }),
                 checkbox("temp2", "select mission", true).on("change", event => onSelectionMode($(event.target as HTMLElement).is(":checked"))),
                 $("<div>").append(
-                    $("<input>", { type: "radio", id: "EM_noEdit", name: "editmode", click: () => setEditMode(EM.None) }),
+                    $("<input>", { type: "radio", id: "EM_noEdit", name: "editmode", on: { click: () => setEditMode(EM.None) } }),
                     $("<label>", { for: "EM_noEdit", text: "no edit" }),
                 ),
                 $("<div>").append(
-                    $("<input>", { type: "radio", id: "EM_massedit", name: "editmode", click: () => setEditMode(EM.MassEdit) }).prop('checked', true),
+                    $("<input>", { type: "radio", id: "EM_massedit", name: "editmode", on: { click: () => setEditMode(EM.MassEdit) } }).prop('checked', true),
                     $("<label>", { for: "EM_massedit", text: "one image" })
                 ),
                 $("<div>").append(
-                    $("<input>", { type: "radio", id: "EM_singleedit", name: "editmode", click: () => setEditMode(EM.SingleEdit) }),
+                    $("<input>", { type: "radio", id: "EM_singleedit", name: "editmode", on: { click: () => setEditMode(EM.SingleEdit) } }),
                     $("<label>", { for: "EM_singleedit", text: "seperated images" }),
                 ),
                 $("<div>").append(
-                    $("<input>", { type: "radio", id: "EM_swapedit", name: "editmode", click: () => setEditMode(EM.DragEdit) }),
+                    $("<input>", { type: "radio", id: "EM_swapedit", name: "editmode", on: { click: () => setEditMode(EM.DragEdit) } }),
                     $("<label>", { for: "EM_swapedit", text: "swap images" }),
                 ),
             ),
@@ -71,7 +71,7 @@ export const showImageEditor = () => {
                 }).css({ "max-width": "20em" }),
                 $("<hr>").css({ width: "80%" }),
                 $("<div>").css({ "display": "flex" }).append(
-                    $("<button>", { id: "download-image", type: "button", text: "Download Images", click: downloadImages }),
+                    $("<button>", { id: "download-image", type: "button", text: "Download Images", on: { click: downloadImages } }),
                     checkbox("saveAsZip", "as ZIP", true).css({ "margin-left": "auto", width: "6em" }),
                 )
             )
