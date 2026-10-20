@@ -10,6 +10,7 @@ import { EM_Single } from "./EM_Single";
 import { Mission } from "../../../State/Mission";
 import { ZIP } from "../../../Helper/zip";
 import { createFilename } from "../../../ImportExport";
+import { confirmDialog } from "../Confirm";
 
 const tiles: MissionImage[] = [];
 
@@ -73,7 +74,9 @@ export const showImageEditor = () => {
                 $("<div>").css({ "display": "flex" }).append(
                     $("<button>", { id: "download-image", type: "button", text: "Download Images", on: { click: downloadImages } }),
                     checkbox("saveAsZip", "as ZIP", true).css({ "margin-left": "auto", width: "6em" }),
-                )
+                ),
+                $("<button>", { id: "delete-image", type: "button", text: "Remove Images", on: { click: removeImages } })
+                    .css({ width: "50%", "margin-top": "0.8em" })
             )
         )
     );
@@ -202,6 +205,24 @@ const downloadImages = async (): Promise<void> => {
     }
 };
 
+const removeImages = async (): Promise<void> => {
+    let missions = currentEditMode.getSelected();
+    if (missions.length === 0) missions = main.state.missions.getAll();
+
+    const missionsWithImages = missions.filter(mission => mission.hasImage());
+    if (missionsWithImages.length === 0) return;
+
+    const missionLabel = missionsWithImages.length === 1 ? "mission" : "missions";
+    if (!await confirmDialog({
+        message: `Remove images from ${missionsWithImages.length} ${missionLabel}?`,
+    })) return;
+
+    missionsWithImages.forEach(mission => mission.setImage(-1));
+    main.state.removeUnusedImages();
+    updatePreview();
+    currentEditMode.imageReloaded();
+};
+
 
 const onMaskChanged = (status: boolean) => {
     tiles.forEach(t => t.showMask(status));
@@ -214,6 +235,5 @@ const onBorderChanged = (status: boolean) => {
 const onSelectionMode = (status: boolean) => {
     currentEditMode.toggleSelectionMode(status);
 }
-
 
 
