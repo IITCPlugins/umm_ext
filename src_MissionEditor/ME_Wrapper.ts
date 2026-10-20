@@ -130,15 +130,18 @@ export const doImportAll = async (missions: Mission[]) => {
 
     if (!confirm(`Import all ${missions.length} missions?`)) return;
 
+    let currentMission: Mission | undefined;
     try {
         Progress.show("creating banner");
         for (const mission of missions) {
+            currentMission = mission;
             Progress.setPrefix(`${mission.id + 1} / ${missions.length}: `);
             await fillMission(mission, true);
         }
-    } catch {
-        console.error("end by exception");
-        Progress.hide();
+    } catch (error) {
+        const missionNumber = currentMission ? currentMission.id + 1 : "unknown";
+        console.error(`Import failed at mission ${missionNumber}`, error);
+        notification(`Import failed at mission ${missionNumber}. See the browser console for details.`);
     } finally {
         Progress.hide();
     }
@@ -553,5 +556,3 @@ const waitForRouteChange = async (): Promise<void> => {
         });
     });
 }
-
-
