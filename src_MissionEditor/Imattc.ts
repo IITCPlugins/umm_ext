@@ -53,7 +53,7 @@ export const isInstalled = (): boolean => {
     const activeuser = $('.navbar-login a').first().text().trim();
     const key = `allCategories_${activeuser}`;
 
-    return localStorage.getItem(key) !== undefined;
+    return localStorage.getItem(key) !== null;
 }
 
 
@@ -79,7 +79,7 @@ export const setCurrentMissionCat = (category: number) => {
     store.forEach((cat, index) => {
         if (index !== category) {
             const pos = cat.missions.indexOf(id);
-            if (pos !== -1) cat.missions.splice(index, 1);
+            if (pos !== -1) cat.missions.splice(pos, 1);
         }
     });
 
@@ -91,11 +91,11 @@ export const setCurrentMissionCat = (category: number) => {
 
     // catch the control
     //  it shouldn't appear, but better make sure we handle it
-    void catchCategoryControl(category);
+    void catchCategoryControl(category, id);
 }
 
 
-const catchCategoryControl = async (category: number) => {
+const catchCategoryControl = async (category: number, missionId: string) => {
     // catch the control
     //  it shouldn't appear, but better make sure we handle it (it has a 500ms delay)
     try {
@@ -108,10 +108,12 @@ const catchCategoryControl = async (category: number) => {
 
         // IMATTC will add it again
         const store = loadCategoryContent();
-        store[category].missions.pop();
+        const categoryMissions = store[category]?.missions;
+        const pos = categoryMissions?.indexOf(missionId) ?? -1;
+        if (categoryMissions && pos !== -1) categoryMissions.splice(pos, 1);
         storeCategoryContent(store);
-    } catch {
-        console.debug("timeout");
+    } catch (error) {
+        console.debug("Failed to catch IMATTC category control", error);
     }
 }
 
@@ -167,4 +169,3 @@ export const createCategory = (store: Category[], categoryName: string): number 
 
     return newCategory.id;
 }
-
