@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import { Mission } from "../src/State/Mission"
-import { notification } from "../src/UI/Notification";
+import { notification } from "./MeUi";
 import { UMM_Portal } from "../src/UMM_types";
 import * as Progress from "./ProgressDialog";
 import * as ME from "./ME_APP";

@@ -56,6 +56,48 @@ export const isInstalled = (): boolean => {
     return localStorage.getItem(key) !== null;
 }
 
+const countDuplicates = (categories: Category[]): number => {
+    const seen = new Set<string>();
+    let duplicates = 0;
+
+    categories.forEach(category => {
+        category.missions.forEach(missionId => {
+            if (seen.has(missionId)) {
+                duplicates++;
+            } else {
+                seen.add(missionId);
+            }
+        });
+    });
+
+    return duplicates;
+}
+
+export const countDuplicateMissionIds = (): number => {
+    return countDuplicates(loadCategoryContent());
+}
+
+export const removeDuplicateMissionIds = (): number => {
+    const categories = loadCategoryContent();
+    const seen = new Set<string>();
+    let removed = 0;
+
+    categories.forEach(category => {
+        category.missions = category.missions.filter(missionId => {
+            if (seen.has(missionId)) {
+                removed++;
+                return false;
+            }
+
+            seen.add(missionId);
+            return true;
+        });
+    });
+
+    if (removed > 0) storeCategoryContent(categories);
+    return removed;
+}
+
 
 
 export const findOrCreateCategory = (name: string): number => {

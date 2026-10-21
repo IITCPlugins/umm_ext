@@ -2,8 +2,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { loadFileInput } from "../src/ImportExport";
 import { State } from "../src/State/State";
-import { notification } from "../src/UI/Notification";
 import { doImport, doImportAll, findMission, getRemainingMissions } from "./ME_Wrapper";
+import { confirmDialog, notification } from "./MeUi";
+import * as IMATTC from "./Imattc";
 import "./PatchNia";
 
 
@@ -42,6 +43,23 @@ class UMM_Editor {
         this.bindFileImport();
         void this.generateMissionSelect();
         void this.generateImportOptions();
+
+        void this.fixImattcData();
+    }
+
+    async fixImattcData(): Promise<void> {
+        const duplicateCount = IMATTC.countDuplicateMissionIds();
+        if (duplicateCount === 0) {
+            return;
+        }
+
+        if (!await confirmDialog({
+            message: "Found duplicated Missions in IMATTC Data",
+            details: `This usually leads to loading error. Remove ${duplicateCount} duplicate IMATTC mission ID${duplicateCount === 1 ? "" : "s"}?`,
+        })) return;
+
+        const removed = IMATTC.removeDuplicateMissionIds();
+        notification(`Removed ${removed} duplicate IMATTC mission ID${removed === 1 ? "" : "s"}.\n\nReload is recommended.`);
     }
 
 
@@ -190,4 +208,3 @@ export const main = new UMM_Editor();
     (window as any).UMM = main; // if anybody else would like to interact
     main.init();
 })();
-
