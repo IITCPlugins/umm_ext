@@ -1,3 +1,11 @@
+# v1.3.2
+
+- add option to remove mission image
+- (IMATTC) fix removing category might fail
+- (IMATTC) check for duplicate IDs (we might have created) and fix it
+- improve console.log on mission import error
+- remove deprecated JQuery styles
+
 # v1.3.1
 
 - fix confirm dialog for import all missions ("ok" and "cancle" were inverted)
