@@ -18,7 +18,7 @@ jobs:
       - name: Build Production
         run: yarn build:prod
       - name: Create Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           name: ${{ github.event.repository.name }} ${{ github.ref_name }}
           draft: false
